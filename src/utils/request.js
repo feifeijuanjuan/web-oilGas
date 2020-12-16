@@ -35,7 +35,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -81,5 +81,45 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+// 封装get方法
+export function get(url, params) {
+  return new Promise((resolve, reject) => {
+    if (!params) {
+      params = {
+        timestamp: new Date().getTime()
+      }
+    } else {
+      Object.assign(params, {
+        timestamp: new Date().getTime()
+      })
+    }
+    service.get(url, {
+      params: params
+    }).then(res => {
+      resolve(res.data)
+    }).catch(err => {
+      reject(err.data)
+    })
+  })
+}
+
+// post方法封装
+export function post(url, params) {
+  return new Promise((resolve, reject) => {
+    service.post(url, params, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        resolve(res.data)
+      })
+      .catch(err => {
+        reject(err.data)
+      })
+  })
+}
 
 export default service

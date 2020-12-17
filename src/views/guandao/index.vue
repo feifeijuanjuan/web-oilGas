@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import gasFieldDay from '@/views/dashboard/gasFieldDay'
-import gasFieldMonth from '@/views/dashboard/gasFieldMonth'
-import gasFieldYear from '@/views/dashboard/gasFieldYear'
+import gasFieldDay from '@/views/guandao/gasFieldDay'
+import gasFieldMonth from '@/views/guandao/gasFieldMonth'
+import gasFieldYear from '@/views/guandao/gasFieldYear'
 
 export default {
   name: 'Dashboard',

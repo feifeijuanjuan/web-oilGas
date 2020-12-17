@@ -46,12 +46,89 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: 'noRedirect',
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: {title: '煤气田填报', icon: 'dashboard'}
+      meta: {title: '煤气田填报', icon: 'meiqi'}
+    }]
+  },
+  {
+    path: '/lianyou',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'lianyou',
+      name: 'lianyou',
+      component: () => import('@/views/lianyou/index'),
+      meta: {title: '炼油厂填报', icon: 'dashboard'}
+    }]
+  },
+  {
+    path: '/meizhiyou',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'meizhiyou',
+      name: 'meizhiyou',
+      component: () => import('@/views/meizhiyou/index'),
+      meta: {title: '煤制油填报', icon: 'dashboard'}
+    }]
+  },
+  {
+    path: '/meizhiqi',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'meizhiqi',
+      name: 'meizhiqi',
+      component: () => import('@/views/meizhiqi/index'),
+      meta: {title: '煤制气填报', icon: 'dashboard'}
+    }]
+  },
+  {
+    path: '/ranqi',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'ranqi',
+      name: 'ranqi',
+      component: () => import('@/views/ranqi/index'),
+      meta: {title: '城市燃气填报', icon: 'dashboard'}
+    }]
+  },
+  {
+    path: '/chenpinyou',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'chenpinyou',
+      name: 'chenpinyou',
+      component: () => import('@/views/chenpinyou/index'),
+      meta: {title: '成品油销售填报', icon: 'dashboard'}
+    }]
+  },
+  {
+    path: '/guandao',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'guandao',
+      name: 'guandao',
+      component: () => import('@/views/guandao/index'),
+      meta: {title: '管道公司填报', icon: 'dashboard'}
+    }]
+  },
+  {
+    path: '/mengshi',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [{
+      path: 'mengshi',
+      name: 'mengshi',
+      component: () => import('@/views/mengshi/index'),
+      meta: {title: '盟市填报', icon: 'dashboard'}
     }]
   },
 
@@ -75,9 +152,9 @@ export const constantRoutes = [
         meta: { title: 'Tree', icon: 'tree' }
       }
     ]
-  },
+  },*/
 
-  {
+  /*{
     path: '/form',
     component: Layout,
     children: [
@@ -88,9 +165,9 @@ export const constantRoutes = [
         meta: { title: 'Form', icon: 'form' }
       }
     ]
-  },
+  },*/
 
-  {
+ /* {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',

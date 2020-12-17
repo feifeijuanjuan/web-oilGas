@@ -7,13 +7,11 @@
       size="medium"
       element-loading-text="Loading"
       :data="tableData"
-      :height="height"
       border
       fit
       highlight-current-row
       tooltip-effect="dark"
       style="width:100%"
-      :header-cell-style="{background:'#F2F9FF',color:'#333',fontWeight:'400'}"
       @current-change="handleSelectRow"
       @cell-dblclick="handleDbclick"
       @selection-change="handleSelectionChange"
@@ -97,10 +95,6 @@ export default {
     total: {
       type: Number,
       default: 0
-    },
-    height: {
-      type: Number,
-      default: 50
     },
     currentPage: {
       type: Number,

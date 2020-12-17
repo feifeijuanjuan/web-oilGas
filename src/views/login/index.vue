@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
-             label-position="left">
+             label-position="left"
+    >
 
       <div class="title-container">
         <h3 class="title">账号登录</h3>
@@ -43,14 +44,18 @@
       </el-form-item>
       <el-checkbox label="记住密码" v-model="loginForm.checked" class="check-box"></el-checkbox>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                 @click.native.prevent="handleLogin">登录
+                 @click.native.prevent="handleLogin"
+      >登录
       </el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import {validUsername} from '@/utils/validate'
+import { validUsername } from '@/utils/validate'
+import Layout from '@/layout'
+import router from '@/router'
+import store from '@/store'
 
 export default {
   name: 'Login',
@@ -76,8 +81,8 @@ export default {
         checked: false
       },
       loginRules: {
-        username: [{required: true, trigger: 'blur', validator: validateUsername}],
-        password: [{required: true, trigger: 'blur', validator: validatePassword}]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -86,7 +91,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -108,7 +113,95 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({path: this.redirect || '/'})
+            let menus = [
+              {
+                path: '/lianyou',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'lianyou',
+                  name: 'lianyou',
+                  component: () => import('@/views/lianyou/index'),
+                  meta: { title: '炼油厂填报', icon: 'dashboard' }
+                }]
+              },
+              {
+                path: '/meizhiyou',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'meizhiyou',
+                  name: 'meizhiyou',
+                  component: () => import('@/views/meizhiyou/index'),
+                  meta: { title: '煤制油填报', icon: 'dashboard' }
+                }]
+              },
+              {
+                path: '/meizhiqi',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'meizhiqi',
+                  name: 'meizhiqi',
+                  component: () => import('@/views/meizhiqi/index'),
+                  meta: { title: '煤制气填报', icon: 'dashboard' }
+                }]
+              },
+              {
+                path: '/ranqi',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'ranqi',
+                  name: 'ranqi',
+                  component: () => import('@/views/ranqi/index'),
+                  meta: { title: '城市燃气填报', icon: 'dashboard' }
+                }]
+              },
+              {
+                path: '/chenpinyou',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'chenpinyou',
+                  name: 'chenpinyou',
+                  component: () => import('@/views/chenpinyou/index'),
+                  meta: { title: '成品油销售填报', icon: 'dashboard' }
+                }]
+              },
+              {
+                path: '/guandao',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'guandao',
+                  name: 'guandao',
+                  component: () => import('@/views/guandao/index'),
+                  meta: { title: '管道公司填报', icon: 'dashboard' }
+                }]
+              },
+              {
+                path: '/mengshi',
+                component: Layout,
+                redirect: 'noRedirect',
+                children: [{
+                  path: 'mengshi',
+                  name: 'mengshi',
+                  component: () => import('@/views/mengshi/index'),
+                  meta: { title: '盟市填报', icon: 'dashboard' }
+                }]
+              }
+            ]
+            // 最后添加
+            let unfound = { path: '*', redirect: '/404', hidden: true }
+            menus.push(unfound)
+            var router1 = router.options.routes
+            router.addRoutes(menus) //动态挂载路由
+            router.options.routes = router1.concat(menus) //路由合并
+            // 把格式化路由放进VUEX
+           /* store.dispatch('user/addRoutes', menus).then(data => {
+            })*/
+            this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
             this.loading = false
@@ -205,7 +298,8 @@ $light_gray: #eee;
     overflow: hidden;
     background-color: rgba(0, 0, 0, .6);
     box-shadow: 0 0 8px #5a799b;
-    .check-box{
+
+    .check-box {
       margin-bottom: 22px;
       color: #fff;
     }

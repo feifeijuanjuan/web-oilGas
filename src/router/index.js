@@ -42,7 +42,6 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -51,86 +50,20 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: {title: '煤气田填报', icon: 'meiqi'}
+      meta: { title: '煤气田填报', icon: 'meiqi' }
     }]
-  },
-  {
-    path: '/lianyou',
+  }
+/*  {
+    path: '/',
     component: Layout,
     redirect: 'noRedirect',
     children: [{
-      path: 'lianyou',
-      name: 'lianyou',
-      component: () => import('@/views/lianyou/index'),
-      meta: {title: '炼油厂填报', icon: 'dashboard'}
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: '煤气田填报', icon: 'meiqi' }
     }]
-  },
-  {
-    path: '/meizhiyou',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'meizhiyou',
-      name: 'meizhiyou',
-      component: () => import('@/views/meizhiyou/index'),
-      meta: {title: '煤制油填报', icon: 'dashboard'}
-    }]
-  },
-  {
-    path: '/meizhiqi',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'meizhiqi',
-      name: 'meizhiqi',
-      component: () => import('@/views/meizhiqi/index'),
-      meta: {title: '煤制气填报', icon: 'dashboard'}
-    }]
-  },
-  {
-    path: '/ranqi',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'ranqi',
-      name: 'ranqi',
-      component: () => import('@/views/ranqi/index'),
-      meta: {title: '城市燃气填报', icon: 'dashboard'}
-    }]
-  },
-  {
-    path: '/chenpinyou',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'chenpinyou',
-      name: 'chenpinyou',
-      component: () => import('@/views/chenpinyou/index'),
-      meta: {title: '成品油销售填报', icon: 'dashboard'}
-    }]
-  },
-  {
-    path: '/guandao',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'guandao',
-      name: 'guandao',
-      component: () => import('@/views/guandao/index'),
-      meta: {title: '管道公司填报', icon: 'dashboard'}
-    }]
-  },
-  {
-    path: '/mengshi',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'mengshi',
-      name: 'mengshi',
-      component: () => import('@/views/mengshi/index'),
-      meta: {title: '盟市填报', icon: 'dashboard'}
-    }]
-  },
+  },*/
 
   /*{
     path: '/example',
@@ -167,83 +100,83 @@ export const constantRoutes = [
     ]
   },*/
 
- /* {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
+  /* {
+     path: '/nested',
+     component: Layout,
+     redirect: '/nested/menu1',
+     name: 'Nested',
+     meta: {
+       title: 'Nested',
+       icon: 'nested'
+     },
+     children: [
+       {
+         path: 'menu1',
+         component: () => import('@/views/nested/menu1/index'), // Parent router-view
+         name: 'Menu1',
+         meta: { title: 'Menu1' },
+         children: [
+           {
+             path: 'menu1-1',
+             component: () => import('@/views/nested/menu1/menu1-1'),
+             name: 'Menu1-1',
+             meta: { title: 'Menu1-1' }
+           },
+           {
+             path: 'menu1-2',
+             component: () => import('@/views/nested/menu1/menu1-2'),
+             name: 'Menu1-2',
+             meta: { title: 'Menu1-2' },
+             children: [
+               {
+                 path: 'menu1-2-1',
+                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                 name: 'Menu1-2-1',
+                 meta: { title: 'Menu1-2-1' }
+               },
+               {
+                 path: 'menu1-2-2',
+                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                 name: 'Menu1-2-2',
+                 meta: { title: 'Menu1-2-2' }
+               }
+             ]
+           },
+           {
+             path: 'menu1-3',
+             component: () => import('@/views/nested/menu1/menu1-3'),
+             name: 'Menu1-3',
+             meta: { title: 'Menu1-3' }
+           }
+         ]
+       },
+       {
+         path: 'menu2',
+         component: () => import('@/views/nested/menu2/index'),
+         name: 'Menu2',
+         meta: { title: 'menu2' }
+       }
+     ]
+   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },*/
+   {
+     path: 'external-link',
+     component: Layout,
+     children: [
+       {
+         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+         meta: { title: 'External Link', icon: 'link' }
+       }
+     ]
+   },*/
 
   // 404 page must be placed at the end !!!
-  {path: '*', redirect: '/404', hidden: true}
+/*  { path: '*', redirect: '/404', hidden: true }*/
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({y: 0}),
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
@@ -254,5 +187,6 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+
 
 export default router

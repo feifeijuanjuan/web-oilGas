@@ -1,12 +1,15 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
+import Layout from '@/layout'
+import {initMenu} from '@/utils/addMenu'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    setRouters: ''
   }
 }
 
@@ -24,6 +27,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROUTER: (state, setRouters) => {
+    state.setRouters = setRouters
   }
 }
 
@@ -33,7 +39,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+        initMenu()
         commit('SET_TOKEN', response.token)
         setToken(response.token)
         resolve()
@@ -48,7 +54,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       let param = { token: state.token }
       getInfo(param).then(response => {
-        const data= response
+        const data = response
 
         if (!data) {
           return reject('Verification failed, please Login again.')
@@ -59,7 +65,6 @@ const actions = {
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {
-        console.log(122122)
         reject(error)
       })
     })
@@ -85,6 +90,11 @@ const actions = {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
       resolve()
+    })
+  },
+  addRouter({ commit }, menus) {
+    return new Promise((resolve, reject) => {
+      commit('SET_ROUTER', menus)
     })
   }
 }

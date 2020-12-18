@@ -41,17 +41,6 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '煤气田填报', icon: 'meiqi' }
-    }]
   }
 /*  {
     path: '/',

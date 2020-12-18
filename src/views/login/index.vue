@@ -115,9 +115,19 @@ export default {
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             let menus = [
               {
+                path: '/',
+                component: Layout,
+                redirect: 'dashboard',
+                children: [{
+                  path: 'dashboard',
+                  name: 'Dashboard',
+                  component: () => import('@/views/dashboard/index'),
+                  meta: { title: '煤气田填报', icon: 'meiqi' }
+                }]
+              },
+              {
                 path: '/lianyou',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'lianyou',
                   name: 'lianyou',
@@ -128,7 +138,6 @@ export default {
               {
                 path: '/meizhiyou',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'meizhiyou',
                   name: 'meizhiyou',
@@ -139,7 +148,6 @@ export default {
               {
                 path: '/meizhiqi',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'meizhiqi',
                   name: 'meizhiqi',
@@ -150,7 +158,6 @@ export default {
               {
                 path: '/ranqi',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'ranqi',
                   name: 'ranqi',
@@ -161,7 +168,6 @@ export default {
               {
                 path: '/chenpinyou',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'chenpinyou',
                   name: 'chenpinyou',
@@ -172,7 +178,6 @@ export default {
               {
                 path: '/guandao',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'guandao',
                   name: 'guandao',
@@ -183,7 +188,6 @@ export default {
               {
                 path: '/mengshi',
                 component: Layout,
-                redirect: 'noRedirect',
                 children: [{
                   path: 'mengshi',
                   name: 'mengshi',
@@ -201,6 +205,7 @@ export default {
             // 把格式化路由放进VUEX
            /* store.dispatch('user/addRoutes', menus).then(data => {
             })*/
+            console.log(this.redirect)
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {

@@ -6,12 +6,12 @@ import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 import Layout from '@/layout'
-import {initMenu} from '@/utils/addMenu'
+import { initMenu } from '@/utils/addMenu'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
-let flag = true;
+let flag = true
 router.beforeEach(async(to, from, next) => {
   console.log(store.getters.setRouters)
   /*if(flag){
@@ -41,7 +41,6 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
           next()
         } catch (error) {
           // remove token and go to login page to re-login

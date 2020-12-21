@@ -4,7 +4,6 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-console.log(process.env.VUE_APP_API_URL)
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
@@ -16,7 +15,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
+      config.headers['authSid'] = getToken()
     }
     return config
   },
@@ -26,7 +25,7 @@ service.interceptors.request.use(
 )
 
 // response interceptor
-service.interceptors.response.use(
+/*service.interceptors.response.use(
   response => {
     const res = response.data
 
@@ -62,7 +61,7 @@ service.interceptors.response.use(
     })
     return Promise.reject(error)
   }
-)
+)*/
 
 // 封装get方法
 export function get(url, params) {
@@ -81,7 +80,6 @@ export function get(url, params) {
     }).then(res => {
       resolve(res.data)
     }).catch(err => {
-      console.log('get')
       reject(err.data)
     })
   })

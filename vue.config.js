@@ -22,16 +22,16 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js'),
-   /* proxy: {
+    // before: require('./mock/mock-server.js'),
+    proxy: {
       '/api': {
-        target: 'http://140.210.90.86/energy-background/',
+        target: 'http://new2aj.natappfree.cc/oilgas-background',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
         }
       }
-    }*/
+    }
   },
   configureWebpack: {
     name: name,

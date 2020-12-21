@@ -1,14 +1,15 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import Layout from '@/layout'
-import {initMenu} from '@/utils/addMenu'
+import { initMenu } from '@/utils/addMenu'
+import { MessageBox, Message } from 'element-ui'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: '',
+    userId: '',
     setRouters: []
   }
 }
@@ -25,8 +26,8 @@ const mutations = {
   SET_NAME: (state, name) => {
     state.name = name
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_USERID: (state, userId) => {
+    state.userId = userId
   },
   SET_ROUTER: (state, setRouters) => {
     state.setRouters = setRouters
@@ -39,9 +40,21 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        // initMenu()
-        commit('SET_TOKEN', response.token)
-        setToken(response.token)
+        if (response.code === 0) {
+          const { sid, user } = response.body
+          console.log(sid)
+          // initMenu()
+          commit('SET_TOKEN', sid)
+          commit('SET_NAME', user.name)
+          commit('SET_USERID', user.userId)
+          setToken(sid)
+        } else {
+          Message({
+            message: '用户名或密码错误',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
         resolve()
       }).catch(error => {
         reject(error)
@@ -50,7 +63,7 @@ const actions = {
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  /*getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       let param = { token: state.token }
       getInfo(param).then(response => {
@@ -68,7 +81,7 @@ const actions = {
         reject(error)
       })
     })
-  },
+  },*/
 
   // user logout
   logout({ commit, state }) {

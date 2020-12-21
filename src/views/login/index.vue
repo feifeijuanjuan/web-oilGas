@@ -56,6 +56,7 @@ import { validUsername } from '@/utils/validate'
 import Layout from '@/layout'
 import router from '@/router'
 import store from '@/store'
+import { userList } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -81,8 +82,8 @@ export default {
         checked: false
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }]
+        // password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -98,6 +99,11 @@ export default {
     }
   },
   methods: {
+    userList() {
+      userList().then(res => {
+        console.log(res)
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -113,6 +119,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.userList()
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {

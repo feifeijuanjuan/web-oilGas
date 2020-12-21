@@ -47,22 +47,28 @@
     >
     </table-cmp>
     <!--    弹窗-->
-    <gas-field-day-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
-                       :dialogFormVisible="dialogFormVisible"
-                       @func="getMsgDialog"
-    ></gas-field-day-add>
+    <ranqi3-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
+                :dialogFormVisible="dialogFormVisible"
+                @func="getMsgDialog"
+    >
+
+    </ranqi3-add>
 
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldDayAdd from '@/views/guandao/gasFieldDayAdd'
-/*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
-管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
+import ranqi3Add from '@/views/ranqi/ranqi3Add'
+/*企业名称、盟市名称、时间、状态
+已建储气能力(万立方米)
+正在建设储气能力(万立方米)
+待建设储气能力(万立方米)
+城燃企业5%实际储气量
+城燃企业5%计划储气量*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldDayAdd },
+  components: { TableCmp, ranqi3Add },
   data() {
     return {
       expandForm: false,
@@ -71,24 +77,19 @@ export default {
       currentPage: 1,
       pageSize: 50,
       loading: false,
-      fromSearch:{
-        one:''
+      fromSearch: {
+        one: ''
       },
-      tableData: [
-      ],
+      tableData: [],
       tableLabel: [
         { label: '企业名称', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
         { label: '盟市', param: 'laneCode' },
-        { label: '管线名', param: 'laneCode' },
-        { label: '管线进油量', param: 'positionCode' },
-        { label: '管线出油量', param: 'positionCode' },
-        { label: '管线管存量', param: 'positionCode' },
-        { label: '管线累计输油', param: 'laneCode' },
-        { label: '城市燃气接收量', param: 'positionCode' },
-        { label: '甲醇接收量', param: 'positionCode' },
-        { label: '化肥接收量', param: 'positionCode' },
-        { label: 'lng接收气量', param: 'positionCode' }
+        { label: '已建储气能力', param: 'positionCode' },
+        { label: '正在建设储气能力', param: 'positionCode' },
+        { label: '待建设储气能力', param: 'positionCode' },
+        { label: '城燃企业5%实际储气量', param: 'positionCode' },
+        { label: '城燃企业5%计划储气量', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',

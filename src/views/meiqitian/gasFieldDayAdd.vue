@@ -1,19 +1,22 @@
 <template>
   <div>
     <el-dialog :title="dialogStatu==='create'?'新增':'修改'" :visible.sync="dialogFormVisible" width="60%">
-      <el-form :model="editForm" size="small" label-width="110px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
-        管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
+      <el-form :model="editForm" size="small" label-width="160px" class="form-box clearfix">
+        <!--        1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
+                7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
+                12直供甲醇厂日供气量、
+                13直供合成氨日供气量、
+                14直供液化工厂日供气量、15状态-->
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" >
+            <el-form-item label="油气田名称" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" class="no-unit" >
+            <el-form-item label="日期" class="no-unit">
               <el-date-picker
                 v-model="editForm.time"
                 placeholder="请选择日期"
@@ -24,13 +27,34 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" >
+            <el-form-item label="油气田区域类型" class="no-unit">
+              <el-select v-model="editForm.oil" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="油气田区域名称" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="集团标识" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="管线名" class="no-unit" >
+            <el-form-item label="盟市名称" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">
               </el-input>
             </el-form-item>
@@ -38,64 +62,64 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管线进油量">
+            <el-form-item label="天然气日产量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
+                <template slot="append">Nm3</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="管线出油量">
+            <el-form-item label="天然气日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="管线管存量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="管线累计输油">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
+                <template slot="append">Nm3</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="城市燃气接收量">
+            <el-form-item label="天然气计划日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
+                <template slot="append">Nm3</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="甲醇接收量">
+            <el-form-item label="天然气日供气合同量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
+                <template slot="append">Nm3</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="化肥接收量">
+            <el-form-item label="直供管道公司日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
+                <template slot="append">Nm3</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="lng接收气量">
+            <el-form-item label="直供甲醇厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
+                <template slot="append">Nm3</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="直供合成氨日供气量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">Nm3</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="直供液化工厂日供气量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">Nm3</template>
               </el-input>
             </el-form-item>
           </el-col>

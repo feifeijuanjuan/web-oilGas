@@ -5,30 +5,15 @@
         <div class="item search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="管道名" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="管道类型" label-width="120px">
-                <el-select v-model="fromSearch.oil" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-input :model="fromSearch.one"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
+            <el-col :span="8">
+              <el-form-item label="盟市名称" label-width="90px">
+                <el-input :model="fromSearch.one"></el-input>
+              </el-form-item>
+            </el-col>
             <el-col :span="8">
               <el-form-item label="起止日期" label-width="90px">
                 <el-date-picker
@@ -77,10 +62,10 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/guandao/gasFieldMonthAdd'
-/*1管道名、2管道类型、3企业名称、4时间、5区内里程、6运送能力、7管道长度、
-8设计压力、9末站压力阈值、10末站压力实际值、11区内起点、12区内终点、
-13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/
+import gasFieldMonthAdd from '@/views/meizhiqi/gasFieldMonthAdd'
+/*1企业名称、2时间、3盟市名称、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
+7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12煤制气产量、
+13煤制气月供应量、14管道气供应量、15CNG供应量、16LNG供应量、17终端消费量、18化工消费量、19火力发电消费量、20供热消费量、21工业消费量、22生活消费量、23建筑业消费量、24商业消费量、25交通消费量、26调峰煤制气用量、27煤制气计划月供应量、28煤制气消费量、29状态*/
 export default {
   name: 'Dashboard',
   components: { TableCmp, gasFieldMonthAdd },
@@ -91,15 +76,6 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '原油'
-      },
-        {
-          value: '选项2',
-          label: '天然气'
-        }
-      ],
       fromSearch: {
         oil: '',
         time: ''
@@ -107,21 +83,18 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '管道名', param: 'stationCode' },
+        { label: '企业名称', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
-        { label: '管道类型', param: 'laneCode' },
-        { label: '企业名称', param: 'positionCode' },
-        { label: '区内里程', param: 'positionCode' },
-        { label: '运送能力', param: 'positionCode' },
-        { label: '设计压力', param: 'positionCode' },
-        { label: '末站压力阈值', param: 'positionCode' },
-        { label: '末站压力实际值', param: 'positionCode' },
-        { label: '区内起点', param: 'positionCode' },
-        { label: '区内终点', param: 'positionCode' },
-        { label: '设计输气（油）能力', param: 'positionCode' },
-        { label: '实际输气（油）能力', param: 'positionCode' },
-        { label: '管径', param: 'positionCode' },
-        { label: '投产时间', param: 'positionCode' }
+        { label: '计划粉煤月加工量', param: 'laneCode' },
+        { label: '粉煤月加工量', param: 'positionCode' },
+        { label: '平均负荷率', param: 'positionCode' },
+        { label: '水资源用量', param: 'positionCode' },
+        { label: '单位产品原料消耗', param: 'positionCode' },
+        { label: '单位产品综合能耗', param: 'positionCode' },
+        { label: '单位产品新鲜水耗', param: 'positionCode' },
+        { label: '煤制气产量', param: 'positionCode' },
+        { label: '煤制气月供应量', param: 'positionCode' },
+        { label: '管道气供应量', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',
@@ -175,5 +148,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

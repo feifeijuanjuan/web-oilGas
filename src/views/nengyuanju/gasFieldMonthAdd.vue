@@ -1,13 +1,20 @@
 <template>
   <div>
     <el-dialog :title="dialogStatu==='create'?'新增':'修改'" :visible.sync="dialogFormVisible" width="60%">
-      <el-form :model="editForm" size="small" label-width="110px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
-        管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
-
+      <el-form :model="editForm" size="small" label-width="200px" class="form-box clearfix">
+<!--        /*盟市名称、时间
+        盟市储气设施总容积
+        地方政府日均三天计划储气量
+        地方政府日均三天实际储气量
+        盟市租赁储罐数量
+        盟市自建储罐数量
+        天然气历史缺口量
+        盟市储气日调用量
+        盟市气化装置数量
+        盟市气化装置日均气化量*/-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" >
+            <el-form-item label="盟市名称" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">
               </el-input>
             </el-form-item>
@@ -24,60 +31,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" >
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="管线名" class="no-unit" >
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="管线进油量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="管线出油量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="管线管存量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="管线累计输油">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="城市燃气接收量">
+            <el-form-item label="盟市储气设施总容积">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="甲醇接收量">
+            <el-form-item label="地方政府日均三天计划储气量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万立方米</template>
               </el-input>
@@ -86,14 +47,30 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="化肥接收量">
+            <el-form-item label="地方政府日均三天实际储气量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="lng接收气量">
+            <el-form-item label="盟市租赁储罐数量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">个</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="盟市自建储罐数量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="天然气历史缺口量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万立方米</template>
               </el-input>
@@ -102,8 +79,25 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="状态" class="no-unit">
+            <el-form-item label="盟市储气日调用量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="盟市气化装置数量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">个</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="盟市气化装置日均气化量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>

@@ -3,7 +3,7 @@
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
-
+$input-unit-width:60px;
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
@@ -96,6 +96,42 @@ div:focus {
   background-color: #fff;
   border: none;
   white-space: normal;
-  width: 60px;
+  width: $input-unit-width;
 }
-
+.no-unit{
+  .el-input__inner{
+    width: calc(100% - #{$input-unit-width});
+  }
+  .el-select{
+    width: calc(100% - #{$input-unit-width})
+  }
+  .el-select .el-input__inner{
+    width: 100%
+  }
+  /*.el-select .el-input__suffix{
+    right: 39px;
+  }*/
+}
+.el-select{
+  width: 100%;
+}
+.el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner{
+  width: 100%;
+}
+.el-date-editor.el-input, .el-date-editor.el-input__inner{
+  width: 100%;
+}
+.form-box {
+  .item{
+    float: left;
+  }
+  .search-btn{
+    width: 80px;
+    float: left;
+    text-align: right;
+  }
+  .search-input{
+    float: left;
+    width: calc(100% - 80px)
+  }
+}

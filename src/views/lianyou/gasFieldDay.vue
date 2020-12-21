@@ -1,31 +1,33 @@
 <template>
-  <div>
+  <div class="app-container">
     <div class="filter-container">
-      <el-form :model="gasFieldDay" size="small" :inline="true" class="form-box">
-        <el-form-item label="油田">
-          <el-select v-model="gasFieldDay.oil" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="起止日期">
-          <el-date-picker
-            v-model="gasFieldDay.time"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('gasFieldDay')">查询</el-button>
-        </el-form-item>
+      <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
+        <div class="search-input">
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <el-form-item label="企业名称">
+                <el-input :model="fromSearch.one"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="search-btn">
+          <el-form-item label-width="0">
+            <el-button type="primary" @click="submitForm('fromSearch')">查询</el-button>
+          </el-form-item>
+        </div>
       </el-form>
     </div>
     <div>
@@ -55,8 +57,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldDayAdd from '@/views/dashboard/gasFieldDayAdd'
-
+import gasFieldDayAdd from '@/views/lianyou/gasFieldDayAdd'
+/*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/
 export default {
   name: 'Dashboard',
   components: { TableCmp, gasFieldDayAdd },
@@ -67,33 +69,19 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '安塞油田'
-      }],
-      gasFieldDay: {
-        oil: '',
-        time: ''
-      },
       loading: false,
-      tableData: [{
-        stationCode: '伊泰煤制油',
-        baseStationCode: '',
-        laneCode: '',
-        positionCode: ''
+      fromSearch:{
+        one:''
       },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        }
+      tableData: [
       ],
       tableLabel: [
-        { label: '油气田名称', param: 'stationCode' },
-        { label: '天然气日供气量', param: 'baseStationCode' },
-        { label: '天然气日供气合同量', param: 'laneCode' },
-        { label: '时间', param: 'positionCode' }
+        { label: '1企业名称', param: 'stationCode' },
+        { label: '时间', param: 'baseStationCode' },
+        { label: '企业性质', param: 'laneCode' },
+        { label: '税收', param: 'positionCode' },
+        { label: '企业人数', param: 'positionCode' },
+        { label: '状态', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',
@@ -112,7 +100,7 @@ export default {
     fasFieldTable() {
       console.log(12222)
     },
-    getMsgDialog(data){
+    getMsgDialog(data) {
       console.log(data)
       this.dialogFormVisible = data
     },
@@ -146,10 +134,6 @@ export default {
   &-text {
     font-size: 30px;
     line-height: 46px;
-  }
-
-  .form-box {
-    display: flex;
   }
 }
 </style>

@@ -1,19 +1,22 @@
 <template>
   <div>
     <el-dialog :title="dialogStatu==='create'?'新增':'修改'" :visible.sync="dialogFormVisible" width="60%">
-      <el-form :model="editForm" size="small" label-width="110px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
-        管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
-
+      <el-form :model="editForm" size="small" label-width="140px" class="form-box clearfix">
+        <!--        1企业名称、2时间、3盟市名称、
+                89#汽油销售量、92#汽油销售量、95#汽油销售量、
+                0#柴油销售量、负35#柴油销售量、负10#柴油销售量、负20#柴油销费量、
+                煤油销费量、
+                柴油消费量预测值、汽油消费量预测、
+                成品油区内消费量、成品油区外消费量-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" >
+            <el-form-item label="企业名称" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" class="no-unit" >
+            <el-form-item label="日期" class="no-unit">
               <el-date-picker
                 v-model="editForm.time"
                 placeholder="请选择日期"
@@ -24,28 +27,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" >
+            <el-form-item label="盟市名称" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="管线名" class="no-unit" >
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="管线进油量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="管线出油量">
+            <el-form-item label="89#汽油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万吨</template>
               </el-input>
@@ -54,14 +42,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管线管存量">
+            <el-form-item label="92#汽油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="管线累计输油">
+            <el-form-item label="95#汽油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
                 <template slot="append">万吨</template>
               </el-input>
@@ -70,40 +58,73 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="城市燃气接收量">
+            <el-form-item label="0#柴油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
+                <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="甲醇接收量">
+            <el-form-item label="负35#柴油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="化肥接收量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="lng接收气量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
+                <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="状态" class="no-unit">
+            <el-form-item label="负10#柴油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="负20#柴油销费量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="煤油销费量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="柴油消费量预测值">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="汽油消费量预测">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成品油区内消费量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="成品油区外消费量">
+              <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>

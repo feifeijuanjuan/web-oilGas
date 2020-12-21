@@ -47,22 +47,22 @@
     >
     </table-cmp>
     <!--    弹窗-->
-    <gas-field-day-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
-                       :dialogFormVisible="dialogFormVisible"
-                       @func="getMsgDialog"
-    ></gas-field-day-add>
+    <chenpinyou3-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
+                     :dialogFormVisible="dialogFormVisible"
+                     @func="getMsgDialog"
+    >
+    </chenpinyou3-add>
 
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldDayAdd from '@/views/guandao/gasFieldDayAdd'
-/*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
-管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
+import chenpinyou3Add from '@/views/chenpinyou/chenpinyou3Add'
+/*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldDayAdd },
+  components: { TableCmp, chenpinyou3Add },
   data() {
     return {
       expandForm: false,
@@ -71,24 +71,17 @@ export default {
       currentPage: 1,
       pageSize: 50,
       loading: false,
-      fromSearch:{
-        one:''
+      fromSearch: {
+        one: ''
       },
-      tableData: [
-      ],
+      tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode' },
+        { label: '1企业名称', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
-        { label: '盟市', param: 'laneCode' },
-        { label: '管线名', param: 'laneCode' },
-        { label: '管线进油量', param: 'positionCode' },
-        { label: '管线出油量', param: 'positionCode' },
-        { label: '管线管存量', param: 'positionCode' },
-        { label: '管线累计输油', param: 'laneCode' },
-        { label: '城市燃气接收量', param: 'positionCode' },
-        { label: '甲醇接收量', param: 'positionCode' },
-        { label: '化肥接收量', param: 'positionCode' },
-        { label: 'lng接收气量', param: 'positionCode' }
+        { label: '企业性质', param: 'laneCode' },
+        { label: '税收', param: 'positionCode' },
+        { label: '企业人数', param: 'positionCode' },
+        { label: '状态', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',

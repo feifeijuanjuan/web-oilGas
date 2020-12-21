@@ -5,30 +5,10 @@
         <div class="item search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="管道名" label-width="90px">
+              <el-form-item label="盟市名称" label-width="90px">
                 <el-input :model="fromSearch.one"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="管道类型" label-width="120px">
-                <el-select v-model="fromSearch.oil" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="起止日期" label-width="90px">
                 <el-date-picker
@@ -77,10 +57,17 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/guandao/gasFieldMonthAdd'
-/*1管道名、2管道类型、3企业名称、4时间、5区内里程、6运送能力、7管道长度、
-8设计压力、9末站压力阈值、10末站压力实际值、11区内起点、12区内终点、
-13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/
+import gasFieldMonthAdd from '@/views/nengyuanju/gasFieldMonthAdd'
+/*盟市名称、时间
+盟市储气设施总容积
+地方政府日均三天计划储气量
+地方政府日均三天实际储气量
+盟市租赁储罐数量
+盟市自建储罐数量
+天然气历史缺口量
+盟市储气日调用量
+盟市气化装置数量
+盟市气化装置日均气化量*/
 export default {
   name: 'Dashboard',
   components: { TableCmp, gasFieldMonthAdd },
@@ -107,21 +94,17 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '管道名', param: 'stationCode' },
+        { label: '盟市', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
-        { label: '管道类型', param: 'laneCode' },
-        { label: '企业名称', param: 'positionCode' },
-        { label: '区内里程', param: 'positionCode' },
-        { label: '运送能力', param: 'positionCode' },
-        { label: '设计压力', param: 'positionCode' },
-        { label: '末站压力阈值', param: 'positionCode' },
-        { label: '末站压力实际值', param: 'positionCode' },
-        { label: '区内起点', param: 'positionCode' },
-        { label: '区内终点', param: 'positionCode' },
-        { label: '设计输气（油）能力', param: 'positionCode' },
-        { label: '实际输气（油）能力', param: 'positionCode' },
-        { label: '管径', param: 'positionCode' },
-        { label: '投产时间', param: 'positionCode' }
+        { label: '盟市储气设施总容积', param: 'laneCode' },
+        { label: '地方政府日均三天计划储气量', param: 'positionCode' },
+        { label: '地方政府日均三天实际储气量', param: 'positionCode' },
+        { label: '盟市租赁储罐数量', param: 'positionCode' },
+        { label: '盟市自建储罐数量', param: 'positionCode' },
+        { label: '天然气历史缺口量', param: 'positionCode' },
+        { label: '盟市储气日调用量', param: 'positionCode' },
+        { label: '盟市气化装置数量', param: 'positionCode' },
+        { label: '盟市气化装置日均气化量', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',

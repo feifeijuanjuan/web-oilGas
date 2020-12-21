@@ -2,18 +2,30 @@ import Layout from '@/layout'
 import router from '@/router'
 import store from '@/store'
 
+/*
 export const initMenu = (() => {
-  let menus = [
+  let menu = [
     {
       path: '/',
       component: Layout,
       redirect: 'dashboard',
+      meta: {
+        title: '煤气田企业填报',
+        icon: 'nested'
+      },
       children: [{
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: '煤气田填报', icon: 'meiqi' }
-      }]
+        path: 'gasFieldDay',
+        name: 'gasFieldDay',
+        component: () => import('@/views/meiqitian/gasFieldDay'),
+        meta: { title: '按日填报', icon: 'meiqi' }
+      },
+        {
+          path: 'gasFieldMonth',
+          name: 'gasFieldMonth',
+          component: () => import('@/views/meiqitian/gasFieldMonth'),
+          meta: { title: '按月填报', icon: 'meiqi' }
+        }
+      ]
     },
     {
       path: '/lianyou',
@@ -87,12 +99,13 @@ export const initMenu = (() => {
     }
   ]
   // 最后添加
-  let unfound = { path: '*', redirect: '/404', hidden: true }
-  menus.push(unfound)
+  const unfound = { path: '*', redirect: '/404', hidden: true }
+  menu.push(unfound)
   var router1 = router.options.routes
-  router.addRoutes(menus) //动态挂载路由
-  router.options.routes = router1.concat(menus) //路由合并
+  router.addRoutes(menu) //动态挂载路由
+  router.options.routes = router1.concat(menu) //路由合并
   // 把格式化路由放进VUEX
-  store.dispatch('user/addRouter', menus).then(data => {
+  store.dispatch('user/addRouter', menu).then(data => {
   })
 })
+*/

@@ -5,30 +5,15 @@
         <div class="item search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="管道名" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="管道类型" label-width="120px">
-                <el-select v-model="fromSearch.oil" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-input :model="fromSearch.one"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
+            <el-col :span="8">
+              <el-form-item label="盟市名称" label-width="90px">
+                <el-input :model="fromSearch.one"></el-input>
+              </el-form-item>
+            </el-col>
             <el-col :span="8">
               <el-form-item label="起止日期" label-width="90px">
                 <el-date-picker
@@ -77,10 +62,11 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/guandao/gasFieldMonthAdd'
-/*1管道名、2管道类型、3企业名称、4时间、5区内里程、6运送能力、7管道长度、
-8设计压力、9末站压力阈值、10末站压力实际值、11区内起点、12区内终点、
-13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/
+import gasFieldMonthAdd from '@/views/meizhiyou/gasFieldMonthAdd'
+/*1企业名称、2时间、3状态、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
+7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12石脑油产量、
+13柴油产量、14液化气产量、15干气产量、16石脑油供应量、17柴油供应量、18液化气供应量、19干气供应量、20石脑油销售量、21柴油销售量、22液化气销售量、23干气销售量、24汽运供应量、25管输供应量、26工程车辆销售量、27城市交通销售量、28工业销售量、乙烯原料销售量、调合汽油销售量、重整原料销售量、原料煤价格、煤制油品价格、呼和浩特市销售量、包头市销售量、乌海市销售量、赤峰市销售量、通辽市销售量、鄂尔多斯市销售量、
+呼伦贝尔市销售量、巴彦淖尔市销售量、乌兰察布市销售量、锡林格勒盟销售量、阿拉善盟销售量、兴安盟销售量、煤制油月产量（万吨）、计划煤制油月产量（万吨）、*/
 export default {
   name: 'Dashboard',
   components: { TableCmp, gasFieldMonthAdd },
@@ -91,15 +77,6 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '原油'
-      },
-        {
-          value: '选项2',
-          label: '天然气'
-        }
-      ],
       fromSearch: {
         oil: '',
         time: ''
@@ -107,21 +84,17 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '管道名', param: 'stationCode' },
+        { label: '企业名称', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
-        { label: '管道类型', param: 'laneCode' },
-        { label: '企业名称', param: 'positionCode' },
-        { label: '区内里程', param: 'positionCode' },
-        { label: '运送能力', param: 'positionCode' },
-        { label: '设计压力', param: 'positionCode' },
-        { label: '末站压力阈值', param: 'positionCode' },
-        { label: '末站压力实际值', param: 'positionCode' },
-        { label: '区内起点', param: 'positionCode' },
-        { label: '区内终点', param: 'positionCode' },
-        { label: '设计输气（油）能力', param: 'positionCode' },
-        { label: '实际输气（油）能力', param: 'positionCode' },
-        { label: '管径', param: 'positionCode' },
-        { label: '投产时间', param: 'positionCode' }
+        { label: '粉煤月加工量(万吨)', param: 'positionCode' },
+        { label: '平均负荷率', param: 'positionCode' },
+        { label: '水资源用量(万吨)', param: 'positionCode' },
+        { label: '单位产品原料消耗', param: 'positionCode' },
+        { label: '单位产品综合能耗', param: 'positionCode' },
+        { label: '单位产品新鲜水耗', param: 'positionCode' },
+        { label: '石脑油产量', param: 'positionCode' },
+        { label: '柴油产量', param: 'positionCode' },
+        { label: '液化气产量', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',
@@ -175,5 +148,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

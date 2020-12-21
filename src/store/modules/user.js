@@ -9,7 +9,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    setRouters: ''
+    setRouters: []
   }
 }
 
@@ -39,7 +39,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        initMenu()
+        // initMenu()
         commit('SET_TOKEN', response.token)
         setToken(response.token)
         resolve()
@@ -95,6 +95,7 @@ const actions = {
   addRouter({ commit }, menus) {
     return new Promise((resolve, reject) => {
       commit('SET_ROUTER', menus)
+      resolve(menus)
     })
   }
 }

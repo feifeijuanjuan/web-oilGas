@@ -4,6 +4,7 @@ import router, { resetRouter } from '@/router'
 import Layout from '@/layout'
 import { initMenu } from '@/utils/addMenu'
 import { MessageBox, Message } from 'element-ui'
+import store from '@/store'
 
 const getDefaultState = () => {
   return {
@@ -48,7 +49,7 @@ const actions = {
           setToken(sid)
           userList().then(res => {
             initMenu(res.body)
-            router.push({ path: this.redirect || router.options.routes[2].children[0].path })
+            router.push({ path: this.redirect || store.getters.setRouters[0].children[0].path })
             this.loading = false
           })
         } else {

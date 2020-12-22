@@ -7,6 +7,7 @@
       size="medium"
       element-loading-text="Loading"
       :data="tableData"
+      :stripe="true"
       border
       fit
       highlight-current-row

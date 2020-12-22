@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-dialog :title="dialogStatu==='create'?'新增':'修改'" :visible.sync="dialogFormVisible" width="60%">
+  <div class="app-container">
+    <h3 style="border-bottom: 1px solid #f7f7f7;font-weight: normal;padding-bottom: 10px">修改</h3>
       <el-form :model="editForm" size="small" label-width="160px" class="form-box clearfix">
         <!--        1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
                 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
@@ -133,12 +133,11 @@
           </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div class="text-center" style="margin-top: 30px">
         <el-button @click="close">取 消</el-button>
         <el-button type="primary" @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
         </el-button>
       </div>
-    </el-dialog>
   </div>
 
 </template>
@@ -179,7 +178,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('func', false)
+      this.$router.push('/youqitian/dayList')
     },
     createData() {
       this.$emit('func', false)
@@ -194,5 +193,7 @@ export default {
 </script>
 
 <style scoped>
-
+.text-center{
+  text-align: center;
+}
 </style>

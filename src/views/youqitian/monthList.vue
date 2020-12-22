@@ -23,13 +23,6 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="盟市名称" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="8">
               <el-form-item label="起止日期" label-width="90px">
                 <el-date-picker
                   v-model="fromSearch.time"
@@ -77,7 +70,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/meiqitian/gasFieldMonthAdd'
+import gasFieldMonthAdd from '@/views/youqitian/monthAdd'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
 13月产能、14综合能源消费量、15状态*/

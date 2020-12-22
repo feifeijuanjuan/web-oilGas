@@ -62,7 +62,7 @@ export const handleMenu = ((menu) => {
             path: item.href,
             name: item.name,
             component: resolve => require([`@/views${item.href}`], resolve),
-            meta: { title: item.name, icon: item.icon }
+            meta: { title: item.name, icon: 'dashboard'  }
           }
           ]
         }
@@ -75,7 +75,7 @@ export const handleMenu = ((menu) => {
             path: i.href,
             name: i.name,
             component: resolve => require([`@/views${i.href}`], resolve),
-            meta: { title: i.name, icon: i.icon }
+            meta: { title: i.name, icon: 'dashboard'}
           }
         )
       })

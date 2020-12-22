@@ -42,6 +42,30 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
+  //油气田按日填报新增
+  {
+    path: '/dayAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/dayAdd',
+        component: () => import('@/views/youqitian/dayAdd')
+      }
+    ]
+  },
+  {
+    path: '/monthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/monthAdd',
+        component: () => import('@/views/youqitian/monthAdd')
+      }
+    ]
+  }
+
   /*  {
       path: '/',
       component: Layout,
@@ -178,155 +202,155 @@ export const constantRoutes = [
       }
     ]
   },*/
-/*  {
-    path: '/guotuziyuan',
-    component: Layout,
-    children: [
-      {
-        path: 'guotuziyuan',
-        name: 'guotuziyuan',
-        component: () => import('@/views/guotuziyuan/index'),
-        meta: { title: '国土资源厅按年填报', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/meizhiqi',
-    component: Layout,
-    meta: { title: '煤制气填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'gasMonth',
-        name: 'gasMonth',
-        component: () => import('@/views/meizhiqi/gasFieldMonth'),
-        meta: { title: '按月填报', icon: 'dashboard' }
-      },
-      {
-        path: 'gasDay',
-        name: 'gasDay',
-        component: () => import('@/views/meizhiqi/gasFieldDay'),
-        meta: { title: '企业信息填报', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/meizhiyou',
-    component: Layout,
-    meta: { title: '煤制油填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'gasMonth',
-        name: 'gasMonth',
-        component: () => import('@/views/meizhiyou/gasFieldMonth'),
-        meta: { title: '按月填报', icon: 'dashboard' }
-      },
-      {
-        path: 'gasDay',
-        name: 'gasDay',
-        component: () => import('@/views/meizhiyou/gasFieldDay'),
-        meta: { title: '企业信息填报', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/chenpinyou',
-    component: Layout,
-    meta: { title: '成品油销售企业填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'chenpinyou1',
-        name: 'chenpinyou1',
-        component: () => import('@/views/chenpinyou/chenpinyou1'),
-        meta: { title: '库存按月填报', icon: 'dashboard' }
-      },
-      {
-        path: 'chenpinyou2',
-        name: 'chenpinyou2',
-        component: () => import('@/views/chenpinyou/chenpinyou2'),
-        meta: { title: '销售按月填报', icon: 'dashboard' }
-      },
-      {
-        path: 'chenpinyou3',
-        name: 'chenpinyou3',
-        component: () => import('@/views/chenpinyou/chenpinyou3'),
-        meta: { title: '企业信息填报', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/lianyou',
-    component: Layout,
-    meta: { title: '炼油厂填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'gasFieldMonth',
-        name: 'gasFieldMonth',
-        component: () => import('@/views/lianyou/gasFieldMonth'),
-        meta: { title: '按月填报', icon: 'dashboard' }
-      },
-      {
-        path: 'gasFieldDay',
-        name: 'gasFieldDay',
-        component: () => import('@/views/lianyou/gasFieldDay'),
-        meta: { title: '企业信息填报', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/guandao',
-    component: Layout,
-    meta: { title: '管道企业填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'gasFieldDay',
-        name: 'gasFieldDay',
-        component: () => import('@/views/guandao/gasFieldDay'),
-        meta: { title: '按日填报', icon: 'dashboard' }
-      },
-      {
-        path: 'gasFieldMonth',
-        name: 'gasFieldMonth',
-        component: () => import('@/views/guandao/gasFieldMonth'),
-        meta: { title: '管道信息按月填报', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
-    path: '/ranqi',
-    component: Layout,
-    meta: { title: '城市燃气企业填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'ranqi1',
-        name: 'ranqi1',
-        component: () => import('@/views/ranqi/ranqi1'),
-        meta: { title: '按日填报', icon: 'dashboard' }
-      },
-      {
-        path: 'ranqi2',
-        name: 'ranqi2',
-        component: () => import('@/views/ranqi/ranqi2'),
-        meta: { title: '调峰按日填报', icon: 'dashboard' }
-      },
-      {
-        path: 'ranqi3',
-        name: 'ranqi3',
-        component: () => import('@/views/ranqi/ranqi3'),
-        meta: { title: '按年填报', icon: 'dashboard' }
-      }
-    ]
-  },
+  /*  {
+      path: '/guotuziyuan',
+      component: Layout,
+      children: [
+        {
+          path: 'guotuziyuan',
+          name: 'guotuziyuan',
+          component: () => import('@/views/guotuziyuan/index'),
+          meta: { title: '国土资源厅按年填报', icon: 'dashboard' }
+        }
+      ]
+    },
+    {
+      path: '/meizhiqi',
+      component: Layout,
+      meta: { title: '煤制气填报', icon: 'dashboard' },
+      children: [
+        {
+          path: 'gasMonth',
+          name: 'gasMonth',
+          component: () => import('@/views/meizhiqi/gasFieldMonth'),
+          meta: { title: '按月填报', icon: 'dashboard' }
+        },
+        {
+          path: 'gasDay',
+          name: 'gasDay',
+          component: () => import('@/views/meizhiqi/gasFieldDay'),
+          meta: { title: '企业信息填报', icon: 'dashboard' }
+        }
+      ]
+    },
+    {
+      path: '/meizhiyou',
+      component: Layout,
+      meta: { title: '煤制油填报', icon: 'dashboard' },
+      children: [
+        {
+          path: 'gasMonth',
+          name: 'gasMonth',
+          component: () => import('@/views/meizhiyou/gasFieldMonth'),
+          meta: { title: '按月填报', icon: 'dashboard' }
+        },
+        {
+          path: 'gasDay',
+          name: 'gasDay',
+          component: () => import('@/views/meizhiyou/gasFieldDay'),
+          meta: { title: '企业信息填报', icon: 'dashboard' }
+        }
+      ]
+    },
+    {
+      path: '/chenpinyou',
+      component: Layout,
+      meta: { title: '成品油销售企业填报', icon: 'dashboard' },
+      children: [
+        {
+          path: 'chenpinyou1',
+          name: 'chenpinyou1',
+          component: () => import('@/views/chenpinyou/chenpinyou1'),
+          meta: { title: '库存按月填报', icon: 'dashboard' }
+        },
+        {
+          path: 'chenpinyou2',
+          name: 'chenpinyou2',
+          component: () => import('@/views/chenpinyou/chenpinyou2'),
+          meta: { title: '销售按月填报', icon: 'dashboard' }
+        },
+        {
+          path: 'chenpinyou3',
+          name: 'chenpinyou3',
+          component: () => import('@/views/chenpinyou/chenpinyou3'),
+          meta: { title: '企业信息填报', icon: 'dashboard' }
+        }
+      ]
+    },
+    {
+      path: '/lianyou',
+      component: Layout,
+      meta: { title: '炼油厂填报', icon: 'dashboard' },
+      children: [
+        {
+          path: 'gasFieldMonth',
+          name: 'gasFieldMonth',
+          component: () => import('@/views/lianyou/gasFieldMonth'),
+          meta: { title: '按月填报', icon: 'dashboard' }
+        },
+        {
+          path: 'gasFieldDay',
+          name: 'gasFieldDay',
+          component: () => import('@/views/lianyou/gasFieldDay'),
+          meta: { title: '企业信息填报', icon: 'dashboard' }
+        }
+      ]
+    },
+    {
+      path: '/guandao',
+      component: Layout,
+      meta: { title: '管道企业填报', icon: 'dashboard' },
+      children: [
+        {
+          path: 'gasFieldDay',
+          name: 'gasFieldDay',
+          component: () => import('@/views/guandao/gasFieldDay'),
+          meta: { title: '按日填报', icon: 'dashboard' }
+        },
+        {
+          path: 'gasFieldMonth',
+          name: 'gasFieldMonth',
+          component: () => import('@/views/guandao/gasFieldMonth'),
+          meta: { title: '管道信息按月填报', icon: 'dashboard' }
+        }
+      ]
+    },
+    {
+      path: '/ranqi',
+      component: Layout,
+      meta: { title: '城市燃气企业填报', icon: 'dashboard' },
+      children: [
+        {
+          path: 'ranqi1',
+          name: 'ranqi1',
+          component: () => import('@/views/ranqi/ranqi1'),
+          meta: { title: '按日填报', icon: 'dashboard' }
+        },
+        {
+          path: 'ranqi2',
+          name: 'ranqi2',
+          component: () => import('@/views/ranqi/ranqi2'),
+          meta: { title: '调峰按日填报', icon: 'dashboard' }
+        },
+        {
+          path: 'ranqi3',
+          name: 'ranqi3',
+          component: () => import('@/views/ranqi/ranqi3'),
+          meta: { title: '按年填报', icon: 'dashboard' }
+        }
+      ]
+    },
 
-  {
-    path: '/nengyuanju',
-    component: Layout,
-    children: [{
-      path: 'nengyuanju',
-      name: 'nengyuanju',
-      component: () => import('@/views/nengyuanju/gasFieldMonth'),
-      meta: { title: '能源局按年填报', icon: 'dashboard' }
-    }]
-  },*/
+    {
+      path: '/nengyuanju',
+      component: Layout,
+      children: [{
+        path: 'nengyuanju',
+        name: 'nengyuanju',
+        component: () => import('@/views/nengyuanju/gasFieldMonth'),
+        meta: { title: '能源局按年填报', icon: 'dashboard' }
+      }]
+    },*/
   // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]

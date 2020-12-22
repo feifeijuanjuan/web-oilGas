@@ -10,11 +10,6 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="盟市名称">
-                <el-input :model="fromSearch.one"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
@@ -24,6 +19,19 @@
                   end-placeholder="结束日期"
                 >
                 </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="状态">
+                <el-select v-model="fromSearch.oil" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -51,22 +59,26 @@
       @handleSizeChange="handleSizeChange"
     >
     </table-cmp>
-    <!--    弹窗-->
+<!--    &lt;!&ndash;    弹窗&ndash;&gt;
     <gas-field-day-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
                        :dialogFormVisible="dialogFormVisible"
                        @func="getMsgDialog"
-    ></gas-field-day-add>
+    ></gas-field-day-add>-->
 
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldDayAdd from '@/views/meiqitian/gasFieldDayAdd'
-
+// import gasFieldDayAdd from '@/views/youqitian/dayAdd'
+/*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
+7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
+12直供甲醇厂日供气量、
+13直供合成氨日供气量、
+14直供液化工厂日供气量、15状态*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldDayAdd },
+  components: { TableCmp },
   data() {
     return {
       expandForm: false,
@@ -74,10 +86,20 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
+      options: [
+        {
+          value: '',
+          label: '全部'
+        },
+        {
         value: '选项1',
-        label: '安塞油田'
-      }],
+        label: '冻结'
+      },
+        {
+          value: '选项2',
+          label: '启用'
+        }
+      ],
       fromSearch: {
         oil: '',
         time: ''
@@ -94,17 +116,48 @@ export default {
           baseStationCode: '',
           laneCode: '',
           positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
         }
       ],
       tableLabel: [
-        { label: '油气田名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '天然气日供气量(万立方)', param: 'laneCode' },
-        { label: '天然气日供气合同量(万立方)', param: 'positionCode' },
-        { label: '直供管道公司日供气量(万立方)', param: 'positionCode' },
-        { label: '直供甲醛日供气量(万立方)', param: 'positionCode' },
-        { label: '直供合成氨日供气量(万立方)', param: 'positionCode' },
-        { label: '直供液化工厂日供气量(万立方)', param: 'positionCode' }
+        { label: '油气田名称', param: 'stationCode', minWidth: '150' },
+        { label: '时间', param: 'baseStationCode', minWidth: '150' },
+        { label: '油气田区域类型', param: 'baseStationCode', minWidth: '180' },
+        { label: '油气田区域名称', param: 'baseStationCode', minWidth: '180' },
+        { label: '集团标识', param: 'baseStationCode', minWidth: '180' },
+        { label: '盟市名称', param: 'baseStationCode', minWidth: '180' },
+        { label: '天然气日产量(万立方米)', param: 'laneCode', minWidth: '180' },
+        { label: '天然气日供气量(万立方米)', param: 'laneCode', minWidth: '180' },
+        { label: '天然气计划日供气量(万立方米)', param: 'laneCode', minWidth: '180' },
+        { label: '天然气日供气合同量(万立方米)', param: 'positionCode', minWidth: '180' },
+        { label: '直供管道公司日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
+        { label: '直供甲醛厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
+        { label: '直供合成氨日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
+        { label: '直供液化工厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
+        { label: '状态', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',
@@ -141,8 +194,7 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      this.$router.push('/dayAdd')
     }
   }
 }

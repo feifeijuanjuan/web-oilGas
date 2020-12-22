@@ -18,7 +18,7 @@ router.beforeEach(async(to, from, next) => {
   if (flag) {
     flag = false//必须在creatnewrouter() 执行
     userList().then(res => {
-      if(res.body){
+      if (res.body) {
         initMenu(res.body)
         next({ ...to, replace: true })
       }
@@ -35,7 +35,7 @@ router.beforeEach(async(to, from, next) => {
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      next({ path: '/' })
+      next({ path: store.getters.setRouters[0].children[0].path })
       NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.name

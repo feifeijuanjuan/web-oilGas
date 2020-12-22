@@ -48,7 +48,7 @@ const actions = {
           setToken(sid)
           userList().then(res => {
             initMenu(res.body)
-            router.push({ path: this.redirect || router.options.routes[2].children.length===1?router.options.routes[2].path:router.options.routes[2].path+router.options.routes[2].children(0).path })
+            router.push({ path: this.redirect || router.options.routes[2].children[0].path })
             this.loading = false
           })
         } else {

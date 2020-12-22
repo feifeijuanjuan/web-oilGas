@@ -6,20 +6,22 @@ import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 import Layout from '@/layout'
-import { initMenu } from '@/utils/addMenu'
+import { initMenu, permissonMenu } from '@/utils/addMenu'
+import { userList } from '@/api/user'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 let flag = true
 router.beforeEach(async(to, from, next) => {
-  console.log(store.getters.setRouters)
-  /*if(flag){
-    flag = false;//必须在creatnewrouter() 执行
-   initMenu()
-    next({...to, replace: true})// 必不可少的，确保你的动态路由创建成功再去执行其它代码
-    console.log(router)
-  }*/
+  console.log(store.getters.setRouters.length)
+  if (flag) {
+    flag = false//必须在creatnewrouter() 执行
+    userList().then(res => {
+      initMenu(res.body)
+      next({ ...to, replace: true })
+    })
+  }
   // start progress bar
   NProgress.start()
 

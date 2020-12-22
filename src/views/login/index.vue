@@ -57,6 +57,7 @@ import Layout from '@/layout'
 import router from '@/router'
 import store from '@/store'
 import { userList } from '@/api/user'
+import {initMenu,filterMenu,handleMenu} from '@/utils/addMenu'
 
 export default {
   name: 'Login',
@@ -99,11 +100,6 @@ export default {
     }
   },
   methods: {
-    userList() {
-      userList().then(res => {
-        console.log(res)
-      })
-    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -119,9 +115,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.userList()
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
+           /* this.$router.push({ path: this.redirect || '/' })
+            this.loading = false*/
           }).catch(() => {
             this.loading = false
           })

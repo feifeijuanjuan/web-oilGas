@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/user'
+import { login, logout,userList } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import Layout from '@/layout'
@@ -42,12 +42,15 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         if (response.code === 0) {
           const { sid, user } = response.body
-          console.log(sid)
-          // initMenu()
           commit('SET_TOKEN', sid)
           commit('SET_NAME', user.name)
           commit('SET_USERID', user.userId)
           setToken(sid)
+          userList().then(res => {
+            initMenu(res.body)
+            router.push({ path: this.redirect || '/' })
+            this.loading = false
+          })
         } else {
           Message({
             message: '用户名或密码错误',
@@ -62,26 +65,7 @@ const actions = {
     })
   },
 
-  // get user info
-  /*getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      let param = { token: state.token }
-      getInfo(param).then(response => {
-        const data = response
 
-        if (!data) {
-          return reject('Verification failed, please Login again.')
-        }
-
-        const { name, avatar } = data
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },*/
 
   // user logout
   logout({ commit, state }) {

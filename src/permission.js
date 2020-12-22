@@ -14,12 +14,14 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login'] // no redirect whitelist
 let flag = true
 router.beforeEach(async(to, from, next) => {
-  console.log(store.getters.setRouters.length)
+  const hasToken = getToken()
   if (flag) {
     flag = false//必须在creatnewrouter() 执行
     userList().then(res => {
-      initMenu(res.body)
-      next({ ...to, replace: true })
+      if(res.body){
+        initMenu(res.body)
+        next({ ...to, replace: true })
+      }
     })
   }
   // start progress bar
@@ -29,7 +31,6 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
-  const hasToken = getToken()
 
   if (hasToken) {
     if (to.path === '/login') {

@@ -13,13 +13,6 @@ export const initMenu = ((menu) => {
   store.dispatch('user/addRouter', filterMenu).then(data => {
   })
 })
-export const permissonMenu = ((menu) => {
-  const filterMenu = menu
-  var router1 = router.options.routes
-  router.addRoutes(filterMenu) //动态挂载路由
-  router.options.routes = router1.concat(filterMenu) //路由合并
-  console.log(router.options.routes)
-})
 
 export const filterMenu = ((menu) => {
   const result = []

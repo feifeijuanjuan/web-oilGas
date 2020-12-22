@@ -159,7 +159,7 @@ export const constantRoutes = [
      ]
    },*/
 
-  {
+  /*{
     path: '/',
     component: Layout,
     meta: { title: '煤气田企业填报', icon: 'dashboard' },
@@ -177,7 +177,7 @@ export const constantRoutes = [
         meta: { title: '按月填报', icon: 'dashboard' }
       }
     ]
-  },
+  },*/
 /*  {
     path: '/guotuziyuan',
     component: Layout,

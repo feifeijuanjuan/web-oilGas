@@ -87,6 +87,27 @@ export function get(url, params) {
   })
 }
 
+
+/**
+ * 以RequestParams的形式传递参数
+ * @param {} url
+ * @param {*} data
+ */
+export function postParams(url, data) {
+  return new Promise((resolve, reject) => {
+    service({
+      method: 'post',
+      url: url,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: QS.stringify(data)
+    }).then(response => {
+      resolve(response)
+    }).catch(error => {
+      reject(error)
+    })
+  })
+}
+
 // post方法封装
 export function post(url, params) {
   return new Promise((resolve, reject) => {
@@ -101,6 +122,20 @@ export function post(url, params) {
       })
       .catch(err => {
         reject(err.data)
+      })
+  })
+}
+
+export function deletefn(url, params) {
+  return new Promise((resolve, reject) => {
+    service.delete(url, {
+      params: params
+    }).then(res => {
+      resolve(res.data)
+    })
+      .catch(err => {
+        reject(err.data)
+        Message({ message: '加载失败', type: 'error' })
       })
   })
 }

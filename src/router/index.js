@@ -50,7 +50,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/dayAdd',
-        component: () => import('@/views/youqitian/dayAdd')
+        component: () => import('@/views/oilgasday/dayAdd')
       }
     ]
   },
@@ -64,9 +64,9 @@ export const constantRoutes = [
         component: () => import('@/views/youqitian/monthAdd')
       }
     ]
-  }
+  },
 
-  /*  {
+   /* {
       path: '/',
       component: Layout,
       redirect: 'noRedirect',
@@ -183,26 +183,7 @@ export const constantRoutes = [
      ]
    },*/
 
-  /*{
-    path: '/',
-    component: Layout,
-    meta: { title: '煤气田企业填报', icon: 'dashboard' },
-    children: [
-      {
-        path: 'gasDay',
-        name: 'gasDay',
-        component: () => import('@/views/meiqitian/gasFieldDay'),
-        meta: { title: '按日填报', icon: 'dashboard' }
-      },
-      {
-        path: 'gasMonth',
-        name: 'gasMonth',
-        component: () => import('@/views/meiqitian/gasFieldMonth'),
-        meta: { title: '按月填报', icon: 'dashboard' }
-      }
-    ]
-  },*/
-  /*  {
+   /* {
       path: '/guotuziyuan',
       component: Layout,
       children: [

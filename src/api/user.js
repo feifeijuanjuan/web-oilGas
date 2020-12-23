@@ -1,4 +1,3 @@
-import request from '@/utils/request'
 import { get, post } from '@/utils/request'
 // 登录
 export const login = params => post(`/LoginController/login`, params)

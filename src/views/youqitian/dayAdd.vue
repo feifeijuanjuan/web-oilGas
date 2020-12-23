@@ -175,6 +175,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.query.rowList)
   },
   methods: {
     close() {

@@ -22,7 +22,7 @@
       <!--{{ (scope.$index + 1) + pageSize*(currentPage-1) }}-->
       <!--</template>-->
       <!--</el-table-column>-->
-      <el-table-column v-if="checkbox" align="center" type="selection" width="50" />
+      <el-table-column v-if="checkbox" align="center" type="selection" width="50"/>
       <el-table-column
         v-for="(item,index) in tableLabel"
         v-if="item.hide ? false :true"
@@ -66,11 +66,34 @@
           </el-table-column>
         </template>
       </el-table-column>
-      <el-table-column v-if="tableOption.label" :width="tableOption.width" :label="tableOption.label" align="center" class-name="small-padding fixed-width">
+      <el-table-column v-if="tableOption.label" :width="tableOption.width" :label="tableOption.label" align="center"
+                       class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-          <el-button v-for="(item,index) in tableOption.options" :key="index" type="text" :icon="item.icon" size="mini" @click="handleButton(item.methods,scope.row,scope.row)">
+          <el-button v-for="(item,index) in tableOption.options" :key="index" type="text" :icon="item.icon" size="mini"
+                     @click="handleButton(item.methods,scope.row,scope.row)"
+          >
             {{ item.label }}
           </el-button>
+        </template>
+      </el-table-column>
+      <!--      switch-->
+      <el-table-column v-if="tableSwitch.label" :width="tableSwitch.width" :label="tableSwitch.label" align="center"
+                       class-name="small-padding fixed-width"
+      >
+        <template slot-scope="scope">
+          <el-switch
+            class="switchStyle"
+            v-model="scope.row[tableSwitch.paramItem]"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            :active-value="tableSwitch.activeValue"
+            :inactive-value="tableSwitch.inactiveValue"
+            active-text="启用"
+            inactive-text="冻结"
+            @change="changeSwitch(tableSwitch.methods,scope.row)"
+          >
+          </el-switch>
         </template>
       </el-table-column>
     </el-table>
@@ -138,12 +161,18 @@ export default {
     isPagination: {
       type: Boolean,
       default: true
+    },
+    tableSwitch: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
 
   },
   data() {
     return {
-
+      value: '100'
     }
   },
   methods: {
@@ -169,24 +198,56 @@ export default {
     },
     handleCol(methods, row) {
       this.$emit('handleCol', { 'methods': methods, 'row': row })
+    },
+    // switch切换
+    changeSwitch(methods, row) {
+      this.$emit('changeSwitch', { 'methods': methods, 'row': row })
     }
   }
 }
 </script>
 
 <style>
-  .el-table--medium td, .el-table--medium th {
-    padding:4px 0!important;
-  }
-  .footer-pagination{
-    margin-top: 10px;
-    text-align: right;
-  }
-  .link-type, .link-type:focus {
-    color: rgb(64, 158, 255);
-    cursor: pointer;
-  }
-  .text-center{
-    text-align: center;
-  }
+.el-table--medium td, .el-table--medium th {
+  padding: 4px 0 !important;
+}
+
+.footer-pagination {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.link-type, .link-type:focus {
+  color: rgb(64, 158, 255);
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.switchStyle .el-switch__label {
+  position: absolute;
+  display: none;
+  color: #fff;
+}
+
+.switchStyle .el-switch__label--left {
+  z-index: 9;
+  left: 6px;
+}
+
+.switchStyle .el-switch__label--right {
+  z-index: 9;
+  left: -14px;
+}
+
+.switchStyle .el-switch__label.is-active {
+  display: block;
+}
+
+.switchStyle.el-switch .el-switch__core,
+.el-switch .el-switch__label {
+  width: 60px !important;
+}
 </style>

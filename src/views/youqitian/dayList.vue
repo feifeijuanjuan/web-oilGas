@@ -44,26 +44,29 @@
       </el-form>
     </div>
     <div>
-      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
+      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">新增</el-button>
+      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
+<!--      <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleEdit">删除</el-button>-->
     </div>
     <table-cmp
       :loading="loading"
       :table-data="tableData"
       :table-label="tableLabel"
-      :table-option="tableOption"
       :total="total"
       :pageSize="pageSize"
       :currentPage="currentPage"
-      @handleButton="handleButton"
+      :tableSwitch="tableSwitch"
+      @handleSelectionChange="handleSelectionChange"
       @handleCurrentChange="handleCurrentChange"
       @handleSizeChange="handleSizeChange"
+      @changeSwitch="changeSwitch"
     >
     </table-cmp>
-<!--    &lt;!&ndash;    弹窗&ndash;&gt;
-    <gas-field-day-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
-                       :dialogFormVisible="dialogFormVisible"
-                       @func="getMsgDialog"
-    ></gas-field-day-add>-->
+    <!--    &lt;!&ndash;    弹窗&ndash;&gt;
+        <gas-field-day-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
+                           :dialogFormVisible="dialogFormVisible"
+                           @func="getMsgDialog"
+        ></gas-field-day-add>-->
 
   </div>
 </template>
@@ -92,9 +95,9 @@ export default {
           label: '全部'
         },
         {
-        value: '选项1',
-        label: '冻结'
-      },
+          value: '选项1',
+          label: '冻结'
+        },
         {
           value: '选项2',
           label: '启用'
@@ -105,17 +108,20 @@ export default {
         time: ''
       },
       loading: false,
-      tableData: [{
-        stationCode: '伊泰煤制油',
-        baseStationCode: '',
-        laneCode: '',
-        positionCode: ''
-      },
+      tableData: [
         {
           stationCode: '伊泰煤制油',
           baseStationCode: '',
           laneCode: '',
-          positionCode: ''
+          positionCode: '',
+          state: '0'
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: '',
+          state: '100'
         },
         {
           stationCode: '伊泰煤制油',
@@ -157,44 +163,51 @@ export default {
         { label: '直供甲醛厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
         { label: '直供合成氨日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
         { label: '直供液化工厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
-        { label: '状态', param: 'positionCode' }
+        { label: '状态', param: 'state'}
       ],
-      tableOption: {
-        label: '操作',
+      selectedRows: [],
+      tableSwitch: {
+        label: '状态',
         width: '200',
-        options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
-        ]
+        paramItem: 'state',
+        methods: 'switch',
+        activeValue:'100',
+        inactiveValue:'0'
       },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+      rowId: ''
     }
   },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
+
+    /*handleButton(val) {
       if (val.methods === 'edit') {
         this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
       }
-    },
+    },*/
     handleCurrentChange() {
 
     },
     handleSizeChange() {
 
     },
+    //新增
     handleAdd() {
-      this.$router.push('/dayAdd')
+      this.$router.push({ path: '/dayAdd', query: { rowList: 123 } })
+    },
+    // 编辑
+    handleEdit() {
+      console.log(this.selectedRows)
+
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.dataId)
+      })
+      this.selectedRows = arr
+    },
+    changeSwitch(val) {
+      console.log(val.row.state)
     }
   }
 }

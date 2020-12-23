@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-form :model="fromSearch" size="small" class="form-box clearfix">
-        <div class="item search-input">
+      <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
+        <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="油气田名称" label-width="90px">
@@ -10,7 +10,19 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="油气田区域类型" label-width="120px">
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="状态">
                 <el-select v-model="fromSearch.oil" placeholder="请选择">
                   <el-option
                     v-for="item in options"
@@ -22,22 +34,10 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="起止日期" label-width="90px">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
           </el-row>
         </div>
-        <div class="item search-btn">
-          <el-form-item>
+        <div class="search-btn">
+          <el-form-item label-width="0">
             <el-button type="primary" @click="submitForm('fromSearch')">查询</el-button>
           </el-form-item>
         </div>
@@ -98,25 +98,67 @@ export default {
         time: ''
       },
       loading: false,
-      tableData: [],
+      tableData: [
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        }
+      ],
       tableLabel: [
         { label: '油气田名称', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
+        { label: '油气田区域类型', param: 'laneCode' },
         { label: '油气田区域名称', param: 'laneCode' },
+        { label: '集团标识', param: 'laneCode' },
         { label: '盟市名称', param: 'positionCode' },
         { label: '月产量', param: 'positionCode' },
         { label: '计划月产量', param: 'positionCode' },
+        { label: '月供应量', param: 'positionCode' },
         { label: '计划月供应量', param: 'positionCode' },
         { label: '区内供应量', param: 'positionCode' },
         { label: '区外供应量', param: 'positionCode' },
-        { label: '月产能', param: 'positionCode' }
+        { label: '月产能', param: 'positionCode' },
+        { label: '综合能源消费量', param: 'positionCode' },
+        { label: '状态', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',
         width: '200',
         options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
+          { label: '编辑', methods: 'edit' },
+          // { label: '删除', methods: 'delete' }
         ]
       },
       rowId: '',

@@ -29,14 +29,15 @@ service.interceptors.request.use(
   response => {
     const res = response.data
 
-    if (res.code !== 20000) {
+    if (res.code !== 0) {
       Message({
-        message: res.message || 'Error',
+        // message: res.message || '网络请求失败',
+        message: '网络请求失败',
         type: 'error',
         duration: 5 * 1000
       })
 
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+    /!*  if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
           confirmButtonText: 'Re-Login',
           cancelButtonText: 'Cancel',
@@ -47,7 +48,7 @@ service.interceptors.request.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.message || 'Error'))*!/
     } else {
       return res
     }
@@ -55,7 +56,8 @@ service.interceptors.request.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.message,
+      // message: error.message,
+      message: '网络请求失败',
       type: 'error',
       duration: 5 * 1000
     })

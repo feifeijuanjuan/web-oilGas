@@ -71,24 +71,23 @@ export default {
       currentPage: 1,
       pageSize: 50,
       loading: false,
-      fromSearch:{
-        one:''
+      fromSearch: {
+        one: ''
       },
-      tableData: [
-      ],
+      tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '盟市', param: 'laneCode' },
-        { label: '管线名', param: 'laneCode' },
-        { label: '管线进油量', param: 'positionCode' },
-        { label: '管线出油量', param: 'positionCode' },
-        { label: '管线管存量', param: 'positionCode' },
-        { label: '管线累计输油', param: 'laneCode' },
-        { label: '城市燃气接收量', param: 'positionCode' },
-        { label: '甲醇接收量', param: 'positionCode' },
-        { label: '化肥接收量', param: 'positionCode' },
-        { label: 'lng接收气量', param: 'positionCode' }
+        { label: '企业名称', param: 'stationCode', minWidth: 150 },
+        { label: '时间', param: 'baseStationCode', minWidth: 150 },
+        { label: '盟市', param: 'laneCode', minWidth: 150 },
+        { label: '管线名', param: 'laneCode', minWidth: 150 },
+        { label: '管线进油量', param: 'positionCode', minWidth: 180 },
+        { label: '管线出油量', param: 'positionCode', minWidth: 180 },
+        { label: '管线管存量', param: 'positionCode', minWidth: 180 },
+        { label: '管线累计输油', param: 'laneCode', minWidth: 180 },
+        { label: '城市燃气接收量', param: 'positionCode', minWidth: 180 },
+        { label: '甲醇接收量', param: 'positionCode', minWidth: 180 },
+        { label: '化肥接收量', param: 'positionCode', minWidth: 180 },
+        { label: 'lng接收气量', param: 'positionCode', minWidth: 180 }
       ],
       tableOption: {
         label: '操作',

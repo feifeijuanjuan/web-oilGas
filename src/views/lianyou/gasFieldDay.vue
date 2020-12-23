@@ -76,7 +76,7 @@ export default {
       tableData: [
       ],
       tableLabel: [
-        { label: '1企业名称', param: 'stationCode' },
+        { label: '企业名称', param: 'stationCode' },
         { label: '时间', param: 'baseStationCode' },
         { label: '企业性质', param: 'laneCode' },
         { label: '税收', param: 'positionCode' },

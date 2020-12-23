@@ -54,7 +54,8 @@
     <!--    弹窗-->
     <chenpinyou2-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
                      :dialogFormVisible="dialogFormVisible"
-                     @func="getMsgDialog"></chenpinyou2-add>
+                     @func="getMsgDialog"
+    ></chenpinyou2-add>
 
   </div>
 </template>
@@ -85,21 +86,21 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '盟市', param: 'positionCode' },
-        { label: '89#汽油销售量', param: 'positionCode' },
-        { label: '92#汽油销售量', param: 'positionCode' },
-        { label: '95#汽油销售量', param: 'positionCode' },
-        { label: '0#柴油销售量', param: 'positionCode' },
-        { label: '负35#柴油销售量', param: 'positionCode' },
-        { label: '负10#柴油销售量', param: 'positionCode' },
-        { label: '负20#柴油销费量', param: 'positionCode' },
-        { label: '煤油销费量', param: 'positionCode' },
-        { label: '柴油消费量预测值', param: 'positionCode' },
-        { label: '汽油消费量预测', param: 'positionCode' },
-        { label: '成品油区内消费量', param: 'positionCode' },
-        { label: '成品油区外消费量', param: 'positionCode' }
+        { label: '企业名称', param: 'stationCode', minWidth: '150' },
+        { label: '时间', param: 'baseStationCode', minWidth: '150' },
+        { label: '盟市', param: 'positionCode', minWidth: '150' },
+        { label: '89#汽油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '92#汽油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '95#汽油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '0#柴油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '负35#柴油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '负10#柴油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '负20#柴油销费量', param: 'positionCode', minWidth: '180' },
+        { label: '煤油销费量', param: 'positionCode', minWidth: '180' },
+        { label: '柴油消费量预测值', param: 'positionCode', minWidth: '180' },
+        { label: '汽油消费量预测', param: 'positionCode', minWidth: '180' },
+        { label: '成品油区内消费量', param: 'positionCode', minWidth: '180' },
+        { label: '成品油区外消费量', param: 'positionCode', minWidth: '180' }
       ],
       tableOption: {
         label: '操作',

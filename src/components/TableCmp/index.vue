@@ -89,8 +89,8 @@
             inactive-color="#ff4949"
             :active-value="tableSwitch.activeValue"
             :inactive-value="tableSwitch.inactiveValue"
-            active-text="启用"
-            inactive-text="冻结"
+            :active-text="tableSwitch.activeText"
+            :inactive-text="tableSwitch.inactivetext"
             @change="changeSwitch(tableSwitch.methods,scope.row)"
           >
           </el-switch>

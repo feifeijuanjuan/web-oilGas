@@ -151,3 +151,6 @@ div:focus {
   background-color: #1890ff;
   border-color: #1890ff;
 }
+body .el-table th.gutter {
+  display: table-cell !important
+}

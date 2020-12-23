@@ -137,27 +137,27 @@ export default {
         }
       ],
       tableLabel: [
-        { label: '油气田名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '油气田区域类型', param: 'laneCode' },
-        { label: '油气田区域名称', param: 'laneCode' },
-        { label: '集团标识', param: 'laneCode' },
-        { label: '盟市名称', param: 'positionCode' },
-        { label: '月产量', param: 'positionCode' },
-        { label: '计划月产量', param: 'positionCode' },
-        { label: '月供应量', param: 'positionCode' },
-        { label: '计划月供应量', param: 'positionCode' },
-        { label: '区内供应量', param: 'positionCode' },
-        { label: '区外供应量', param: 'positionCode' },
-        { label: '月产能', param: 'positionCode' },
-        { label: '综合能源消费量', param: 'positionCode' },
+        { label: '油气田名称', param: 'stationCode', minWidth: '150' },
+        { label: '时间', param: 'baseStationCode', minWidth: '150' },
+        { label: '油气田区域类型', param: 'laneCode', minWidth: '180' },
+        { label: '油气田区域名称', param: 'laneCode', minWidth: '180' },
+        { label: '集团标识', param: 'laneCode', minWidth: '150' },
+        { label: '盟市名称', param: 'positionCode', minWidth: '150' },
+        { label: '月产量', param: 'positionCode' , minWidth: '150'},
+        { label: '计划月产量', param: 'positionCode', minWidth: '150' },
+        { label: '月供应量', param: 'positionCode' , minWidth: '150'},
+        { label: '计划月供应量', param: 'positionCode' , minWidth: '150'},
+        { label: '区内供应量', param: 'positionCode' , minWidth: '150'},
+        { label: '区外供应量', param: 'positionCode' , minWidth: '150'},
+        { label: '月产能', param: 'positionCode' , minWidth: '150'},
+        { label: '综合能源消费量', param: 'positionCode', minWidth: '180' },
         { label: '状态', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',
         width: '200',
         options: [
-          { label: '编辑', methods: 'edit' },
+          { label: '编辑', methods: 'edit' }
           // { label: '删除', methods: 'delete' }
         ]
       },

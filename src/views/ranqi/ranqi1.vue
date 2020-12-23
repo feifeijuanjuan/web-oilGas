@@ -94,7 +94,21 @@ export default {
         { label: '天然气需求量', param: 'positionCode' },
         { label: '天然气供应合同量', param: 'positionCode' },
         { label: '天然气计划日供气量', param: 'positionCode' },
-        { label: '工业用户天然气消费量', param: 'positionCode' }
+        { label: '工业用户天然气消费量', param: 'positionCode' },
+        { label: '商业用户天然气消费量', param: 'positionCode' },
+        { label: '建筑业天然气消费量', param: 'positionCode' },
+        { label: '生活销售天然气销售量', param: 'positionCode' },
+        { label: '供暖天然气销售量', param: 'positionCode' },
+        { label: '可中断工业消费量', param: 'positionCode' },
+        { label: '不可中断工业消费量', param: 'positionCode' },
+        { label: '居民用气量天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: '民生用气量天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: '社会车辆用气天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: '商业用户天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: '工业燃料天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: '甲醇天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: '化肥天然气日消费量(万立方米)', param: 'positionCode' },
+        { label: 'LNG天然气日消费量(万立方米)', param: 'positionCode' }
       ],
       tableOption: {
         label: '操作',

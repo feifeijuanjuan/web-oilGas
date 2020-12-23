@@ -46,13 +46,14 @@
     <div>
       <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">新增</el-button>
       <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
-<!--      <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleEdit">删除</el-button>-->
+      <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel">删除</el-button>
     </div>
     <table-cmp
       :loading="loading"
       :table-data="tableData"
       :table-label="tableLabel"
       :total="total"
+      :checkbox="checkbox"
       :pageSize="pageSize"
       :currentPage="currentPage"
       :tableSwitch="tableSwitch"
@@ -62,11 +63,6 @@
       @changeSwitch="changeSwitch"
     >
     </table-cmp>
-    <!--    &lt;!&ndash;    弹窗&ndash;&gt;
-        <gas-field-day-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
-                           :dialogFormVisible="dialogFormVisible"
-                           @func="getMsgDialog"
-        ></gas-field-day-add>-->
 
   </div>
 </template>
@@ -87,6 +83,7 @@ export default {
       expandForm: false,
       count: 3,
       total: 0,
+      checkbox: true,
       currentPage: 1,
       pageSize: 50,
       options: [
@@ -149,7 +146,7 @@ export default {
         }
       ],
       tableLabel: [
-        { label: '油气田名称', param: 'stationCode', minWidth: '150' },
+        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '时间', param: 'baseStationCode', minWidth: '150' },
         { label: '油气田区域类型', param: 'baseStationCode', minWidth: '180' },
         { label: '油气田区域名称', param: 'baseStationCode', minWidth: '180' },
@@ -162,8 +159,7 @@ export default {
         { label: '直供管道公司日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
         { label: '直供甲醛厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
         { label: '直供合成氨日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
-        { label: '直供液化工厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' },
-        { label: '状态', param: 'state'}
+        { label: '直供液化工厂日供气量(万立方米)', param: 'positionCode', minWidth: '180' }
       ],
       selectedRows: [],
       tableSwitch: {
@@ -171,13 +167,21 @@ export default {
         width: '200',
         paramItem: 'state',
         methods: 'switch',
-        activeValue:'100',
-        inactiveValue:'0'
+        activeValue: '100',
+        inactiveValue: '0',
+        activeText: '启用',
+        inactivetext: '冻结'
       },
       rowId: ''
     }
   },
+  created() {
+    this.fasFieldTable()
+  },
   methods: {
+    fasFieldTable(){
+      console.log(12222222222224)
+    },
 
     /*handleButton(val) {
       if (val.methods === 'edit') {
@@ -192,11 +196,24 @@ export default {
     },
     //新增
     handleAdd() {
-      this.$router.push({ path: '/dayAdd', query: { rowList: 123 } })
+      const params = {
+        title: '新增',
+        rowList: 123,
+        statu: 'create'
+      }
+      this.$router.push({ path: '/dayAdd', query: params })
     },
     // 编辑
     handleEdit() {
-      console.log(this.selectedRows)
+      const params = {
+        title: '编辑',
+        rowList: 123,
+        statu: 'update'
+      }
+      this.$router.push({ path: '/dayAdd', query: params })
+
+    },
+    handleDel() {
 
     },
     handleSelectionChange(val) {

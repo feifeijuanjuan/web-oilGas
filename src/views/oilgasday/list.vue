@@ -46,25 +46,28 @@
         </div>
       </el-form>
     </div>
-    <div>
-      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">新增</el-button>
-      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
-      <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel">删除</el-button>
+    <div class="table-wrapper">
+      <div>
+        <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">新增</el-button>
+        <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
+        <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel">删除</el-button>
+      </div>
+      <table-cmp
+        :loading="loading"
+        :table-data="tableData"
+        :table-label="tableLabel"
+        :total="total"
+        :checkbox="checkbox"
+        :pageSize="pageSize"
+        :currentPage="currentPage"
+        @handleSelectionChange="handleSelectionChange"
+        @handleCurrentChange="handleCurrentChange"
+        @handleSizeChange="handleSizeChange"
+        @changeSwitch="changeSwitch"
+      >
+      </table-cmp>
     </div>
-    <table-cmp
-      :loading="loading"
-      :table-data="tableData"
-      :table-label="tableLabel"
-      :total="total"
-      :checkbox="checkbox"
-      :pageSize="pageSize"
-      :currentPage="currentPage"
-      @handleSelectionChange="handleSelectionChange"
-      @handleCurrentChange="handleCurrentChange"
-      @handleSizeChange="handleSizeChange"
-      @changeSwitch="changeSwitch"
-    >
-    </table-cmp>
+
 
   </div>
 </template>

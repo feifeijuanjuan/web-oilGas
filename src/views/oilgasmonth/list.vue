@@ -1,4 +1,5 @@
 <template>
+  <!--  油气田企业按月填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
@@ -38,13 +39,15 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" @click="submitForm('fromSearch')">查询</el-button>
+            <el-button type="primary" @click="list((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
     <div>
       <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
+      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
+      <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel">删除</el-button>
     </div>
     <table-cmp
       :loading="loading"

@@ -183,7 +183,7 @@ export const constantRoutes = [
      ]
    },*/
 
-   /* {
+    {
       path: '/guotuziyuan',
       component: Layout,
       children: [
@@ -331,7 +331,7 @@ export const constantRoutes = [
         component: () => import('@/views/nengyuanju/gasFieldMonth'),
         meta: { title: '能源局按年填报', icon: 'dashboard' }
       }]
-    },*/
+    },
   // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]

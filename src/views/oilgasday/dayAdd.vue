@@ -232,7 +232,15 @@ export default {
     // 数据回显
     update() {
       update(this.$route.query.id).then((res) => {
-        this.editForm = res
+        if (res.code === 0) {
+          this.editForm = res.body
+        } else {
+          Message({
+            message: '请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
       })
     },
     // 取消

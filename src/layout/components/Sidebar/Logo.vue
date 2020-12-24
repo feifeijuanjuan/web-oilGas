@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '内蒙古自治区油气平台数据填报',
+      title: '',
       logo: ''
     }
   }
@@ -44,8 +44,8 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  //height: 50px;
+  //line-height: 50px;
   background: #2b2f3a;
   text-align: center;
   overflow: hidden;

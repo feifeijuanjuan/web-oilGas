@@ -48,7 +48,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按年填报
+          按日填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -85,16 +85,15 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
-/*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+/*企业名称、盟市名称、时间、状态、
+天然气消费量、天然气需求量、天然气供应合同量、天然气计划日供气量、
+工业用户天然气消费量、商业用户天然气消费量、建筑业天然气消费量、生活销售天然气销售量、供暖天然气销售量、
+可中断工业消费量、不可中断工业消费量、
+居民用气量天然气日消费量(万立方米)、民生用气量天然气日消费量(万立方米)、社会车辆用气天然气日消费量(万立方米)、商业用户天然气日消费量(万立方米)、工业燃料天然气日消费量(万立方米)、
+甲醇天然气日消费量(万立方米)、化肥天然气日消费量(万立方米)、LNG天然气日消费量(万立方米）*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp },
   data() {
     return {
       expandForm: false,
@@ -102,26 +101,42 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        one: ''
+        oil: '',
+        time: ''
       },
+      loading: false,
       tableData: [],
       tableLabel: [
         { label: '企业名称', param: 'stationCode',minWidth:120 },
         { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
+        { label: '盟市', param: 'positionCode' ,minWidth:120},
+        { label: '天然气消费量', param: 'positionCode',minWidth:120 },
+        { label: '天然气需求量', param: 'positionCode',minWidth:120 },
+        { label: '天然气供应合同量', param: 'positionCode' ,minWidth:150},
+        { label: '天然气计划日供气量', param: 'positionCode' ,minWidth:150},
+        { label: '工业用户天然气消费量', param: 'positionCode' ,minWidth:180},
+        { label: '商业用户天然气消费量', param: 'positionCode' ,minWidth:180},
+        { label: '建筑业天然气消费量', param: 'positionCode' ,minWidth:150},
+        { label: '生活销售天然气销售量', param: 'positionCode' ,minWidth:180},
+        { label: '供暖天然气销售量', param: 'positionCode',minWidth:150 },
+        { label: '可中断工业消费量', param: 'positionCode',minWidth:150 },
+        { label: '不可中断工业消费量', param: 'positionCode',minWidth:150 },
+        { label: '居民用气量天然气日消费量', param: 'positionCode',minWidth:200 },
+        { label: '民生用气量天然气日消费量', param: 'positionCode',minWidth:200 },
+        { label: '社会车辆用气天然气日消费量', param: 'positionCode' ,minWidth:200},
+        { label: '商业用户天然气日消费量', param: 'positionCode',minWidth:180 },
+        { label: '工业燃料天然气日消费量', param: 'positionCode',minWidth:180 },
+        { label: '甲醇天然气日消费量', param: 'positionCode',minWidth:180 },
+        { label: '化肥天然气日消费量', param: 'positionCode',minWidth:180 },
+        { label: 'LNG天然气日消费量', param: 'positionCode' ,minWidth:180},
+        { label: '状态', param: 'positionCode',minWidth:120 }
       ]
     }
   },
   methods: {
     fasFieldTable() {
-      console.log(12222)
+      console.log(1222)
     },
     getMsgDialog(data) {
       console.log(data)
@@ -141,8 +156,11 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/citygaspeekdayAdd', query: params })
     }
   }
 }
@@ -158,5 +176,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

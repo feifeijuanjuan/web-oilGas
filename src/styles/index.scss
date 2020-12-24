@@ -144,26 +144,27 @@ div:focus {
 
   .search-btn {
     width: 80px;
-    float: left;
+    float: right;
     text-align: right;
   }
 
   .search-input {
     float: left;
-    width: calc(100% - 80px)
+    width: calc(100% - 120px)
   }
 }
 
-/*.el-table--striped .el-table__body tr.el-table__row--striped td{
-  background-color: #b7cdec;
+.el-table--striped .el-table__body tr.el-table__row--striped td{
+  background-color: rgba(216, 223, 235, 0.3);
 }
 .el-table th{
-  background-color: #5ea2e3;
-  color: #fff;
+  background-color: #DBEBFE;
+  color: #2C3B4C;
+  font-weight: bold;
 }
 .el-table--enable-row-transition .el-table__body td{
-  color: #333;
-}*/
+  color: #2C3B4C;
+}
 .el-button--primary {
   color: #FFF;
   background-color: #1890ff;
@@ -193,6 +194,7 @@ body .el-table th.gutter {
   text-align: right;
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 
   .submenu-title {
     color: #2C3B4C;
@@ -201,13 +203,87 @@ body .el-table th.gutter {
 
   .i-add {
     color: #0072f9;
+    margin-right: 5px;
   }
 
   .i-edit {
     color: #3dc16e;
+    margin-right: 5px;
   }
 
   .i-del {
     color: #dd4c28;
+    margin-right: 5px;
+  }
+  .btn-add{
+    border-color:#0072f9;
+  }
+  .btn-edit{
+    border-color: #3dc16e;
+  }
+  .btn-del{
+    border-color: #dd4c28;
+  }
+  .el-button--small, .el-button--small.is-round {
+    padding: 6px 12px;
+    font-size: 13px;
   }
 }
+.form-wrapper{
+  background-color: #fff;
+  box-shadow: 0px 4px 14px 2px rgba(145, 153, 162, 0.1);
+  border-radius: 10px 10px  0 0;
+  padding-top: 15px;
+  .form-wrapper-title{
+    color: #2C3B4C;
+    padding-left: 20px;
+    font-weight: bold;
+    &:before{
+      content: '';
+      height: 10px;
+      border-left: 5px solid #0072F9;
+      margin-right: 5px;
+    }
+  }
+
+  .form-box{
+    padding: 0 70px;
+  }
+}
+.form-footer-btn{
+  background-color: #F9FCFF;
+  height:80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 14px 2px rgba(145, 153, 162, 0.1);
+  border-radius:  0 0 10px 10px;
+  .close-btn{
+    width: 100px;
+    height: 40px;
+    background: #D8DFEB;
+    box-shadow: 0px 6px 17px 1px rgba(178, 190, 211, 0.33);
+    border-radius: 6px;
+  }
+  .confrim-btn{
+    width: 100px;
+    height: 40px;
+    background: #0072F9;
+    box-shadow: 0px 6px 17px 1px rgba(0, 114, 249, 0.33);
+    border-radius: 6px;
+    color: white;
+  }
+}
+.form-add{
+  margin-bottom: 15px;
+  .first{
+    color:#7B8BA1
+  }
+  .first-line{
+    margin: 0 5px;
+  }
+  .second{
+    color:#3F4B5B
+  }
+}
+

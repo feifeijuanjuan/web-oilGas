@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
+              <el-form-item label="油气田名称" label-width="90px">
                 <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
@@ -51,15 +51,15 @@
           按年填报
         </div>
         <div>
-          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleEdit"><i
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
-          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleDel"><i
             class="icon iconfont i-del"
           >&#xe614;</i>删除
           </el-button>
@@ -85,38 +85,70 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
-/*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+/*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
+7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
+13预测储量、14控制储量、15油气田面积、16状态*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
+      options: [{
+        value: '选项1',
+        label: '安塞油田'
+      }],
       fromSearch: {
-        one: ''
+        oil: '',
+        time: ''
       },
-      tableData: [],
+      loading: false,
+      tableData: [{
+        stationCode: '伊泰煤制油',
+        baseStationCode: '',
+        laneCode: '',
+        positionCode: ''
+      },
+        {
+          stationCode: '伊泰煤制油',
+          baseStationCode: '',
+          laneCode: '',
+          positionCode: ''
+        }
+      ],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
-      ]
+        { label: '油气田名称', param: 'stationCode', minWidth: '150' },
+        { label: '时间', param: 'baseStationCode', minWidth: '150' },
+        { label: '油气田区域类型', param: 'laneCode', minWidth: '150' },
+        { label: '油气田区域名称', param: 'positionCode', minWidth: '150' },
+        { label: '集团标识', param: 'positionCode', minWidth: '150' },
+        { label: '盟市名称', param: 'positionCode', minWidth: '150' },
+        { label: '累计探明地质储量', param: 'positionCode', minWidth: '180' },
+        { label: '剩余技术可采储量', param: 'positionCode', minWidth: '180' },
+        { label: '剩余经济可采储量', param: 'positionCode', minWidth: '180' },
+        { label: '储采比', param: 'positionCode', minWidth: '150' },
+        { label: '油气田人数', param: 'positionCode', minWidth: '150' },
+        { label: '远景资源量', param: 'positionCode', minWidth: '150' },
+        { label: '预测储量', param: 'positionCode', minWidth: '150' },
+        { label: '控制储量', param: 'positionCode', minWidth: '150' },
+        { label: '油气田面积', param: 'positionCode', minWidth: '150' },
+        { label: '状态', param: 'positionCode', minWidth: '150' }
+      ],
+      tableOption: {
+        label: '操作',
+        width: '200',
+        options: [
+          { label: '修改', methods: 'edit' },
+          { label: '删除', methods: 'delete' }
+        ]
+      },
+      rowId: '',
+      dialogStatu: '',//判断新增还是修改页面
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -141,8 +173,11 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/guotuAdd', query: params })
     }
   }
 }

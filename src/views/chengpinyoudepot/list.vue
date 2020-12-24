@@ -10,20 +10,6 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  :clearable="false"
-                >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
               <el-form-item label="状态">
                 <el-select v-model="fromSearch.status" placeholder="请选择">
                   <el-option
@@ -48,7 +34,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按年填报
+          库存按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -85,16 +71,10 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
-/*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+// 1企业名称、2时间、3盟市名称、油库汽油总库存、油库柴油总库存、油库煤油总库存、油库原油总库存、状态
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp },
   data() {
     return {
       expandForm: false,
@@ -102,21 +82,24 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        one: ''
+        oil: '',
+        time: ''
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
-      ]
+        { label: '企业名称', param: 'stationCode' },
+        { label: '时间', param: 'baseStationCode' },
+        { label: '盟市', param: 'positionCode' },
+        { label: '油库汽油总库存', param: 'positionCode' },
+        { label: '油库柴油总库存', param: 'positionCode' },
+        { label: '油库煤油总库存', param: 'positionCode' },
+        { label: '油库原油总库存', param: 'positionCode' }
+      ],
+      rowId: '',
+      dialogStatu: '',//判断新增还是修改页面
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -141,8 +124,11 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/chengpinyoudepotAdd', query: params })
     }
   }
 }
@@ -158,5 +144,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

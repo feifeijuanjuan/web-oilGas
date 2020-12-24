@@ -1,8 +1,15 @@
 <template>
   <div>
-    <el-dialog :title="dialogStatu==='create'?'新增':'修改'" :visible.sync="dialogFormVisible" width="60%">
+    <div class="form-add"><span class="first">煤制气企业填报</span>
+      <span class="first-line">></span>
+      <span class="first">企业信息填报</span
+      ><span class="first-line">></span>
+      <span class="second">{{ pageTitle }}
+      </span></div>
+    <div class="form-wrapper">
+      <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
       <el-form :model="editForm" size="small" label-width="90px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/-->
+        <!--        /*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/-->
 
         <el-row>
           <el-col :span="12">
@@ -57,12 +64,13 @@
           </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="close">取 消</el-button>
-        <el-button type="primary" @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
+    </div>
+    <div class="form-footer-btn" >
+        <el-button class="close-btn" @click="close">取 消</el-button>
+        <el-button class="confrim-btn" type="primary"
+                   @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
         </el-button>
       </div>
-    </el-dialog>
   </div>
 
 </template>
@@ -99,19 +107,21 @@ export default {
       }]
     }
   },
+  created() {
+    this.pageTitle = this.$route.query.title
+    this.statu = this.$route.query.statu
+  },
   mounted() {
   },
   methods: {
     close() {
-      this.$emit('func', false)
+      this.$router.push('/enterprise/list')
     },
     createData() {
-      this.$emit('func', false)
-      this.fasFieldTable()
+      this.$router.push('/enterprise/list')
     },
     updateData() {
-      this.$emit('func', false)
-      this.fasFieldTable()
+      this.$router.push('/enterprise/list')
     }
   }
 }

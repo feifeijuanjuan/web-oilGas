@@ -8,7 +8,6 @@
       element-loading-text="Loading"
       :data="tableData"
       :stripe="true"
-      border
       fit
       highlight-current-row
       tooltip-effect="dark"
@@ -98,17 +97,28 @@
       </el-table-column>
     </el-table>
     <div class="footer-pagination text-center" v-show="isPagination">
+      <!--      <el-pagination
+              id="pageH"
+              ref="pagination"
+              :current-page="currentPage"
+              :page-sizes="[10,50, 100, 150, 200]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+            />-->
       <el-pagination
-        id="pageH"
-        ref="pagination"
-        :current-page="currentPage"
-        :page-sizes="[10,50, 100, 150, 200]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-      />
+        :current-page.sync="currentPage"
+        :page-sizes="[10,50, 100, 150, 200]"
+        :page-size="pageSize"
+        layout="total,sizes, prev, pager, next"
+        :total="total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>

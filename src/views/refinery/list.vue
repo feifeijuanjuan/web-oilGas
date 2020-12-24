@@ -48,7 +48,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按年填报
+          按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -85,16 +85,15 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
-/*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+import gasFieldMonthAdd from '@/views/lianyou/gasFieldMonthAdd'
+/*1企业名称、2时间、3盟市名称、4状态、
+原油月加工量、原油计划月加工量、成品油产量、计划成品油月产量、计划负荷率、平均负荷率、
+89#汽油产量、92#汽油产量、95#汽油产量、
+负35号柴油产量、负20号柴油产量、负10号柴油产量、0号柴油产量、
+煤油产量*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp, gasFieldMonthAdd },
   data() {
     return {
       expandForm: false,
@@ -102,21 +101,41 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        one: ''
+        oil: '',
+        time: ''
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
-      ]
+        { label: '企业名称', param: 'enterName', minWidth: 150 },
+        { label: '时间', param: 'recordDate', minWidth: 150 },
+        { label: '原油月加工量', param: 'crudeOilProcessingCapacity', minWidth: 150 },
+        { label: '原油计划月加工量', param: 'oilPlanMonthProcess', minWidth: 180 },
+        { label: '成品油产量', param: 'yieldProductedOil', minWidth: 150 },
+        { label: '计划成品油月产量', param: 'productedOilPlanMonthProduct', minWidth: 180 },
+        { label: '计划负荷率', param: 'planLoadRate', minWidth: 150 },
+        { label: '平均负荷率', param: 'avgLoadRate', minWidth: 150 },
+        { label: '89#汽油产量', param: 'yieldGasoline89', minWidth: 180 },
+        { label: '92#汽油产量', param: 'yieldGasoline92', minWidth: 150 },
+        { label: '95#汽油产量', param: 'yieldGasoline95', minWidth: 180 },
+        { label: '负35号柴油产量', param: 'yieldDieseOilMinus35', minWidth: 180 },
+        { label: '负20号柴油产量', param: 'yieldDieselOilMinus20', minWidth: 180 },
+        { label: '负10号柴油产量', param: 'yieldDieselOilMinus10', minWidth: 180 },
+        { label: '0号柴油产量', param: 'yieldDieselOil0', minWidth: 180 },
+        { label: '煤油产量', param: 'yieldAviationCoal', minWidth: 150 }
+      ],
+      tableOption: {
+        label: '操作',
+        width: '200',
+        options: [
+          { label: '修改', methods: 'edit' },
+          { label: '删除', methods: 'delete' }
+        ]
+      },
+      rowId: '',
+      dialogStatu: '',//判断新增还是修改页面
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -141,8 +160,11 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/refineryAdd', query: params })
     }
   }
 }
@@ -158,5 +180,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

@@ -48,7 +48,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按年填报
+         销售按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -85,16 +85,16 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
-/*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+import chenpinyou2Add from '@/views/chenpinyou/chenpinyou2Add'
+/*1企业名称、2时间、3盟市名称、
+89#汽油销售量、92#汽油销售量、95#汽油销售量、
+0#柴油销售量、负35#柴油销售量、负10#柴油销售量、负20#柴油销费量、
+煤油销费量、
+柴油消费量预测值、汽油消费量预测、
+成品油区内消费量、成品油区外消费量*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp },
   data() {
     return {
       expandForm: false,
@@ -102,21 +102,40 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        one: ''
+        oil: '',
+        time: ''
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
-      ]
+        { label: '企业名称', param: 'stationCode', minWidth: '150' },
+        { label: '时间', param: 'baseStationCode', minWidth: '150' },
+        { label: '盟市', param: 'positionCode', minWidth: '150' },
+        { label: '89#汽油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '92#汽油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '95#汽油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '0#柴油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '负35#柴油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '负10#柴油销售量', param: 'positionCode', minWidth: '180' },
+        { label: '负20#柴油销费量', param: 'positionCode', minWidth: '180' },
+        { label: '煤油销费量', param: 'positionCode', minWidth: '180' },
+        { label: '柴油消费量预测值', param: 'positionCode', minWidth: '180' },
+        { label: '汽油消费量预测', param: 'positionCode', minWidth: '180' },
+        { label: '成品油区内消费量', param: 'positionCode', minWidth: '180' },
+        { label: '成品油区外消费量', param: 'positionCode', minWidth: '180' }
+      ],
+      tableOption: {
+        label: '操作',
+        width: '200',
+        options: [
+          { label: '修改', methods: 'edit' },
+          { label: '删除', methods: 'delete' }
+        ]
+      },
+      rowId: '',
+      dialogStatu: '',//判断新增还是修改页面
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -141,8 +160,11 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/chengpinyousaleAdd', query: params })
     }
   }
 }
@@ -158,5 +180,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

@@ -1,62 +1,84 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-form :model="fromSearch" size="small" class="form-box clearfix">
-        <div class="item search-input">
+      <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
+        <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
+                <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="盟市名称" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="起止日期" label-width="90px">
+              <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
                   type="daterange"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
             </el-col>
+            <el-col :span="8">
+              <el-form-item label="状态">
+                <el-select v-model="fromSearch.status" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
           </el-row>
         </div>
-        <div class="item search-btn">
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('fromSearch')">查询</el-button>
+        <div class="search-btn">
+          <el-form-item label-width="0">
+            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
-    <div>
-      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">添加</el-button>
+    <div class="table-wrapper">
+      <div class="handel-btn">
+        <div class="submenu-title">
+          调峰按日填报
+        </div>
+        <div>
+          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
+            class="icon iconfont i-add"
+          >&#xe880;</i>新增
+          </el-button>
+          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+            class="icon iconfont i-edit"
+          >&#xe630;</i>编辑
+          </el-button>
+          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+            class="icon iconfont i-del"
+          >&#xe614;</i>删除
+          </el-button>
+        </div>
+      </div>
+      <table-cmp
+        :loading="loading"
+        :table-data="tableData"
+        :table-label="tableLabel"
+        :total="total"
+        :checkbox="checkbox"
+        :pageSize="pageSize"
+        :currentPage="currentPage"
+        @handleSelectionChange="handleSelectionChange"
+        @handleCurrentChange="handleCurrentChange"
+        @handleSizeChange="handleSizeChange"
+      >
+      </table-cmp>
     </div>
-    <table-cmp
-      :loading="loading"
-      :table-data="tableData"
-      :table-label="tableLabel"
-      :table-option="tableOption"
-      :total="total"
-      :pageSize="pageSize"
-      :currentPage="currentPage"
-      @handleButton="handleButton"
-      @handleCurrentChange="handleCurrentChange"
-      @handleSizeChange="handleSizeChange"
-    >
-    </table-cmp>
-    <!--    弹窗-->
-    <ranqi2-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
-                :dialogFormVisible="dialogFormVisible"
-                @func="getMsgDialog"
-    >
-    </ranqi2-add>
 
   </div>
 </template>
@@ -91,17 +113,18 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '盟市', param: 'positionCode' },
-        { label: '商业调峰量', param: 'positionCode' },
-        { label: '甲醇化肥调峰量', param: 'positionCode' },
-        { label: '可中断工业调峰量', param: 'positionCode' },
-        { label: '不可中断工业调峰量', param: 'positionCode' },
-        { label: 'LNG调峰量', param: 'positionCode' },
-        { label: '盟市储气日调用量', param: 'positionCode' },
-        { label: '计划日调峰量', param: 'positionCode' },
-        { label: '实际日调峰量', param: 'positionCode' }
+        { label: '企业名称', param: 'stationCode',minWidth:120 },
+        { label: '时间', param: 'baseStationCode' ,minWidth:120},
+        { label: '盟市', param: 'positionCode' ,minWidth:120},
+        { label: '商业调峰量', param: 'positionCode',minWidth:150},
+        { label: '甲醇化肥调峰量', param: 'positionCode',minWidth:150 },
+        { label: '可中断工业调峰量', param: 'positionCode' ,minWidth:150},
+        { label: '不可中断工业调峰量', param: 'positionCode' ,minWidth:150},
+        { label: 'LNG调峰量', param: 'positionCode' ,minWidth:150},
+        { label: '盟市储气日调用量', param: 'positionCode',minWidth:150 },
+        { label: '计划日调峰量', param: 'positionCode' ,minWidth:150},
+        { label: '实际日调峰量', param: 'positionCode' ,minWidth:150},
+        { label: '状态', param: 'positionCode' ,minWidth:150}
       ],
       tableOption: {
         label: '操作',

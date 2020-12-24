@@ -1,37 +1,42 @@
 <template>
   <div class="navbar">
-<!--    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>-->
-    <img src="../../assets/web/logo.png" alt="暂无图片">
-    <breadcrumb class="breadcrumb-container"/>
+    <div class="navbar-wraper">
+      <img src="../../assets/web/logo.png" alt="暂无图片" style="height: 34px">
+      <!--    <breadcrumb class="breadcrumb-container"/>-->
 
-    <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img src="../../assets/web/user.png" alt="暂无图片">
-<!--          <i class="icon iconfont user-avatar">&#xe60f;</i>-->
-          <span class="name-box">{{ userName }}</span>
-          <!--          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">-->
-<!--          <i class="el-icon-caret-bottom"/>-->
-        </div>
-<!--        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          &lt;!&ndash;          <router-link to="/">
-                      <el-dropdown-item>
-                        Home
-                      </el-dropdown-item>
-                    </router-link>
-                    <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-                      <el-dropdown-item>Github</el-dropdown-item>
-                    </a>
-                    <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-                      <el-dropdown-item>Docs</el-dropdown-item>
-                    </a>&ndash;&gt;
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">退出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>-->
-      </el-dropdown>
-      <i class="icon iconfont i-exit"  @click.native="logout">&#xe75d;</i>
+      <div class="right-menu">
+        <img src="../../assets/web/user.png" alt="暂无图片" style="height: 70px;position: relative;top: 5px;">
+        <span class="name-box">{{ userName }}</span>
+        <i class="icon iconfont i-exit" @click.native="logout">&#xe75d;</i>
+        <!--        <el-dropdown class="avatar-container" trigger="click">
+                  <div class="avatar-wrapper">
+
+                    &lt;!&ndash;          <i class="icon iconfont user-avatar">&#xe60f;</i>&ndash;&gt;
+
+                    &lt;!&ndash;          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">&ndash;&gt;
+                    &lt;!&ndash;          <i class="el-icon-caret-bottom"/>&ndash;&gt;
+                  </div>
+                  &lt;!&ndash;        <el-dropdown-menu slot="dropdown" class="user-dropdown">
+                            &lt;!&ndash;          <router-link to="/">
+                                        <el-dropdown-item>
+                                          Home
+                                        </el-dropdown-item>
+                                      </router-link>
+                                      <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+                                        <el-dropdown-item>Github</el-dropdown-item>
+                                      </a>
+                                      <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+                                        <el-dropdown-item>Docs</el-dropdown-item>
+                                      </a>&ndash;&gt;
+                            <el-dropdown-item divided @click.native="logout">
+                              <span style="display:block;">退出</span>
+                            </el-dropdown-item>
+                          </el-dropdown-menu>&ndash;&gt;
+                </el-dropdown>-->
+      </div>
     </div>
+<!--        <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>-->
+
   </div>
 </template>
 
@@ -101,7 +106,7 @@ export default {
     float: left;
   }
 
-  .right-menu {
+  /*.right-menu {
     float: right;
     height: 100%;
     line-height: 50px;
@@ -160,6 +165,32 @@ export default {
     }
     .i-exit{
       color: #0072f9;
+    }
+  }*/
+  .navbar-wraper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+  }
+
+  .right-menu {
+    height: 70px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .i-exit {
+      color: #0072f9;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .name-box:after {
+      content: '';
+      height: 15px;
+      border-right: 1px solid #DADCE7;
+      margin: 0 20px;
     }
   }
 }

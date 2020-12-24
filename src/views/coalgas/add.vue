@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <el-dialog :title="dialogStatu==='create'?'新增':'修改'" :visible.sync="dialogFormVisible" width="60%">
+  <div class="app-container">
+    <div class="form-add"><span class="first">煤制气企业填报</span>
+      <span class="first-line">></span>
+      <span class="first">按月填报</span
+      ><span class="first-line">></span>
+      <span class="second">{{ pageTitle }}
+      </span></div>
+    <div class="form-wrapper">
+      <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
       <el-form :model="editForm" size="small" label-width="140px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3盟市名称、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
-        7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12煤制气产量、
-        13煤制气月供应量、14管道气供应量、15CNG供应量、16LNG供应量、17终端消费量、18化工消费量、19火力发电消费量、20供热消费量、21工业消费量、22生活消费量、23建筑业消费量、24商业消费量、25交通消费量、26调峰煤制气用量、27煤制气计划月供应量、28煤制气消费量、29状态*/-->
+        <!--        /*1企业名称、2时间、3盟市名称、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
+                7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12煤制气产量、
+                13煤制气月供应量、14管道气供应量、15CNG供应量、16LNG供应量、17终端消费量、18化工消费量、19火力发电消费量、20供热消费量、21工业消费量、22生活消费量、23建筑业消费量、24商业消费量、25交通消费量、26调峰煤制气用量、27煤制气计划月供应量、28煤制气消费量、29状态*/-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit">
@@ -238,12 +245,13 @@
           </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="close">取 消</el-button>
-        <el-button type="primary" @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
+    </div>
+      <div class="form-footer-btn">
+        <el-button  class="close-btn" @click="close">取 消</el-button>
+        <el-button class="confrim-btn" type="primary"
+                   @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
         </el-button>
       </div>
-    </el-dialog>
   </div>
 
 </template>
@@ -280,19 +288,21 @@ export default {
       }]
     }
   },
+  created() {
+    this.pageTitle = this.$route.query.title
+    this.statu = this.$route.query.statu
+  },
   mounted() {
   },
   methods: {
     close() {
-      this.$emit('func', false)
+      this.$router.push('/coalgas/list')
     },
     createData() {
-      this.$emit('func', false)
-      this.fasFieldTable()
+      this.$router.push('/coalgas/list')
     },
     updateData() {
-      this.$emit('func', false)
-      this.fasFieldTable()
+      this.$router.push('/coalgas/list')
     }
   }
 }

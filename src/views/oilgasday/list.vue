@@ -41,7 +41,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -49,16 +49,21 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-           按日填报
+          按日填报
         </div>
         <div>
-          <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd"><i
-            class="icon iconfont i-add">&#xe880;</i>新增
+          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
+            class="icon iconfont i-add"
+          >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit"><i
-            class="icon iconfont i-edit">&#xe630;</i>编辑</el-button>
-          <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel"><i
-            class="icon iconfont i-del">&#xe614;</i>删除</el-button>
+          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+            class="icon iconfont i-edit"
+          >&#xe630;</i>编辑
+          </el-button>
+          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+            class="icon iconfont i-del"
+          >&#xe614;</i>删除
+          </el-button>
         </div>
       </div>
       <table-cmp
@@ -76,8 +81,6 @@
       >
       </table-cmp>
     </div>
-
-
   </div>
 </template>
 
@@ -128,13 +131,13 @@ export default {
         { label: '集团标识', param: 'groupType', minWidth: '180' },
         { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
         { label: '天然气日产量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' },
-        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '180' },
-        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '180' },
-        { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '180' },
-        { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '180' },
-        { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '180' },
-        { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '180' },
-        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '180' },
+        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
+        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
+        { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
+        { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
+        { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
+        { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
+        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
         { label: '状态', param: 'status', minWidth: 150 }
       ],
       selectedRows: []

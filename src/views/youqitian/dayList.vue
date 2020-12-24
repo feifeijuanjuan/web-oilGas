@@ -1,4 +1,5 @@
 <template>
+  <!--  油气田企业按日填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
@@ -6,7 +7,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="油气田名称" label-width="90px">
-                <el-input :model="fromSearch.one"></el-input>
+                <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -17,13 +18,15 @@
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="状态">
-                <el-select v-model="fromSearch.oil" placeholder="请选择">
+                <el-select v-model="fromSearch.status" placeholder="请选择">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -38,38 +41,55 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" @click="submitForm('fromSearch')">查询</el-button>
+            <el-button type="primary"  icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
-    <div>
-      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">新增</el-button>
-      <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
-      <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel">删除</el-button>
+    <div class="table-wrapper">
+      <div class="handel-btn">
+        <div class="submenu-title">
+          按日填报
+        </div>
+        <div>
+          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd" ><i
+            class="icon iconfont i-add"
+          >&#xe880;</i>新增
+          </el-button>
+          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit" ><i
+            class="icon iconfont i-edit"
+          >&#xe630;</i>编辑
+          </el-button>
+          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+            class="icon iconfont i-del"
+          >&#xe614;</i>删除
+          </el-button>
+        </div>
+      </div>
+      <table-cmp
+        :loading="loading"
+        :table-data="tableData"
+        :table-label="tableLabel"
+        :total="total"
+        :checkbox="checkbox"
+        :pageSize="pageSize"
+        :currentPage="currentPage"
+        @handleSelectionChange="handleSelectionChange"
+        @handleCurrentChange="handleCurrentChange"
+        @handleSizeChange="handleSizeChange"
+        @changeSwitch="changeSwitch"
+      >
+      </table-cmp>
     </div>
-    <table-cmp
-      :loading="loading"
-      :table-data="tableData"
-      :table-label="tableLabel"
-      :total="total"
-      :checkbox="checkbox"
-      :pageSize="pageSize"
-      :currentPage="currentPage"
-      :tableSwitch="tableSwitch"
-      @handleSelectionChange="handleSelectionChange"
-      @handleCurrentChange="handleCurrentChange"
-      @handleSizeChange="handleSizeChange"
-      @changeSwitch="changeSwitch"
-    >
-    </table-cmp>
+
 
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-// import gasFieldDayAdd from '@/views/youqitian/dayAdd'
+import { MessageBox, Message } from 'element-ui'
+import { list, save, update, deleteList } from '@/api/fill'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
 12直供甲醇厂日供气量、
@@ -80,8 +100,6 @@ export default {
   components: { TableCmp },
   data() {
     return {
-      expandForm: false,
-      count: 3,
       total: 0,
       checkbox: true,
       currentPage: 1,
@@ -101,48 +119,21 @@ export default {
         }
       ],
       fromSearch: {
-        oil: '',
-        time: ''
+        oilGasName: null,
+        time: '',
+        status: ''
       },
       loading: false,
       tableData: [
+        {},
         {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: '',
-          state: '0'
+
         },
         {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: '',
-          state: '100'
+
         },
         {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
+
         }
       ],
       tableLabel: [
@@ -153,16 +144,17 @@ export default {
         { label: '集团标识', param: 'groupType', minWidth: '180' },
         { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
         { label: '天然气日产量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' },
-        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '180' },
-        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '180' },
-        { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '180' },
-        { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '180' },
-        { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '180' },
-        { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '180' },
-        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '180' }
+        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
+        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
+        { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
+        { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
+        { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
+        { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
+        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
+        { label: '状态', param: 'status', minWidth: 150 }
       ],
-      selectedRows: [],
-      tableSwitch: {
+      selectedRows: []
+      /*tableSwitch: {
         label: '状态',
         width: '200',
         paramItem: 'state',
@@ -171,55 +163,114 @@ export default {
         inactiveValue: '0',
         activeText: '启用',
         inactivetext: '冻结'
-      },
-      rowId: ''
+      },*/
     }
   },
   created() {
-    this.fasFieldTable()
+    // 初始化查询列表
+    // this.list(1, this.pageSize)
   },
   methods: {
-    fasFieldTable(){
-      console.log(12222222222224)
-    },
-
-    /*handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],
+        oilGasName: this.fromSearch.oilGasName
       }
-    },*/
-    handleCurrentChange() {
-
+      list(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleSizeChange() {
-
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.list(val, this.pageSize)
+    },
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     //新增
     handleAdd() {
       const params = {
         title: '新增',
-        rowList: 123,
         statu: 'create'
       }
       this.$router.push({ path: '/dayAdd', query: params })
     },
     // 编辑
     handleEdit() {
-      const params = {
-        title: '编辑',
-        rowList: 123,
-        statu: 'update'
-      }
-      this.$router.push({ path: '/dayAdd', query: params })
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/dayAdd', query: params })
 
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
     },
     handleDel() {
+      if (this.selectedRows.length === 1) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteList(this.selectedRows[0]).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败!'
+              })
+            }
+          })
 
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
     },
     handleSelectionChange(val) {
       const arr = []
       val.map((item) => {
-        arr.push(item.dataId)
+        arr.push(item.id)
       })
       this.selectedRows = arr
     },

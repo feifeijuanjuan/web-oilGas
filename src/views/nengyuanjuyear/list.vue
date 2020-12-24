@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
+              <el-form-item label="盟市名称" label-width="90px">
                 <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
@@ -85,16 +85,20 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
-/*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+import gasFieldMonthAdd from '@/views/nengyuanju/gasFieldMonthAdd'
+/*盟市名称、时间
+盟市储气设施总容积
+地方政府日均三天计划储气量
+地方政府日均三天实际储气量
+盟市租赁储罐数量
+盟市自建储罐数量
+天然气历史缺口量
+盟市储气日调用量
+盟市气化装置数量
+盟市气化装置日均气化量*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp, gasFieldMonthAdd },
   data() {
     return {
       expandForm: false,
@@ -102,21 +106,45 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
-      fromSearch: {
-        one: ''
+      options: [{
+        value: '选项1',
+        label: '原油'
       },
+        {
+          value: '选项2',
+          label: '天然气'
+        }
+      ],
+      fromSearch: {
+        oil: '',
+        time: ''
+      },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
-      ]
+        { label: '盟市', param: 'stationCode', minWidth: 120 },
+        { label: '时间', param: 'baseStationCode', minWidth: 120 },
+        { label: '盟市储气设施总容积', param: 'laneCode', minWidth: 180 },
+        { label: '地方政府日均三天计划储气量', param: 'positionCode', minWidth: 210 },
+        { label: '地方政府日均三天实际储气量', param: 'positionCode', minWidth: 210 },
+        { label: '盟市租赁储罐数量', param: 'positionCode', minWidth: 160 },
+        { label: '盟市自建储罐数量', param: 'positionCode', minWidth: 160 },
+        { label: '天然气历史缺口量', param: 'positionCode', minWidth: 160 },
+        { label: '盟市储气日调用量', param: 'positionCode', minWidth: 160 },
+        { label: '盟市气化装置数量', param: 'positionCode', minWidth: 160 },
+        { label: '盟市气化装置日均气化量', param: 'positionCode', minWidth: 180 }
+      ],
+      tableOption: {
+        label: '操作',
+        width: '200',
+        options: [
+          { label: '修改', methods: 'edit' },
+          { label: '删除', methods: 'delete' }
+        ]
+      },
+      rowId: '',
+      dialogStatu: '',//判断新增还是修改页面
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -141,8 +169,11 @@ export default {
 
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/nengyuanjuyearAdd', query: params })
     }
   }
 }

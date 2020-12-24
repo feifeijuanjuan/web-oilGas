@@ -57,88 +57,50 @@
       :total="total"
       :pageSize="pageSize"
       :currentPage="currentPage"
-      @handleButton="handleButton"
       @handleCurrentChange="handleCurrentChange"
       @handleSizeChange="handleSizeChange"
     >
     </table-cmp>
-    <!--    弹窗-->
-    <gas-field-month-add :rowId="rowId" :fasFieldTable="fasFieldTable" :dialogStatu="dialogStatu"
-                         :dialogFormVisible="dialogFormVisible"
-                         @func="getMsgDialog"
-    ></gas-field-month-add>
 
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/youqitian/monthAdd'
+import { deleteList, list } from '@/api/fill'
+import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
 13月产能、14综合能源消费量、15状态*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldMonthAdd },
+  components: { TableCmp },
   data() {
     return {
-      expandForm: false,
-      count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '原油'
-      },
+      options: [
+        {
+          value: '',
+          label: '全部'
+        },
+        {
+          value: '选项1',
+          label: '冻结'
+        },
         {
           value: '选项2',
-          label: '天然气'
+          label: '启用'
         }
       ],
       fromSearch: {
-        oil: '',
-        time: ''
+        oilGasName: null,
+        time: '',
+        status: ''
       },
       loading: false,
-      tableData: [
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        }
-      ],
+      tableData: [],
       tableLabel: [
         { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '时间', param: 'recordDate', minWidth: '150' },
@@ -146,53 +108,125 @@ export default {
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },
         { label: '集团标识', param: 'groupType', minWidth: '150' },
         { label: '盟市名称', param: 'positionCode', minWidth: '150' },
-        { label: '月产量', param: 'yieldOilGas' , minWidth: '150'},
+        { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
         { label: '计划月产量', param: 'oilGasPlanMonthYield', minWidth: '150' },
-        { label: '月供应量', param: 'supplyOilGas' , minWidth: '150'},
-        { label: '计划月供应量', param: 'oilGasPlanMonthSupply' , minWidth: '150'},
-        { label: '区内供应量', param: 'supplyInOilGas' , minWidth: '150'},
-        { label: '区外供应量', param: 'supplyOutOilGas' , minWidth: '150'},
-        { label: '月产能', param: 'capacityOilGas' , minWidth: '150'},
+        { label: '月供应量', param: 'supplyOilGas', minWidth: '150' },
+        { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
+        { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
+        { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
+        { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
         { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' },
         { label: '状态', param: 'status' }
       ],
-      tableOption: {
-        label: '操作',
-        width: '200',
-        options: [
-          { label: '编辑', methods: 'edit' }
-          // { label: '删除', methods: 'delete' }
-        ]
-      },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+      selectedRows: []
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],
+        oilGasName: this.fromSearch.oilGasName
       }
+      list(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
-      this.dialogStatu = 'create'
-      this.dialogFormVisible = true
+      const params = {
+        title: '新增',
+        statu: 'create'
+      }
+      this.$router.push({ path: '/monthAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/monthAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleDel() {
+      if (this.selectedRows.length === 1) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteList(this.selectedRows[0]).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败!'
+              })
+            }
+          })
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

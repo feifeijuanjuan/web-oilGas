@@ -1,19 +1,20 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
-
+<!--    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>-->
+    <img src="../../assets/web/logo.png" alt="暂无图片">
     <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <i class="icon iconfont user-avatar">&#xe60f;</i>
+          <img src="../../assets/web/user.png" alt="暂无图片">
+<!--          <i class="icon iconfont user-avatar">&#xe60f;</i>-->
           <span class="name-box">{{ userName }}</span>
           <!--          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">-->
-          <i class="el-icon-caret-bottom"/>
+<!--          <i class="el-icon-caret-bottom"/>-->
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <!--          <router-link to="/">
+<!--        <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          &lt;!&ndash;          <router-link to="/">
                       <el-dropdown-item>
                         Home
                       </el-dropdown-item>
@@ -23,12 +24,13 @@
                     </a>
                     <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
                       <el-dropdown-item>Docs</el-dropdown-item>
-                    </a>-->
+                    </a>&ndash;&gt;
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
           </el-dropdown-item>
-        </el-dropdown-menu>
+        </el-dropdown-menu>-->
       </el-dropdown>
+      <i class="icon iconfont i-exit"  @click.native="logout">&#xe75d;</i>
     </div>
   </div>
 </template>
@@ -155,6 +157,9 @@ export default {
           font-size: 12px;
         }
       }
+    }
+    .i-exit{
+      color: #0072f9;
     }
   }
 }

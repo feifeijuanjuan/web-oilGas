@@ -9,3 +9,5 @@ export const save = params => post(`/oilgasday/save`, params)
 export const update = params => get(`/oilgasday/select/${params}`)
 // 删除
 export const deleteList = params => deletefn(`/oilgasday/delete/${params}`)
+
+// 油气田企业按日填报

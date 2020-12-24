@@ -168,7 +168,7 @@ export default {
       editForm: {
         oilGasName: '',
         recordDate: '',
-        oilGasAreaType: '',
+        oilGasAreaType: '1',
         oilGasAreaName: '',
         groupType: '',
         dayYieldNaGas: '',
@@ -216,7 +216,8 @@ export default {
           value: 2,
           label: '中石油'
         }
-      ]
+      ],
+      unit: '万吨'
     }
   },
   created() {
@@ -229,6 +230,10 @@ export default {
     }
   },
   methods: {
+    //根据不同油气田区域类型显示不同单位
+    changeUint() {
+      this.editForm.oilGasAreaType == 1 ? this.unit = '万吨' : this.unit = '万立方米'
+    },
     // 数据回显
     update() {
       update(this.$route.query.id).then((res) => {
@@ -283,7 +288,6 @@ export default {
             duration: 5 * 1000
           })
         }
-        this.$router.push('/oilgasday/list')
       })
     }
   }

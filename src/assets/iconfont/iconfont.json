@@ -6,11 +6,39 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "1418231",
-      "name": "头像",
-      "font_class": "touxiang",
-      "unicode": "e60f",
-      "unicode_decimal": 58895
+      "icon_id": "12163475",
+      "name": "菜单管理",
+      "font_class": "caidanguanli",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "2488126",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "1181053",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "4933416",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e75d",
+      "unicode_decimal": 59229
+    },
+    {
+      "icon_id": "9626949",
+      "name": "添加文件",
+      "font_class": "tianjiawenjian",
+      "unicode": "e880",
+      "unicode_decimal": 59520
     }
   ]
 }

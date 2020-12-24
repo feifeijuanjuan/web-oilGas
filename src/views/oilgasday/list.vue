@@ -47,10 +47,19 @@
       </el-form>
     </div>
     <div class="table-wrapper">
-      <div>
-        <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd">新增</el-button>
-        <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit">编辑</el-button>
-        <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel">删除</el-button>
+      <div class="handel-btn">
+        <div class="submenu-title">
+           按日填报
+        </div>
+        <div>
+          <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleAdd"><i
+            class="icon iconfont i-add">&#xe880;</i>新增
+          </el-button>
+          <el-button size="small" type="primary" style="margin-bottom: 10px;" @click="handleEdit"><i
+            class="icon iconfont i-edit">&#xe630;</i>编辑</el-button>
+          <el-button size="small" type="danger" style="margin-bottom: 10px;" @click="handleDel"><i
+            class="icon iconfont i-del">&#xe614;</i>删除</el-button>
+        </div>
       </div>
       <table-cmp
         :loading="loading"
@@ -86,7 +95,6 @@ export default {
   components: { TableCmp },
   data() {
     return {
-      expandForm: false,
       total: 0,
       checkbox: true,
       currentPage: 1,
@@ -129,7 +137,7 @@ export default {
         { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '180' },
         { label: '状态', param: 'status', minWidth: 150 }
       ],
-      selectedRows: [],
+      selectedRows: []
       /*tableSwitch: {
         label: '状态',
         width: '200',
@@ -140,7 +148,6 @@ export default {
         activeText: '启用',
         inactivetext: '冻结'
       },*/
-      rowId: ''
     }
   },
   created() {
@@ -172,12 +179,6 @@ export default {
       })
       this.loading = false
     },
-
-    /*handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-      }
-    },*/
     handleCurrentChange(val) {
       this.currentPage = val
       this.list(val, this.pageSize)

@@ -5,6 +5,7 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 const service = axios.create({
+  // baseURL: 'http://210.73.216.32:8081/oilgas-background/',
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
@@ -86,7 +87,6 @@ export function get(url, params) {
     })
   })
 }
-
 
 /**
  * 以RequestParams的形式传递参数

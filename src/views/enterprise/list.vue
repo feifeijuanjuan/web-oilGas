@@ -6,20 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -71,65 +58,66 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldDayAdd from '@/views/meizhiqi/add'
-/*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/
+import { enterpriseList, enterpriseSwitchs } from '@/api/fill'
+import { Message } from 'element-ui'
+/*1企业名称、2时间、3企业性质、4税收、5企业人数*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldDayAdd },
+  components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
       loading: false,
-      fromSearch:{
-        one:''
+      fromSearch: {
+        enterName: ''
       },
-      tableData: [
-      ],
+      tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '企业性质', param: 'laneCode' },
-        { label: '税收', param: 'positionCode' },
-        { label: '企业人数', param: 'positionCode' },
-        { label: '状态', param: 'positionCode' }
-      ],
-      tableOption: {
-        label: '操作',
-        width: '200',
-        options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
-        ]
-      },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+        { label: '企业名称', param: 'enterName' },
+        { label: '企业性质', param: 'enterType' },
+        { label: '税收', param: 'taxRevenue' },
+        { label: '企业人数', param: 'employeesNum' }
+      ]
     }
   },
+  created() {
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        oilGasName: this.fromSearch.oilGasName
       }
+      enterpriseList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -137,6 +125,71 @@ export default {
         statu: 'create'
       }
       this.$router.push({ path: '/enterpriseAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/enterpriseAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          enterpriseSwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

@@ -10,8 +10,8 @@ const name = defaultSettings.title || '内蒙古自治区油气平台数据填�
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
 
 module.exports = {
-  publicPath: '/',
-  outputDir: 'dist',
+  publicPath: './',
+  outputDir: 'oil',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
@@ -25,7 +25,7 @@ module.exports = {
     // before: require('./mock/mock-server.js'),
     proxy: {
       '/api': {
-        target: 'http://99tpdr.natappfree.cc/oilgas-background',
+        target: 'http://8nukv3.natappfree.cc/oilgas-background',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

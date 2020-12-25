@@ -9,31 +9,28 @@
                 <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="9">
               <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  :clearable="false"
-                >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.beginTime"
+                    type="year"
+                    placeholder="开始日期"
+                    value-format="yyyy-MM-dd"
                   >
-                  </el-option>
-                </el-select>
+                  </el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">至</el-col>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.endTime"
+                    type="year"
+                    placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+
               </el-form-item>
             </el-col>
           </el-row>
@@ -85,6 +82,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
+import { guotuYearList, guotuSwitchs } from '@/api/fill'
+import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
 13预测储量、14控制储量、15油气田面积、16状态*/
@@ -98,79 +97,71 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '安塞油田'
-      }],
       fromSearch: {
-        oil: '',
-        time: ''
+        oilGasName: '',
+        beginTime: null,
+        endTime: null
       },
       loading: false,
-      tableData: [{
-        stationCode: '伊泰煤制油',
-        baseStationCode: '',
-        laneCode: '',
-        positionCode: ''
-      },
-        {
-          stationCode: '伊泰煤制油',
-          baseStationCode: '',
-          laneCode: '',
-          positionCode: ''
-        }
-      ],
+      tableData: [],
       tableLabel: [
-        { label: '油气田名称', param: 'stationCode', minWidth: '150' },
-        { label: '时间', param: 'baseStationCode', minWidth: '150' },
-        { label: '油气田区域类型', param: 'laneCode', minWidth: '150' },
-        { label: '油气田区域名称', param: 'positionCode', minWidth: '150' },
+        { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
+        { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '150' },
+        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '150' },
         { label: '集团标识', param: 'positionCode', minWidth: '150' },
-        { label: '盟市名称', param: 'positionCode', minWidth: '150' },
-        { label: '累计探明地质储量', param: 'positionCode', minWidth: '180' },
-        { label: '剩余技术可采储量', param: 'positionCode', minWidth: '180' },
-        { label: '剩余经济可采储量', param: 'positionCode', minWidth: '180' },
-        { label: '储采比', param: 'positionCode', minWidth: '150' },
-        { label: '油气田人数', param: 'positionCode', minWidth: '150' },
-        { label: '远景资源量', param: 'positionCode', minWidth: '150' },
-        { label: '预测储量', param: 'positionCode', minWidth: '150' },
-        { label: '控制储量', param: 'positionCode', minWidth: '150' },
-        { label: '油气田面积', param: 'positionCode', minWidth: '150' },
-        { label: '状态', param: 'positionCode', minWidth: '150' }
+        { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
+        { label: '累计探明地质储量', param: 'reservesCumulativeKnow', minWidth: '180' },
+        { label: '剩余技术可采储量', param: 'recoveryReservesSurplusTech', minWidth: '180' },
+        { label: '剩余经济可采储量', param: 'recoveryReservesSurplusEcon', minWidth: '180' },
+        { label: '储采比', param: 'reserveProductionRatio', minWidth: '150' },
+        { label: '油气田人数', param: 'peopleNum', minWidth: '150' },
+        { label: '远景资源量', param: 'prospectiveResources', minWidth: '150' },
+        { label: '预测储量', param: 'predictedReserves', minWidth: '150' },
+        { label: '控制储量', param: 'controlReserve', minWidth: '150' },
+        { label: '油气田面积', param: 'oilGasSize', minWidth: '150' }
       ],
-      tableOption: {
-        label: '操作',
-        width: '200',
-        options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
-        ]
-      },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+      selectedRows: []
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
+        oilGasName: this.fromSearch.oilGasName
       }
+      guotuYearList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -178,6 +169,72 @@ export default {
         statu: 'create'
       }
       this.$router.push({ path: '/guotuAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/guotuAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    // 删除
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          guotuSwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

@@ -35,7 +35,8 @@
                 </el-dropdown>-->
       </div>
     </div>
-<!--        <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>-->
+        <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"
+                   style="display: none"/>
 
   </div>
 </template>

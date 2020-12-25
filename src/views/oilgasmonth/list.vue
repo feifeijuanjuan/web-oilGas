@@ -14,7 +14,8 @@
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
-                  type="daterange"
+                  unlink-panels
+                  type="monthrange"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -22,19 +23,6 @@
                   :clearable="false"
                 >
                 </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -77,7 +65,6 @@
         @handleSelectionChange="handleSelectionChange"
         @handleCurrentChange="handleCurrentChange"
         @handleSizeChange="handleSizeChange"
-        @changeSwitch="changeSwitch"
       >
       </table-cmp>
     </div>
@@ -86,7 +73,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { deleteList, list } from '@/api/fill'
+import { oilgasmonthList, oilgasmonthSwitchs } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
@@ -96,37 +83,23 @@ export default {
   components: { TableCmp },
   data() {
     return {
+      checkbox: true,
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [
-        {
-          value: '',
-          label: '全部'
-        },
-        {
-          value: '选项1',
-          label: '冻结'
-        },
-        {
-          value: '选项2',
-          label: '启用'
-        }
-      ],
       fromSearch: {
         oilGasName: null,
-        time: '',
-        status: ''
+        time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },
         { label: '集团标识', param: 'groupType', minWidth: '150' },
-        { label: '盟市名称', param: 'positionCode', minWidth: '150' },
+        { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
         { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
         { label: '计划月产量', param: 'oilGasPlanMonthYield', minWidth: '150' },
         { label: '月供应量', param: 'supplyOilGas', minWidth: '150' },
@@ -134,8 +107,7 @@ export default {
         { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
         { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
         { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
-        { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' },
-        { label: '状态', param: 'status' }
+        { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
       ],
       selectedRows: []
     }
@@ -155,7 +127,7 @@ export default {
         endTime: this.fromSearch.time[1],
         oilGasName: this.fromSearch.oilGasName
       }
-      list(params).then((res) => {
+      oilgasmonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -203,20 +175,25 @@ export default {
         })
       }
     },
+    // 删除
     handleDel() {
-      if (this.selectedRows.length === 1) {
+      if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteList(this.selectedRows[0]).then((res) => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          oilgasmonthSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',
                 message: '删除成功!'
               })
-              this.list(1, this.pageSize)
+              this.list(this.currentPage, this.pageSize)
             } else {
               this.$message({
                 type: 'error',

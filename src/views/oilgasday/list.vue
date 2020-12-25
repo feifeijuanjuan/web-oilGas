@@ -15,6 +15,7 @@
                 <el-date-picker
                   v-model="fromSearch.time"
                   type="daterange"
+                  unlink-panels
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -22,19 +23,6 @@
                   :clearable="false"
                 >
                 </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -77,7 +65,6 @@
         @handleSelectionChange="handleSelectionChange"
         @handleCurrentChange="handleCurrentChange"
         @handleSizeChange="handleSizeChange"
-        @changeSwitch="changeSwitch"
       >
       </table-cmp>
     </div>
@@ -87,7 +74,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { MessageBox, Message } from 'element-ui'
-import { list, save, update, deleteList } from '@/api/fill'
+import { list, oilgasdaySwitchs } from '@/api/fill'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
 12直供甲醇厂日供气量、
@@ -102,30 +89,15 @@ export default {
       checkbox: true,
       currentPage: 1,
       pageSize: 50,
-      options: [
-        {
-          value: '',
-          label: '全部'
-        },
-        {
-          value: '选项1',
-          label: '冻结'
-        },
-        {
-          value: '选项2',
-          label: '启用'
-        }
-      ],
       fromSearch: {
         oilGasName: null,
-        time: '',
-        status: ''
+        time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },
         { label: '集团标识', param: 'groupType', minWidth: '180' },
@@ -137,20 +109,9 @@ export default {
         { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
         { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
         { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
-        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
-        { label: '状态', param: 'status', minWidth: 150 }
+        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' }
       ],
       selectedRows: []
-      /*tableSwitch: {
-        label: '状态',
-        width: '200',
-        paramItem: 'state',
-        methods: 'switch',
-        activeValue: '100',
-        inactiveValue: '0',
-        activeText: '启用',
-        inactivetext: '冻结'
-      },*/
     }
   },
   created() {
@@ -218,27 +179,30 @@ export default {
       }
     },
     handleDel() {
-      if (this.selectedRows.length === 1) {
+      if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteList(this.selectedRows[0]).then((res) => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          oilgasdaySwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: '删除成功'
               })
               this.list(1, this.pageSize)
             } else {
               this.$message({
                 type: 'error',
-                message: '删除失败!'
+                message: '删除失败'
               })
             }
           })
-
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -260,9 +224,6 @@ export default {
         arr.push(item.id)
       })
       this.selectedRows = arr
-    },
-    changeSwitch(val) {
-      console.log(val.row.state)
     }
   }
 }

@@ -74,7 +74,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { MessageBox, Message } from 'element-ui'
-import { list, oilgasdaySwitchs } from '@/api/fill'
+import { list, oilgasdaySwitchs,dic } from '@/api/fill'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
 12直供甲醇厂日供气量、

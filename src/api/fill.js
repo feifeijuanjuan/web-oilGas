@@ -171,3 +171,5 @@ export const gasreleaseUpdate = params => get(`/gasrelease/select/${params}`)
 // 删除
 export const gasreleaseSwitchs = params => post(`/gasrelease/switchs`, params)
 
+// 字典表
+export const dic = () => get('/dict/init')

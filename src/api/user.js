@@ -3,5 +3,5 @@ import { get, post } from '@/utils/request'
 export const login = params => post(`/LoginController/login`, params)
 //当前用户可访问的菜单列表
 export const userList = () => get(`/sys/menu/userList`)
-export const logout = () => post(`/vue-admin-template/user/logout`)
+export const logout = params => get(`/LogoutController/logout`, params)
 

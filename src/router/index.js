@@ -234,6 +234,30 @@ export const constantRoutes = [
       }
     ]
   },
+  // 能源局调峰
+  {
+    path: '/emergencyAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/emergencyAdd',
+        component: () => import('@/views/emergency/add')
+      }
+    ]
+  },
+  //储气释放事件填报
+  {
+    path: '/gasreleaseAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasreleaseAdd',
+        component: () => import('@/views/gasrelease/add')
+      }
+    ]
+  },
 
   /* {
      path: '/',

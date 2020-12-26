@@ -116,7 +116,7 @@ export default {
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
         { label: '储罐容积', param: 'tankVolume', minWidth: 180 },
         { label: '计划储气量', param: 'plannedStorageGovernment', minWidth: 210 },
-        { label: '实际储气量', param: 'actualStorageGovernments', minWidth: 210 },
+        { label: '实际储气量', param: 'actualStorageGovernment', minWidth: 210 },
         { label: '盟市租赁储罐数量', param: 'tankRent', minWidth: 160 },
         { label: '盟市自建储罐数量', param: 'tankSelf', minWidth: 160 },
         { label: '天然气历史缺口量', param: 'naGasBreach', minWidth: 160 },

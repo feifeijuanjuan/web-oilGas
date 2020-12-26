@@ -60,3 +60,83 @@ export const coaloilSave = params => post('/coaloil/save', params)
 export const coaloilUpdate = params => get(`/coaloil/select/${params}`)
 // 删除
 export const coaloilSwitchs = params => post(`/coaloil/switchs`, params)
+
+// 成品油销售企业销售填报
+// 查询
+export const chengpinyousalelList = params => post('/chengpinyousale/list', params)
+// 保存
+export const chengpinyousalelSave = params => post('/chengpinyousale/save', params)
+// 更新
+export const chengpinyousaleUpdate = params => get(`/chengpinyousale/select/${params}`)
+// 删除
+export const chengpinyousaleSwitchs = params => post(`/chengpinyousale/switchs`, params)
+
+// 成品油销售企业库存填报
+// 查询
+export const chengpinyoudepotlList = params => post('/chengpinyoudepot/list', params)
+// 保存
+export const chengpinyoudepotSave = params => post('/chengpinyoudepot/save', params)
+// 更新
+export const chengpinyoudepotUpdate = params => get(`/chengpinyoudepot/select/${params}`)
+// 删除
+export const chengpinyoudepotSwitchs = params => post(`/chengpinyoudepot/switchs`, params)
+
+// 炼油厂企业填报
+// 查询
+export const refinerylList = params => post('/refinery/list', params)
+// 保存
+export const refinerySave = params => post('/refinery/save', params)
+// 更新
+export const refineryUpdate = params => get(`/refinery/select/${params}`)
+// 删除
+export const refinerySwitchs = params => post(`/refinery/switchs`, params)
+
+// 管道企业按日填报
+// 查询
+export const pipelinedaylList = params => post('/pipelineday/list', params)
+// 保存
+export const pipelinedaysave = params => post('/pipelineday/save', params)
+// 更新
+export const pipelinedayUpdate = params => get(`/pipelineday/select/${params}`)
+// 删除
+export const pipelinedaySwitchs = params => post(`/pipelineday/switchs`, params)
+
+// 管道企业管道信息填报
+// 查询
+export const pipelinemonthlList = params => post('/pipelinemonth/list', params)
+// 保存
+export const pipelinemonthsave = params => post('/pipelinemonth/save', params)
+// 更新
+export const pipelinemonthUpdate = params => get(`/pipelinemonth/select/${params}`)
+// 删除
+export const pipelinemonthSwitchs = params => post(`/pipelinemonth/switchs`, params)
+
+// 城市燃气企业按年填报
+// 查询
+export const citygasyearlList = params => post('/citygasyear/list', params)
+// 保存
+export const citygasyearhsave = params => post('/citygasyear/save', params)
+// 更新
+export const citygasyearUpdate = params => get(`/citygasyear/select/${params}`)
+// 删除
+export const citygasyearSwitchs = params => post(`/citygasyear/switchs`, params)
+
+// 城市燃气企业按日填报
+// 查询
+export const citygasdaylList = params => post('/citygasday/list', params)
+// 保存
+export const citygasdayrhsave = params => post('/citygasday/save', params)
+// 更新
+export const citygasdayUpdate = params => get(`/citygasday/select/${params}`)
+// 删除
+export const citygasdaySwitchs = params => post(`/citygasday/switchs`, params)
+
+// 城燃企业按日调峰填报
+// 查询
+export const citygaspeekdaylList = params => post('/citygaspeekday/list', params)
+// 保存
+export const citygaspeekdaysave = params => post('/citygaspeekday/save', params)
+// 更新
+export const citygaspeekdayUpdate = params => get(`/citygaspeekday/select/${params}`)
+// 删除
+export const citygaspeekdaySwitchs = params => post(`/citygaspeekday/switchs`, params)

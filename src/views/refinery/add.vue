@@ -8,23 +8,27 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" size="small" label-width="140px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3盟市名称、4状态、
-        原油月加工量、原油计划月加工量、成品油产量、计划成品油月产量、计划负荷率、平均负荷率、
-        89#汽油产量、92#汽油产量、95#汽油产量、
-        负35号柴油产量、负20号柴油产量、负10号柴油产量、0号柴油产量、
-        煤油产量*/-->
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="140px"
+               class="form-box clearfix"
+      >
+        <!--        /*1企业名称、2时间、3盟市名称、4状态、
+                原油月加工量、原油计划月加工量、成品油产量、计划成品油月产量、计划负荷率、平均负荷率、
+                89#汽油产量、92#汽油产量、95#汽油产量、
+                负35号柴油产量、负20号柴油产量、负10号柴油产量、0号柴油产量、
+                煤油产量*/-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+            <el-form-item label="企业名称" class="no-unit" prop="enterName">
+              <el-input placeholder="请输入内容" v-model="editForm.enterName">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" class="no-unit">
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
-                v-model="editForm.time"
+                v-model="editForm.recordDate"
+                type="month"
+                value-format="yyyy-MM-dd"
                 placeholder="请选择日期"
               >
               </el-date-picker>
@@ -33,29 +37,15 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="状态" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="原油月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.crudeOilProcessingCapacity">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="原油计划月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.oilPlanMonthProcess">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -64,14 +54,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="成品油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldProductedOil">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="计划成品油月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilPlanMonthProduct">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -80,14 +70,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="计划负荷率">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.planLoadRate">
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="平均负荷率">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.avgLoadRate">
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -96,14 +86,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="89#汽油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldGasoline89">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="92#汽油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldGasoline92">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -112,14 +102,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="95#汽油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldGasoline95">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="负35号柴油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldDieselOilMinus35">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -128,14 +118,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="负20号柴油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldDieselOilMinus20">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="负10号柴油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldDieselOilMinus10">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -144,14 +134,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="0号柴油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldDieselOil0">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label=" 煤油产量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldAviationCoal">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -159,10 +149,11 @@
         </el-row>
       </el-form>
     </div>
-    <div class="form-footer-btn" >
-      <el-button  class="close-btn" @click="close">取 消</el-button>
+    <div class="form-footer-btn">
+      <el-button class="close-btn" @click="close">取 消</el-button>
       <el-button class="confrim-btn" type="primary"
-                 @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
+                 @click="statu==='create'?createData('editForm'):updateData('editForm')"
+      >确 定
       </el-button>
     </div>
   </div>
@@ -170,35 +161,40 @@
 </template>
 
 <script>
+import { refinerySave, refineryUpdate } from '@/api/fill'
+import { Message } from 'element-ui'
+
 export default {
   name: 'editFormAdd',
-  props: {
-    rowId: {
-      type: String,
-      default: ''
-    },
-    dialogStatu: {
-      type: String,
-      default: ''
-    },
-    fasFieldTable: {
-      type: Function,
-      default: null
-    },
-    dialogFormVisible: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       editForm: {
-        one: ''
+        enterName: '',
+        recordDate: '',
+        crudeOilProcessingCapacity: '',
+        oilPlanMonthProcess: '',
+        yieldProductedOil: '',
+        productedOilPlanMonthProduct: '',
+        planLoadRate: '',
+        avgLoadRate: '',
+        yieldGasoline89: '',
+        yieldGasoline92: '',
+        yieldGasoline95: '',
+        yieldDieselOilMinus35: '',
+        yieldDieselOilMinus20: '',
+        yieldDieselOilMinus10: '',
+        yieldDieselOil0: '',
+        yieldAviationCoal: ''
+
       },
-      options: [{
-        value: '选项1',
-        label: '安塞油田'
-      }]
+      rules: {
+        enterName: [
+          { required: true, message: '请输入企业名称', trigger: 'blur' }
+        ],
+        recordDate: [
+          { required: true, message: '请选择日期', trigger: 'change' }
+        ]
+      }
     }
   },
   created() {
@@ -206,16 +202,77 @@ export default {
     this.statu = this.$route.query.statu
   },
   mounted() {
+    if (this.statu !== 'create') {
+      this.update()
+    }
   },
   methods: {
+    // 数据回显
+    update() {
+      refineryUpdate(this.$route.query.id).then((res) => {
+        if (res.code === 0) {
+          this.editForm = res.body
+        } else {
+          Message({
+            message: '请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     close() {
       this.$router.push('/refinery/list')
     },
+    // 新增保存
     createData() {
-      this.$router.push('/refinery/list')
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          refinerySave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '保存成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/refinery/list')
+            } else {
+              Message({
+                message: '保存失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
     },
+    // 编辑保存
     updateData() {
-      this.$router.push('/refinery/list')
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          refinerySave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '修改成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/refinery/list')
+            } else {
+              Message({
+                message: '修改失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
     }
   }
 }

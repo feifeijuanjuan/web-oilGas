@@ -6,14 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
-                  type="daterange"
+                  type="monthrange"
+                  unlink-panels
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -21,19 +22,6 @@
                   :clearable="false"
                 >
                 </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -85,7 +73,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import chenpinyou2Add from '@/views/chenpinyou/chenpinyou2Add'
+import { chengpinyousalelList, chengpinyousaleSwitchs} from '@/api/fill'
+import { Message } from 'element-ui'
 /*1企业名称、2时间、3盟市名称、
 89#汽油销售量、92#汽油销售量、95#汽油销售量、
 0#柴油销售量、负35#柴油销售量、负10#柴油销售量、负20#柴油销费量、
@@ -97,67 +86,75 @@ export default {
   components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
       fromSearch: {
-        oil: '',
+        enterName: '',
         time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode', minWidth: '150' },
-        { label: '时间', param: 'baseStationCode', minWidth: '150' },
-        { label: '盟市', param: 'positionCode', minWidth: '150' },
-        { label: '89#汽油销售量', param: 'positionCode', minWidth: '180' },
-        { label: '92#汽油销售量', param: 'positionCode', minWidth: '180' },
-        { label: '95#汽油销售量', param: 'positionCode', minWidth: '180' },
-        { label: '0#柴油销售量', param: 'positionCode', minWidth: '180' },
-        { label: '负35#柴油销售量', param: 'positionCode', minWidth: '180' },
-        { label: '负10#柴油销售量', param: 'positionCode', minWidth: '180' },
-        { label: '负20#柴油销费量', param: 'positionCode', minWidth: '180' },
-        { label: '煤油销费量', param: 'positionCode', minWidth: '180' },
-        { label: '柴油消费量预测值', param: 'positionCode', minWidth: '180' },
-        { label: '汽油消费量预测', param: 'positionCode', minWidth: '180' },
-        { label: '成品油区内消费量', param: 'positionCode', minWidth: '180' },
-        { label: '成品油区外消费量', param: 'positionCode', minWidth: '180' }
+        { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '企业名称', param: 'enterName', minWidth: '150' },
+        { label: '盟市', param: 'leagueCityName', minWidth: '150' },
+        { label: '89#汽油销售量', param: 'salesGasoline89', minWidth: '180' },
+        { label: '92#汽油销售量', param: 'salesGasoline92', minWidth: '180' },
+        { label: '95#汽油销售量', param: 'salesGasoline95', minWidth: '180' },
+        { label: '0#柴油销售量', param: 'salesDieselOil0', minWidth: '180' },
+        { label: '负35#柴油销售量', param: 'salesDieselOilMinus35', minWidth: '180' },
+        { label: '负10#柴油销售量', param: 'salesDieselOilMinus10', minWidth: '180' },
+        { label: '负20#柴油销费量', param: 'salesDieselOilMinus20', minWidth: '180' },
+        { label: '煤油销费量', param: 'aviationCoalSales', minWidth: '180' },
+        { label: '柴油消费量预测值', param: 'salesPlanDieselOil', minWidth: '180' },
+        { label: '汽油消费量预测', param: 'salesPlanGasoline', minWidth: '180' },
+        { label: '成品油区内消费量', param: 'productedOilInAreaSales', minWidth: '180' },
+        { label: '成品油区外消费量', param: 'productedOilOutAreaSales', minWidth: '180' }
       ],
-      tableOption: {
-        label: '操作',
-        width: '200',
-        options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
-        ]
-      },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+      selectedRows:[]
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
+        enterName: this.fromSearch.enterName
       }
+      chengpinyousalelList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -165,6 +162,72 @@ export default {
         statu: 'create'
       }
       this.$router.push({ path: '/chengpinyousaleAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/chengpinyousaleAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    // 删除
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          chengpinyousaleSwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

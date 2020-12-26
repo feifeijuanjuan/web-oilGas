@@ -6,7 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -14,6 +14,7 @@
                 <el-date-picker
                   v-model="fromSearch.time"
                   type="daterange"
+                  unlink-panels
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -21,19 +22,6 @@
                   :clearable="false"
                 >
                 </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -85,6 +73,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
+import { citygasdaylList, citygasdaySwitchs} from '@/api/fill'
+import { Message } from 'element-ui'
 /*企业名称、盟市名称、时间、状态、
 天然气消费量、天然气需求量、天然气供应合同量、天然气计划日供气量、
 工业用户天然气消费量、商业用户天然气消费量、建筑业天然气消费量、生活销售天然气销售量、供暖天然气销售量、
@@ -96,71 +86,148 @@ export default {
   components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
       fromSearch: {
-        oil: '',
+        enterName: '',
         time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'positionCode' ,minWidth:120},
-        { label: '天然气消费量', param: 'positionCode',minWidth:120 },
-        { label: '天然气需求量', param: 'positionCode',minWidth:120 },
-        { label: '天然气供应合同量', param: 'positionCode' ,minWidth:150},
-        { label: '天然气计划日供气量', param: 'positionCode' ,minWidth:150},
-        { label: '工业用户天然气消费量', param: 'positionCode' ,minWidth:180},
-        { label: '商业用户天然气消费量', param: 'positionCode' ,minWidth:180},
-        { label: '建筑业天然气消费量', param: 'positionCode' ,minWidth:150},
-        { label: '生活销售天然气销售量', param: 'positionCode' ,minWidth:180},
-        { label: '供暖天然气销售量', param: 'positionCode',minWidth:150 },
-        { label: '可中断工业消费量', param: 'positionCode',minWidth:150 },
-        { label: '不可中断工业消费量', param: 'positionCode',minWidth:150 },
-        { label: '居民用气量天然气日消费量', param: 'positionCode',minWidth:200 },
-        { label: '民生用气量天然气日消费量', param: 'positionCode',minWidth:200 },
-        { label: '社会车辆用气天然气日消费量', param: 'positionCode' ,minWidth:200},
-        { label: '商业用户天然气日消费量', param: 'positionCode',minWidth:180 },
-        { label: '工业燃料天然气日消费量', param: 'positionCode',minWidth:180 },
-        { label: '甲醇天然气日消费量', param: 'positionCode',minWidth:180 },
-        { label: '化肥天然气日消费量', param: 'positionCode',minWidth:180 },
-        { label: 'LNG天然气日消费量', param: 'positionCode' ,minWidth:180},
-        { label: '状态', param: 'positionCode',minWidth:120 }
-      ]
+        { label: '时间', param: 'recordDate', minWidth: 120 },
+        { label: '企业名称', param: 'enterName', minWidth: 120 },
+        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
+        { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
+        { label: '天然气供应合同量', param: 'supplyNaGasContract', minWidth: 150 },
+        { label: '天然气计划日供气量', param: 'naturalGasPlanSupply', minWidth: 150 },
+        { label: '可中断工业消费量', param: 'interruptibleUserSales', minWidth: 150 },
+        { label: '不可中断工业消费量', param: 'uninterruptibleUserSales', minWidth: 150 },
+        { label: '居民用气量天然气日消费量', param: 'householdSalesDay', minWidth: 200 },
+        { label: '民生用气量天然气日消费量', param: 'livelihoodSalesDay', minWidth: 200 },
+        { label: '社会车辆用气天然气日消费量', param: 'cityTrafficSalesDay', minWidth: 200 },
+        { label: '商业用户天然气日消费量', param: 'businessSalesDay', minWidth: 180 },
+        { label: '工业燃料天然气日消费量', param: 'industrySalesDay', minWidth: 180 },
+        { label: '甲醇天然气日消费量', param: 'methanolSalesDay', minWidth: 180 },
+        { label: '化肥天然气日消费量', param: 'fertilizerSalesDay', minWidth: 180 },
+        { label: 'LNG天然气日消费量', param: 'lngSalesDay', minWidth: 180 }
+      ],
+      selectedRows: []
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(1222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],
+        enterName: this.fromSearch.enterName
       }
+      citygasdaylList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/citygaspeekdayAdd', query: params })
+      this.$router.push({ path: '/citygasdayAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/citygasdayAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          citygasdaySwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

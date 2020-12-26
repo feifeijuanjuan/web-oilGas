@@ -90,8 +90,8 @@ export default {
       currentPage: 1,
       pageSize: 50,
       fromSearch: {
-        oil: '',
-        enterName: ''
+        enterName: '',
+        time: ''
       },
       loading: false,
       tableData: [],
@@ -157,8 +157,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.beginTime,
-        endTime: this.fromSearch.endTime,
+        beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],
         enterName: this.fromSearch.enterName
       }
       coaloilList(params).then((res) => {

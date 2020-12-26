@@ -8,21 +8,23 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" size="small" label-width="110px" class="form-box clearfix">
-<!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
-        管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="110px"
+               class="form-box clearfix">
+        <!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
+                管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" >
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+            <el-form-item label="企业名称" class="no-unit" prop="enterName">
+              <el-input placeholder="请输入内容" v-model="editForm.enterName">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" class="no-unit" >
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
-                v-model="editForm.time"
+                v-model="editForm.recordDate"
+                value-format="yyyy-MM-dd"
                 placeholder="请选择日期"
               >
               </el-date-picker>
@@ -31,77 +33,62 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" >
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+            <el-form-item label="管线名" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.oilPipeline">
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="管线名" class="no-unit" >
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="管线进油量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineInputVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="管线出油量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineOutputVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="管线管存量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineStock">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="管线累计输油">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineCumulativeVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="城市燃气接收量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.cityGasReceipt">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="甲醇接收量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.methanolReceipt">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="化肥接收量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="lng接收气量">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.fertilizerReceipt">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -109,18 +96,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="状态" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+            <el-form-item label="lng接收气量">
+              <el-input placeholder="请输入内容" v-model="editForm.lngReceipt">
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </div>
-    <div class="form-footer-btn" >
-      <el-button  class="close-btn" @click="close">取 消</el-button>
+    <div class="form-footer-btn">
+      <el-button class="close-btn" @click="close">取 消</el-button>
       <el-button class="confrim-btn" type="primary"
-                 @click="dialogStatu==='create'?createData('editForm'):updateData('editForm')">确 定
+                 @click="statu==='create'?createData('editForm'):updateData('editForm')"
+      >确 定
       </el-button>
     </div>
   </div>
@@ -128,35 +117,34 @@
 </template>
 
 <script>
+import { pipelinedaysave, pipelinedayUpdate } from '@/api/fill'
+import { Message } from 'element-ui'
+
 export default {
   name: 'editFormAdd',
-  props: {
-    rowId: {
-      type: String,
-      default: ''
-    },
-    dialogStatu: {
-      type: String,
-      default: ''
-    },
-    fasFieldTable: {
-      type: Function,
-      default: null
-    },
-    dialogFormVisible: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       editForm: {
-        one: ''
+        recordDate: '',
+        enterName: '',
+        oilPipeline: '',
+        pipelineInputVolume: '',
+        pipelineOutputVolume: '',
+        pipelineStock: '',
+        pipelineCumulativeVolume: '',
+        cityGasReceipt: '',
+        methanolReceipt: '',
+        fertilizerReceipt: '',
+        lngReceipt: ''
       },
-      options: [{
-        value: '选项1',
-        label: '安塞油田'
-      }]
+      rules: {
+        enterName: [
+          { required: true, message: '请输入企业名称', trigger: 'blur' }
+        ],
+        recordDate: [
+          { required: true, message: '请选择日期', trigger: 'change' }
+        ]
+      }
     }
   },
   created() {
@@ -164,16 +152,77 @@ export default {
     this.statu = this.$route.query.statu
   },
   mounted() {
+    if (this.statu !== 'create') {
+      this.update()
+    }
   },
   methods: {
+    // 数据回显
+    update() {
+      pipelinedayUpdate(this.$route.query.id).then((res) => {
+        if (res.code === 0) {
+          this.editForm = res.body
+        } else {
+          Message({
+            message: '请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     close() {
       this.$router.push('/pipelineday/list')
     },
+    // 新增保存
     createData() {
-      this.$router.push('/pipelineday/list')
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          pipelinedaysave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '保存成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/pipelineday/list')
+            } else {
+              Message({
+                message: '保存失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
     },
+    // 编辑保存
     updateData() {
-      this.$router.push('/pipelineday/list')
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          pipelinedaysave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '修改成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/pipelineday/list')
+            } else {
+              Message({
+                message: '修改失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
     }
   }
 }

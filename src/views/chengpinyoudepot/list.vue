@@ -6,20 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -70,58 +57,78 @@
 </template>
 
 <script>
+import {
+  chengpinyoudepotlList,
+  chengpinyoudepotSwitchs
+} from '@/api/fill'
 import TableCmp from '@/components/TableCmp'
+import { Message } from 'element-ui'
 // 1企业名称、2时间、3盟市名称、油库汽油总库存、油库柴油总库存、油库煤油总库存、油库原油总库存、状态
 export default {
   name: 'Dashboard',
   components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
       fromSearch: {
-        oil: '',
+        enterName: '',
         time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode' },
-        { label: '时间', param: 'baseStationCode' },
-        { label: '盟市', param: 'positionCode' },
-        { label: '油库汽油总库存', param: 'positionCode' },
-        { label: '油库柴油总库存', param: 'positionCode' },
-        { label: '油库煤油总库存', param: 'positionCode' },
-        { label: '油库原油总库存', param: 'positionCode' }
-      ],
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+        { label: '时间', param: 'recordDate' },
+        { label: '企业名称', param: 'enterName' },
+        { label: '盟市', param: 'leagueCityName' },
+        { label: '油库汽油总库存', param: 'gasolineInventoryOilDepot' },
+        { label: '油库柴油总库存', param: 'dieselInventoryOilDepot' },
+        { label: '油库煤油总库存', param: 'aviationCoalInventoryOilDepot' },
+        { label: '油库原油总库存', param: 'crudeInventoryOilDepot' }
+      ]
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
+        enterName: this.fromSearch.enterName
       }
+      chengpinyoudepotlList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -129,6 +136,72 @@ export default {
         statu: 'create'
       }
       this.$router.push({ path: '/chengpinyoudepotAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/chengpinyoudepotAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    // 删除
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          chengpinyoudepotSwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

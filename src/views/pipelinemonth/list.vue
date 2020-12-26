@@ -11,20 +11,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="管道类型">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
+                <el-select v-model="fromSearch.pipelineType" placeholder="请选择">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -84,13 +71,13 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/guandao/gasFieldMonthAdd'
+import {pipelinemonthlList,pipelinemonthSwitchs} from '@/api/fill'
 /*1管道名、2管道类型、3企业名称、4时间、5区内里程、6运送能力、7管道长度、
 8设计压力、9末站压力阈值、10末站压力实际值、11区内起点、12区内终点、
 13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldMonthAdd },
+  components: { TableCmp },
   data() {
     return {
       expandForm: false,
@@ -98,15 +85,6 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '原油'
-      },
-        {
-          value: '选项2',
-          label: '天然气'
-        }
-      ],
       fromSearch: {
         oil: '',
         time: ''

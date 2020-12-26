@@ -6,34 +6,31 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="盟市名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+                <el-input v-model="fromSearch.leagueCityName"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="9">
               <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  :clearable="false"
-                >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.beginTime"
+                    type="year"
+                    placeholder="开始日期"
+                    value-format="yyyy-MM-dd"
                   >
-                  </el-option>
-                </el-select>
+                  </el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">至</el-col>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.endTime"
+                    type="year"
+                    placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+
               </el-form-item>
             </el-col>
           </el-row>
@@ -85,7 +82,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import gasFieldMonthAdd from '@/views/nengyuanju/gasFieldMonthAdd'
+import { nengyuanjuyearSwitchs, nengyuanjuyearList } from '@/api/fill'
+import { Message } from 'element-ui'
 /*盟市名称、时间
 盟市储气设施总容积
 地方政府日均三天计划储气量
@@ -98,75 +96,74 @@ import gasFieldMonthAdd from '@/views/nengyuanju/gasFieldMonthAdd'
 盟市气化装置日均气化量*/
 export default {
   name: 'Dashboard',
-  components: { TableCmp, gasFieldMonthAdd },
+  components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [{
-        value: '选项1',
-        label: '原油'
-      },
-        {
-          value: '选项2',
-          label: '天然气'
-        }
-      ],
       fromSearch: {
-        oil: '',
-        time: ''
+        leagueCityName: '',
+        beginTime: null,
+        endTime:null
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '盟市', param: 'stationCode', minWidth: 120 },
-        { label: '时间', param: 'baseStationCode', minWidth: 120 },
-        { label: '盟市储气设施总容积', param: 'laneCode', minWidth: 180 },
-        { label: '地方政府日均三天计划储气量', param: 'positionCode', minWidth: 210 },
-        { label: '地方政府日均三天实际储气量', param: 'positionCode', minWidth: 210 },
-        { label: '盟市租赁储罐数量', param: 'positionCode', minWidth: 160 },
-        { label: '盟市自建储罐数量', param: 'positionCode', minWidth: 160 },
-        { label: '天然气历史缺口量', param: 'positionCode', minWidth: 160 },
-        { label: '盟市储气日调用量', param: 'positionCode', minWidth: 160 },
-        { label: '盟市气化装置数量', param: 'positionCode', minWidth: 160 },
-        { label: '盟市气化装置日均气化量', param: 'positionCode', minWidth: 180 }
-      ],
-      tableOption: {
-        label: '操作',
-        width: '200',
-        options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
-        ]
-      },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+        { label: '时间', param: 'recordDate', minWidth: 120 },
+        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        { label: '储罐容积', param: 'tankVolume', minWidth: 180 },
+        { label: '计划储气量', param: 'plannedStorageGovernment', minWidth: 210 },
+        { label: '实际储气量', param: 'actualStorageGovernments', minWidth: 210 },
+        { label: '盟市租赁储罐数量', param: 'tankRent', minWidth: 160 },
+        { label: '盟市自建储罐数量', param: 'tankSelf', minWidth: 160 },
+        { label: '天然气历史缺口量', param: 'naGasBreach', minWidth: 160 },
+        { label: '盟市储气日调用量', param: 'naGasInvoke', minWidth: 160 },
+        { label: '盟市气化装置数量', param: 'apparatusNum', minWidth: 160 },
+        { label: '盟市气化装置日均气化量', param: 'apparatusGasContent', minWidth: 180 }
+      ]
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
+        leagueCityName: this.fromSearch.leagueCityName
       }
+      nengyuanjuyearList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -174,6 +171,72 @@ export default {
         statu: 'create'
       }
       this.$router.push({ path: '/nengyuanjuyearAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/nengyuanjuyearAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    // 删除
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          nengyuanjuyearSwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

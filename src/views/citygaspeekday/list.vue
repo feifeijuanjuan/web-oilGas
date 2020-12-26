@@ -6,7 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -14,6 +14,7 @@
                 <el-date-picker
                   v-model="fromSearch.time"
                   type="daterange"
+                  unlink-panels
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -21,19 +22,6 @@
                   :clearable="false"
                 >
                 </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -48,7 +36,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按年填报
+          调峰按日填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -85,60 +73,88 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import ranqi3Add from '@/views/ranqi/ranqi3Add'
+import { citygaspeekdaySwitchs, citygaspeekdaylList } from '@/api/fill'
+import { Message } from 'element-ui'
 /*企业名称、盟市名称、时间、状态
-已建储气能力(万立方米)
-正在建设储气能力(万立方米)
-待建设储气能力(万立方米)
-城燃企业5%实际储气量
-城燃企业5%计划储气量*/
+商业调峰量
+甲醇化肥调峰量
+可中断工业调峰量
+不可中断工业调峰量
+LNG调峰量
+盟市储气日调用量（释放气量）
+计划日调峰量
+实际日调峰量*/
+
 export default {
   name: 'Dashboard',
-  components: { TableCmp, ranqi3Add },
+  components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        one: ''
+        enterName: '',
+        time: ''
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'stationCode',minWidth:120 },
-        { label: '时间', param: 'baseStationCode',minWidth:120 },
-        { label: '盟市', param: 'laneCode' ,minWidth:120},
-        { label: '已建储气能力', param: 'positionCode',minWidth:120 },
-        { label: '正在建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '待建设储气能力', param: 'positionCode' ,minWidth:150},
-        { label: '城燃企业5%实际储气量', param: 'positionCode',minWidth:150 },
-        { label: '城燃企业5%计划储气量', param: 'positionCode',minWidth:150 }
-      ]
+        { label: '时间', param: 'recordDate', minWidth: 120 },
+        { label: '企业名称', param: 'enterName', minWidth: 120 },
+        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        { label: '商业调峰量', param: 'businessPeakLoadRegulation', minWidth: 150 },
+        { label: '甲醇化肥调峰量', param: 'methanolPeakLoadRegulation', minWidth: 150 },
+        { label: '可中断工业调峰量', param: 'interruptiblePeakLoadRegulation', minWidth: 150 },
+        { label: '不可中断工业调峰量', param: 'uninterruptiblePeakLoadRegulation', minWidth: 150 },
+        { label: 'LNG调峰量', param: 'lngPeakLoadRegulation', minWidth: 150 },
+        { label: '盟市储气日调用量', param: 'gasInvoke', minWidth: 150 },
+        { label: '计划日调峰量', param: 'planPeakLoadRegulation', minWidth: 150 },
+        { label: '实际日调峰量', param: 'peakLoadRegulation', minWidth: 150 }
+      ],
+      selectedRows: []
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
-    },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],
+        enterName: this.fromSearch.enterName
       }
+      citygaspeekdaylList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -146,6 +162,72 @@ export default {
         statu: 'create'
       }
       this.$router.push({ path: '/citygaspeekdayAdd', query: params })
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/citygaspeekdayAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    // 删除
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          citygaspeekdaySwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }
@@ -161,5 +243,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

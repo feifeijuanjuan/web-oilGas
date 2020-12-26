@@ -140,3 +140,34 @@ export const citygaspeekdaysave = params => post('/citygaspeekday/save', params)
 export const citygaspeekdayUpdate = params => get(`/citygaspeekday/select/${params}`)
 // 删除
 export const citygaspeekdaySwitchs = params => post(`/citygaspeekday/switchs`, params)
+
+// 能源局填报-按年填报
+// 查询
+export const nengyuanjuyearList = params => post('/nengyuanjuyear/list', params)
+// 保存
+export const nengyuanjuyearsave = params => post('/nengyuanjuyear/save', params)
+// 更新
+export const nengyuanjuyearUpdate = params => get(`/nengyuanjuyear/select/${params}`)
+// 删除
+export const nengyuanjuyearSwitchs = params => post(`/nengyuanjuyear/switchs`, params)
+
+// 能源局-应急调峰事件填报
+// 查询
+export const emergencyList = params => post('/emergency/list', params)
+// 保存
+export const emergencysave = params => post('/emergency/save', params)
+// 更新
+export const emergencyUpdate = params => get(`/emergency/select/${params}`)
+// 删除
+export const emergencSwitchs = params => post(`/emergency/switchs`, params)
+
+// 能源局-储气释放填报
+// 查询
+export const gasreleaseList = params => post('/gasrelease/list', params)
+// 保存
+export const gasreleasesave = params => post('/gasrelease/save', params)
+// 更新
+export const gasreleaseUpdate = params => get(`/gasrelease/select/${params}`)
+// 删除
+export const gasreleaseSwitchs = params => post(`/gasrelease/switchs`, params)
+

@@ -8,7 +8,8 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" size="small" label-width="200px" class="form-box clearfix">
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="200px"
+               class="form-box clearfix">
 <!--        /*盟市名称、时间
         盟市储气设施总容积
         地方政府日均三天计划储气量
@@ -22,7 +23,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
+              <el-input placeholder="请输入内容" v-model="editForm.leagueCityName">
               </el-input>
             </el-form-item>
           </el-col>
@@ -122,35 +123,14 @@
 </template>
 
 <script>
+import {nengyuanjuyearsave,nengyuanjuyearUpdate} from '@/api/fill'
 export default {
   name: 'editFormAdd',
-  props: {
-    rowId: {
-      type: String,
-      default: ''
-    },
-    dialogStatu: {
-      type: String,
-      default: ''
-    },
-    fasFieldTable: {
-      type: Function,
-      default: null
-    },
-    dialogFormVisible: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       editForm: {
         one: ''
-      },
-      options: [{
-        value: '选项1',
-        label: '安塞油田'
-      }]
+      }
     }
   },
   created() {

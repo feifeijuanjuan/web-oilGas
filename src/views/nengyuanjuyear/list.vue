@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="盟市名称" label-width="90px">
-                <el-input v-model="fromSearch.leagueCityName"></el-input>
+                <el-select v-model="fromSearch.leagueCityName" clearable>
+                  <el-option
+                    v-for="item in leagueCityTypeAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="9">
@@ -82,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { nengyuanjuyearSwitchs, nengyuanjuyearList } from '@/api/fill'
+import { nengyuanjuyearSwitchs, nengyuanjuyearList, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*盟市名称、时间
 盟市储气设施总容积
@@ -104,10 +112,11 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
+      leagueCityTypeAry: [],//盟市名称
       fromSearch: {
         leagueCityName: '',
         beginTime: null,
-        endTime:null
+        endTime: null
       },
       loading: false,
       tableData: [],
@@ -129,8 +138,24 @@ export default {
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    //字典表
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data.leagueCityType
+          this.leagueCityTypeAry = data
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

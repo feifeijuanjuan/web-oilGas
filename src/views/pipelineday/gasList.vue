@@ -1,5 +1,4 @@
 <template>
-  <!--  煤制气按月填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
@@ -11,18 +10,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  unlink-panels
-                  type="monthrange"
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  :clearable="false"
-                >
-                </el-date-picker>
+              <el-form-item label="管线名" label-width="90px">
+                <el-input v-model="fromSearch.oilPipeline"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -37,7 +26,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按月填报
+          按日填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -74,11 +63,15 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { coalgasList, coalgasSwitchs,dic } from '@/api/fill'
+import { pipelinedaylList, pipelinedaySwitchs ,dic} from '@/api/fill'
 import { Message } from 'element-ui'
-/*1企业名称、2时间、3盟市名称、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
-7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12煤制气产量、
-13煤制气月供应量、14管道气供应量、15CNG供应量、16LNG供应量、17终端消费量、18化工消费量、19火力发电消费量、20供热消费量、21工业消费量、22生活消费量、23建筑业消费量、24商业消费量、25交通消费量、26调峰煤制气用量、27煤制气计划月供应量、28煤制气消费量、29状态*/
+/*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
+管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
+/*末站压力阈值
+末站压力实际值
+设计输气（油）能力
+实际输气（油）能力*/
+
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -89,41 +82,29 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
+      loading: false,
       fromSearch: {
         enterName: '',
-        time: ''
+        oilPipeline: ''
       },
-      loading: false,
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 150 },
         { label: '企业名称', param: 'enterName', minWidth: 150 },
-        { label: '盟市', param: 'leagueCityName', minWidth: 150 },
-        { label: '计划粉煤月加工量', param: 'coalProcessMonth', minWidth: 150 },
-        { label: '粉煤月加工量', param: 'pulverizedCoalProcessingCapacity', minWidth: 150 },
-        { label: '平均负荷率', param: 'avgLoadRate', minWidth: 150 },
-        { label: '计划平均负荷率', param: 'planAvgLoadRate', minWidth: 150 },
-        { label: '水资源用量', param: 'waterUse', minWidth: 150 },
-        { label: '单位产品原料消耗', param: 'unitProductRawSales', minWidth: 150 },
-        { label: '单位产品综合能耗', param: 'unitProductComprehensiveEnergySales', minWidth: 150 },
-        { label: '单位产品新鲜水耗', param: 'unitProductFreshWaterSales', minWidth: 150 },
-        { label: '煤制气产量', param: 'gasYield', minWidth: 150 },
-        { label: '煤制气月供应量', param: 'gasSupply', minWidth: 150 },
-        { label: '管道气供应量', param: 'pipelineGasSupply', minWidth: 150 },
-        { label: 'CNG供应量', param: 'cngSupply', minWidth: 150 },
-        { label: 'LNG供应量', param: 'lngSupply', minWidth: 150 },
-        { label: '终端消费量', param: 'householdSales', minWidth: 150 },
-        { label: '化工消费量', param: 'chemicalConsumption', minWidth: 150 },
-        { label: '火力发电消费量', param: 'thermalPowerSales', minWidth: 150 },
-        { label: '供热消费量', param: 'heatingSales', minWidth: 150 },
-        { label: '工业消费量', param: 'industrySales', minWidth: 150 },
-        { label: '生活消费量', param: 'lifeSales', minWidth: 150 },
-        { label: '建筑业消费量', param: 'constructionIndustrySales', minWidth: 150 },
-        { label: '商业消费量', param: 'businessSales', minWidth: 150 },
-        { label: '交通消费量', param: 'trafficSales', minWidth: 150 },
-        { label: '调峰煤制气用量', param: 'peakShavingSales', minWidth: 150 },
-        { label: '煤制气计划月供应量', param: 'gasPlanMonthSupply', minWidth: 150 },
-        { label: '煤制气消费量', param: 'gasConsumption', minWidth: 150 }
+        // { label: '盟市', param: 'laneCode', minWidth: 150 },
+        { label: '管线名', param: 'oilPipeline', minWidth: 150 },
+        { label: '管线进油量', param: 'pipelineInputVolume', minWidth: 180 },
+        { label: '管线出油量', param: 'pipelineOutputVolume', minWidth: 180 },
+        { label: '管线管存量', param: 'pipelineStock', minWidth: 180 },
+        { label: '管线累计输油', param: 'pipelineCumulativeVolume', minWidth: 180 },
+        { label: '城市燃气接收量', param: 'cityGasReceipt', minWidth: 180 },
+        { label: '甲醇接收量', param: 'methanolReceipt', minWidth: 180 },
+        { label: '化肥接收量', param: 'fertilizerReceipt', minWidth: 180 },
+        { label: 'lng接收气量', param: 'lngReceipt', minWidth: 180 },
+        { label: '末站压力阈值', param: 'pressureThreshold', minWidth: 180 },
+        { label: '末站压力实际值', param: 'pressureActualValue', minWidth: 180 },
+        { label: '设计输气（油）能力', param: 'runPlanPressure', minWidth: 180 },
+        { label: '实际输气（油）能力', param: 'runPressure', minWidth: 180 }
       ],
       selectedRows: []
     }
@@ -131,13 +112,15 @@ export default {
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
-    //字典表
+    //
     this.dic()
   },
   methods: {
     dic(){
       dic().then((res)=>{
-
+        if(res.success){
+          // const data=res.data
+        }
       })
     },
     // 查询列表
@@ -146,11 +129,10 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
-        enterName: this.fromSearch.enterName
+        enterName: this.fromSearch.enterName,
+        oilPipeline: this.fromSearch.oilPipeline
       }
-      coalgasList(params).then((res) => {
+      pipelinedaylList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -178,7 +160,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/coalgasAdd', query: params })
+      this.$router.push({ path: '/gasAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -188,7 +170,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/coalgasAdd', query: params })
+        this.$router.push({ path: '/gasAdd', query: params })
 
       } else {
         Message({
@@ -209,7 +191,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          coalgasSwitchs(params).then((res) => {
+          pipelinedaySwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',
@@ -259,7 +241,5 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
-
-
 }
 </style>

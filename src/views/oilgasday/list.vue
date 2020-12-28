@@ -6,8 +6,19 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="油气田名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+              <el-form-item label="气田名称" label-width="90px">
+                <el-select v-model="fromSearch.oilGasName" placeholder="请选择气田名称"
+                           style="width: 180px" ref="selectReport"
+                >
+                  <el-option :value="fromSearch.name" :label="fromSearch.name1"
+                             style="width: 180px;height:200px;overflow: auto;background-color:#fff"
+                  >
+                    <el-tree
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                  </el-option>
+                </el-select>
+                <!--                <el-input v-model="fromSearch.oilGasName"></el-input>-->
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -74,7 +85,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { MessageBox, Message } from 'element-ui'
-import { list, oilgasdaySwitchs,dic } from '@/api/fill'
+import { list, oilgasdaySwitchs, dic } from '@/api/fill'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
 12直供甲醇厂日供气量、
@@ -91,13 +102,15 @@ export default {
       pageSize: 50,
       fromSearch: {
         oilGasName: null,
-        time: ''
+        time: '',
+        name: '',
+        name1: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: '150' },
-        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
+        { label: '气田名称', param: 'oilGasName', minWidth: '150' },
         /*{ label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
         { label: '企业结构', param: 'groupType', minWidth: '180' },
@@ -111,14 +124,24 @@ export default {
         { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
         { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' }
       ],
-      selectedRows: []
+      selectedRows: [],
+      oilTypesObj: {}
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data.oilTypes
+          this.oilTypesObj = data
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true
@@ -224,6 +247,9 @@ export default {
         arr.push(item.id)
       })
       this.selectedRows = arr
+    },
+    handleNodeClick() {
+
     }
   }
 }

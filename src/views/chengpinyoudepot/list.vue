@@ -84,6 +84,7 @@ export default {
         { label: '时间', param: 'recordDate' },
         { label: '企业名称', param: 'enterName' },
         { label: '盟市', param: 'leagueCityName' },
+        { label: '企业结构', param: 'groupType' },
         { label: '油库汽油总库存', param: 'gasolineInventoryOilDepot' },
         { label: '油库柴油总库存', param: 'dieselInventoryOilDepot' },
         { label: '油库煤油总库存', param: 'aviationCoalInventoryOilDepot' },

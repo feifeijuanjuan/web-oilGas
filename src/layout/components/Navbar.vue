@@ -7,7 +7,7 @@
       <div class="right-menu">
         <img src="../../assets/web/user.png" alt="暂无图片" style="height: 70px;position: relative;top: 5px;">
         <span class="name-box">{{ userName }}</span>
-        <i class="icon iconfont i-exit" @click.native="logout">&#xe75d;</i>
+        <i class="icon iconfont i-exit" @click="logout">&#xe75d;</i>
         <!--        <el-dropdown class="avatar-container" trigger="click">
                   <div class="avatar-wrapper">
 
@@ -35,8 +35,9 @@
                 </el-dropdown>-->
       </div>
     </div>
-        <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"
-                   style="display: none"/>
+    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"
+               style="display: none"
+    />
 
   </div>
 </template>

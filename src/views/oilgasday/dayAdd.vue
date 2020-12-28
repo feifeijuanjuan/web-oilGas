@@ -19,7 +19,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油气田名称" class="no-unit" prop="oilGasName">
+            <el-form-item label="气田名称" class="no-unit" prop="oilGasName">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasName">
               </el-input>
             </el-form-item>

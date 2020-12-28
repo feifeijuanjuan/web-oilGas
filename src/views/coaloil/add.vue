@@ -9,7 +9,8 @@
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
       <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="140px"
-               class="form-box clearfix">
+               class="form-box clearfix"
+      >
         <!--        /*1企业名称、2时间、3状态、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
                 7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12石脑油产量、
                 13柴油产量、14液化气产量、15干气产量、16石脑油供应量、17柴油供应量、18液化气供应量、19干气供应量、20石脑油销售量、
@@ -38,12 +39,21 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="计划粉煤月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth">
+            <el-form-item label="煤制油月产量">
+              <el-input placeholder="请输入内容" v-model="editForm.coalOilMonthProduct">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="计划煤制油月产量">
+              <el-input placeholder="请输入内容" v-model="editForm.coalOilPlanMonthProduct">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="粉煤月加工量">
               <el-input placeholder="请输入内容" v-model="editForm.pulverizedCoalProcessingCapacity">
@@ -51,6 +61,14 @@
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="计划粉煤月加工量">
+              <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
 
         </el-row>
         <el-row>
@@ -174,40 +192,6 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="石脑油销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.naphthaSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="柴油销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.dieselOilSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="液化气销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.lgpSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="干气销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.dryGasSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="汽运供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyBusTrans">
                 <template slot="append">万吨</template>
@@ -222,6 +206,38 @@
             </el-form-item>
           </el-col>
 
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="柴油销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.dieselOilSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="液化气销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.lgpSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="石脑油销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.naphthaSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="干气销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.dryGasSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -325,70 +341,6 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="鄂尔多斯市销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.eerduosiSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="呼伦贝尔市销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.hulunbeierSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="巴彦淖尔市销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.bayannaoerSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="乌兰察布市销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.wulanchabuSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="锡林格勒盟销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.xilingelemengSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="阿拉善盟销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.alashanmengSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="兴安盟销售量">
-              <el-input placeholder="请输入内容" v-model="editForm.xinganmengSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="煤制油月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.coalOilMonthProduct">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="通辽市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.tongliaoSales">
                 <template slot="append">万吨</template>
@@ -396,8 +348,56 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="计划煤制油月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.coalOilPlanMonthProduct">
+            <el-form-item label="鄂尔多斯市销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.eerduosiSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="呼伦贝尔市销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.hulunbeierSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="巴彦淖尔市销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.bayannaoerSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="乌兰察布市销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.wulanchabuSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="锡林格勒盟销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.xilingelemengSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="阿拉善盟销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.alashanmengSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="兴安盟销售量">
+              <el-input placeholder="请输入内容" v-model="editForm.xinganmengSales">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>

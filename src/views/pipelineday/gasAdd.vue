@@ -8,8 +8,9 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="110px"
-               class="form-box clearfix">
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="160px"
+               class="form-box clearfix"
+      >
         <!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
                 管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
 
@@ -102,6 +103,34 @@
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="末站压力阈值" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.pressureThreshold">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="末站压力实际值" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.pressureActualValue">
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="设计输气（油）能力" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.runPlanPressure">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="实际输气（油）能力" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.runPressure">
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -135,7 +164,11 @@ export default {
         cityGasReceipt: '',
         methanolReceipt: '',
         fertilizerReceipt: '',
-        lngReceipt: ''
+        lngReceipt: '',
+        pressureThreshold: '',
+        pressureActualValue: '',
+        runPlanPressure: '',
+        runPressure: ''
       },
       rules: {
         enterName: [
@@ -172,7 +205,7 @@ export default {
       })
     },
     close() {
-      this.$router.push('/pipelineday/list')
+      this.$router.push('/pipelineday/gasList')
     },
     // 新增保存
     createData() {
@@ -185,7 +218,7 @@ export default {
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/pipelineday/list')
+              this.$router.push('/pipelineday/gasList')
             } else {
               Message({
                 message: '保存失败',
@@ -210,7 +243,7 @@ export default {
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/pipelineday/list')
+              this.$router.push('/pipelineday/gasList')
             } else {
               Message({
                 message: '修改失败',

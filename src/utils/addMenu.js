@@ -14,42 +14,6 @@ export const initMenu = ((menu) => {
   })
 })
 
-export const filterMenu = ((menu) => {
-  const result = []
-  const mItem = {
-    path: '',
-    meta: { title: '', icon: '' },
-    component: Layout,
-    children: []
-  }
-  const mItemChild = {
-    path: '',
-    name: '',
-    meta: { title: '', icon: '' },
-    component: (() => {
-
-    })
-  }
-  menu.forEach(function(item) {
-    mItem.path = item.href
-    mItem.meta.title = item.name
-    mItem.meta.icon = item.icon
-    item.children.forEach(function(cItem) {
-      mItemChild.path = cItem.href
-      mItemChild.name = cItem.href
-      mItemChild.meta.title = cItem.name
-      mItemChild.meta.icon = cItem.icon
-      mItemChild.component = (() => {
-        import('@/views' + item.href + '/' + cItem.href)
-      })
-      mItem.children.push(mItemChild)
-    })
-
-    result.push(mItem)
-  })
-  return result
-})
-
 export const handleMenu = ((menu) => {
   const menuList = []
   menu.forEach((item, index) => {

@@ -1,17 +1,19 @@
 <template>
   <div class="app-container">
-    <div class="form-add"><span class="first">成品油销售企业填报</span>
+    <div class="form-add"><span class="first">管道企业填报</span>
       <span class="first-line">></span>
-      <span class="first">库存按月填报</span
+      <span class="first">按日填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" size="small" :rules="rules" ref="ruleForm" label-width="140px"
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="160px"
                class="form-box clearfix"
       >
-        <!--        // 1企业名称、2时间、3盟市名称、油库汽油总库存、油库柴油总库存、油库煤油总库存、油库原油总库存、状态-->
+        <!--        /*1企业名称、2时间、3盟市名称、管线名、管线进油量、管线出油量、
+                管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
+
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
@@ -23,7 +25,6 @@
             <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
                 v-model="editForm.recordDate"
-                type="month"
                 value-format="yyyy-MM-dd"
                 placeholder="请选择日期"
               >
@@ -33,37 +34,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.leagueCityName">
+            <el-form-item label="管线名" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.oilPipeline">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="企业结构" class="no-unit">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
-                <el-option
-                  v-for="item in optionsGroupType"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="油库汽油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.gasolineInventoryOilDepot">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="油库柴油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.dieselInventoryOilDepot">
+            <el-form-item label="管线进油量">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineInputVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -71,16 +49,53 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油库煤油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.aviationCoalInventoryOilDepot">
+            <el-form-item label="管线出油量">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineOutputVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="油库原油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.crudeInventoryOilDepot">
+            <el-form-item label="管线管存量">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineStock">
                 <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="管线累计输油">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineCumulativeVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="末站压力阈值" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.pressureThreshold">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="末站压力实际值" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.pressureActualValue">
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="设计输气（油）能力" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.runPlanPressure">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="实际输气（油）能力" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.runPressure">
               </el-input>
             </el-form-item>
           </el-col>
@@ -99,7 +114,7 @@
 </template>
 
 <script>
-import { chengpinyoudepotSave, chengpinyoudepotUpdate } from '@/api/fill'
+import { pipelinedaysave, pipelinedayUpdate } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -109,23 +124,16 @@ export default {
       editForm: {
         recordDate: '',
         enterName: '',
-        groupType:'',
-        leagueCityName: '',
-        gasolineInventoryOilDepot: '',
-        dieselInventoryOilDepot: '',
-        aviationCoalInventoryOilDepot: '',
-        crudeInventoryOilDepot: ''
+        oilPipeline: '',
+        pipelineInputVolume: '',
+        pipelineOutputVolume: '',
+        pipelineStock: '',
+        pipelineCumulativeVolume: '',
+        pressureThreshold: '',
+        pressureActualValue: '',
+        runPlanPressure: '',
+        runPressure: ''
       },
-      optionsGroupType: [
-        {
-          value: 1,
-          label: '中石化'
-        },
-        {
-          value: 2,
-          label: '中石油'
-        }
-      ],
       rules: {
         enterName: [
           { required: true, message: '请输入企业名称', trigger: 'blur' }
@@ -148,7 +156,7 @@ export default {
   methods: {
     // 数据回显
     update() {
-      chengpinyoudepotUpdate(this.$route.query.id).then((res) => {
+      pipelinedayUpdate(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
@@ -161,19 +169,20 @@ export default {
       })
     },
     close() {
-      this.$router.push('/chengpinyoudepot/list')
+      this.$router.push('/pipelineday/crudeList')
     },
+    // 新增保存
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          chengpinyoudepotSave(this.editForm).then((res) => {
+          pipelinedaysave(this.editForm).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '保存成功',
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/chengpinyoudepot/list')
+              this.$router.push('/pipelineday/crudeList')
             } else {
               Message({
                 message: '保存失败',
@@ -187,18 +196,18 @@ export default {
         }
       })
     },
-
+    // 编辑保存
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          chengpinyoudepotSave(this.editForm).then((res) => {
+          pipelinedaysave(this.editForm).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '修改成功',
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/chengpinyoudepot/list')
+              this.$router.push('/pipelineday/crudeList')
             } else {
               Message({
                 message: '修改失败',

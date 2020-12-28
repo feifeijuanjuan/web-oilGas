@@ -64,6 +64,7 @@
                   :value="item.value"
                 >
                 </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">

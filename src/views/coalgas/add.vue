@@ -42,17 +42,35 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="计划粉煤月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth">
+            <el-form-item label="煤制气产量">
+              <el-input placeholder="请输入内容" v-model="editForm.gasYield">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="计划煤制气（天然气）产量">
+              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthProduct">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="粉煤月加工量">
+              <el-input placeholder="请输入内容" v-model="editForm.pulverizedCoalProcessingCapacity">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
+
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="粉煤月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.pulverizedCoalProcessingCapacity">
+            <el-form-item label="计划粉煤月加工量">
+              <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -106,17 +124,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="煤制气产量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasYield">
+            <el-form-item label="煤制气供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.gasSupply">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
+
           <el-col :span="12">
-            <el-form-item label="煤制气月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasSupply">
+            <el-form-item label="煤制气计划月供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthSupply">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -130,6 +149,7 @@
           </el-col>
         </el-row>
         <el-row>
+
           <el-col :span="12">
             <el-form-item label="CNG供应量">
               <el-input placeholder="请输入内容" v-model="editForm.cngSupply">
@@ -146,6 +166,14 @@
           </el-col>
         </el-row>
         <el-row>
+
+          <el-col :span="12">
+            <el-form-item label="煤制气消费量">
+              <el-input placeholder="请输入内容" v-model="editForm.gasConsumption">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="终端消费量">
               <el-input placeholder="请输入内容" v-model="editForm.householdSales">
@@ -153,6 +181,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="化工消费量">
               <el-input placeholder="请输入内容" v-model="editForm.chemicalConsumption">
@@ -160,8 +191,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="火力发电消费量">
               <el-input placeholder="请输入内容" v-model="editForm.thermalPowerSales">
@@ -169,15 +198,9 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="供热消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.heatingSales">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
         <el-row>
+
           <el-col :span="12">
             <el-form-item label="工业消费量">
               <el-input placeholder="请输入内容" v-model="editForm.industrySales">
@@ -186,8 +209,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="生活消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.lifeSales">
+            <el-form-item label="供热消费量">
+              <el-input placeholder="请输入内容" v-model="editForm.heatingSales">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -218,24 +241,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="调峰煤制气用量">
-              <el-input placeholder="请输入内容" v-model="editForm.peakShavingSales">
+            <el-form-item label="生活消费量">
+              <el-input placeholder="请输入内容" v-model="editForm.lifeSales">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
+
           <el-col :span="12">
-            <el-form-item label="煤制气计划月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthSupply">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="煤制气消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasConsumption">
+            <el-form-item label="调峰煤制气用量">
+              <el-input placeholder="请输入内容" v-model="editForm.peakShavingSales">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -255,7 +272,7 @@
 </template>
 
 <script>
-import { coalgasSave, coalgasUpdate} from '@/api/fill'
+import { coalgasSave, coalgasUpdate } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -267,6 +284,7 @@ export default {
         recordDate: '',
         leagueCityName: '',
         coalProcessMonth: '',
+        gasPlanMonthProduct: '',
         pulverizedCoalProcessingCapacity: '',
         avgLoadRate: '',
         planAvgLoadRate: '',

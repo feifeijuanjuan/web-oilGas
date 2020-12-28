@@ -1,19 +1,35 @@
 <template>
+  <!--  油气田企业按月填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+              <el-form-item label="气田名称" label-width="90px">
+                <el-input v-model="fromSearch.oilGasName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  unlink-panels
+                  type="monthrange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                  :clearable="false"
+                >
+                </el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="gaslist((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -21,7 +37,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          企业信息填报
+          按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -52,39 +68,52 @@
       >
       </table-cmp>
     </div>
-
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { enterpriseList, enterpriseSwitchs } from '@/api/fill'
+import { oilgasmonthList, oilgasmonthSwitchs } from '@/api/fill'
 import { Message } from 'element-ui'
-/*1企业名称、2时间、3企业性质、4税收、5企业人数*/
+/*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
+7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
+13月产能、14综合能源消费量、15状态*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
   data() {
     return {
       checkbox: true,
-      count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        enterName: ''
+        oilGasName: null,
+        time: ''
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'enterName' },
-        { label: '企业性质', param: 'enterType' },
-        { label: '税收', param: 'taxRevenue' },
-        { label: '企业人数', param: 'employeesNum' }
-      ]
+        { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '气田名称', param: 'oilGasName', minWidth: '150' },
+       /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
+        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        { label: '企业结构', param: 'groupType', minWidth: '150' },
+        { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
+        { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
+        { label: '计划月产量', param: 'oilGasPlanMonthYield', minWidth: '150' },
+        { label: '月供应量', param: 'supplyOilGas', minWidth: '150' },
+        { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
+        { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
+        { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
+        { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
+        { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
+      ],
+      selectedRows: []
     }
   },
   created() {
+    // 初始化查询列表
     this.list(1, this.pageSize)
   },
   methods: {
@@ -94,9 +123,11 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
+        beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],
         oilGasName: this.fromSearch.oilGasName
       }
-      enterpriseList(params).then((res) => {
+      oilgasmonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -124,7 +155,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/enterpriseAdd', query: params })
+      this.$router.push({ path: '/monthAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -134,7 +165,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/enterpriseAdd', query: params })
+        this.$router.push({ path: '/monthAdd', query: params })
 
       } else {
         Message({
@@ -144,6 +175,7 @@ export default {
         })
       }
     },
+    // 删除
     handleDel() {
       if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
@@ -155,20 +187,21 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          enterpriseSwitchs(params).then((res) => {
+          oilgasmonthSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',
-                message: '删除成功'
+                message: '删除成功!'
               })
-              this.list(1, this.pageSize)
+              this.list(this.currentPage, this.pageSize)
             } else {
               this.$message({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败!'
               })
             }
           })
+
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -205,5 +238,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

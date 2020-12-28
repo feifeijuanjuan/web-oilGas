@@ -66,6 +66,18 @@ export const constantRoutes = [
       }
     ]
   },
+  //油气田按月填报新增
+  {
+    path: '/oilAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/oilAdd',
+        component: () => import('@/views/oilgasmonth/oilAdd')
+      }
+    ]
+  },
   //国土资源厅按年填报新增
   {
     path: '/guotuAdd',
@@ -92,13 +104,37 @@ export const constantRoutes = [
   },
   // 煤制气企业信息填报
   {
-    path: '/enterpriseAdd',
+    path: '/coalgasEnterpriseAdd',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/enterpriseAdd',
-        component: () => import('@/views/enterprise/add')
+        path: '/coalgasEnterpriseAdd',
+        component: () => import('@/views/enterprise/coalgasAdd')
+      }
+    ]
+  },
+  // 煤制气企业信息填报
+  {
+    path: '/coaloilAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/coaloilAdd',
+        component: () => import('@/views/enterprise/coaloilAdd')
+      }
+    ]
+  },
+  // 炼厂企业信息填报
+  {
+    path: '/lianchangAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/lianchangAdd',
+        component: () => import('@/views/enterprise/lianchangAdd')
       }
     ]
   },
@@ -162,15 +198,36 @@ export const constantRoutes = [
       }
     ]
   },
-  // 管道按日
   {
-    path: '/pipelinedayAdd',
+    path: '/crudeAdd',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/pipelinedayAdd',
-        component: () => import('@/views/pipelineday/add')
+        path: '/crudeAdd',
+        component: () => import('@/views/pipelineday/crudeAdd')
+      }
+    ]
+  },
+  {
+    path: '/gasAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasAdd',
+        component: () => import('@/views/pipelineday/gasAdd')
+      }
+    ]
+  },
+  {
+    path: '/productAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/productAdd',
+        component: () => import('@/views/pipelineday/productAdd')
       }
     ]
   },
@@ -258,6 +315,7 @@ export const constantRoutes = [
       }
     ]
   },
+  // 管道
 
   /* {
      path: '/',

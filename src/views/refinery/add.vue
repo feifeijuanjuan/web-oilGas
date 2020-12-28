@@ -147,6 +147,127 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="成品油区外调入量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferInVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label=" 呼炼供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilRefineInVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="总调出量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferOutVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label=" 89#汽油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyGasoline89">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="92#汽油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyGasoline92">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="95#汽油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyGasoline95">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="0#柴油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyDieselOil0">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="负10#柴油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyDieselOilMinus10">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="负20#柴油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyDieselOilMinus20">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="负35#柴油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyDieselOilMinus35">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="煤油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.aviationCoalSupply">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="商业的成品油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.businessProductedOilSupply">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="交通的成品油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.trafficProductedOilSupply">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="工业的成品油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.industryProductedOilSupply">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="农业的成品油供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.agriculturalProductedOilSupply">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </div>
     <div class="form-footer-btn">
@@ -184,7 +305,22 @@ export default {
         yieldDieselOilMinus20: '',
         yieldDieselOilMinus10: '',
         yieldDieselOil0: '',
-        yieldAviationCoal: ''
+        yieldAviationCoal: '',
+        productedOilTransferInVolume: '',
+        productedOilRefineInVolume: '',
+        productedOilTransferOutVolume: '',
+        supplyGasoline89: '',
+        supplyGasoline92: '',
+        supplyGasoline95: '',
+        supplyDieselOil0: '',
+        supplyDieselOilMinus10: '',
+        supplyDieselOilMinus20: '',
+        supplyDieselOilMinus35: '',
+        aviationCoalSupply: '',
+        businessProductedOilSupply: '',
+        trafficProductedOilSupply: '',
+        industryProductedOilSupply: '',
+        agriculturalProductedOilSupply: ''
 
       },
       rules: {

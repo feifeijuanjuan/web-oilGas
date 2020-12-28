@@ -17,7 +17,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="气田名称" class="no-unit" prop="oilGasName">
+            <el-form-item label="油田名称" class="no-unit" prop="oilGasName">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasName">
               </el-input>
             </el-form-item>
@@ -34,27 +34,27 @@
             </el-form-item>
           </el-col>
         </el-row>
-<!--        <el-row>
-          <el-col :span="12">
-            <el-form-item label="油气田区域类型" class="no-unit">
-              <el-select v-model="editForm.oilGasAreaType" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="油气田区域名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasAreaName">
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
+        <!--        <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="油气田区域类型" class="no-unit">
+                      <el-select v-model="editForm.oilGasAreaType" placeholder="请选择">
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="油气田区域名称" class="no-unit">
+                      <el-input placeholder="请输入内容" v-model="editForm.oilGasAreaName">
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业结构" class="no-unit">
@@ -200,10 +200,10 @@ export default {
           label: '中石油'
         }
       ],
-      unit: '万立方米',
+      unit: '万吨',
       rules: {
         oilGasName: [
-          { required: true, message: '请输入气田名称', trigger: 'blur' }
+          { required: true, message: '请输入油田名称', trigger: 'blur' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -237,7 +237,7 @@ export default {
     },
     // 取消
     close() {
-      this.$router.push('/oilgasmonth/gasList')
+      this.$router.push('/oilgasmonth/oilList')
     },
     // 新增保存
     createData() {
@@ -250,7 +250,7 @@ export default {
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/oilgasmonth/gasList')
+              this.$router.push('/oilgasmonth/oilList')
             } else {
               Message({
                 message: '保存失败',
@@ -275,7 +275,7 @@ export default {
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/oilgasmonth/gasList')
+              this.$router.push('/oilgasmonth/oilList')
             } else {
               Message({
                 message: '修改失败',

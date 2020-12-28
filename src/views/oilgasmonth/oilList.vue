@@ -1,12 +1,12 @@
 <template>
-  <!--  油气田企业按日填报-->
+  <!--  油气田油田按月填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="油气田名称" label-width="90px">
+              <el-form-item label="油田名称" label-width="90px">
                 <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
@@ -14,7 +14,8 @@
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
-                  type="daterange"
+                  unlink-panels
+                  type="monthrange"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -24,24 +25,11 @@
                 </el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="状态">
-                <el-select v-model="fromSearch.status" placeholder="请选择">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
           </el-row>
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary"  icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="gaslist((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -49,14 +37,14 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按日填报
+          按月填报
         </div>
         <div>
-          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd" ><i
+          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit" ><i
+          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
@@ -77,98 +65,56 @@
         @handleSelectionChange="handleSelectionChange"
         @handleCurrentChange="handleCurrentChange"
         @handleSizeChange="handleSizeChange"
-        @changeSwitch="changeSwitch"
       >
       </table-cmp>
     </div>
-
-
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { MessageBox, Message } from 'element-ui'
-import { list, save, update, deleteList } from '@/api/fill'
+import { oilgasmonthList, oilgasmonthSwitchs } from '@/api/fill'
+import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
-7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
-12直供甲醇厂日供气量、
-13直供合成氨日供气量、
-14直供液化工厂日供气量、15状态*/
+7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
+13月产能、14综合能源消费量、15状态*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
   data() {
     return {
-      total: 0,
       checkbox: true,
+      total: 0,
       currentPage: 1,
       pageSize: 50,
-      options: [
-        {
-          value: '',
-          label: '全部'
-        },
-        {
-          value: '选项1',
-          label: '冻结'
-        },
-        {
-          value: '选项2',
-          label: '启用'
-        }
-      ],
       fromSearch: {
         oilGasName: null,
-        time: '',
-        status: ''
+        time: ''
       },
       loading: false,
-      tableData: [
-        {},
-        {
-
-        },
-        {
-
-        },
-        {
-
-        }
-      ],
+      tableData: [],
       tableLabel: [
-        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
         { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '油田名称', param: 'oilGasName', minWidth: '150' },
        /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
-        { label: '企业结构', param: 'groupType', minWidth: '180' },
-        { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
-        { label: '天然气日产量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' },
-        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
-        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
-        { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
-        { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
-        { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
-        { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
-        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
-        { label: '状态', param: 'status', minWidth: 150 }
+        { label: '企业结构', param: 'groupType', minWidth: '150' },
+        { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
+        { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
+        { label: '计划月产量', param: 'oilGasPlanMonthYield', minWidth: '150' },
+        { label: '月供应量', param: 'supplyOilGas', minWidth: '150' },
+        { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
+        { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
+        { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
+        { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
+        { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
       ],
       selectedRows: []
-      /*tableSwitch: {
-        label: '状态',
-        width: '200',
-        paramItem: 'state',
-        methods: 'switch',
-        activeValue: '100',
-        inactiveValue: '0',
-        activeText: '启用',
-        inactivetext: '冻结'
-      },*/
     }
   },
   created() {
     // 初始化查询列表
-    // this.list(1, this.pageSize)
+    this.list(1, this.pageSize)
   },
   methods: {
     // 查询列表
@@ -181,7 +127,7 @@ export default {
         endTime: this.fromSearch.time[1],
         oilGasName: this.fromSearch.oilGasName
       }
-      list(params).then((res) => {
+      oilgasmonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -204,13 +150,12 @@ export default {
       this.currentPage = 1
       this.list(this.currentPage, val)
     },
-    //新增
     handleAdd() {
       const params = {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/dayAdd', query: params })
+      this.$router.push({ path: '/oilAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -220,7 +165,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/dayAdd', query: params })
+        this.$router.push({ path: '/oilAdd', query: params })
 
       } else {
         Message({
@@ -230,20 +175,25 @@ export default {
         })
       }
     },
+    // 删除
     handleDel() {
-      if (this.selectedRows.length === 1) {
+      if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteList(this.selectedRows[0]).then((res) => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          oilgasmonthSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',
                 message: '删除成功!'
               })
-              this.list(1, this.pageSize)
+              this.list(this.currentPage, this.pageSize)
             } else {
               this.$message({
                 type: 'error',
@@ -273,9 +223,6 @@ export default {
         arr.push(item.id)
       })
       this.selectedRows = arr
-    },
-    changeSwitch(val) {
-      console.log(val.row.state)
     }
   }
 }
@@ -291,5 +238,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

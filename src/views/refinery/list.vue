@@ -80,6 +80,21 @@ import { Message } from 'element-ui'
 89#汽油产量、92#汽油产量、95#汽油产量、
 负35号柴油产量、负20号柴油产量、负10号柴油产量、0号柴油产量、
 煤油产量*/
+/*成品油区外调入量
+呼炼供应量
+总调出量
+89#汽油供应量
+92#汽油供应量
+95#汽油供应量
+0#柴油供应量
+负10#柴油供应量
+负20#柴油供应量
+负35#柴油供应量
+煤油供应量
+商业的成品油供应量
+交通的成品油供应量
+工业的成品油供应量
+农业的成品油供应量*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -112,7 +127,22 @@ export default {
         { label: '负20号柴油产量', param: 'yieldDieselOilMinus20', minWidth: 180 },
         { label: '负10号柴油产量', param: 'yieldDieselOilMinus10', minWidth: 180 },
         { label: '0号柴油产量', param: 'yieldDieselOil0', minWidth: 180 },
-        { label: '煤油产量', param: 'yieldAviationCoal', minWidth: 150 }
+        { label: '煤油产量', param: 'yieldAviationCoal', minWidth: 150 },
+        { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 150 },
+        { label: '呼炼供应量', param: 'productedOilRefineInVolume', minWidth: 180 },
+        { label: '总调出量', param: 'productedOilTransferOutVolume', minWidth: 150 },
+        { label: '89#汽油供应量', param: 'supplyGasoline89', minWidth: 180 },
+        { label: '92#汽油供应量', param: 'supplyGasoline92', minWidth: 180 },
+        { label: '95#汽油供应量', param: 'supplyGasoline95', minWidth: 180 },
+        { label: '0#柴油供应量', param: 'supplyDieselOil0', minWidth: 180 },
+        { label: '负10#柴油供应量', param: 'supplyDieselOilMinus10', minWidth: 180 },
+        { label: '负20#柴油供应量', param: 'supplyDieselOilMinus20', minWidth: 150 },
+        { label: '负35#柴油供应量', param: 'supplyDieselOilMinus35', minWidth: 150 },
+        { label: '煤油供应量', param: 'aviationCoalSupply', minWidth: 180 },
+        { label: '商业的成品油供应量', param: 'businessProductedOilSupply', minWidth: 150 },
+        { label: '交通的成品油供应量', param: 'trafficProductedOilSupply', minWidth: 180 },
+        { label: '工业的成品油供应量', param: 'industryProductedOilSupply', minWidth: 180 },
+        { label: '农业的成品油供应量', param: 'agriculturalProductedOilSupply', minWidth: 180 }
       ],
       selectedRows: []
     }

@@ -9,11 +9,6 @@
                 <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="管线名" label-width="90px">
-                <el-input v-model="fromSearch.oilPipeline"></el-input>
-              </el-form-item>
-            </el-col>
           </el-row>
         </div>
         <div class="search-btn">
@@ -26,7 +21,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按日填报
+          企业信息填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -63,10 +58,9 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { pipelinedaylList, pipelinedaySwitchs } from '@/api/fill'
+import { enterpriseList, enterpriseSwitchs,dic } from '@/api/fill'
 import { Message } from 'element-ui'
-/*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
-管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
+/*1企业名称、2时间、3企业性质、4税收、5企业人数*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -79,42 +73,33 @@ export default {
       pageSize: 50,
       loading: false,
       fromSearch: {
-        enterName: '',
-        oilPipeline: ''
+        enterName: ''
       },
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: 150 },
-        { label: '企业名称', param: 'enterName', minWidth: 150 },
-        // { label: '盟市', param: 'laneCode', minWidth: 150 },
-        { label: '管线名', param: 'oilPipeline', minWidth: 150 },
-        { label: '管线进油量', param: 'pipelineInputVolume', minWidth: 180 },
-        { label: '管线出油量', param: 'pipelineOutputVolume', minWidth: 180 },
-        { label: '管线管存量', param: 'pipelineStock', minWidth: 180 },
-        { label: '管线累计输油', param: 'pipelineCumulativeVolume', minWidth: 180 },
-        { label: '城市燃气接收量', param: 'cityGasReceipt', minWidth: 180 },
-        { label: '甲醇接收量', param: 'methanolReceipt', minWidth: 180 },
-        { label: '化肥接收量', param: 'fertilizerReceipt', minWidth: 180 },
-        { label: 'lng接收气量', param: 'lngReceipt', minWidth: 180 }
-      ],
-      selectedRows: []
+        { label: '企业名称', param: 'enterName' },
+        { label: '企业性质', param: 'enterType' },
+        { label: '税收', param: 'taxRevenue' },
+        { label: '企业人数', param: 'employeesNum' }
+      ]
     }
   },
   created() {
-    // 初始化查询列表
     this.list(1, this.pageSize)
+    //字典表
+    this.dic()
   },
   methods: {
+
     // 查询列表
     list() {
       this.loading = true
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        enterName: this.fromSearch.enterName,
-        oilPipeline: this.fromSearch.oilPipeline
+        oilGasName: this.fromSearch.oilGasName
       }
-      pipelinedaylList(params).then((res) => {
+      enterpriseList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -142,7 +127,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/pipelinedayAdd', query: params })
+      this.$router.push({ path: '/coalgasEnterpriseAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -152,7 +137,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/pipelinedayAdd', query: params })
+        this.$router.push({ path: '/coalgasEnterpriseAdd', query: params })
 
       } else {
         Message({
@@ -173,7 +158,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          pipelinedaySwitchs(params).then((res) => {
+          enterpriseSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',

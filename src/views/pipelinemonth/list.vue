@@ -34,7 +34,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按月填报
+          管道信息填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -72,9 +72,11 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import {pipelinemonthlList,pipelinemonthSwitchs} from '@/api/fill'
-/*1管道名、2管道类型、3企业名称、4时间、5区内里程、6运送能力、7管道长度、
-8设计压力、9末站压力阈值、10末站压力实际值、11区内起点、12区内终点、
-13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/
+/*1管道名、2管道类别、3企业名称、4企业性质、5企业地址、
+6时间、7管径、8境内里程、9设计运输能力（亿立方米/年）、
+10投产时间、11全线起点位置、12全线终点位置、13区内起点、
+14区内终点、15设计压力、16法人代表、17安全负责人、18安全负责人电话 、
+19是否运行*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -92,35 +94,26 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '管道名', param: 'stationCode', minWidth: 150 },
-        { label: '时间', param: 'baseStationCode', minWidth: 150 },
-        { label: '管道类型', param: 'laneCode', minWidth: 150 },
-        { label: '企业名称', param: 'positionCode', minWidth: 150 },
-        { label: '区内里程', param: 'positionCode', minWidth: 150 },
-        { label: '运送能力', param: 'positionCode', minWidth: 150 },
-        { label: '管道长度', param: 'positionCode', minWidth: 150 },
-        { label: '设计压力', param: 'positionCode', minWidth: 150 },
-        { label: '末站压力阈值', param: 'positionCode', minWidth: 180 },
-        { label: '末站压力实际值', param: 'positionCode', minWidth: 180 },
-        { label: '区内起点', param: 'positionCode', minWidth: 150 },
-        { label: '区内终点', param: 'positionCode', minWidth: 150 },
-        { label: '设计输气（油）能力', param: 'positionCode', minWidth: 180 },
-        { label: '实际输气（油）能力', param: 'positionCode', minWidth: 180 },
-        { label: '管径', param: 'positionCode', minWidth: 150 },
-        { label: '投产时间', param: 'positionCode', minWidth: 150 },
-        { label: '负责人', param: 'positionCode', minWidth: 150 }
-      ],
-      tableOption: {
-        label: '操作',
-        width: '200',
-        options: [
-          { label: '修改', methods: 'edit' },
-          { label: '删除', methods: 'delete' }
-        ]
-      },
-      rowId: '',
-      dialogStatu: '',//判断新增还是修改页面
-      dialogFormVisible: false
+        { label: '管道名', param: 'pipelineName', minWidth: 150 },
+        { label: '管道类别', param: 'pipelineType', minWidth: 150 },
+        { label: '企业名称', param: 'enterName', minWidth: 150 },
+        { label: '企业性质', param: 'enterType', minWidth: 150 },
+        { label: '企业地址', param: 'enterAddress', minWidth: 150 },
+        { label: '时间', param: 'recordDate', minWidth: 150 },
+        { label: '管径', param: 'pipelineDiamete', minWidth: 150 },
+        { label: '境内里程', param: 'pipelineLength', minWidth: 150 },
+        { label: '设计运输能力', param: 'transportPower', minWidth: 180 },
+        { label: '投产时间', param: 'dateIncreaseInvest', minWidth: 180 },
+        { label: '全线起点位置', param: 'startPipeline', minWidth: 150 },
+        { label: '全线终点位置', param: 'endPipeline', minWidth: 150 },
+        { label: '区内起点', param: 'startInPipeline', minWidth: 180 },
+        { label: '区内终点', param: 'endInPipeline', minWidth: 180 },
+        { label: '设计压力', param: 'designPressure', minWidth: 150 },
+        { label: '法人代表', param: 'legalRepresentative', minWidth: 150 },
+        { label: '安全负责人', param: 'chargeUser', minWidth: 150 },
+        { label: '安全负责人电话', param: 'userPhone', minWidth: 150 },
+        { label: '是否运行', param: 'isUse', minWidth: 150 }
+      ]
     }
   },
   methods: {

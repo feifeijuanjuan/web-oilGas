@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -73,7 +81,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { coaloilSwitchs, coaloilList } from '@/api/fill'
+import { coaloilSwitchs, coaloilList, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1企业名称、2时间、3状态、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
 7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12石脑油产量、
@@ -143,14 +151,30 @@ export default {
         { label: '阿拉善盟销售量', param: 'alashanmengSales', minWidth: 150 },
         { label: '兴安盟销售量', param: 'xinganmengSales', minWidth: 150 }
       ],
-      selectedRows: []
+      selectedRows: [],
+      enterNameAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.enterName
+          this.enterNameAry=enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

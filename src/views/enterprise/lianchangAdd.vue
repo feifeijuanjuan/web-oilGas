@@ -13,12 +13,18 @@
       >
         <!--        /*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/-->
 
-
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" prop="enterName">
-              <el-input placeholder="请输入内容" v-model="editForm.enterName">
-              </el-input>
+              <el-select v-model="editForm.enterName" clearable>
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -81,6 +87,7 @@ export default {
   data() {
     return {
       enterpriseEconomyTypeAry: [],
+      enterNameAry:[],
       editForm: {
         enterName: '',
         enterType: '',
@@ -90,7 +97,7 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请输入企业名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ]
       }
     }
@@ -110,7 +117,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.enterpriseEconomyType
+          const enterName = res.data.enterName
           this.enterpriseEconomyTypeAry = data
+          this.enterNameAry=enterName
         } else {
           Message({
             message: '请求失败',

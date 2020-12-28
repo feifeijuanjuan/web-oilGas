@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -73,7 +81,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { chengpinyousalelList, chengpinyousaleSwitchs} from '@/api/fill'
+import { chengpinyousalelList, chengpinyousaleSwitchs, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1企业名称、2时间、3盟市名称、
 89#汽油销售量、92#汽油销售量、95#汽油销售量、
@@ -114,14 +122,30 @@ export default {
         { label: '成品油区内消费量', param: 'productedOilInAreaSales', minWidth: '180' },
         { label: '成品油区外消费量', param: 'productedOilOutAreaSales', minWidth: '180' }
       ],
-      selectedRows:[]
+      selectedRows:[],
+      enterNameAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.enterName
+          this.enterNameAry=enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

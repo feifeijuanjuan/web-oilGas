@@ -56,27 +56,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit">
-              <el-select v-model="editForm.leagueCityName" placeholder="请选择">
-                <el-option
-                  v-for="item in leagueCityNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="月产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="计划月产量">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield">
@@ -84,8 +71,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="月供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas">
@@ -93,6 +78,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="计划月供应量">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthSupply">
@@ -100,8 +87,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="区内供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas">
@@ -109,6 +94,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="区外供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyOutOilGas">
@@ -116,8 +103,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="月产能">
               <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas">
@@ -125,6 +110,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="综合能源消费量">
               <el-input placeholder="请输入内容" v-model="editForm.energyConsumption">
@@ -173,7 +161,7 @@ export default {
       },
       pageTitle: '',
       statu: '',
-      oilTypesAry:[],
+      oilTypesAry: [],
       optionsGroupType: [],
       unit: '万吨',
       rules: {
@@ -233,7 +221,9 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          oilgasmonthSave(this.editForm).then((res) => {
+          const param = this.editForm
+          param['oilGasAreaType'] = 1
+          oilgasmonthSave(param).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '保存成功',
@@ -258,7 +248,9 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          oilgasmonthSave(this.editForm).then((res) => {
+          const param = this.editForm
+          param['oilGasAreaType'] = 1
+          oilgasmonthSave(param).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '修改成功',

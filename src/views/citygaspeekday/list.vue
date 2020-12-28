@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -73,7 +81,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { citygaspeekdaySwitchs, citygaspeekdaylList } from '@/api/fill'
+import { citygaspeekdaySwitchs, citygaspeekdaylList, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*企业名称、盟市名称、时间、状态
 商业调峰量
@@ -114,14 +122,30 @@ export default {
         { label: '计划日调峰量', param: 'planPeakLoadRegulation', minWidth: 150 },
         { label: '实际日调峰量', param: 'peakLoadRegulation', minWidth: 150 }
       ],
-      selectedRows: []
+      selectedRows: [],
+      enterNameAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName=res.data.enterName
+          this.enterNameAry=enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

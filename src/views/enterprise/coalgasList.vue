@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -82,16 +90,30 @@ export default {
         { label: '产能', param: 'proCapacity' },
         { label: '税收', param: 'taxRevenue' },
         { label: '企业人数', param: 'employeesNum' }
-      ]
+      ],
+      enterNameAry:[]
     }
   },
   created() {
     this.list(1, this.pageSize)
     //字典表
-    // this.dic()
+    this.dic()
   },
   methods: {
-
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.enterName
+          this.enterNameAry=enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

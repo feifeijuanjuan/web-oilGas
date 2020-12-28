@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="9">
@@ -82,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { citygasyearlList, citygasyearSwitchs } from '@/api/fill'
+import { citygasyearlList, citygasyearSwitchs, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*企业名称、盟市名称、时间、状态
 已建储气能力(万立方米)
@@ -117,14 +125,30 @@ export default {
         { label: '城燃企业5%实际储气量', param: 'actualStorageEnterprise', minWidth: 150 },
         { label: '城燃企业5%计划储气量', param: 'plannedStorageEnterprise', minWidth: 150 }
       ],
-      selectedRows: []
+      selectedRows: [],
+      enterNameAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.enterName
+          this.enterNameAry = enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

@@ -15,8 +15,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-input placeholder="请输入内容" v-model="editForm.enterName">
-              </el-input>
+              <el-select v-model="editForm.enterName" placeholder="请选择">
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -125,6 +132,7 @@ export default {
       },
       optionsGroupType: [],
       leagueCityNameAry:[],
+      enterNameAry:[],
       rules: {
         enterName: [
           { required: true, message: '请输入企业名称', trigger: 'blur' }
@@ -152,8 +160,10 @@ export default {
           const data = res.data
           const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
+          const enterName=data.enterName
           this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
+          this.enterNameAry=enterName
         }
       })
     },

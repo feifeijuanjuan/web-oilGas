@@ -22,8 +22,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-input placeholder="请输入内容" v-model="editForm.enterName">
-              </el-input>
+              <el-select v-model="editForm.enterName">
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -139,6 +146,7 @@ export default {
   data() {
     return {
       leagueCityTypeAry: [],//盟市名称
+      enterNameAry:[],
       editForm: {
         recordDate: '',
         enterName: '',
@@ -154,7 +162,7 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请输入企业名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -178,7 +186,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
+          const enterName = res.data.enterName
           this.leagueCityTypeAry = data
+          this.enterNameAry = enterName
         } else {
           Message({
             message: '网络请求失败',

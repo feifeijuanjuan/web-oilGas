@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -23,21 +31,21 @@
               </el-form-item>
             </el-col>
 
-<!--            <el-col :span="8">
-              <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  :clearable="false"
-                >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>-->
+            <!--            <el-col :span="8">
+                          <el-form-item label="起止日期">
+                            <el-date-picker
+                              v-model="fromSearch.time"
+                              type="daterange"
+                              unlink-panels
+                              range-separator="至"
+                              start-placeholder="开始日期"
+                              end-placeholder="结束日期"
+                              value-format="yyyy-MM-dd"
+                              :clearable="false"
+                            >
+                            </el-date-picker>
+                          </el-form-item>
+                        </el-col>-->
           </el-row>
 
         </div>
@@ -118,9 +126,10 @@ export default {
         { label: '企业', param: 'enterName', minWidth: 180 },
         { label: '释放气量', param: 'releaseVolumn', minWidth: 210 },
         { label: '气量属性', param: 'airAttribute', minWidth: 210 },
-        { label: '剩余气量', param: 'surplusVolumn', minWidth: 160 },
+        { label: '剩余气量', param: 'surplusVolumn', minWidth: 160 }
       ],
-      leagueCityTypeAry:[]
+      leagueCityTypeAry: [],
+      enterNameAry: []
     }
   },
   created() {
@@ -133,7 +142,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
+          const enterName = res.data.enterName
           this.leagueCityTypeAry = data
+          this.enterNameAry = enterName
         } else {
           Message({
             message: '网络请求失败',
@@ -149,10 +160,10 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-     /*   beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],*/
+        /*   beginTime: this.fromSearch.time[0],
+           endTime: this.fromSearch.time[1],*/
         leagueCityName: this.fromSearch.leagueCityName,
-        enterName:this.fromSearch.enterName
+        enterName: this.fromSearch.enterName
       }
       gasreleaseList(params).then((res) => {
         if (res.code === 0) {

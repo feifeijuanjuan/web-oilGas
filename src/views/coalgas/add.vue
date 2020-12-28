@@ -18,8 +18,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-input placeholder="请输入内容" v-model="editForm.enterName">
-              </el-input>
+              <el-select v-model="editForm.enterName" placeholder="请选择">
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -37,8 +44,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.leagueCityName">
-              </el-input>
+              <el-select v-model="editForm.leagueCityName" placeholder="请选择">
+                <el-option
+                  v-for="item in leagueCityNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -272,7 +286,7 @@
 </template>
 
 <script>
-import { coalgasSave, coalgasUpdate } from '@/api/fill'
+import { coalgasSave, coalgasUpdate, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -312,17 +326,20 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请输入企业名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+      },
+      enterNameAry:[],
+      leagueCityNameAry:[]
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -330,6 +347,17 @@ export default {
     }
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data
+          const enterName = data.enterName
+          const leagueCityType = data.leagueCityType
+          this.leagueCityNameAry = leagueCityType
+          this.enterNameAry=enterName
+        }
+      })
+    },
     // 数据回显
     update() {
       coalgasUpdate(this.$route.query.id).then((res) => {

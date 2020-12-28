@@ -17,8 +17,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-input placeholder="请输入内容" v-model="editForm.enterName">
-              </el-input>
+              <el-select v-model="editForm.enterName" placeholder="请选择企业名称" clearable>
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -35,7 +42,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="管线名" class="no-unit">
-              <el-select v-model="editForm.oilPipeline" placeholder="请选择管线名" clearable>
+              <el-select v-model="editForm.pipelineName" placeholder="请选择管线名" clearable>
                 <el-option
                   v-for="item in pipelineNameTypeAry"
                   :key="item.dictItemName"
@@ -131,7 +138,7 @@ export default {
       editForm: {
         recordDate: '',
         enterName: '',
-        oilPipeline: '',
+        pipelineName: '',
         pipelineInputVolume: '',
         pipelineOutputVolume: '',
         pipelineStock: '',
@@ -143,13 +150,14 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请输入企业名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
       },
-      pipelineNameTypeAry: []
+      pipelineNameTypeAry: [],
+      enterNameAry:[]
     }
   },
   created() {
@@ -167,7 +175,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const pipelineNameType = res.data.pipelineNameType
+          const enterName=res.data.enterName
           this.pipelineNameTypeAry = pipelineNameType
+          this.enterNameAry=enterName
         } else {
           Message({
             message: '网络请求失败',
@@ -198,7 +208,9 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          pipelinedaysave(this.editForm).then((res) => {
+          const param = this.editForm
+          param['pipelineType'] = '原油管线'
+          pipelinedaysave(param).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '保存成功',
@@ -223,7 +235,9 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          pipelinedaysave(this.editForm).then((res) => {
+          const param = this.editForm
+          param['pipelineType'] = '原油管线'
+          pipelinedaysave(param).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '修改成功',

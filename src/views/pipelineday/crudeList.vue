@@ -6,12 +6,20 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" placeholder="请选择企业名称" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="管线名" label-width="90px">
-                <el-select v-model="fromSearch.oilPipeline" placeholder="请选择管线名" clearable>
+                <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
                   <el-option
                     v-for="item in pipelineNameTypeAry"
                     :key="item.dictItemName"
@@ -93,14 +101,14 @@ export default {
       loading: false,
       fromSearch: {
         enterName: '',
-        oilPipeline: ''
+        pipelineName: ''
       },
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 150 },
         { label: '企业名称', param: 'enterName', minWidth: 150 },
         // { label: '盟市', param: 'laneCode', minWidth: 150 },
-        { label: '管线名', param: 'oilPipeline', minWidth: 150 },
+        { label: '管线名', param: 'pipelineName', minWidth: 150 },
         { label: '管线进油量', param: 'pipelineInputVolume', minWidth: 180 },
         { label: '管线出油量', param: 'pipelineOutputVolume', minWidth: 180 },
         { label: '管线管存量', param: 'pipelineStock', minWidth: 180 },
@@ -115,7 +123,8 @@ export default {
         { label: '实际输气（油）能力', param: 'runPressure', minWidth: 180 }
       ],
       selectedRows: [],
-      pipelineNameTypeAry: []
+      pipelineNameTypeAry: [],
+      enterNameAry:[]
     }
   },
   created() {
@@ -129,7 +138,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const pipelineNameType = res.data.pipelineNameType
+          const enterName=res.data.enterName
           this.pipelineNameTypeAry = pipelineNameType
+          this.enterNameAry=enterName
         } else {
           Message({
             message: '网络请求失败',
@@ -146,7 +157,7 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
         enterName: this.fromSearch.enterName,
-        oilPipeline: this.fromSearch.oilPipeline
+        pipelineName: this.fromSearch.pipelineName
       }
       crudeList(params).then((res) => {
         if (res.code === 0) {

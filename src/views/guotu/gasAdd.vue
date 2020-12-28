@@ -40,19 +40,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="企业结构" class="no-unit">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
-                <el-option
-                  v-for="item in optionsGroupType"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
+
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
               <el-select v-model="editForm.leagueCityName" placeholder="请选择">
@@ -66,8 +54,6 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="累计探明地质储量">
               <el-input placeholder="请输入内容" v-model="editForm.reservesCumulativeKnow">
@@ -75,6 +61,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="剩余技术可采储量">
               <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusTech">
@@ -82,8 +71,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="剩余经济可采储量">
               <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusEcon">
@@ -91,6 +78,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="储采比">
               <el-input placeholder="请输入内容" v-model="editForm.reserveProductionRatio">
@@ -98,14 +88,14 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="气田人数" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.peopleNum">
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="远景资源量">
               <el-input placeholder="请输入内容" v-model="editForm.prospectiveResources">
@@ -113,8 +103,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="预测储量">
               <el-input placeholder="请输入内容" v-model="editForm.predictedReserves">
@@ -122,6 +110,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="控制储量">
               <el-input placeholder="请输入内容" v-model="editForm.controlReserve">
@@ -129,8 +119,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="气田面积">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasSize">
@@ -165,7 +153,7 @@ export default {
         recordDate: '',
         oilGasAreaType: '',
         oilGasAreaName: '',
-        groupType:'',
+        groupType: '',
         leagueCityName: '',
         reservesCumulativeKnow: '',
         recoveryReservesSurplusTech: '',
@@ -234,7 +222,9 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          guotuSave(this.editForm).then((res) => {
+          const param = this.editForm
+          param['oilGasAreaType'] = 2
+          guotuSave(param).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '保存成功',
@@ -259,7 +249,9 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          guotuSave(this.editForm).then((res) => {
+          const param = this.editForm
+          param['oilGasAreaType'] = 2
+          guotuSave(param).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '修改成功',

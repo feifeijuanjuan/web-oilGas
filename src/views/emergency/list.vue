@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -120,6 +128,7 @@ export default {
         { label: '具体措施', param: 'specificMeasure', minWidth: 160 },
       ],
       leagueCityTypeAry: [],//盟市名称
+      enterNameAry:[]
     }
   },
   created() {
@@ -132,7 +141,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
+          const enterName = res.data.enterName
           this.leagueCityTypeAry = data
+          this.enterNameAry=enterName
         } else {
           Message({
             message: '网络请求失败',

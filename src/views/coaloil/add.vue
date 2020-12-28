@@ -21,8 +21,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-input placeholder="请输入内容" v-model="editForm.enterName">
-              </el-input>
+              <el-select v-model="editForm.enterName" clearable>
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -417,7 +424,7 @@
 </template>
 
 <script>
-import { coaloilSave, coaloilUpdate } from '@/api/fill'
+import { coaloilSave, coaloilUpdate, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -475,17 +482,19 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请输入油气田名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+      },
+      enterNameAry: []
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -493,6 +502,20 @@ export default {
     }
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.enterName
+          this.enterNameAry = enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 数据回显
     update() {
       coaloilUpdate(this.$route.query.id).then((res) => {

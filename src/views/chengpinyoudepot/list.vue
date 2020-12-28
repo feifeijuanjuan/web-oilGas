@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -59,7 +67,7 @@
 <script>
 import {
   chengpinyoudepotlList,
-  chengpinyoudepotSwitchs
+  chengpinyoudepotSwitchs, dic
 } from '@/api/fill'
 import TableCmp from '@/components/TableCmp'
 import { Message } from 'element-ui'
@@ -89,14 +97,30 @@ export default {
         { label: '油库柴油总库存', param: 'dieselInventoryOilDepot' },
         { label: '油库煤油总库存', param: 'aviationCoalInventoryOilDepot' },
         { label: '油库原油总库存', param: 'crudeInventoryOilDepot' }
-      ]
+      ],
+      enterNameAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.enterName
+          this.enterNameAry=enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

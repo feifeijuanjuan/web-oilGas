@@ -5,8 +5,32 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-input v-model="fromSearch.enterName"></el-input>
+              <el-form-item label="油田名称" label-width="90px">
+                <el-input v-model="fromSearch.oilGasName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="起止日期">
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.beginTime"
+                    type="year"
+                    placeholder="开始日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">至</el-col>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.endTime"
+                    type="year"
+                    placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+
               </el-form-item>
             </el-col>
           </el-row>
@@ -21,18 +45,18 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          企业信息填报
+          按年填报
         </div>
         <div>
-          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleEdit"><i
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
-          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleDel"><i
             class="icon iconfont i-del"
           >&#xe614;</i>删除
           </el-button>
@@ -58,9 +82,11 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { enterpriseList, enterpriseSwitchs,dic } from '@/api/fill'
+import { guotuYearList, guotuSwitchs } from '@/api/fill'
 import { Message } from 'element-ui'
-/*1企业名称、2时间、3企业性质、4税收、5企业人数*/
+/*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
+7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
+13预测储量、14控制储量、15油气田面积、16状态*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -71,35 +97,49 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
       fromSearch: {
-        enterName: ''
+        oilGasName: '',
+        beginTime: null,
+        endTime: null
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '企业名称', param: 'enterName' },
-        { label: '企业性质', param: 'enterType' },
-        { label: '税收', param: 'taxRevenue' },
-        { label: '企业人数', param: 'employeesNum' }
-      ]
+        { label: '时间', param: 'recordDate', minWidth: '150' },
+        { label: '油田名称', param: 'oilGasName', minWidth: '150' },
+       /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '150' },
+        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '150' },*/
+        { label: '企业结构', param: 'positionCode', minWidth: '150' },
+        { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
+        { label: '累计探明地质储量', param: 'reservesCumulativeKnow', minWidth: '180' },
+        { label: '剩余技术可采储量', param: 'recoveryReservesSurplusTech', minWidth: '180' },
+        { label: '剩余经济可采储量', param: 'recoveryReservesSurplusEcon', minWidth: '180' },
+        { label: '储采比', param: 'reserveProductionRatio', minWidth: '150' },
+        { label: '油田人数', param: 'peopleNum', minWidth: '150' },
+        { label: '远景资源量', param: 'prospectiveResources', minWidth: '150' },
+        { label: '预测储量', param: 'predictedReserves', minWidth: '150' },
+        { label: '控制储量', param: 'controlReserve', minWidth: '150' },
+        { label: '油田面积', param: 'oilGasSize', minWidth: '150' }
+      ],
+      selectedRows: []
     }
   },
   created() {
+    // 初始化查询列表
     this.list(1, this.pageSize)
-    //字典表
-    this.dic()
   },
   methods: {
-
     // 查询列表
     list() {
       this.loading = true
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
         oilGasName: this.fromSearch.oilGasName
       }
-      enterpriseList(params).then((res) => {
+      guotuYearList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -114,6 +154,7 @@ export default {
       this.loading = false
     },
     handleCurrentChange(val) {
+      console.log(val)
       this.currentPage = val
       this.list(val, this.pageSize)
     },
@@ -127,7 +168,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/coaloilEnterpriseAdd', query: params })
+      this.$router.push({ path: '/guotuOilAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -137,7 +178,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/coaloilEnterpriseAdd', query: params })
+        this.$router.push({ path: '/guotuOilAdd', query: params })
 
       } else {
         Message({
@@ -147,6 +188,7 @@ export default {
         })
       }
     },
+    // 删除
     handleDel() {
       if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
@@ -158,7 +200,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          enterpriseSwitchs(params).then((res) => {
+          guotuSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',

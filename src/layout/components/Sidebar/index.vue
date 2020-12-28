@@ -33,7 +33,6 @@ export default {
     ]),
     routes() {
       console.log(this.$router.options.routes)
-      console.log(store.getters.setRouters)
       return this.$router.options.routes
     },
     activeMenu() {

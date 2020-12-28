@@ -57,11 +57,6 @@ const actions = {
             router.push({ path: this.redirect || store.getters.setRouters[0].children[0].path })
             this.loading = false
           })
-          // 字典表
-          dic().then((res) => {
-
-          })
-
         } else {
           Message({
             message: '用户名或密码错误',
@@ -87,6 +82,7 @@ const actions = {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
+        location.reload()
         resolve()
       }).catch(error => {
         reject(error)

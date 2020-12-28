@@ -15,7 +15,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油气田名称" class="no-unit" prop="oilGasName">
+            <el-form-item label="气田名称" class="no-unit" prop="oilGasName">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasName">
               </el-input>
             </el-form-item>
@@ -108,7 +108,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油气田人数" class="no-unit">
+            <el-form-item label="气田人数" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.peopleNum">
               </el-input>
             </el-form-item>
@@ -139,7 +139,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油气田面积">
+            <el-form-item label="气田面积">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasSize">
                 <template slot="append">万立方米</template>
               </el-input>
@@ -206,7 +206,7 @@ export default {
       ],
       rules: {
         oilGasName: [
-          { required: true, message: '请输入油气田名称', trigger: 'blur' }
+          { required: true, message: '请输入气田名称', trigger: 'blur' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -239,7 +239,7 @@ export default {
       })
     },
     close() {
-      this.$router.push('/guotu/yearList')
+      this.$router.push('/guotu/gasList')
     },
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
@@ -251,7 +251,7 @@ export default {
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/guotu/yearList')
+              this.$router.push('/guotu/gasList')
             } else {
               Message({
                 message: '保存失败',
@@ -276,7 +276,7 @@ export default {
                 type: 'success',
                 duration: 5 * 1000
               })
-              this.$router.push('/guotu/yearList')
+              this.$router.push('/guotu/gasList')
             } else {
               Message({
                 message: '修改失败',

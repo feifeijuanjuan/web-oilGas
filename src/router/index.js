@@ -80,13 +80,24 @@ export const constantRoutes = [
   },
   //国土资源厅按年填报新增
   {
-    path: '/guotuAdd',
+    path: '/guotuGasAdd',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/guotuAdd',
-        component: () => import('@/views/guotu/add')
+        path: '/guotuGasAdd',
+        component: () => import('@/views/guotu/gasAdd')
+      }
+    ]
+  },
+  {
+    path: '/guotuOilAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/guotuOilAdd',
+        component: () => import('@/views/guotu/oilAdd')
       }
     ]
   },
@@ -116,12 +127,12 @@ export const constantRoutes = [
   },
   // 煤制气企业信息填报
   {
-    path: '/coaloilAdd',
+    path: '/coaloilEnterpriseAdd',
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/coaloilAdd',
+        path: '/coaloilEnterpriseAdd',
         component: () => import('@/views/enterprise/coaloilAdd')
       }
     ]

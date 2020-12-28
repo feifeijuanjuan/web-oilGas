@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="油气田名称" label-width="90px">
+              <el-form-item label="气田名称" label-width="90px">
                 <el-input v-model="fromSearch.oilGasName"></el-input>
               </el-form-item>
             </el-col>
@@ -106,7 +106,7 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: '150' },
-        { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
+        { label: '气田名称', param: 'oilGasName', minWidth: '150' },
        /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '150' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '150' },*/
         { label: '企业结构', param: 'positionCode', minWidth: '150' },
@@ -115,11 +115,11 @@ export default {
         { label: '剩余技术可采储量', param: 'recoveryReservesSurplusTech', minWidth: '180' },
         { label: '剩余经济可采储量', param: 'recoveryReservesSurplusEcon', minWidth: '180' },
         { label: '储采比', param: 'reserveProductionRatio', minWidth: '150' },
-        { label: '油气田人数', param: 'peopleNum', minWidth: '150' },
+        { label: '气田人数', param: 'peopleNum', minWidth: '150' },
         { label: '远景资源量', param: 'prospectiveResources', minWidth: '150' },
         { label: '预测储量', param: 'predictedReserves', minWidth: '150' },
         { label: '控制储量', param: 'controlReserve', minWidth: '150' },
-        { label: '油气田面积', param: 'oilGasSize', minWidth: '150' }
+        { label: '气田面积', param: 'oilGasSize', minWidth: '150' }
       ],
       selectedRows: []
     }
@@ -168,7 +168,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/guotuAdd', query: params })
+      this.$router.push({ path: '/guotuGasAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -178,7 +178,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/guotuAdd', query: params })
+        this.$router.push({ path: '/guotuGasAdd', query: params })
 
       } else {
         Message({

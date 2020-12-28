@@ -24,7 +24,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="油气田区域类型" class="no-unit">
               <el-select v-model="editForm.oil" placeholder="请选择">
                 <el-option
@@ -36,7 +36,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="油气田区域名称" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.one">

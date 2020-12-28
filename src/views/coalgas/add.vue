@@ -85,14 +85,14 @@
           <el-col :span="12">
             <el-form-item label="单位产品原料消耗">
               <el-input placeholder="请输入内容" v-model="editForm.unitProductRawSales">
-                <template slot="append">吨标煤/千立方</template>
+                <template slot="append">吨标煤/吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="单位产品综合能耗">
               <el-input placeholder="请输入内容" v-model="editForm.unitProductComprehensiveEnergySales">
-                <template slot="append">吨标煤/千立方</template>
+                <template slot="append">吨标煤/吨</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -101,7 +101,7 @@
           <el-col :span="12">
             <el-form-item label="单位产品新鲜水耗">
               <el-input placeholder="请输入内容" v-model="editForm.unitProductFreshWaterSales">
-                <template slot="append">吨/千立方</template>
+                <template slot="append">吨</template>
               </el-input>
             </el-form-item>
           </el-col>

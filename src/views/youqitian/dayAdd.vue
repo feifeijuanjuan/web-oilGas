@@ -26,7 +26,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
+<!--      <el-row>
         <el-col :span="12">
           <el-form-item label="油气田区域类型" class="no-unit">
             <el-select v-model="editForm.oilGasAreaType" placeholder="请选择">
@@ -46,10 +46,10 @@
             </el-input>
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row>-->
       <el-row>
         <el-col :span="12">
-          <el-form-item label="集团标识" class="no-unit">
+          <el-form-item label="企业结构" class="no-unit">
             <el-select v-model="editForm.groupType" placeholder="请选择">
               <el-option
                 v-for="item in optionsGroupType"
@@ -191,20 +191,6 @@ export default {
         {
           value: 2,
           label: '气田'
-        }
-      ],
-      optionsStatus: [
-        {
-          value: 1,
-          label: '启用'
-        },
-        {
-          value: 2,
-          label: '禁用'
-        },
-        {
-          value: 3,
-          label: '删除'
         }
       ],
       optionsGroupType: [

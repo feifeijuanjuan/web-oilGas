@@ -96,9 +96,9 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: '150' },
         { label: '油气田名称', param: 'oilGasName', minWidth: '150' },
-        { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
-        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },
-        { label: '集团标识', param: 'groupType', minWidth: '150' },
+       /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
+        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        { label: '企业结构', param: 'groupType', minWidth: '150' },
         { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
         { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
         { label: '计划月产量', param: 'oilGasPlanMonthYield', minWidth: '150' },

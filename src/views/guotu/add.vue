@@ -32,7 +32,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+<!--        <el-row>
           <el-col :span="12">
             <el-form-item label="油气田区域类型" class="no-unit">
               <el-select v-model="editForm.oilGasAreaType" placeholder="请选择">
@@ -52,12 +52,18 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="集团标识" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.one">
-              </el-input>
+            <el-form-item label="企业结构" class="no-unit">
+              <el-select v-model="editForm.groupType" placeholder="请选择">
+                <el-option
+                  v-for="item in optionsGroupType"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -71,14 +77,14 @@
           <el-col :span="12">
             <el-form-item label="累计探明地质储量">
               <el-input placeholder="请输入内容" v-model="editForm.reservesCumulativeKnow">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="剩余技术可采储量">
               <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusTech">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -87,14 +93,14 @@
           <el-col :span="12">
             <el-form-item label="剩余经济可采储量">
               <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusEcon">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="储采比">
               <el-input placeholder="请输入内容" v-model="editForm.reserveProductionRatio">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -109,7 +115,7 @@
           <el-col :span="12">
             <el-form-item label="远景资源量">
               <el-input placeholder="请输入内容" v-model="editForm.prospectiveResources">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -118,14 +124,14 @@
           <el-col :span="12">
             <el-form-item label="预测储量">
               <el-input placeholder="请输入内容" v-model="editForm.predictedReserves">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="控制储量">
               <el-input placeholder="请输入内容" v-model="editForm.controlReserve">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -134,7 +140,7 @@
           <el-col :span="12">
             <el-form-item label="油气田面积">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasSize">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -165,6 +171,7 @@ export default {
         recordDate: '',
         oilGasAreaType: '',
         oilGasAreaName: '',
+        groupType:'',
         leagueCityName: '',
         reservesCumulativeKnow: '',
         recoveryReservesSurplusTech: '',
@@ -184,6 +191,16 @@ export default {
         {
           value: 2,
           label: '气田'
+        }
+      ],
+      optionsGroupType: [
+        {
+          value: 1,
+          label: '中石化'
+        },
+        {
+          value: 2,
+          label: '中石油'
         }
       ],
       rules: {

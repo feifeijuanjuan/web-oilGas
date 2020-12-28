@@ -98,7 +98,7 @@
           <el-col :span="12">
             <el-form-item label="单位产品新鲜水耗">
               <el-input placeholder="请输入内容" v-model="editForm.unitProductFreshWaterConsumption">
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨</template>
               </el-input>
             </el-form-item>
           </el-col>

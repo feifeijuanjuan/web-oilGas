@@ -47,6 +47,7 @@
           <el-col :span="12">
             <el-form-item label="区内里程">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">km</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -67,6 +68,7 @@
           <el-col :span="12">
             <el-form-item label="设计压力">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -75,12 +77,14 @@
           <el-col :span="12">
             <el-form-item label="末站压力阈值">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="末站压力实际值">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -117,6 +121,7 @@
           <el-col :span="12">
             <el-form-item label="管径">
               <el-input placeholder="请输入内容" v-model="editForm.one">
+                <template slot="append">mm</template>
               </el-input>
             </el-form-item>
           </el-col>

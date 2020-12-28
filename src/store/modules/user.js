@@ -10,6 +10,7 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
+    password: '',
     userId: '',
     setRouters: []
   }
@@ -26,6 +27,9 @@ const mutations = {
   },
   SET_NAME: (state, name) => {
     state.name = name
+  },
+  SET_PASSWORD: (state, password) => {
+    state.password = password
   },
   SET_USERID: (state, userId) => {
     state.userId = userId
@@ -46,6 +50,7 @@ const actions = {
           commit('SET_TOKEN', sid)
           commit('SET_NAME', user.name)
           commit('SET_USERID', user.userId)
+          commit('SET_PASSWORD', password)
           setToken(sid)
           userList().then(res => {
             initMenu(res.body)
@@ -74,8 +79,11 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      const param = {}
-      logout(state.token).then(() => {
+      const param = {
+        username: store.getters.name,
+        password: store.getters.password
+      }
+      logout(param).then(() => {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')

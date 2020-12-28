@@ -81,14 +81,14 @@
           <el-col :span="12">
             <el-form-item label="天然气日产量">
               <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="天然气日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGas">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -97,14 +97,14 @@
           <el-col :span="12">
             <el-form-item label="天然气计划日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="天然气日供气合同量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGasContract">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -113,14 +113,14 @@
           <el-col :span="12">
             <el-form-item label="直供管道公司日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="直供甲醇厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -129,14 +129,14 @@
           <el-col :span="12">
             <el-form-item label="直供合成氨日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="直供液化工厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant">
-                <template slot="append">Nm3</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -219,10 +219,6 @@ export default {
     }
   },
   methods: {
-    //根据不同油气田区域类型显示不同单位
-    changeUint() {
-      this.editForm.oilGasAreaType == 1 ? this.unit = '万吨' : this.unit = '万立方米'
-    },
     // 数据回显
     update() {
       update(this.$route.query.id).then((res) => {

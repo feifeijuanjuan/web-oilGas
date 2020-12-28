@@ -90,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { guotuYearList, guotuSwitchs, dic } from '@/api/fill'
+import { guotuGasList, guotuSwitchs, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
@@ -157,7 +157,7 @@ export default {
         endTime: this.fromSearch.endTime,
         oilGasName: this.fromSearch.oilGasName
       }
-      guotuYearList(params).then((res) => {
+      guotuGasList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total

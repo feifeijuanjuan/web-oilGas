@@ -6,17 +6,25 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="管线名" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+                <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
+                  <el-option
+                    v-for="item in pipelineNameTypeAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="管道类型">
                 <el-select v-model="fromSearch.pipelineType" placeholder="请选择">
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="item in pipelineTypeAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
                   >
                   </el-option>
                 </el-select>
@@ -71,7 +79,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import {pipelinemonthlList,pipelinemonthSwitchs} from '@/api/fill'
+import { dic, pipelinemonthlList, pipelinemonthSwitchs } from '@/api/fill'
+import { Message } from 'element-ui'
 /*1管道名、2管道类别、3企业名称、4企业性质、5企业地址、
 6时间、7管径、8境内里程、9设计运输能力（亿立方米/年）、
 10投产时间、11全线起点位置、12全线终点位置、13区内起点、
@@ -82,19 +91,19 @@ export default {
   components: { TableCmp },
   data() {
     return {
-      expandForm: false,
+      checkbox: true,
       count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 50,
       fromSearch: {
-        oil: '',
-        time: ''
+        pipelineName: '',
+        pipelineType: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '管道名', param: 'pipelineName', minWidth: 150 },
+        { label: '管线名', param: 'pipelineName', minWidth: 150 },
         { label: '管道类别', param: 'pipelineType', minWidth: 150 },
         { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '企业性质', param: 'enterType', minWidth: 150 },
@@ -113,29 +122,66 @@ export default {
         { label: '安全负责人', param: 'chargeUser', minWidth: 150 },
         { label: '安全负责人电话', param: 'userPhone', minWidth: 150 },
         { label: '是否运行', param: 'isUse', minWidth: 150 }
-      ]
+      ],
+      selectedRows: [],
+      pipelineNameTypeAry:[],
+      pipelineTypeAry:[]
     }
   },
+  created() {
+    // 初始化查询列表
+    this.list(1, this.pageSize)
+    //
+    this.dic()
+  },
   methods: {
-    fasFieldTable() {
-      console.log(12222)
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const pipelineNameType = res.data.pipelineNameType
+          const pipelineTypy=res.data.pipelineType
+          this.pipelineNameTypeAry = pipelineNameType
+          this.pipelineTypeAry=pipelineTypy
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
     },
-    getMsgDialog(data) {
-      console.log(data)
-      this.dialogFormVisible = data
-    },
-    handleButton(val) {
-      if (val.methods === 'edit') {
-        this.rowId = 'fafd'
-        this.dialogStatu = 'update'
-        this.dialogFormVisible = true
+    // 查询列表
+    list() {
+      this.loading = true
+      const params = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        pipelineType: this.fromSearch.pipelineType,
+        pipelineName: this.fromSearch.pipelineName
       }
+      pipelinemonthlList(params).then((res) => {
+        if (res.code === 0) {
+          this.tableData = res.body.data
+          this.total = res.body.total
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+      this.loading = false
     },
-    handleCurrentChange() {
-
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.list(val, this.pageSize)
     },
-    handleSizeChange() {
-
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
     },
     handleAdd() {
       const params = {
@@ -144,6 +190,71 @@ export default {
       }
       this.$router.push({ path: '/pipelinemonthAdd', query: params })
 
+    },
+    // 编辑
+    handleEdit() {
+      if (this.selectedRows.length === 1) {
+        const params = {
+          title: '编辑',
+          id: this.selectedRows[0],
+          statu: 'update'
+        }
+        this.$router.push({ path: '/pipelinemonthAdd', query: params })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行编辑',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleDel() {
+      if (this.selectedRows.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            ids: this.selectedRows,
+            lx: 3
+          }
+          pipelinemonthSwitchs(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              })
+              this.list(1, this.pageSize)
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
     }
   }
 }

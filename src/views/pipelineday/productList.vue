@@ -11,7 +11,15 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="管线名" label-width="90px">
-                <el-input v-model="fromSearch.oilPipeline"></el-input>
+                <el-select v-model="fromSearch.oilPipeline" placeholder="请选择管线名" clearable>
+                  <el-option
+                    v-for="item in pipelineNameTypeAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -63,7 +71,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { pipelinedaylList, pipelinedaySwitchs ,dic} from '@/api/fill'
+import { productList, pipelinedaySwitchs, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
 管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
@@ -97,16 +105,17 @@ export default {
         { label: '管线出油量', param: 'pipelineOutputVolume', minWidth: 180 },
         { label: '管线管存量', param: 'pipelineStock', minWidth: 180 },
         { label: '管线累计输油', param: 'pipelineCumulativeVolume', minWidth: 180 },
-     /*   { label: '城市燃气接收量', param: 'cityGasReceipt', minWidth: 180 },
-        { label: '甲醇接收量', param: 'methanolReceipt', minWidth: 180 },
-        { label: '化肥接收量', param: 'fertilizerReceipt', minWidth: 180 },
-        { label: 'lng接收气量', param: 'lngReceipt', minWidth: 180 },*/
+        /*   { label: '城市燃气接收量', param: 'cityGasReceipt', minWidth: 180 },
+           { label: '甲醇接收量', param: 'methanolReceipt', minWidth: 180 },
+           { label: '化肥接收量', param: 'fertilizerReceipt', minWidth: 180 },
+           { label: 'lng接收气量', param: 'lngReceipt', minWidth: 180 },*/
         { label: '末站压力阈值', param: 'pressureThreshold', minWidth: 180 },
         { label: '末站压力实际值', param: 'pressureActualValue', minWidth: 180 },
         { label: '设计输气（油）能力', param: 'runPlanPressure', minWidth: 180 },
         { label: '实际输气（油）能力', param: 'runPressure', minWidth: 180 }
       ],
-      selectedRows: []
+      selectedRows: [],
+      pipelineNameTypeAry: []
     }
   },
   created() {
@@ -116,10 +125,17 @@ export default {
     this.dic()
   },
   methods: {
-    dic(){
-      dic().then((res)=>{
-        if(res.success){
-          // const data=res.data
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const pipelineNameType = res.data.pipelineNameType
+          this.pipelineNameTypeAry = pipelineNameType
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
         }
       })
     },
@@ -132,7 +148,7 @@ export default {
         enterName: this.fromSearch.enterName,
         oilPipeline: this.fromSearch.oilPipeline
       }
-      pipelinedaylList(params).then((res) => {
+      productList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total

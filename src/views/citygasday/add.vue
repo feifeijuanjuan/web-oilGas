@@ -8,7 +8,7 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="180px"
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="200px"
                class="form-box clearfix"
       >
         <!--        /*企业名称、盟市名称、时间、状态、
@@ -38,8 +38,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.leagueCityName">
-              </el-input>
+              <el-select v-model="editForm.leagueCityName">
+                <el-option
+                  v-for="item in leagueCityTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -169,13 +176,14 @@
 </template>
 
 <script>
-import { citygasdayrhsave, citygasdayUpdate } from '@/api/fill'
+import { citygasdayrhsave, citygasdayUpdate, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
   name: 'editFormAdd',
   data() {
     return {
+      leagueCityTypeAry:[],
       editForm: {
         recordDate: '',
         enterName: '',
@@ -209,6 +217,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -216,6 +225,20 @@ export default {
     }
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data.leagueCityType
+          this.leagueCityTypeAry = data
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 数据回显
     update() {
       citygasdayUpdate(this.$route.query.id).then((res) => {

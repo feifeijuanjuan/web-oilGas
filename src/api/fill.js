@@ -13,7 +13,10 @@ export const oilgasdaySwitchs = params => post(`/oilgasday/switchs`, params)
 
 // 油气田企业按月填报
 // 查询
-export const oilgasmonthList = params => post('/oilgasmonth/list', params)
+export const gasmonthList = params => post('/oilgasmonth/gasList', params)
+
+// 查询
+export const oilmonthList = params => post('/oilgasmonth/oilList', params)
 // 保存
 export const oilgasmonthSave = params => post('/oilgasmonth/save', params)
 // 更新
@@ -23,7 +26,8 @@ export const oilgasmonthSwitchs = params => post(`/oilgasmonth/switchs`, params)
 
 // 国土资源厅按年填报
 // 查询
-export const guotuYearList = params => post('/guotu/yearList', params)
+export const guotuGasList = params => post('/guotu/gasList', params)
+export const guotuOilList = params => post('/guotu/oilList', params)
 // 保存
 export const guotuSave = params => post('/guotu/save', params)
 // 更新
@@ -180,3 +184,11 @@ export const coalgasEnterpriseList = params => post('/enterprise/coalgasList', p
 export const coaloilEnterpriseList = params => post('/enterprise/coaloilList', params)
 // 炼厂企业信息填报
 export const lianchangEnterpriseList = params => post('/enterprise/lianchangList', params)
+
+// 管道企业按日填报
+// 原油管线查询
+export const crudeList = params => post('/pipelineday/crudeList', params)
+// 天然气管线查询
+export const gasList = params => post('/pipelineday/gasList', params)
+// 成品油管线查询
+export const productList = params => post('/pipelineday/productList', params)

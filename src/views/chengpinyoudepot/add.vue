@@ -34,8 +34,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.leagueCityName">
-              </el-input>
+              <el-select v-model="editForm.leagueCityName" placeholder="请选择">
+                <el-option
+                  v-for="item in leagueCityNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -43,9 +50,9 @@
               <el-select v-model="editForm.groupType" placeholder="请选择">
                 <el-option
                   v-for="item in optionsGroupType"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
                 >
                 </el-option>
               </el-select>
@@ -99,7 +106,7 @@
 </template>
 
 <script>
-import { chengpinyoudepotSave, chengpinyoudepotUpdate } from '@/api/fill'
+import { chengpinyoudepotSave, chengpinyoudepotUpdate, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -116,16 +123,8 @@ export default {
         aviationCoalInventoryOilDepot: '',
         crudeInventoryOilDepot: ''
       },
-      optionsGroupType: [
-        {
-          value: 1,
-          label: '中石化'
-        },
-        {
-          value: 2,
-          label: '中石油'
-        }
-      ],
+      optionsGroupType: [],
+      leagueCityNameAry:[],
       rules: {
         enterName: [
           { required: true, message: '请输入企业名称', trigger: 'blur' }
@@ -139,6 +138,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -146,6 +146,17 @@ export default {
     }
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data
+          const groupTypes = data.groupType
+          const leagueCityType = data.leagueCityType
+          this.optionsGroupType = groupTypes
+          this.leagueCityNameAry = leagueCityType
+        }
+      })
+    },
     // 数据回显
     update() {
       chengpinyoudepotUpdate(this.$route.query.id).then((res) => {

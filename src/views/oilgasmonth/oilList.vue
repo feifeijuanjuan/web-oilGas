@@ -81,7 +81,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, oilgasmonthList, oilgasmonthSwitchs } from '@/api/fill'
+import { dic, oilmonthList, oilgasmonthSwitchs } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
@@ -145,7 +145,7 @@ export default {
         endTime: this.fromSearch.time[1],
         oilGasName: this.fromSearch.oilGasName
       }
-      oilgasmonthList(params).then((res) => {
+      oilmonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total

@@ -35,8 +35,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="管线名" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.oilPipeline">
-              </el-input>
+              <el-select v-model="editForm.oilPipeline" placeholder="请选择管线名" clearable>
+                <el-option
+                  v-for="item in pipelineNameTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -146,7 +153,7 @@
 </template>
 
 <script>
-import { pipelinedaysave, pipelinedayUpdate } from '@/api/fill'
+import { dic, pipelinedaysave, pipelinedayUpdate } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -177,12 +184,14 @@ export default {
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+      },
+      pipelineNameTypeAry: []
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -190,6 +199,20 @@ export default {
     }
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const pipelineNameType = res.data.pipelineNameType
+          this.pipelineNameTypeAry = pipelineNameType
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 数据回显
     update() {
       pipelinedayUpdate(this.$route.query.id).then((res) => {

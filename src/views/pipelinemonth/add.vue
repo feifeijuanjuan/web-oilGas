@@ -13,13 +13,29 @@
         13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管道名" class="no-unit">
-              <el-input v-model="editForm.pipelineName" placeholder="请输入内容"/>
+            <el-form-item label="管线名" class="no-unit">
+              <el-select v-model="editForm.pipelineName" placeholder="请选择管线名" clearable>
+                <el-option
+                  v-for="item in pipelineNameTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="管道类别" class="no-unit">
-              <el-input v-model="editForm.pipelineType" placeholder="请输入内容"/>
+            <el-form-item label="管道类型" class="no-unit">
+              <el-select v-model="editForm.pipelineType" placeholder="请选择">
+                <el-option
+                  v-for="item in pipelineTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -31,7 +47,15 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="企业性质" class="no-unit">
-              <el-input v-model="editForm.enterType" placeholder="请输入内容"/>
+              <el-select v-model="editForm.enterType" placeholder="请选择">
+                <el-option
+                  v-for="item in enterpriseEconomyTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -157,6 +181,9 @@
 </template>
 
 <script>
+import { dic } from '@/api/fill'
+import { Message } from 'element-ui'
+
 export default {
   name: 'EditFormAdd',
   data() {
@@ -181,16 +208,38 @@ export default {
         chargeUser: '',
         userPhone: '',
         isUse: ''
-      }
+      },
+      pipelineNameTypeAry:[],
+      pipelineTypeAry:[],
+      enterpriseEconomyTypeAry:[]
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const pipelineNameType = res.data.pipelineNameType
+          const pipelineTypy=res.data.pipelineType
+          const enterpriseEconomyType=res.data.enterpriseEconomyType
+          this.pipelineNameTypeAry = pipelineNameType
+          this.pipelineTypeAry=pipelineTypy
+          this.enterpriseEconomyTypeAry=enterpriseEconomyType
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     close() {
       this.$router.push('/pipelinemonth/list')
     },

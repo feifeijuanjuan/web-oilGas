@@ -58,7 +58,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { enterpriseList, enterpriseSwitchs,dic } from '@/api/fill'
+import { coaloilEnterpriseList, enterpriseSwitchs,dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1企业名称、2时间、3企业性质、4税收、5企业人数*/
 export default {
@@ -78,7 +78,8 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '企业名称', param: 'enterName' },
-        { label: '企业性质', param: 'enterType' },
+        { label: '企业性质', param: 'enterpriseEconomyType' },
+        { label: '产能', param: 'proCapacity' },
         { label: '税收', param: 'taxRevenue' },
         { label: '企业人数', param: 'employeesNum' }
       ]
@@ -99,7 +100,7 @@ export default {
         pageSize: this.pageSize,
         oilGasName: this.fromSearch.oilGasName
       }
-      enterpriseList(params).then((res) => {
+      coaloilEnterpriseList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total

@@ -173,3 +173,10 @@ export const gasreleaseSwitchs = params => post(`/gasrelease/switchs`, params)
 
 // 字典表
 export const dic = () => get('/dict/init')
+
+// 煤制气企业信息填报
+export const coalgasEnterpriseList = params => post('/enterprise/coalgasList', params)
+// 煤制油企业信息填报
+export const coaloilEnterpriseList = params => post('/enterprise/coaloilList', params)
+// 炼厂企业信息填报
+export const lianchangEnterpriseList = params => post('/enterprise/lianchangList', params)

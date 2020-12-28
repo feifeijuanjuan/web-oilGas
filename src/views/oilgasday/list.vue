@@ -7,18 +7,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="气田名称" label-width="90px">
-                <el-select v-model="fromSearch.oilGasName" placeholder="请选择气田名称"
-                           style="width: 180px" ref="selectReport"
-                >
-                  <el-option :value="fromSearch.name" :label="fromSearch.name1"
-                             style="width: 180px;height:200px;overflow: auto;background-color:#fff"
+                <el-select v-model="fromSearch.oilGasName" placeholder="请选择气田名称" clearable>
+                  <el-option
+                    v-for="item in gasTypesAry"
+                    :key="item.typeName"
+                    :label="item.typeName"
+                    :value="item.typeName"
                   >
-                    <el-tree
-                      @node-click="handleNodeClick"
-                    ></el-tree>
                   </el-option>
                 </el-select>
-                <!--                <el-input v-model="fromSearch.oilGasName"></el-input>-->
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -125,7 +122,7 @@ export default {
         { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' }
       ],
       selectedRows: [],
-      oilTypesObj: {}
+      gasTypesAry: []
     }
   },
   created() {
@@ -137,8 +134,8 @@ export default {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const data = res.data.oilTypes
-          this.oilTypesObj = data
+          const data = res.data.gasTypes
+          this.gasTypesAry = data
         }
       })
     },

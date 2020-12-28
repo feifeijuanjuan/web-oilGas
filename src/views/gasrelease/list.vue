@@ -5,11 +5,25 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="盟市名称" label-width="90px">
-                <el-input v-model="fromSearch.leagueCityName"></el-input>
+              <el-form-item label="企业名称" label-width="90px">
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
+              <el-form-item label="盟市名称" label-width="90px">
+                <el-select v-model="fromSearch.leagueCityName" clearable>
+                  <el-option
+                    v-for="item in leagueCityTypeAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+
+<!--            <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
@@ -23,7 +37,7 @@
                 >
                 </el-date-picker>
               </el-form-item>
-            </el-col>
+            </el-col>-->
           </el-row>
 
         </div>
@@ -74,7 +88,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { gasreleaseList, gasreleaseSwitchs } from '@/api/fill'
+import { dic, gasreleaseList, gasreleaseSwitchs } from '@/api/fill'
 import { Message } from 'element-ui'
 /*league_city_name盟市名称（地区）
 		enter_name		企业（管理方）
@@ -94,7 +108,7 @@ export default {
       pageSize: 50,
       fromSearch: {
         leagueCityName: '',
-        time: ''
+        enterName: ''
       },
       loading: false,
       tableData: [],
@@ -105,23 +119,40 @@ export default {
         { label: '释放气量', param: 'releaseVolumn', minWidth: 210 },
         { label: '气量属性', param: 'airAttribute', minWidth: 210 },
         { label: '剩余气量', param: 'surplusVolumn', minWidth: 160 },
-      ]
+      ],
+      leagueCityTypeAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data.leagueCityType
+          this.leagueCityTypeAry = data
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
-        leagueCityName: this.fromSearch.leagueCityName
+     /*   beginTime: this.fromSearch.time[0],
+        endTime: this.fromSearch.time[1],*/
+        leagueCityName: this.fromSearch.leagueCityName,
+        enterName:this.fromSearch.enterName
       }
       gasreleaseList(params).then((res) => {
         if (res.code === 0) {

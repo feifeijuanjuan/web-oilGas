@@ -16,8 +16,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="气田名称" class="no-unit" prop="oilGasName">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasName">
-              </el-input>
+              <el-select v-model="editForm.oilGasName" placeholder="请选择气田名称" clearable>
+                <el-option
+                  v-for="item in gasTypesAry"
+                  :key="item.typeName"
+                  :label="item.typeName"
+                  :value="item.typeName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -32,36 +39,15 @@
             </el-form-item>
           </el-col>
         </el-row>
-<!--        <el-row>
-          <el-col :span="12">
-            <el-form-item label="油气田区域类型" class="no-unit">
-              <el-select v-model="editForm.oilGasAreaType" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="油气田区域名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasAreaName">
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业结构" class="no-unit">
               <el-select v-model="editForm.groupType" placeholder="请选择">
                 <el-option
                   v-for="item in optionsGroupType"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
                 >
                 </el-option>
               </el-select>
@@ -69,8 +55,15 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.leagueCityName">
-              </el-input>
+              <el-select v-model="editForm.leagueCityName" placeholder="请选择">
+                <el-option
+                  v-for="item in leagueCityNameAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -160,7 +153,7 @@
 </template>
 
 <script>
-import { guotuSave, guotuUpdate } from '@/api/fill'
+import { dic, guotuSave, guotuUpdate } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -184,39 +177,23 @@ export default {
         controlReserve: '',
         oilGasSize: ''
       },
-      options: [
-        {
-          value: 1,
-          label: '油田'
-        },
-        {
-          value: 2,
-          label: '气田'
-        }
-      ],
-      optionsGroupType: [
-        {
-          value: 1,
-          label: '中石化'
-        },
-        {
-          value: 2,
-          label: '中石油'
-        }
-      ],
+      optionsGroupType: [],
       rules: {
         oilGasName: [
-          { required: true, message: '请输入气田名称', trigger: 'blur' }
+          { required: true, message: '请输入气田名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+      },
+      gasTypesAry: [],
+      leagueCityNameAry: []
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.dic()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -224,6 +201,19 @@ export default {
     }
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data
+          const gasType = data.gasTypes
+          const groupTypes = data.groupType
+          const leagueCityType = data.leagueCityType
+          this.gasTypesAry = gasType
+          this.optionsGroupType = groupTypes
+          this.leagueCityNameAry = leagueCityType
+        }
+      })
+    },
     // 数据回显
     update() {
       guotuUpdate(this.$route.query.id).then((res) => {

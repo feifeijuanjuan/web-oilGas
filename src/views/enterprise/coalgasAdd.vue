@@ -22,7 +22,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="企业性质">
-              <el-select v-model="editForm.enterType">
+              <el-select v-model="editForm.enterpriseEconomyType">
                 <el-option
                   v-for="item in enterpriseEconomyTypeAry"
                   :key="item.dictItemName"
@@ -36,11 +36,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="产能">
+              <el-input placeholder="请输入内容" v-model="editForm.proCapacity">
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="税收">
               <el-input placeholder="请输入内容" v-model="editForm.taxRevenue">
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="企业人数">
               <el-input placeholder="请输入内容" v-model="editForm.employeesNum">
@@ -73,7 +82,8 @@ export default {
       enterpriseEconomyTypeAry: [],
       editForm: {
         enterName: '',
-        enterType: '',
+        enterpriseEconomyType: '',
+        proCapacity:'',
         taxRevenue: '',
         employeesNum: ''
       },
@@ -130,7 +140,9 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          enterpriseSave(this.editForm).then((res) => {
+          const parms = this.editForm
+          parms['enterpriseType'] = '煤制气企业'
+          enterpriseSave(parms).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '保存成功',
@@ -155,7 +167,9 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          enterpriseSave(this.editForm).then((res) => {
+          const parms = this.editForm
+          parms['enterpriseType'] = '煤制气企业'
+          enterpriseSave(parms).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '修改成功',

@@ -74,7 +74,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { coalgasList, coalgasSwitchs,dic } from '@/api/fill'
+import { coalgasList, coalgasSwitchs, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1企业名称、2时间、3盟市名称、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
 7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12煤制气产量、
@@ -135,8 +135,8 @@ export default {
     this.dic()
   },
   methods: {
-    dic(){
-      dic().then((res)=>{
+    dic() {
+      dic().then((res) => {
 
       })
     },

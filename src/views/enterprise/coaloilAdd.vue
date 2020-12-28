@@ -13,6 +13,7 @@
       >
         <!--        /*1企业名称、2时间、3企业性质、4税收、5企业人数、6状态*/-->
 
+
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" prop="enterName">
@@ -22,7 +23,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="企业性质">
-              <el-select v-model="editForm.enterType">
+              <el-select v-model="editForm.enterpriseEconomyType">
                 <el-option
                   v-for="item in enterpriseEconomyTypeAry"
                   :key="item.dictItemName"
@@ -36,11 +37,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="产能">
+              <el-input placeholder="请输入内容" v-model="editForm.proCapacity">
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="税收">
               <el-input placeholder="请输入内容" v-model="editForm.taxRevenue">
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="企业人数">
               <el-input placeholder="请输入内容" v-model="editForm.employeesNum">
@@ -74,6 +84,7 @@ export default {
       editForm: {
         enterName: '',
         enterType: '',
+        proCapacity: '',
         taxRevenue: '',
         employeesNum: ''
       },
@@ -130,7 +141,9 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          enterpriseSave(this.editForm).then((res) => {
+          const parms = this.editForm
+          parms['enterpriseType'] = '煤制油企业'
+          enterpriseSave(parms).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '保存成功',
@@ -155,7 +168,9 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          enterpriseSave(this.editForm).then((res) => {
+          const parms = this.editForm
+          parms['enterpriseType'] = '煤制油企业'
+          enterpriseSave(parms).then((res) => {
             if (res.code === 0) {
               Message({
                 message: '修改成功',

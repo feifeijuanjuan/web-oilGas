@@ -6,7 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="油田名称" label-width="90px">
-                <el-input v-model="fromSearch.oilGasName"></el-input>
+                <el-select v-model="fromSearch.oilGasName" placeholder="请选择油田名称" clearable>
+                  <el-option
+                    v-for="item in oilTypesAry"
+                    :key="item.typeName"
+                    :label="item.typeName"
+                    :value="item.typeName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="9">
@@ -82,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { guotuYearList, guotuSwitchs } from '@/api/fill'
+import { guotuYearList, guotuSwitchs, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
@@ -121,14 +129,24 @@ export default {
         { label: '控制储量', param: 'controlReserve', minWidth: '150' },
         { label: '油田面积', param: 'oilGasSize', minWidth: '150' }
       ],
-      selectedRows: []
+      selectedRows: [],
+      oilTypesAry:[]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
+    this.dic()
   },
   methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data.oilTypes
+          this.oilTypesAry = data
+        }
+      })
+    },
     // 查询列表
     list() {
       this.loading = true

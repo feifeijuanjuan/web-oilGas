@@ -190,7 +190,9 @@
     }
   }
 }
-
+.el-submenu__title i{
+  color: rgb(191, 203, 217);
+}
 // when menu collapsed
 .el-menu--vertical {
   & > .el-menu {

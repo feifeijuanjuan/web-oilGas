@@ -26,7 +26,7 @@ export const handleMenu = ((menu) => {
             path: item.href,
             name: item.name,
             component: resolve => require([`@/views${item.href}`], resolve),
-            meta: { title: item.name, icon: 'dashboard'  }
+            meta: { title: item.name, icon: 'menu'  }
           }
           ]
         }
@@ -39,14 +39,14 @@ export const handleMenu = ((menu) => {
             path: i.href,
             name: i.name,
             component: resolve => require([`@/views${i.href}`], resolve),
-            meta: { title: i.name, icon: 'dashboard'}
+            meta: { title: i.name, icon: 'circle'}
           }
         )
       })
       menuList.push({
         path: item.href,
         component: Layout,
-        meta: { title: item.name, icon: 'dashboard' },
+        meta: { title: item.name, icon: 'menu' },
         children: childList
       })
     }

@@ -18,15 +18,11 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="气田名称" class="no-unit" prop="oilGasName">
-              <el-select v-model="editForm.oilGasName" placeholder="请选择气田名称" clearable>
-                <el-option
-                  v-for="item in gasTypesAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+              <el-cascader
+                v-model="editForm.oilGasName"
+                placeholder="请选择气田名称"
+                :options="oilGasOptions"
+              ></el-cascader>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -136,7 +132,7 @@
 </template>
 
 <script>
-import { oilgasmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
+import { gasmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -172,18 +168,22 @@ export default {
         ]
       },
       gasTypesAry: [],
-      leagueCityNameAry: []
+      leagueCityNameAry: [],
+      oilGasOptions: []
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
-    this.dic()
   },
   mounted() {
-    if (this.statu !== 'create') {
-      this.update()
-    }
+    Promise.all([
+      this.dic()
+    ]).then(res => {
+      if (this.statu !== 'create') {
+        this.update()
+      }
+    })
   },
   methods: {
     dic() {
@@ -193,7 +193,26 @@ export default {
           const gasType = data.gasTypes
           const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
-          this.gasTypesAry = gasType
+          // this.gasTypesAry = gasType
+          this.oilGasOptions = []
+          gasType.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.oilGasOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
           this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
         }
@@ -201,17 +220,21 @@ export default {
     },
     // 数据回显
     update() {
-      oilgasmonthUpdate(this.$route.query.id).then((res) => {
-        if (res.code === 0) {
-          this.editForm = res.body
-        } else {
-          Message({
-            message: '请求失败',
-            type: 'error',
-            duration: 5 * 1000
-          })
-        }
+      return new Promise((resolve, reject) => {
+        gasmonthUpdate(this.$route.query.id).then((res) => {
+          if (res.code === 0) {
+            this.editForm = res.body
+            this.editForm.oilGasName = [res.body.typeName, res.body.oilGasName]
+          } else {
+            Message({
+              message: '请求失败',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
+        })
       })
+
     },
     // 取消
     close() {
@@ -221,6 +244,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
           const param = this.editForm
           param['oilGasAreaType'] = 2
           oilgasmonthSave(param).then((res) => {
@@ -248,6 +272,8 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          console.log( this.editForm.oilGasName)
           const param = this.editForm
           param['oilGasAreaType'] = 2
           oilgasmonthSave(param).then((res) => {

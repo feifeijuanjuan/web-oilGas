@@ -119,8 +119,8 @@ export default {
            { label: 'lng接收气量', param: 'lngReceipt', minWidth: 180 },*/
         { label: '末站压力阈值', param: 'pressureThreshold', minWidth: 180 },
         { label: '末站压力实际值', param: 'pressureActualValue', minWidth: 180 },
-        { label: '设计输气（油）能力', param: 'runPlanPressure', minWidth: 180 },
-        { label: '实际输气（油）能力', param: 'runPressure', minWidth: 180 }
+        { label: '设计输油能力', param: 'runPlanPressure', minWidth: 180 },
+        { label: '实际输油能力', param: 'runPressure', minWidth: 180 }
       ],
       selectedRows: [],
       pipelineNameTypeAry: [],

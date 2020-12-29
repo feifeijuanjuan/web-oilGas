@@ -6,15 +6,13 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="气田名称" label-width="90px">
-                <el-select v-model="fromSearch.oilGasName" placeholder="请选择气田名称" clearable>
-                  <el-option
-                    v-for="item in gasTypesAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
+                <el-cascader
+                  v-model="fromSearch.oilGasName"
+                  placeholder="请选择气田名称"
+                  :options="oilGasOptions"
+                  @change="handleChange"
+                  clearable
+                ></el-cascader>
               </el-form-item>
             </el-col>
             <el-col :span="9">
@@ -130,7 +128,8 @@ export default {
         { label: '气田面积', param: 'oilGasSize', minWidth: '150' }
       ],
       selectedRows: [],
-      gasTypesAry: []
+      gasTypesAry: [],
+      oilGasOptions: []
     }
   },
   created() {
@@ -139,11 +138,37 @@ export default {
     this.dic()
   },
   methods: {
+    handleChange(val) {
+      if (val.length > 0) {
+        this.fromSearch.oilGasName = val[val.length - 1]
+      } else {
+        this.fromSearch.oilGasName = ''
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.gasTypes
-          this.gasTypesAry = data
+          // this.gasTypesAry = data
+          this.oilGasOptions = []
+          data.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.oilGasOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
         }
       })
     },

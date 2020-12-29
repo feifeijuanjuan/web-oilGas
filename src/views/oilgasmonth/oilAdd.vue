@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { oilgasmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
+import { oilmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -232,7 +232,7 @@ export default {
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {
-        oilgasmonthUpdate(this.$route.query.id).then((res) => {
+        oilmonthUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
             this.editForm.oilGasName = [res.body.typeName, res.body.oilGasName]

@@ -136,7 +136,7 @@ export default {
   },
   methods: {
     handleChange(val) {
-      if (val.length > 1) {
+      if (val.length > 0) {
         this.fromSearch.oilGasName = val[val.length - 1]
       } else {
         this.fromSearch.oilGasName = ''

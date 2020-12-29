@@ -7,15 +7,13 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="气田名称" label-width="90px">
-                <el-select v-model="fromSearch.oilGasName" placeholder="请选择气田名称" clearable>
-                  <el-option
-                    v-for="item in gasTypesAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
+                <el-cascader
+                  v-model="fromSearch.oilGasName"
+                  placeholder="请选择气田名称"
+                  :options="oilGasOptions"
+                  @change="handleChange"
+                  clearable
+                ></el-cascader>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -104,8 +102,8 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: '150' },
         { label: '气田名称', param: 'oilGasName', minWidth: '150' },
-       /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
-        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
+         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
         { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
         { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
@@ -118,7 +116,8 @@ export default {
         { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
       ],
       selectedRows: [],
-      gasTypesAry: []
+      gasTypesAry: [],
+      oilGasOptions: []
     }
   },
   created() {
@@ -131,9 +130,35 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.gasTypes
-          this.gasTypesAry = data
+          // this.gasTypesAry = data
+          this.oilGasOptions = []
+          data.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.oilGasOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
         }
       })
+    },
+    handleChange(val) {
+      if (val.length > 0) {
+        this.fromSearch.oilGasName = val[val.length - 1]
+      } else {
+        this.fromSearch.oilGasName = ''
+      }
     },
     // 查询列表
     list() {

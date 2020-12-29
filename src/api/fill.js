@@ -19,8 +19,10 @@ export const gasmonthList = params => post('/oilgasmonth/gasList', params)
 export const oilmonthList = params => post('/oilgasmonth/oilList', params)
 // 保存
 export const oilgasmonthSave = params => post('/oilgasmonth/save', params)
-// 更新
-export const oilgasmonthUpdate = params => get(`/oilgasmonth/select/${params}`)
+// 更新(油田按月)
+export const oilmonthUpdate = params => get(`/oilgasmonth/select/${params}`)
+//更新（气田按月）
+export const gasmonthUpdate = params => get(`/oilgasmonth/select1/${params}`)
 // 删除
 export const oilgasmonthSwitchs = params => post(`/oilgasmonth/switchs`, params)
 
@@ -30,8 +32,10 @@ export const guotuGasList = params => post('/guotu/gasList', params)
 export const guotuOilList = params => post('/guotu/oilList', params)
 // 保存
 export const guotuSave = params => post('/guotu/save', params)
-// 更新
-export const guotuUpdate = params => get(`/guotu/select/${params}`)
+// 更新（油田）
+export const guotuOilUpdate = params => get(`/guotu/select/${params}`)
+// 更新（气田）
+export const guotuGasUpdate = params => get(`/guotu/select1/${params}`)
 // 删除
 export const guotuSwitchs = params => post(`/guotu/switchs`, params)
 

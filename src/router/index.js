@@ -161,18 +161,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // 煤制有企业填报
-  {
-    path: '/meizhiqiAdd',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '/meizhiqiAdd',
-        component: () => import('@/views/meizhiqi/add')
-      }
-    ]
-  },
   // 成品油库存按月
   {
     path: '/chengpinyoudepotAdd',

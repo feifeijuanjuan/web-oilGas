@@ -54,7 +54,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="管线进油量">
+            <el-form-item label="管线进气量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineInputVolume">
                 <template slot="append">万吨</template>
               </el-input>
@@ -63,7 +63,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管线出油量">
+            <el-form-item label="管线出气量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineOutputVolume">
                 <template slot="append">万吨</template>
               </el-input>
@@ -79,7 +79,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管线累计输油">
+            <el-form-item label="管线累计输气">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineCumulativeVolume">
                 <template slot="append">万吨</template>
               </el-input>
@@ -132,7 +132,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="设计输气（油）能力" class="no-unit">
+            <el-form-item label="设计输气能力" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.runPlanPressure">
               </el-input>
             </el-form-item>
@@ -140,7 +140,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="实际输气（油）能力" class="no-unit">
+            <el-form-item label="实际输气能力" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.runPressure">
               </el-input>
             </el-form-item>

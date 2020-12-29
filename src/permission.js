@@ -18,7 +18,6 @@ router.beforeEach(async(to, from, next) => {
   if (flag) {
     flag = false//必须在creatnewrouter() 执行
     userList().then(res => {
-      console.log(112222)
       if (res.body) {
         initMenu(res.body)
         next({ ...to, replace: true })

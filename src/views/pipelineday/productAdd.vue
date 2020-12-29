@@ -100,7 +100,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="设计输气（油）能力" class="no-unit">
+            <el-form-item label="设计输油能力" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.runPlanPressure">
               </el-input>
             </el-form-item>
@@ -108,7 +108,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="实际输气（油）能力" class="no-unit">
+            <el-form-item label="实际输油能力" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.runPressure">
               </el-input>
             </el-form-item>

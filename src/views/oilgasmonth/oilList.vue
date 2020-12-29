@@ -7,15 +7,22 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="油田名称" label-width="90px">
-                <el-select v-model="fromSearch.oilGasName" placeholder="请选择油田名称" clearable>
-                  <el-option
-                    v-for="item in oilTypesAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
+                <!--                <el-select v-model="fromSearch.oilGasName" placeholder="请选择油田名称" clearable>
+                                  <el-option
+                                    v-for="item in oilTypesAry"
+                                    :key="item.typeName"
+                                    :label="item.typeName"
+                                    :value="item.typeName"
+                                  >
+                                  </el-option>
+                                </el-select>-->
+                <el-cascader
+                  v-model="fromSearch.oilGasName"
+                  placeholder="请选择油田名称"
+                  :options="oilGasOptions"
+                  clearable
+                  @change="handleChange"
+                ></el-cascader>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -37,7 +44,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="gaslist((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -104,8 +111,8 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: '150' },
         { label: '油田名称', param: 'oilGasName', minWidth: '150' },
-       /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
-        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
+         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
         { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
         { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
@@ -118,7 +125,8 @@ export default {
         { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
       ],
       selectedRows: [],
-      oilTypesAry:[]
+      oilTypesAry: [],
+      oilGasOptions: []
     }
   },
   created() {
@@ -127,11 +135,36 @@ export default {
     this.dic()
   },
   methods: {
+    handleChange(val) {
+      if (val.length > 1) {
+        this.fromSearch.oilGasName = val[val.length - 1]
+      } else {
+        this.fromSearch.oilGasName = ''
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.oilTypes
-          this.oilTypesAry = data
+          this.oilGasOptions = []
+          data.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.oilGasOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
         }
       })
     },

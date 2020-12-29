@@ -18,15 +18,20 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="油田名称" class="no-unit" prop="oilGasName">
-              <el-select v-model="editForm.oilGasName" placeholder="请选择油田名称" clearable>
-                <el-option
-                  v-for="item in oilTypesAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+              <!--              <el-select v-model="editForm.oilGasName" placeholder="请选择油田名称" clearable>
+                              <el-option
+                                v-for="item in oilTypesAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
+              <el-cascader
+                v-model="editForm.oilGasName"
+                placeholder="请选择油田名称"
+                :options="oilGasOptions"
+              ></el-cascader>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -172,28 +177,53 @@ export default {
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
       },
-      leagueCityNameAry: []
+      leagueCityNameAry: [],
+      oilGasOptions: []
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
-    this.dic()
+    // this.dic()
   },
   mounted() {
-    if (this.statu !== 'create') {
-      this.update()
-    }
+    Promise.all([
+      this.dic()
+    ]).then(res => {
+      if (this.statu !== 'create') {
+        this.update()
+      }
+    })
   },
   methods: {
     dic() {
       dic().then((res) => {
         if (res.success) {
           const data = res.data
-          const oilType = data.oilTypes
+          const oilType = res.data.oilTypes
+          this.oilGasOptions = []
+          oilType.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.oilGasOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
+          // const oilType = data.oilTypes
           const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
-          this.oilTypesAry = oilType
+          // this.oilTypesAry = oilType
           this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
         }
@@ -201,16 +231,19 @@ export default {
     },
     // 数据回显
     update() {
-      oilgasmonthUpdate(this.$route.query.id).then((res) => {
-        if (res.code === 0) {
-          this.editForm = res.body
-        } else {
-          Message({
-            message: '请求失败',
-            type: 'error',
-            duration: 5 * 1000
-          })
-        }
+      return new Promise((resolve, reject) => {
+        oilgasmonthUpdate(this.$route.query.id).then((res) => {
+          if (res.code === 0) {
+            this.editForm = res.body
+            this.editForm.oilGasName = [res.body.typeName, res.body.oilGasName]
+          } else {
+            Message({
+              message: '请求失败',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
+        })
       })
     },
     // 取消
@@ -221,6 +254,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
           const param = this.editForm
           param['oilGasAreaType'] = 1
           oilgasmonthSave(param).then((res) => {
@@ -248,6 +282,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
           const param = this.editForm
           param['oilGasAreaType'] = 1
           oilgasmonthSave(param).then((res) => {

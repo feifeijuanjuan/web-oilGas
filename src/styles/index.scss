@@ -120,9 +120,12 @@ div:focus {
     width: 100%
   }
 
-  /*.el-select .el-input__suffix{
-    right: 39px;
-  }*/
+  .el-cascader{
+    width: calc(100% - #{$input-unit-width})
+  }
+  .el-cascader .el-input__inner{
+    width: 100%;
+  }
 }
 
 .el-select {
@@ -151,6 +154,9 @@ div:focus {
   .search-input {
     float: left;
     width: calc(100% - 120px)
+  }
+  .search-input .el-cascader{
+    width: 100%;
   }
 }
 

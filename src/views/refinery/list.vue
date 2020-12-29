@@ -112,7 +112,7 @@ export default {
       count: 3,
       total: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 10,
       fromSearch: {
         enterName: '',
         time: ''

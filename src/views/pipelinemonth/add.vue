@@ -7,40 +7,22 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" size="small"  :rules="rules" ref="ruleForm" label-width="140px"
-               class="form-box clearfix">
+      <el-form :model="editForm" size="small" :rules="rules" ref="ruleForm" label-width="140px"
+               class="form-box clearfix"
+      >
         <!--        /*1管道名、2管道类型、3企业名称、4时间、5区内里程、6运送能力、7管道长度、
         8设计压力、9末站压力阈值、10末站压力实际值、11区内起点、12区内终点、
         13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="管线名" class="no-unit" prop="pipelineName">
-              <el-select v-model="editForm.pipelineName" placeholder="请选择管线名" clearable>
-                <el-option
-                  v-for="item in pipelineNameTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
+              <el-cascader
+                v-model="editForm.pipelineName"
+                placeholder="请选择管线名称"
+                :options="pipelineNameOptions"
+              ></el-cascader>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="管道类型" class="no-unit" prop="pipelineType">
-              <el-select v-model="editForm.pipelineType" placeholder="请选择">
-                <el-option
-                  v-for="item in pipelineTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit">
               <el-select v-model="editForm.enterName" placeholder="请选择">
@@ -54,6 +36,9 @@
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="企业性质" class="no-unit">
               <el-select v-model="editForm.enterType" placeholder="请选择">
@@ -67,13 +52,14 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="企业地址" class="no-unit">
               <el-input v-model="editForm.enterAddress" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="日期" class="no-unit">
               <el-date-picker
@@ -82,8 +68,6 @@
               />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="管径">
               <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容">
@@ -91,6 +75,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="境内里程">
               <el-input v-model="editForm.pipelineLength" placeholder="请输入内容">
@@ -98,15 +85,16 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="设计运输能力">
               <el-input v-model="editForm.transportPower" placeholder="请输入内容">
-              <template slot="append">亿立方米/年</template>
+                <template slot="append">亿立方米/年</template>
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="投产时间" class="no-unit">
               <el-date-picker
@@ -115,59 +103,61 @@
               />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="全线起点位置" class="no-unit">
               <el-input v-model="editForm.startPipeline" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="全线终点位置" class="no-unit">
               <el-input v-model="editForm.endPipeline" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="区内起点" class="no-unit">
               <el-input v-model="editForm.startInPipeline" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="区内终点" class="no-unit">
               <el-input v-model="editForm.endInPipeline" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="设计压力" class="no-unit">
               <el-input v-model="editForm.designPressure" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="法人代表" class="no-unit">
               <el-input v-model="editForm.legalRepresentative" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="安全负责人" class="no-unit">
               <el-input v-model="editForm.chargeUser" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="安全负责人电话" class="no-unit">
               <el-input v-model="editForm.userPhone" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="是否运行" class="no-unit">
               <el-input v-model="editForm.isUse" placeholder="请输入内容"/>
@@ -218,42 +208,59 @@ export default {
         userPhone: '',
         isUse: ''
       },
-      pipelineNameTypeAry:[],
-      pipelineTypeAry:[],
-      enterpriseEconomyTypeAry:[],
-      enterNameAry:[],
+      pipelineNameTypeAry: [],
+      pipelineTypeAry: [],
+      enterpriseEconomyTypeAry: [],
+      enterNameAry: [],
       rules: {
         pipelineName: [
-          { required: true, message: '请输入管线名称', trigger: 'change' }
-        ],
-        pipelineType: [
-          { required: true, message: '请选择管道类型', trigger: 'change' }
+          { required: true, message: '请选择管线名称', trigger: 'change' }
         ]
-      }
+      },
+      pipelineNameOptions:[]
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
-    this.dic()
   },
   mounted() {
-    if (this.statu !== 'create') {
-      this.update()
-    }
+    Promise.all([
+      this.dic()
+    ]).then(res => {
+      if (this.statu !== 'create') {
+        this.update()
+      }
+    })
   },
   methods: {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const pipelineNameType = res.data.pipelineNameType
-          const pipelineTypy=res.data.pipelineType
-          const enterpriseEconomyType=res.data.enterpriseEconomyType
-          const enterName=res.data.enterName
-          this.pipelineNameTypeAry = pipelineNameType
-          this.pipelineTypeAry=pipelineTypy
-          this.enterpriseEconomyTypeAry=enterpriseEconomyType
-          this.enterNameAry=enterName
+          const pipelineTypy = res.data.pipelineType
+          const enterpriseEconomyType = res.data.enterpriseEconomyType
+          const enterName = res.data.enterName
+          this.pipelineNameOptions = []
+          pipelineTypy.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.pipelineNameOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
+          this.enterpriseEconomyTypeAry = enterpriseEconomyType
+          this.enterNameAry = enterName
         } else {
           Message({
             message: '网络请求失败',
@@ -265,16 +272,19 @@ export default {
     },
     // 数据回显
     update() {
-      pipelinemonthUpdate(this.$route.query.id).then((res) => {
-        if (res.code === 0) {
-          this.editForm = res.body
-        } else {
-          Message({
-            message: '请求失败',
-            type: 'error',
-            duration: 5 * 1000
-          })
-        }
+      return new Promise((resolve, reject) => {
+        pipelinemonthUpdate(this.$route.query.id).then((res) => {
+          if (res.code === 0) {
+            this.editForm = res.body
+            this.editForm.pipelineName = [res.body.typeName, res.body.pipelineName]
+          } else {
+            Message({
+              message: '请求失败',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
+        })
       })
     },
     close() {
@@ -284,6 +294,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.editForm.pipelineName = this.editForm.pipelineName[this.editForm.pipelineName.length - 1]
           pipelinemonthsave(this.editForm).then((res) => {
             if (res.code === 0) {
               Message({
@@ -309,6 +320,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.editForm.pipelineName = this.editForm.pipelineName[this.editForm.pipelineName.length - 1]
           pipelinemonthsave(this.editForm).then((res) => {
             if (res.code === 0) {
               Message({

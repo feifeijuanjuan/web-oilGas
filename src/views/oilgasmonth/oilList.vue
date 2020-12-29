@@ -101,7 +101,7 @@ export default {
       checkbox: true,
       total: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 10,
       fromSearch: {
         oilGasName: null,
         time: ''
@@ -244,6 +244,9 @@ export default {
                 type: 'success',
                 message: '删除成功!'
               })
+              const totalPage = Math.ceil((this.total - 1) / this.pageSize)
+              const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
+              this.currentPage = currentPage < 1 ? 1 : currentPage
               this.list(this.currentPage, this.pageSize)
             } else {
               this.$message({

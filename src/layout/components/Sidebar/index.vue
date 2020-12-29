@@ -34,13 +34,14 @@ export default {
     ...mapGetters([
       'sidebar'
     ]),
+  /*  userList().then(res => {
+       if (res.body) {
+         initMenu(res.body)
+       }
+     })*/
     routes() {
-      /*userList().then(res => {
-        if (res.body) {
-          initMenu(res.body)
-        }
-      })*/
-      return this.$router.options.routes
+      // return this.$router.options.routes
+      return store.getters.setRouters
     },
     activeMenu() {
       const route = this.$route

@@ -5,29 +5,14 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="管线名" label-width="90px">
-                <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
-                  <el-option
-                    v-for="item in pipelineNameTypeAry"
-                    :key="item.dictItemName"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="管道类型">
-                <el-select v-model="fromSearch.pipelineType" placeholder="请选择">
-                  <el-option
-                    v-for="item in pipelineTypeAry"
-                    :key="item.dictItemName"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
-                  >
-                  </el-option>
-                </el-select>
+              <el-form-item label="管线名" label-width="70px">
+                <el-cascader
+                  v-model="fromSearch.pipelineName"
+                  placeholder="请选择管线名称"
+                  :options="pipelineNameOptions"
+                  @change="handleChange"
+                  clearable
+                ></el-cascader>
               </el-form-item>
             </el-col>
           </el-row>
@@ -95,7 +80,7 @@ export default {
       count: 3,
       total: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 10,
       fromSearch: {
         pipelineName: '',
         pipelineType: ''
@@ -104,7 +89,6 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '管线名', param: 'pipelineName', minWidth: 150 },
-        { label: '管道类别', param: 'pipelineType', minWidth: 150 },
         { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '企业性质', param: 'enterType', minWidth: 150 },
         { label: '企业地址', param: 'enterAddress', minWidth: 150 },
@@ -125,7 +109,8 @@ export default {
       ],
       selectedRows: [],
       pipelineNameTypeAry:[],
-      pipelineTypeAry:[]
+      pipelineTypeAry:[],
+      pipelineNameOptions:[]
     }
   },
   created() {
@@ -135,13 +120,36 @@ export default {
     this.dic()
   },
   methods: {
+    handleChange(val) {
+      if (val.length > 0) {
+        this.fromSearch.pipelineName = val[val.length - 1]
+      } else {
+        this.fromSearch.pipelineName = ''
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const pipelineNameType = res.data.pipelineNameType
-          const pipelineTypy=res.data.pipelineType
-          this.pipelineNameTypeAry = pipelineNameType
-          this.pipelineTypeAry=pipelineTypy
+          const pipelineType = res.data.pipelineType
+          this.pipelineNameOptions = []
+          pipelineType.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.pipelineNameOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
         } else {
           Message({
             message: '网络请求失败',
@@ -226,7 +234,10 @@ export default {
                 type: 'success',
                 message: '删除成功'
               })
-              this.list(1, this.pageSize)
+              const totalPage = Math.ceil((this.total - 1) / this.pageSize)
+              const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
+              this.currentPage = currentPage < 1 ? 1 : currentPage
+              this.list(this.currentPage, this.pageSize)
             } else {
               this.$message({
                 type: 'error',

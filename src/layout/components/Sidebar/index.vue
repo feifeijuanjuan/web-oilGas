@@ -34,11 +34,11 @@ export default {
     ...mapGetters([
       'sidebar'
     ]),
-  /*  userList().then(res => {
-       if (res.body) {
-         initMenu(res.body)
-       }
-     })*/
+    /*  userList().then(res => {
+         if (res.body) {
+           initMenu(res.body)
+         }
+       })*/
     routes() {
       // return this.$router.options.routes
       return store.getters.setRouters
@@ -50,7 +50,55 @@ export default {
       if (meta.activeMenu) {
         return meta.activeMenu
       }
-      return path
+      if (path === '/dayAdd') {
+        return '/oilgasday/list'
+      } else if (path === '/monthAdd') {
+        return '/oilgasmonth/gasList'
+      } else if (path === '/oilAdd') {
+        return '/oilgasmonth/oilList'
+      } else if (path === '/guotuGasAdd') {
+        return '/guotu/gasList'
+      } else if (path === '/guotuOilAdd') {
+        return '/guotu/oilList'
+      } else if (path === '/coalgasAdd') {
+        return '/coalgas/list'
+      } else if (path === '/coalgasEnterpriseAdd') {
+        return '/enterprise/coalgasList'
+      } else if (path === '/coaloilEnterpriseAdd') {
+        return '/enterprise/coaloilList'
+      } else if (path === '/lianchangAdd') {
+        return '/enterprise/lianchangList'
+      } else if (path === '/coaloilAdd') {
+        return '/coaloil/list'
+      } else if (path === '/chengpinyoudepotAdd') {
+        return '/chengpinyoudepot/list'
+      } else if (path === '/chengpinyousaleAdd') {
+        return '/chengpinyousale/list'
+      } else if (path === '/refineryAdd') {
+        return '/refinery/list'
+      } else if (path === '/crudeAdd') {
+        return '/pipelineday/crudeList'
+      } else if (path === '/gasAdd') {
+        return '/pipelineday/gasList'
+      } else if (path === '/productAdd') {
+        return '/pipelineday/productList'
+      } else if (path === '/pipelinemonthAdd') {
+        return '/pipelinemonth/list'
+      } else if (path === '/citygasdayAdd') {
+        return '/citygasday/list'
+      } else if (path === '/citygasyearAdd') {
+        return '/citygasyear/list'
+      } else if (path === '/citygaspeekdayAdd') {
+        return '/citygaspeekday/list'
+      } else if (path === '/nengyuanjuyearAdd') {
+        return '/nengyuanjuyear/list'
+      } else if (path === '/emergencyAdd') {
+        return '/emergency/list'
+      } else if (path === '/gasreleaseAdd') {
+        return '/gasrelease/list'
+      } else {
+        return path
+      }
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo

@@ -28,9 +28,9 @@
               <el-select v-model="editForm.enterName" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
+                  :key="item.typeName"
+                  :label="item.typeName"
+                  :value="item.typeName"
                 >
                 </el-option>
               </el-select>
@@ -228,7 +228,7 @@ export default {
         if (res.success) {
           const pipelineTypy = res.data.pipelineType
           const enterpriseEconomyType = res.data.enterpriseEconomyType
-          const enterName = res.data.enterName
+          const enterName = res.data.guandao
           this.pipelineNameOptions = []
           pipelineTypy.forEach(item => {
             const childList = []

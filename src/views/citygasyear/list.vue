@@ -9,9 +9,9 @@
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
                     v-for="item in enterNameAry"
-                    :key="item.dictItemName"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
+                    :key="item.typeName"
+                    :label="item.typeName"
+                    :value="item.typeName"
                   >
                   </el-option>
                 </el-select>
@@ -138,7 +138,7 @@ export default {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.enterName
+          const enterName = res.data.chengshiranqi
           this.enterNameAry = enterName
         } else {
           Message({

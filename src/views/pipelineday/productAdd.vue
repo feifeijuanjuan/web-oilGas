@@ -20,9 +20,9 @@
               <el-select v-model="editForm.enterName" placeholder="请选择管线名" clearable>
                 <el-option
                   v-for="item in enterNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
+                  :key="item.typeName"
+                  :label="item.typeName"
+                  :value="item.typeName"
                 >
                 </el-option>
               </el-select>
@@ -175,7 +175,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const pipelineNameType = res.data.chengpinyouguandao
-          const enterName=res.data.enterName
+          const enterName=res.data.guandao
           this.pipelineNameTypeAry = pipelineNameType
           this.enterNameAry=enterName
         } else {

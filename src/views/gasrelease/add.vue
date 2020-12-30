@@ -49,9 +49,9 @@
               <el-select v-model="editForm.enterName" clearable>
                 <el-option
                   v-for="item in enterNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
+                  :key="item.typeId"
+                  :label="item.typeName"
+                  :value="item.typeName"
                 >
                 </el-option>
               </el-select>
@@ -112,7 +112,7 @@ export default {
       statu: '',
       rules: {
         leagueCityName: [
-          { required: true, message: '请输入盟市名称', trigger: 'change' }
+          { required: true, message: '请选择盟市名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -135,7 +135,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName = res.data.enterName
+          const enterName = res.data.nengyuanju
           this.leagueCityTypeAry = data
           this.enterNameAry = enterName
         } else {

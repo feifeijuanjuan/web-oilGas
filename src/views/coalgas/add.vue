@@ -21,9 +21,9 @@
               <el-select v-model="editForm.enterName" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
+                  :key="item.typeName"
+                  :label="item.typeName"
+                  :value="item.typeName"
                 >
                 </el-option>
               </el-select>
@@ -351,7 +351,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data
-          const enterName = data.enterName
+          const enterName = data.meizhiqi
           const leagueCityType = data.leagueCityType
           this.leagueCityNameAry = leagueCityType
           this.enterNameAry=enterName

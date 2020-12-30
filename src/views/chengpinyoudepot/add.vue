@@ -18,9 +18,9 @@
               <el-select v-model="editForm.enterName" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
+                  :key="item.typeName"
+                  :label="item.typeName"
+                  :value="item.typeName"
                 >
                 </el-option>
               </el-select>
@@ -135,7 +135,7 @@ export default {
       enterNameAry:[],
       rules: {
         enterName: [
-          { required: true, message: '请输入企业名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -160,7 +160,7 @@ export default {
           const data = res.data
           const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
-          const enterName=data.enterName
+          const enterName=data.chengpinyou
           this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
           this.enterNameAry=enterName

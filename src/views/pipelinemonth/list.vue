@@ -5,14 +5,35 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
+              <el-form-item label="管道类型" label-width="70px">
+                <el-select v-model="fromSearch.pipelineType" clearable>
+                  <el-option
+                    v-for="item in pipelineTypeAry"
+                    :key="item.typeId"
+                    :label="item.typeName"
+                    :value="item.typeName"
+                  >
+                  </el-option>
+                </el-select>
+                <!--                <el-cascader
+                                  v-model="fromSearch.pipelineName"
+                                  placeholder="请选择管线类型"
+                                  :options="pipelineNameOptions"
+                                  @change="handleChange"
+                                  clearable
+                                ></el-cascader>-->
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
               <el-form-item label="管线名" label-width="70px">
-                <el-cascader
+<!--                <el-cascader
                   v-model="fromSearch.pipelineName"
                   placeholder="请选择管线名称"
                   :options="pipelineNameOptions"
                   @change="handleChange"
                   clearable
-                ></el-cascader>
+                ></el-cascader>-->
+                <el-input v-model="fromSearch.pipelineName"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -88,6 +109,7 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
+        { label: '管道类型', param: 'pipelineType', minWidth: 150 },
         { label: '管线名', param: 'pipelineName', minWidth: 150 },
         { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '企业性质', param: 'enterType', minWidth: 150 },
@@ -108,9 +130,9 @@ export default {
         { label: '是否运行', param: 'isUse', minWidth: 150 }
       ],
       selectedRows: [],
-      pipelineNameTypeAry:[],
-      pipelineTypeAry:[],
-      pipelineNameOptions:[]
+      pipelineNameTypeAry: [],
+      pipelineTypeAry: [],
+      pipelineNameOptions: []
     }
   },
   created() {
@@ -131,7 +153,8 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const pipelineType = res.data.pipelineType
-          this.pipelineNameOptions = []
+          this.pipelineTypeAry=pipelineType
+         /* this.pipelineNameOptions = []
           pipelineType.forEach(item => {
             const childList = []
             if (item.childrenProjectType) {
@@ -149,7 +172,7 @@ export default {
               label: item.typeName,
               children: childList
             })
-          })
+          })*/
         } else {
           Message({
             message: '网络请求失败',

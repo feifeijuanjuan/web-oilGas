@@ -15,14 +15,31 @@
         13设计输气（油）能力、14实际输气（油）能力、15管径、16投产时间、17负责人、18状态*/-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管线名" class="no-unit" prop="pipelineName">
-              <el-cascader
-                v-model="editForm.pipelineName"
-                placeholder="请选择管线名称"
-                :options="pipelineNameOptions"
-              ></el-cascader>
+            <el-form-item label="管道类型" class="no-unit" prop="pipelineType">
+              <el-select v-model="editForm.pipelineType" placeholder="请选择">
+                <el-option
+                  v-for="item in pipelineTypeAry"
+                  :key="item.typeId"
+                  :label="item.typeName"
+                  :value="item.typeName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="管线名" class="no-unit" prop="pipelineName">
+              <!--              <el-cascader
+                              v-model="editForm.pipelineName"
+                              placeholder="请选择管线名称"
+                              :options="pipelineNameOptions"
+                            ></el-cascader>-->
+              <el-input v-model="editForm.pipelineName"></el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit">
               <el-select v-model="editForm.enterName" placeholder="请选择">
@@ -36,9 +53,6 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="企业性质" class="no-unit">
               <el-select v-model="editForm.enterType" placeholder="请选择">
@@ -52,13 +66,14 @@
               </el-select>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="企业地址" class="no-unit">
               <el-input v-model="editForm.enterAddress" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="管径">
               <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容">
@@ -66,6 +81,10 @@
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="境内里程">
               <el-input v-model="editForm.pipelineLength" placeholder="请输入内容">
@@ -73,10 +92,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
-
           <el-col :span="12">
             <el-form-item label="设计运输能力">
               <el-input v-model="editForm.transportPower" placeholder="请输入内容">
@@ -84,6 +99,10 @@
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="投产时间" class="no-unit">
               <el-date-picker
@@ -92,61 +111,60 @@
               />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
-
           <el-col :span="12">
             <el-form-item label="全线起点位置" class="no-unit">
               <el-input v-model="editForm.startPipeline" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="全线终点位置" class="no-unit">
               <el-input v-model="editForm.endPipeline" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="区内起点" class="no-unit">
               <el-input v-model="editForm.startInPipeline" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="区内终点" class="no-unit">
               <el-input v-model="editForm.endInPipeline" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="设计压力" class="no-unit">
               <el-input v-model="editForm.designPressure" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="法人代表" class="no-unit">
               <el-input v-model="editForm.legalRepresentative" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="安全负责人" class="no-unit">
               <el-input v-model="editForm.chargeUser" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="安全负责人电话" class="no-unit">
               <el-input v-model="editForm.userPhone" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="是否运行" class="no-unit">
               <el-input v-model="editForm.isUse" placeholder="请输入内容"/>
@@ -202,8 +220,11 @@ export default {
       enterpriseEconomyTypeAry: [],
       enterNameAry: [],
       rules: {
+        pipelineType: [
+          { required: true, message: '请选择管道名称', trigger: 'change' }
+        ],
         pipelineName: [
-          { required: true, message: '请选择管线名称', trigger: 'change' }
+          { required: true, message: '请输入管线名称', trigger: 'blur' }
         ]
       },
       pipelineNameOptions: []
@@ -229,7 +250,8 @@ export default {
           const pipelineTypy = res.data.pipelineType
           const enterpriseEconomyType = res.data.enterpriseEconomyType
           const enterName = res.data.guandao
-          this.pipelineNameOptions = []
+          this.pipelineTypeAry = pipelineTypy
+          /*this.pipelineNameOptions = []
           pipelineTypy.forEach(item => {
             const childList = []
             if (item.childrenProjectType) {
@@ -247,7 +269,7 @@ export default {
               label: item.typeName,
               children: childList
             })
-          })
+          })*/
           this.enterpriseEconomyTypeAry = enterpriseEconomyType
           this.enterNameAry = enterName
         } else {
@@ -265,7 +287,7 @@ export default {
         pipelinemonthUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
-            this.editForm.pipelineName = [res.body.typeName, res.body.pipelineName]
+            // this.editForm.pipelineName = [res.body.typeName, res.body.pipelineName]
           } else {
             Message({
               message: '请求失败',
@@ -283,7 +305,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.pipelineName = this.editForm.pipelineName[this.editForm.pipelineName.length - 1]
+          // this.editForm.pipelineName = this.editForm.pipelineName[this.editForm.pipelineName.length - 1]
           pipelinemonthsave(this.editForm).then((res) => {
             if (res.code === 0) {
               Message({
@@ -309,7 +331,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.pipelineName = this.editForm.pipelineName[this.editForm.pipelineName.length - 1]
+          // this.editForm.pipelineName = this.editForm.pipelineName[this.editForm.pipelineName.length - 1]
           pipelinemonthsave(this.editForm).then((res) => {
             if (res.code === 0) {
               Message({

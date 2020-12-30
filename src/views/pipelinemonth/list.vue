@@ -92,7 +92,7 @@ export default {
         { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '企业性质', param: 'enterType', minWidth: 150 },
         { label: '企业地址', param: 'enterAddress', minWidth: 150 },
-        { label: '时间', param: 'recordDate', minWidth: 150 },
+        // { label: '时间', param: 'recordDate', minWidth: 150 },
         { label: '管径', param: 'pipelineDiamete', minWidth: 150 },
         { label: '境内里程', param: 'pipelineLength', minWidth: 150 },
         { label: '设计运输能力', param: 'transportPower', minWidth: 180 },

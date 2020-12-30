@@ -59,15 +59,6 @@
           </el-col>
         </el-row>
         <el-row>
-
-          <el-col :span="12">
-            <el-form-item label="日期" class="no-unit">
-              <el-date-picker
-                v-model="editForm.recordDate"
-                placeholder="请选择日期"
-              />
-            </el-form-item>
-          </el-col>
           <el-col :span="12">
             <el-form-item label="管径">
               <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容">
@@ -75,9 +66,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="境内里程">
               <el-input v-model="editForm.pipelineLength" placeholder="请输入内容">
@@ -85,6 +73,10 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
+
           <el-col :span="12">
             <el-form-item label="设计运输能力">
               <el-input v-model="editForm.transportPower" placeholder="请输入内容">
@@ -92,9 +84,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="投产时间" class="no-unit">
               <el-date-picker
@@ -103,61 +92,61 @@
               />
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
+
           <el-col :span="12">
             <el-form-item label="全线起点位置" class="no-unit">
               <el-input v-model="editForm.startPipeline" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="全线终点位置" class="no-unit">
               <el-input v-model="editForm.endPipeline" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="区内起点" class="no-unit">
               <el-input v-model="editForm.startInPipeline" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="区内终点" class="no-unit">
               <el-input v-model="editForm.endInPipeline" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="设计压力" class="no-unit">
               <el-input v-model="editForm.designPressure" placeholder="请输入内容">
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="法人代表" class="no-unit">
               <el-input v-model="editForm.legalRepresentative" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="安全负责人" class="no-unit">
               <el-input v-model="editForm.chargeUser" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="安全负责人电话" class="no-unit">
               <el-input v-model="editForm.userPhone" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="是否运行" class="no-unit">
               <el-input v-model="editForm.isUse" placeholder="请输入内容"/>
@@ -217,7 +206,7 @@ export default {
           { required: true, message: '请选择管线名称', trigger: 'change' }
         ]
       },
-      pipelineNameOptions:[]
+      pipelineNameOptions: []
     }
   },
   created() {

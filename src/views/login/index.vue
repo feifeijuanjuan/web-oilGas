@@ -43,7 +43,7 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
         </span>
       </el-form-item>
-<!--      <el-checkbox label="记住密码" v-model="loginForm.checked" class="check-box"></el-checkbox>-->
+      <!--      <el-checkbox label="记住密码" v-model="loginForm.checked" class="check-box"></el-checkbox>-->
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
                  @click.native.prevent="handleLogin"
       >登录
@@ -79,8 +79,8 @@ export default {
         checked: false
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }]
-        // password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名', }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码', }]
       },
       loading: false,
       passwordType: 'password',
@@ -303,7 +303,7 @@ $light_gray: #eee;
 
   .login-form {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
     margin-left: -180px;
     width: 360px;

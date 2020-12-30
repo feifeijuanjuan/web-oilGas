@@ -25,7 +25,7 @@ module.exports = {
     // before: require('./mock/mock-server.js'),
     proxy: {
       '/api': {
-        target: 'http://64t3gc.natappfree.cc/oilgas-background',
+        target: 'http://vdck59.natappfree.cc/oilgas-background',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

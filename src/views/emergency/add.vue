@@ -112,7 +112,7 @@ export default {
       statu: '',
       rules: {
         leagueCityName: [
-          { required: true, message: '请输入盟市名称', trigger: 'change' }
+          { required: true, message: '请选择盟市名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }

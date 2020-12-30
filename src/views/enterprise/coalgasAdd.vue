@@ -97,7 +97,7 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请输入企业名称', trigger: 'blur' }
+          { required: true, message: '请选择企业名称', trigger: 'change' }
         ]
       }
     }

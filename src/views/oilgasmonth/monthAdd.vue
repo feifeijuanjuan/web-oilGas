@@ -161,7 +161,7 @@ export default {
       unit: '万立方米',
       rules: {
         oilGasName: [
-          { required: true, message: '请输入气田名称', trigger: 'change' }
+          { required: true, message: '请选择气田名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }

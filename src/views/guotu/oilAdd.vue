@@ -163,7 +163,7 @@ export default {
       optionsGroupType: [],
       rules: {
         oilGasName: [
-          { required: true, message: '请输入油田名称', trigger: 'change' }
+          { required: true, message: '请选择油田名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }

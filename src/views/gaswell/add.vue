@@ -13,12 +13,12 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="气井名称" prop="gasWellName">
+            <el-form-item label="气井名称" prop="gasWellName" class="no-unit">
               <el-input v-model="editForm.gasWellName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期">
+            <el-form-item label="日期" class="no-unit">
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
@@ -30,12 +30,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="气井地图坐标信息">
+            <el-form-item label="气井地图坐标信息" class="no-unit">
               <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="气井所属生产基地">
+            <el-form-item label="气井所属生产基地" class="no-unit">
               <el-input v-model="editForm.baseName" placeholder="请输入内容">
               </el-input>
             </el-form-item>
@@ -45,6 +45,7 @@
           <el-col :span="12">
             <el-form-item label="气井月产能">
               <el-input v-model="editForm.gasWellYield" placeholder="请输入内容">
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>

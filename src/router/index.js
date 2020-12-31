@@ -314,6 +314,42 @@ export const constantRoutes = [
       }
     ]
   },
+  // 油田及气田生产基地
+  {
+    path: '/baseAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/baseAdd',
+        component: () => import('@/views/base/add')
+      }
+    ]
+  },
+  // 油井
+  {
+    path: '/oilWellAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/oilWellAdd',
+        component: () => import('@/views/oilwell/add')
+      }
+    ]
+  },
+  // 气井
+  {
+    path: '/gasWellAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasWellAdd',
+        component: () => import('@/views/gaswell/add')
+      }
+    ]
+  },
   // 管道
 
   /* {

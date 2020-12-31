@@ -1,0 +1,195 @@
+<template>
+  <div class="app-container">
+    <div class="form-add"><span class="first">油气田企业填报</span>
+      <span class="first-line">></span>
+      <span class="first">油井信息填报</span
+      ><span class="first-line">></span>
+      <span class="second">{{ pageTitle }}
+      </span></div>
+    <div class="form-wrapper">
+      <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
+      <el-form :model="editForm" size="small" :rules="rules" ref="ruleForm" label-width="140px"
+               class="form-box clearfix"
+      >
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="油井名称" prop="oilWellName">
+              <el-input v-model="editForm.oilWellName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="日期">
+              <el-date-picker
+                v-model="editForm.recordDate"
+                placeholder="请选择日期"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="油井地图坐标信息">
+              <el-input v-model="editForm.oilWellCoordinate" placeholder="请输入内容"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="油井所属生产基地">
+              <el-input v-model="editForm.baseName" placeholder="请输入内容">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="油井月产能">
+              <el-input v-model="editForm.oilWellYield" placeholder="请输入内容">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+    <div class="form-footer-btn">
+      <el-button class="close-btn" @click="close">取 消</el-button>
+      <el-button
+        class="confrim-btn"
+        type="primary"
+        @click="statu==='create'?createData('editForm'):updateData('editForm')"
+      >确 定
+      </el-button>
+    </div>
+  </div>
+
+</template>
+
+<script>
+import { oilwellSave,oilwellUpdate } from '@/api/fill'
+import { Message } from 'element-ui'
+
+export default {
+  name: 'EditFormAdd',
+  data() {
+    return {
+      editForm: {
+        oilWellName: '',
+        recordDate: '',
+        oilWellCoordinate: '',
+        baseName: '',
+        oilWellYield: ''
+      },
+      rules: {
+        oilWellName: [
+          { required: true, message: '请输入油井名称', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  created() {
+    this.pageTitle = this.$route.query.title
+    this.statu = this.$route.query.statu
+  },
+  mounted() {
+    /*Promise.all([
+      this.dic()
+    ]).then(res => {
+      if (this.statu !== 'create') {
+        this.update()
+      }
+    })*/
+    if (this.statu !== 'create') {
+      this.update()
+    }
+  },
+  methods: {
+   /* dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const enterName = res.data.guandao
+          this.enterNameAry = enterName
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },*/
+    // 数据回显
+    update() {
+      return new Promise((resolve, reject) => {
+        oilwellUpdate(this.$route.query.id).then((res) => {
+          if (res.code === 0) {
+            this.editForm = res.body
+          } else {
+            Message({
+              message: '请求失败',
+              type: 'error',
+              duration: 5 * 1000
+            })
+          }
+        })
+      })
+    },
+    close() {
+      this.$router.push('/oilwell/list')
+    },
+    // 新增保存
+    createData() {
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          oilwellSave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '保存成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/oilwell/list')
+            } else {
+              Message({
+                message: '保存失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    // 编辑保存
+    updateData() {
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          oilwellSave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '修改成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/oilwell/list')
+            } else {
+              Message({
+                message: '修改失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

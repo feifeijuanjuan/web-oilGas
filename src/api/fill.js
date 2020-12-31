@@ -196,3 +196,32 @@ export const crudeList = params => post('/pipelineday/crudeList', params)
 export const gasList = params => post('/pipelineday/gasList', params)
 // 成品油管线查询
 export const productList = params => post('/pipelineday/productList', params)
+// 气井
+// 查询
+export const gaswellList = params => post('/gaswell/list', params)
+// 保存
+export const gaswellSave = params => post('/gaswell/save', params)
+// 更新
+export const gaswellUpdate = params => get(`/gaswell/select/${params}`)
+// 删除
+export const gaswellSwitchs = params => post(`/gaswell/switchs`, params)
+
+// 油井
+// 查询
+export const oilwellList = params => post('/oilwell/list', params)
+// 保存
+export const oilwellSave = params => post('/oilwell/save', params)
+// 更新
+export const oilwellUpdate = params => get(`/oilwell/select/${params}`)
+// 删除
+export const oilwellSwitchs = params => post(`/oilwell/switchs`, params)
+
+// 生产基地信息填报
+// 查询
+export const baseList = params => post('/base/list', params)
+// 保存
+export const baseSave = params => post('/base/save', params)
+// 更新
+export const baseUpdate = params => get(`/base/select/${params}`)
+// 删除
+export const baseSwitchs = params => post(`/base/switchs`, params)

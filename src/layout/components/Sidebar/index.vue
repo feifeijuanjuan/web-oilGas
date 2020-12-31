@@ -96,6 +96,12 @@ export default {
         return '/emergency/list'
       } else if (path === '/gasreleaseAdd') {
         return '/gasrelease/list'
+      } else if (path === '/baseAdd') {
+        return '/base/list'
+      } else if (path === '/oilWellAdd') {
+        return '/oilwell/list'
+      } else if (path === '/gasWellAdd') {
+        return '/gaswell/list'
       } else {
         return path
       }

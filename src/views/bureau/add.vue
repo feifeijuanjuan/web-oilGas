@@ -1,0 +1,204 @@
+<template>
+  <div class="app-container">
+    <div class="form-add"><span class="first">能源局填报</span>
+      <span class="first-line">></span>
+      <span class="first">按月填报</span
+      ><span class="first-line">></span>
+      <span class="second">{{ pageTitle }}
+      </span></div>
+    <div class="form-wrapper">
+      <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="200px"
+               class="form-box clearfix"
+      >
+        <!--        /*盟市名称、时间
+                盟市储气设施总容积
+                地方政府日均三天计划储气量
+                地方政府日均三天实际储气量
+                盟市租赁储罐数量
+                盟市自建储罐数量
+                天然气历史缺口量
+                盟市储气日调用量
+                盟市气化装置数量
+                盟市气化装置日均气化量*/-->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="盟市名称" class="no-unit" prop="leagueCityName">
+              <el-select v-model="editForm.leagueCityName">
+                <el-option
+                  v-for="item in leagueCityTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
+              <el-date-picker
+                type="month"
+                v-model="editForm.recordDate"
+                placeholder="请选择日期"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="成品油区外调入量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferInVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成品油区外总调出量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferOutVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+      </el-form>
+    </div>
+    <div class="form-footer-btn">
+      <el-button class="close-btn" @click="close">取 消</el-button>
+      <el-button class="confrim-btn" type="primary"
+                 @click="statu==='create'?createData('editForm'):updateData('editForm')"
+      >确 定
+      </el-button>
+    </div>
+  </div>
+
+</template>
+
+<script>
+import { dic, bureauUpdate, bureauSave } from '@/api/fill'
+import { Message } from 'element-ui'
+
+export default {
+  name: 'editFormAdd',
+  data() {
+    return {
+      leagueCityTypeAry: [],//盟市名称
+      editForm: {
+        recordDate: '',
+        leagueCityName: '',
+        productedOilTransferInVolume: '',
+        productedOilTransferOutVolume: ''
+
+      },
+      rules: {
+        leagueCityName: [
+          { required: true, message: '请选择盟市名称', trigger: 'change' }
+        ],
+        recordDate: [
+          { required: true, message: '请选择日期', trigger: 'change' }
+        ]
+      }
+    }
+  },
+  created() {
+    this.pageTitle = this.$route.query.title
+    this.statu = this.$route.query.statu
+    //字典表
+    this.dic()
+  },
+  mounted() {
+    if (this.statu !== 'create') {
+      this.update()
+    }
+  },
+  methods: {
+    dic() {
+      dic().then((res) => {
+        if (res.success) {
+          const data = res.data.leagueCityType
+          this.leagueCityTypeAry = data
+        } else {
+          Message({
+            message: '网络请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
+    // 数据回显
+    update() {
+      bureauUpdate(this.$route.query.id).then((res) => {
+        if (res.code === 0) {
+          this.editForm = res.body
+        } else {
+          Message({
+            message: '请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
+    close() {
+      this.$router.push('/bureau/list')
+    },
+    createData() {
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          bureauSave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '保存成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/bureau/list')
+            } else {
+              Message({
+                message: '保存失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    },
+
+    updateData() {
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          bureauSave(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '修改成功',
+                type: 'success',
+                duration: 5 * 1000
+              })
+              this.$router.push('/bureau/list')
+            } else {
+              Message({
+                message: '修改失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
+          })
+        } else {
+          return false
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-select v-model="fromSearch.enterName" placeholder="请选择企业名称" clearable>
                   <el-option
@@ -16,7 +16,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="8">
               <el-form-item label="管线名" label-width="90px">
                 <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
@@ -156,7 +156,7 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        enterName: this.fromSearch.enterName,
+        // enterName: this.fromSearch.enterName,
         pipelineName: this.fromSearch.pipelineName
       }
       crudeList(params).then((res) => {

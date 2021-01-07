@@ -102,6 +102,8 @@ export default {
         return '/oilwell/list'
       } else if (path === '/gasWellAdd') {
         return '/gaswell/list'
+      } else if (path === '/bureauAdd') {
+        return '/bureau/list'
       } else {
         return path
       }

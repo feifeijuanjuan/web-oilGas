@@ -225,3 +225,13 @@ export const baseSave = params => post('/base/save', params)
 export const baseUpdate = params => get(`/base/select/${params}`)
 // 删除
 export const baseSwitchs = params => post(`/base/switchs`, params)
+
+// 能源局按月填报
+// 查询
+export const bureauList = params => post('/bureau/list', params)
+// 保存
+export const bureauSave = params => post('/bureau/save', params)
+// 更新
+export const bureauUpdate = params => get(`/bureau/select/${params}`)
+// 删除
+export const bureauSwitchs = params => post(`/bureau/switchs`, params)

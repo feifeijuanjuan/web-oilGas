@@ -15,11 +15,24 @@
                 管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/-->
 
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
               <el-select v-model="editForm.enterName" placeholder="请选择管线名" clearable>
                 <el-option
                   v-for="item in enterNameAry"
+                  :key="item.typeName"
+                  :label="item.typeName"
+                  :value="item.typeName"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>-->
+          <el-col :span="12">
+            <el-form-item label="管线名称" class="no-unit" prop="pipelineName">
+              <el-select v-model="editForm.pipelineName" placeholder="请选择管线名称" clearable>
+                <el-option
+                  v-for="item in pipelineNameTypeAry"
                   :key="item.typeName"
                   :label="item.typeName"
                   :value="item.typeName"
@@ -40,19 +53,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="管线名" class="no-unit">
-              <el-select v-model="editForm.pipelineName" placeholder="请选择管线名" clearable>
-                <el-option
-                  v-for="item in pipelineNameTypeAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
+
           <el-col :span="12">
             <el-form-item label="管线进气量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineInputVolume">
@@ -60,8 +61,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="管线出气量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineOutputVolume">
@@ -69,6 +68,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="管线管存量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineStock">
@@ -76,8 +78,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="管线累计输气">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineCumulativeVolume">
@@ -85,6 +85,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="城市燃气接收量">
               <el-input placeholder="请输入内容" v-model="editForm.cityGasReceipt">
@@ -92,8 +95,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="甲醇接收量">
               <el-input placeholder="请输入内容" v-model="editForm.methanolReceipt">
@@ -101,6 +102,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="化肥接收量">
               <el-input placeholder="请输入内容" v-model="editForm.fertilizerReceipt">
@@ -108,8 +112,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="lng接收气量">
               <el-input placeholder="请输入内容" v-model="editForm.lngReceipt">
@@ -117,6 +119,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="末站压力阈值">
               <el-input placeholder="请输入内容" v-model="editForm.pressureThreshold">
@@ -124,8 +129,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="末站压力实际值">
               <el-input placeholder="请输入内容" v-model="editForm.pressureActualValue">
@@ -133,6 +136,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="设计输气能力">
               <el-input placeholder="请输入内容" v-model="editForm.runPlanPressure">
@@ -140,8 +146,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="实际输气能力">
               <el-input placeholder="请输入内容" v-model="editForm.runPressure">
@@ -173,7 +177,7 @@ export default {
     return {
       editForm: {
         recordDate: '',
-        enterName: '',
+        // enterName: '',
         pipelineName: '',
         pipelineInputVolume: '',
         pipelineOutputVolume: '',
@@ -189,8 +193,8 @@ export default {
         runPressure: ''
       },
       rules: {
-        enterName: [
-          { required: true, message: '请选择企业名称', trigger: 'change' }
+        pipelineName: [
+          { required: true, message: '请选择管线名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }

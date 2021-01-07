@@ -350,6 +350,17 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/bureauAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/bureauAdd',
+        component: () => import('@/views/bureau/add')
+      }
+    ]
+  }
   // 管道
 
   /* {

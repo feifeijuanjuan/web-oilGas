@@ -4,30 +4,32 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-<!--            <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-select v-model="fromSearch.enterName" placeholder="请选择企业名称" clearable>
+            <el-col :span="8">
+              <el-form-item label="盟市名称" label-width="90px">
+                <el-select v-model="fromSearch.leagueCityName" clearable>
                   <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
+                    v-for="item in leagueCityTypeAry"
+                    :key="item.dictItemName"
+                    :label="item.dictItemName"
+                    :value="item.dictItemName"
                   >
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>-->
+            </el-col>
             <el-col :span="8">
-              <el-form-item label="管线名" label-width="90px">
-                <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
-                  <el-option
-                    v-for="item in pipelineNameTypeAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  unlink-panels
+                  type="monthrange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                  :clearable="false"
+                >
+                </el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
@@ -42,7 +44,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按日填报
+          按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -79,14 +81,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { productList, pipelinedaySwitchs, dic } from '@/api/fill'
+import { bureauSwitchs, bureauList, dic } from '@/api/fill'
 import { Message } from 'element-ui'
-/*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
-管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
-/*末站压力阈值
-末站压力实际值
-设计输气（油）能力
-实际输气（油）能力*/
 
 export default {
   name: 'Dashboard',
@@ -98,49 +94,34 @@ export default {
       total: 0,
       currentPage: 1,
       pageSize: 50,
-      loading: false,
+      leagueCityTypeAry: [],//盟市名称
       fromSearch: {
-        // enterName: '',
-        pipelineName: ''
+        leagueCityName: '',
+        beginTime: null,
+        endTime: null
       },
+      loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: 150 },
-        { label: '企业名称', param: 'enterName', minWidth: 150 },
-        // { label: '盟市', param: 'laneCode', minWidth: 150 },
-        { label: '管线名', param: 'pipelineName', minWidth: 150 },
-        { label: '管线进油量', param: 'pipelineInputVolume', minWidth: 180 },
-        { label: '管线出油量', param: 'pipelineOutputVolume', minWidth: 180 },
-        { label: '管线管存量', param: 'pipelineStock', minWidth: 180 },
-        { label: '管线累计输油', param: 'pipelineCumulativeVolume', minWidth: 180 },
-        /*   { label: '城市燃气接收量', param: 'cityGasReceipt', minWidth: 180 },
-           { label: '甲醇接收量', param: 'methanolReceipt', minWidth: 180 },
-           { label: '化肥接收量', param: 'fertilizerReceipt', minWidth: 180 },
-           { label: 'lng接收气量', param: 'lngReceipt', minWidth: 180 },*/
-        { label: '末站压力阈值', param: 'pressureThreshold', minWidth: 180 },
-        { label: '末站压力实际值', param: 'pressureActualValue', minWidth: 180 },
-        { label: '设计输油能力', param: 'runPlanPressure', minWidth: 180 },
-        { label: '实际输油能力', param: 'runPressure', minWidth: 180 }
-      ],
-      selectedRows: [],
-      pipelineNameTypeAry: [],
-      enterNameAry:[]
+        { label: '时间', param: 'recordDate', minWidth: 120 },
+        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 180 },
+        { label: '成品油区外总调出量', param: 'productedOilTransferOutVolume', minWidth: 210 }
+      ]
     }
   },
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
-    //
+    //字典表
     this.dic()
   },
   methods: {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const pipelineNameType = res.data.chengpinyouguandao
-          const enterName=res.data.guandao
-          this.pipelineNameTypeAry = pipelineNameType
-          this.enterNameAry=enterName
+          const data = res.data.leagueCityType
+          this.leagueCityTypeAry = data
         } else {
           Message({
             message: '网络请求失败',
@@ -156,10 +137,11 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        // enterName: this.fromSearch.enterName,
-        pipelineName: this.fromSearch.pipelineName
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
+        leagueCityName: this.fromSearch.leagueCityName
       }
-      productList(params).then((res) => {
+      bureauList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -174,6 +156,7 @@ export default {
       this.loading = false
     },
     handleCurrentChange(val) {
+      console.log(val)
       this.currentPage = val
       this.list(val, this.pageSize)
     },
@@ -187,7 +170,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/productAdd', query: params })
+      this.$router.push({ path: '/bureauAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -197,7 +180,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/productAdd', query: params })
+        this.$router.push({ path: '/bureauAdd', query: params })
 
       } else {
         Message({
@@ -207,6 +190,7 @@ export default {
         })
       }
     },
+    // 删除
     handleDel() {
       if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
@@ -218,16 +202,13 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          pipelinedaySwitchs(params).then((res) => {
+          bureauSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$message({
                 type: 'success',
                 message: '删除成功'
               })
-              const totalPage = Math.ceil((this.total - 1) / this.pageSize)
-              const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
-              this.currentPage = currentPage < 1 ? 1 : currentPage
-              this.list(this.currentPage, this.pageSize)
+              this.list(1, this.pageSize)
             } else {
               this.$message({
                 type: 'error',

@@ -13,7 +13,7 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="基地名称" prop="baseName">
+            <el-form-item label="基地(单位-部门)" prop="baseName">
               <el-input v-model="editForm.baseName"></el-input>
             </el-form-item>
           </el-col>
@@ -34,9 +34,9 @@
               <el-select v-model="editForm.enterName" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
+                  :key="item.dictItemId"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
                 >
                 </el-option>
               </el-select>
@@ -106,7 +106,7 @@ export default {
       enterNameAry: [],
       rules: {
         baseName: [
-          { required: true, message: '请输入基地名称', trigger: 'blur' }
+          { required: true, message: '请输入基地(单位-部门)', trigger: 'blur' }
         ]
       }
     }
@@ -128,7 +128,7 @@ export default {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.youqitian
+          const enterName = res.data.groupType
           this.enterNameAry = enterName
         } else {
           Message({

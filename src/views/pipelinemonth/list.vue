@@ -111,9 +111,9 @@ export default {
       tableLabel: [
         { label: '管道类型', param: 'pipelineType', minWidth: 150 },
         { label: '管线名', param: 'pipelineName', minWidth: 150 },
-        { label: '企业名称', param: 'enterName', minWidth: 150 },
-        { label: '企业性质', param: 'enterType', minWidth: 150 },
-        { label: '企业地址', param: 'enterAddress', minWidth: 150 },
+        { label: '所属企业', param: 'enterName', minWidth: 150 },
+        // { label: '企业性质', param: 'enterType', minWidth: 150 },
+        // { label: '企业地址', param: 'enterAddress', minWidth: 150 },
         // { label: '时间', param: 'recordDate', minWidth: 150 },
         { label: '管径', param: 'pipelineDiamete', minWidth: 150 },
         { label: '境内里程', param: 'pipelineLength', minWidth: 150 },

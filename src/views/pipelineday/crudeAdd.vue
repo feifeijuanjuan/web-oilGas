@@ -86,30 +86,34 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="末站压力阈值" class="no-unit">
+            <el-form-item label="末站压力阈值">
               <el-input placeholder="请输入内容" v-model="editForm.pressureThreshold">
+                <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="末站压力实际值" class="no-unit">
+            <el-form-item label="末站压力实际值">
               <el-input placeholder="请输入内容" v-model="editForm.pressureActualValue">
+                <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="设计输油能力" class="no-unit">
+            <el-form-item label="设计输油能力">
               <el-input placeholder="请输入内容" v-model="editForm.runPlanPressure">
+                <template slot="append"> 万吨/天</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="实际输油能力" class="no-unit">
+            <el-form-item label="实际输油能力">
               <el-input placeholder="请输入内容" v-model="editForm.runPressure">
+                <template slot="append"> 万吨/天</template>
               </el-input>
             </el-form-item>
           </el-col>

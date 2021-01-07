@@ -57,7 +57,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="89#汽油销售量">
+            <el-form-item label="89#汽油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesGasoline89">
                 <template slot="append">万吨</template>
               </el-input>
@@ -66,14 +66,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="92#汽油销售量">
+            <el-form-item label="92#汽油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesGasoline92">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="95#汽油销售量">
+            <el-form-item label="95#汽油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesGasoline95">
                 <template slot="append">万吨</template>
               </el-input>
@@ -82,14 +82,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="0#柴油销售量">
+            <el-form-item label="0#柴油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesDieselOil0">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="负35#柴油销售量">
+            <el-form-item label="负35#柴油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesDieselOilMinus35">
                 <template slot="append">万吨</template>
               </el-input>
@@ -98,14 +98,14 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="负10#柴油销售量">
+            <el-form-item label="负10#柴油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesDieselOilMinus10">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="负20#柴油销费量">
+            <el-form-item label="负20#柴油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.salesDieselOilMinus20">
                 <template slot="append">万吨</template>
               </el-input>
@@ -114,24 +114,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="煤油销费量">
+            <el-form-item label="煤油消费量">
               <el-input placeholder="请输入内容" v-model="editForm.aviationCoalSales">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="柴油消费量预测值">
-              <el-input placeholder="请输入内容" v-model="editForm.salesPlanDieselOil">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="汽油消费量预测">
-              <el-input placeholder="请输入内容" v-model="editForm.salesPlanGasoline">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -143,7 +127,24 @@
               </el-input>
             </el-form-item>
           </el-col>
+<!--          <el-col :span="12">
+            <el-form-item label="柴油消费量预测值">
+              <el-input placeholder="请输入内容" v-model="editForm.salesPlanDieselOil">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>-->
         </el-row>
+<!--        <el-row>
+&lt;!&ndash;          <el-col :span="12">
+            <el-form-item label="汽油消费量预测">
+              <el-input placeholder="请输入内容" v-model="editForm.salesPlanGasoline">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>&ndash;&gt;
+
+        </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="成品油区外消费量">

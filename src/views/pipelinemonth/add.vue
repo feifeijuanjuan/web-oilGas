@@ -16,7 +16,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="管道类型" class="no-unit" prop="pipelineType">
-              <el-select v-model="editForm.pipelineType" placeholder="请选择">
+              <el-select v-model="editForm.pipelineType" placeholder="请选择" @change="changeUnit">
                 <el-option
                   v-for="item in pipelineTypeAry"
                   :key="item.typeId"
@@ -41,7 +41,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit">
+            <el-form-item label="所属企业" class="no-unit">
               <el-select v-model="editForm.enterName" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
@@ -53,27 +53,19 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="企业性质" class="no-unit">
-              <el-select v-model="editForm.enterType" placeholder="请选择">
-                <el-option
-                  v-for="item in enterpriseEconomyTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="企业地址" class="no-unit">
-              <el-input v-model="editForm.enterAddress" placeholder="请输入内容"/>
-            </el-form-item>
-          </el-col>
+          <!--          <el-col :span="12">
+                      <el-form-item label="企业性质" class="no-unit">
+                        <el-select v-model="editForm.enterType" placeholder="请选择">
+                          <el-option
+                            v-for="item in enterpriseEconomyTypeAry"
+                            :key="item.dictItemName"
+                            :label="item.dictItemName"
+                            :value="item.dictItemName"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>-->
           <el-col :span="12">
             <el-form-item label="管径">
               <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容">
@@ -81,21 +73,29 @@
               </el-input>
             </el-form-item>
           </el-col>
-
         </el-row>
+        <!--        <el-row>
+        &lt;!&ndash;          <el-col :span="12">
+                    <el-form-item label="企业地址" class="no-unit">
+                      <el-input v-model="editForm.enterAddress" placeholder="请输入内容"/>
+                    </el-form-item>
+                  </el-col>&ndash;&gt;
+
+
+                </el-row>-->
         <el-row>
 
           <el-col :span="12">
             <el-form-item label="境内里程">
               <el-input v-model="editForm.pipelineLength" placeholder="请输入内容">
-                <template slot="append">km</template>
+                <template slot="append">公里</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="设计运输能力">
               <el-input v-model="editForm.transportPower" placeholder="请输入内容">
-                <template slot="append">亿立方米/年</template>
+                <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -140,8 +140,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="设计压力" class="no-unit">
+            <el-form-item label="设计压力">
               <el-input v-model="editForm.designPressure" placeholder="请输入内容">
+                <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -154,15 +155,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="安全负责人" class="no-unit">
+            <el-form-item label="负责人" class="no-unit">
               <el-input v-model="editForm.chargeUser" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="安全负责人电话" class="no-unit">
-              <el-input v-model="editForm.userPhone" placeholder="请输入内容"/>
+            <el-form-item label="管道长度" class="no-unit">
+              <el-input v-model="editForm.pipelineTotalLength" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -213,7 +214,8 @@ export default {
         legalRepresentative: '',
         chargeUser: '',
         userPhone: '',
-        isUse: ''
+        isUse: '',
+        pipelineTotalLength: ''
       },
       pipelineNameTypeAry: [],
       pipelineTypeAry: [],
@@ -227,7 +229,8 @@ export default {
           { required: true, message: '请输入管线名称', trigger: 'blur' }
         ]
       },
-      pipelineNameOptions: []
+      pipelineNameOptions: [],
+      unit: ''
     }
   },
   created() {
@@ -244,6 +247,14 @@ export default {
     })
   },
   methods: {
+    //更换单位
+    changeUnit(val){
+      if(val=='天然气管线'){
+        this.unit='亿立方米/年'
+      }else{
+        this.unit='万吨/年'
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

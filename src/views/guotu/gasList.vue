@@ -116,7 +116,7 @@ export default {
        /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '150' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '150' },*/
         // { label: '企业结构', param: 'groupType', minWidth: '150' },
-        { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
+        // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
         { label: '累计探明地质储量', param: 'reservesCumulativeKnow', minWidth: '180' },
         { label: '剩余技术可采储量', param: 'recoveryReservesSurplusTech', minWidth: '180' },
         { label: '剩余经济可采储量', param: 'recoveryReservesSurplusEcon', minWidth: '180' },

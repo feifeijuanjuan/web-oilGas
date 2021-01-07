@@ -57,37 +57,38 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="天然气消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.naturalGasSales">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="天然气需求量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasDemand">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="天然气供应合同量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyNaGasContract">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="天然气计划日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.naturalGasPlanSupply">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
+          <!--          <el-col :span="12">
+                      <el-form-item label="天然气消费量">
+                        <el-input placeholder="请输入内容" v-model="editForm.naturalGasSales">
+                          <template slot="append">万立方米</template>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
+        </el-row>
+        <!--        <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="天然气需求量">
+                      <el-input placeholder="请输入内容" v-model="editForm.gasDemand">
+                        <template slot="append">万立方米</template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="天然气供应合同量">
+                      <el-input placeholder="请输入内容" v-model="editForm.supplyNaGasContract">
+                        <template slot="append">万立方米</template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>-->
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="可中断工业消费量">
               <el-input placeholder="请输入内容" v-model="editForm.interruptibleUserSales">
@@ -95,8 +96,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="不可中断工业消费量">
               <el-input placeholder="请输入内容" v-model="editForm.uninterruptibleUserSales">
@@ -104,6 +103,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="居民用气量天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.householdSalesDay">
@@ -111,8 +113,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="民生用气量天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.livelihoodSalesDay">
@@ -120,6 +120,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="社会车辆用气天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.cityTrafficSalesDay">
@@ -127,8 +130,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="商业用户天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.businessSalesDay">
@@ -136,6 +137,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="工业燃料天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.industrySalesDay">
@@ -143,8 +147,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="甲醇天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.methanolSalesDay">
@@ -152,6 +154,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="化肥天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.fertilizerSalesDay">
@@ -159,11 +163,18 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="LNG天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.lngSalesDay">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="城燃企业5%实际储气量">
+              <el-input placeholder="请输入内容" v-model="editForm.actualStorageEnterprise">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -190,8 +201,8 @@ export default {
   name: 'editFormAdd',
   data() {
     return {
-      leagueCityTypeAry:[],
-      enterNameAry:[],
+      leagueCityTypeAry: [],
+      enterNameAry: [],
       editForm: {
         recordDate: '',
         enterName: '',
@@ -209,7 +220,8 @@ export default {
         industrySalesDay: '',
         methanolSalesDay: '',
         fertilizerSalesDay: '',
-        lngSalesDay: ''
+        lngSalesDay: '',
+        actualStorageEnterprise: ''
 
       },
       rules: {

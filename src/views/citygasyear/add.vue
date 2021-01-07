@@ -59,14 +59,21 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="城燃企业5%计划储气量">
+              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+<!--          <el-col :span="12">
             <el-form-item label="已建储气能力">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
-        <el-row>
+<!--        <el-row>
           <el-col :span="12">
             <el-form-item label="正在建设储气能力">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction">
@@ -81,22 +88,16 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="城燃企业5%实际储气量">
               <el-input placeholder="请输入内容" v-model="editForm.actualStorageEnterprise">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="城燃企业5%计划储气量">
-              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
+          </el-col>-->
+
         </el-row>
       </el-form>
     </div>

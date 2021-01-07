@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="基地名称" label-width="70px">
+              <el-form-item label="基地(单位-部门)" label-width="120px">
                 <el-input v-model="fromSearch.baseName"></el-input>
               </el-form-item>
             </el-col>
@@ -75,7 +75,7 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '基地名称', param: 'baseName', minWidth: 150 },
+        { label: '基地(单位-部门)', param: 'baseName', minWidth: 150 },
         { label: '时间', param: 'recordDate', minWidth: 150 },
         { label: '所属企业', param: 'enterName', minWidth: 150 },
         { label: '企业法人', param: 'enterJuridical', minWidth: 150 },

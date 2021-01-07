@@ -109,9 +109,9 @@ export default {
         { label: '时间', param: 'recordDate', minWidth: 120 },
         { label: '企业名称', param: 'enterName', minWidth: 120 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
-        { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
+       /* { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
         { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
-        { label: '天然气供应合同量', param: 'supplyNaGasContract', minWidth: 150 },
+        { label: '天然气供应合同量', param: 'supplyNaGasContract', minWidth: 150 },*/
         { label: '天然气计划日供气量', param: 'naturalGasPlanSupply', minWidth: 150 },
         { label: '可中断工业消费量', param: 'interruptibleUserSales', minWidth: 150 },
         { label: '不可中断工业消费量', param: 'uninterruptibleUserSales', minWidth: 150 },
@@ -122,10 +122,11 @@ export default {
         { label: '工业燃料天然气日消费量', param: 'industrySalesDay', minWidth: 180 },
         { label: '甲醇天然气日消费量', param: 'methanolSalesDay', minWidth: 180 },
         { label: '化肥天然气日消费量', param: 'fertilizerSalesDay', minWidth: 180 },
-        { label: 'LNG天然气日消费量', param: 'lngSalesDay', minWidth: 180 }
+        { label: 'LNG天然气日消费量', param: 'lngSalesDay', minWidth: 180 },
+        { label: '城燃企业5%实际储气量', param: 'actualStorageEnterprise', minWidth: 180 }
       ],
       selectedRows: [],
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {

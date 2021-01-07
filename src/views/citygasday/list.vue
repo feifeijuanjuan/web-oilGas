@@ -112,6 +112,7 @@ export default {
        /* { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
         { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
         { label: '天然气供应合同量', param: 'supplyNaGasContract', minWidth: 150 },*/
+        { label: '天然气实际日供气量', param: 'supplyNaGasContract', minWidth: 150 },
         { label: '天然气计划日供气量', param: 'naturalGasPlanSupply', minWidth: 150 },
         { label: '可中断工业消费量', param: 'interruptibleUserSales', minWidth: 150 },
         { label: '不可中断工业消费量', param: 'uninterruptibleUserSales', minWidth: 150 },

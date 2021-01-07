@@ -57,14 +57,14 @@
           <el-col :span="12">
             <el-form-item label="管线进气量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineInputVolume">
-                <template slot="append">万吨</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="管线出气量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineOutputVolume">
-                <template slot="append">万吨</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -74,14 +74,14 @@
           <el-col :span="12">
             <el-form-item label="管线管存量">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineStock">
-                <template slot="append">万吨</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="管线累计输气">
               <el-input placeholder="请输入内容" v-model="editForm.pipelineCumulativeVolume">
-                <template slot="append">万吨</template>
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>

@@ -156,24 +156,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="成品油区外调入量">
-              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferInVolume">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
             <el-form-item label=" 呼炼供应量">
               <el-input placeholder="请输入内容" v-model="editForm.productedOilRefineInVolume">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="总调出量">
-              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferOutVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -338,7 +322,7 @@ export default {
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
       },
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {

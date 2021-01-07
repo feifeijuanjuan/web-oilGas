@@ -115,7 +115,7 @@ export default {
         { label: '0#柴油消费量', param: 'salesDieselOil0', minWidth: '180' },
         { label: '负35#柴油消费量', param: 'salesDieselOilMinus35', minWidth: '180' },
         { label: '负10#柴油消费量', param: 'salesDieselOilMinus10', minWidth: '180' },
-        { label: '负20#柴油销费量', param: 'salesDieselOilMinus20', minWidth: '180' },
+        { label: '负20#柴油消费量', param: 'salesDieselOilMinus20', minWidth: '180' },
         { label: '煤油消费量', param: 'aviationCoalSales', minWidth: '180' },/*
         { label: '柴油消费量预测值', param: 'salesPlanDieselOil', minWidth: '180' },
         { label: '汽油消费量预测', param: 'salesPlanGasoline', minWidth: '180' },*/

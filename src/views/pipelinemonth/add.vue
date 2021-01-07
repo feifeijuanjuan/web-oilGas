@@ -162,8 +162,10 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管道长度" class="no-unit">
-              <el-input v-model="editForm.pipelineTotalLength" placeholder="请输入内容"/>
+            <el-form-item label="管道长度" >
+              <el-input v-model="editForm.pipelineTotalLength" placeholder="请输入内容">
+                <template slot="append">千米</template>
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">

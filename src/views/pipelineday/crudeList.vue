@@ -106,9 +106,9 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 150 },
-        { label: '企业名称', param: 'enterName', minWidth: 150 },
-        // { label: '盟市', param: 'laneCode', minWidth: 150 },
         { label: '管线名', param: 'pipelineName', minWidth: 150 },
+        { label: '所属企业', param: 'enterName', minWidth: 150 },
+        // { label: '盟市', param: 'laneCode', minWidth: 150 },
         { label: '管线进油量', param: 'pipelineInputVolume', minWidth: 180 },
         { label: '管线出油量', param: 'pipelineOutputVolume', minWidth: 180 },
         { label: '管线管存量', param: 'pipelineStock', minWidth: 180 },

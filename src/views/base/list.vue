@@ -77,7 +77,7 @@ export default {
       tableLabel: [
         { label: '基地(单位-部门)', param: 'baseName', minWidth: 150 },
         { label: '时间', param: 'recordDate', minWidth: 150 },
-        { label: '所属企业', param: 'enterName', minWidth: 150 },
+        { label: '所属企业', param: 'groupType', minWidth: 150 },
         { label: '企业法人', param: 'enterJuridical', minWidth: 150 },
         { label: '基地员工数量', param: 'employeesNum', minWidth: 150 },
         { label: '当月产量', param: 'yieldMonth', minWidth: 150 },

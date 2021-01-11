@@ -1,12 +1,12 @@
 import axios from 'axios'
-import QS from 'qs'
+import Qs from 'qs'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 const service = axios.create({
-  baseURL: 'http://210.73.216.32:8081/oilgas-background/',
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: 'http://210.73.216.32:8081/oilgas-background/',
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
   crossDomain: true

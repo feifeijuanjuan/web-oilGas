@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
+              <el-form-item label="调峰单位" label-width="90px">
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
                     v-for="item in enterNameAry"
@@ -122,8 +122,8 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 160 },
+        { label: '调峰单位', param: 'enterName', minWidth: 180 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
-        { label: '企业', param: 'enterName', minWidth: 180 },
         { label: '释放气量', param: 'releaseVolumn', minWidth: 210 },
         { label: '气量属性', param: 'airAttribute', minWidth: 210 },
         { label: '剩余气量', param: 'surplusVolumn', minWidth: 160 }

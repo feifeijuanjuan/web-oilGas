@@ -96,13 +96,13 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="盟市储气日调用量">
               <el-input placeholder="请输入内容" v-model="editForm.naGasInvoke">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="盟市气化装置数量">
               <el-input placeholder="请输入内容" v-model="editForm.apparatusNum">
@@ -110,8 +110,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="盟市气化装置日均气化量">
               <el-input placeholder="请输入内容" v-model="editForm.apparatusGasContent">
@@ -119,6 +117,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="已建储气能力">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt">
@@ -126,8 +127,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="正在建设储气能力">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction">
@@ -135,6 +134,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="待建设储气能力">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityToBuild">

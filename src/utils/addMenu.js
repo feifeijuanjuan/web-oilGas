@@ -26,7 +26,7 @@ export const handleMenu = ((menu) => {
             path: item.href,
             name: item.name,
             component: resolve => require([`@/views${item.href}`], resolve),
-            meta: { title: item.name, icon: 'menu'  }
+            meta: { title: item.name, icon: 'menu' }
           }
           ]
         }
@@ -39,7 +39,7 @@ export const handleMenu = ((menu) => {
             path: i.href,
             name: i.name,
             component: resolve => require([`@/views${i.href}`], resolve),
-            meta: { title: i.name, icon: 'circle'}
+            meta: { title: i.name, icon: 'circle' }
           }
         )
       })
@@ -47,6 +47,69 @@ export const handleMenu = ((menu) => {
         path: item.href,
         component: Layout,
         meta: { title: item.name, icon: 'menu' },
+        children: childList
+      })
+    }
+  })
+  return menuList
+})
+
+export const filterMenu = ((menu) => {
+  const menuList = []
+  menu.forEach((item, index) => {
+    if (item.children.length === 0) {
+      menuList.push(
+        {
+          id: item.id,
+          menuId: item.menuId,
+          label: item.name
+        }
+      )
+    } else {
+      const childList = []
+      item.children.forEach((i, idx) => {
+        childList.push(
+          {
+            id: i.id,
+            label: i.name,
+            menuId: i.menuId
+          }
+        )
+      })
+      menuList.push({
+        id: item.id,
+        label: item.name,
+        menuId: item.menuId,
+        children: childList
+      })
+    }
+  })
+  return menuList
+})
+
+export const orgTree = ((menu) => {
+  const menuList = []
+  menu.forEach((item, index) => {
+    if (item.children.length === 0) {
+      menuList.push(
+        {
+          id: item.orgId,
+          label: item.name
+        }
+      )
+    } else {
+      const childList = []
+      item.children.forEach((i, idx) => {
+        childList.push(
+          {
+            id: i.orgId,
+            label: i.name,
+          }
+        )
+      })
+      menuList.push({
+        id: item.orgId,
+        label: item.name,
         children: childList
       })
     }

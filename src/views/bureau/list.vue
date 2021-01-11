@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="盟市名称" label-width="90px">
                 <el-select v-model="fromSearch.leagueCityName" clearable>
                   <el-option
@@ -16,7 +16,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
@@ -104,9 +104,10 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 120 },
-        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        // { label: '盟市', param: 'leagueCityName', minWidth: 120 },
         { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 180 },
-        { label: '成品油区外总调出量', param: 'productedOilTransferOutVolume', minWidth: 210 }
+        { label: '成品油总调出量', param: 'productedOilTransferOutVolume', minWidth: 210 },
+        { label: '成品油呼炼供应量', param: 'productedOilRefineInVolume', minWidth: 210 }
       ]
     }
   },
@@ -139,7 +140,7 @@ export default {
         pageSize: this.pageSize,
         beginTime: this.fromSearch.beginTime,
         endTime: this.fromSearch.endTime,
-        leagueCityName: this.fromSearch.leagueCityName
+        // leagueCityName: this.fromSearch.leagueCityName
       }
       bureauList(params).then((res) => {
         if (res.code === 0) {

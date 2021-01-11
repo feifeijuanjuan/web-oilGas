@@ -11,30 +11,21 @@
       <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="200px"
                class="form-box clearfix"
       >
-        <!--        /*盟市名称、时间
-                盟市储气设施总容积
-                地方政府日均三天计划储气量
-                地方政府日均三天实际储气量
-                盟市租赁储罐数量
-                盟市自建储罐数量
-                天然气历史缺口量
-                盟市储气日调用量
-                盟市气化装置数量
-                盟市气化装置日均气化量*/-->
+
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" prop="leagueCityName">
-              <el-select v-model="editForm.leagueCityName">
-                <el-option
-                  v-for="item in leagueCityTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
+          <!--          <el-col :span="12">
+                      <el-form-item label="盟市名称" class="no-unit" prop="leagueCityName">
+                        <el-select v-model="editForm.leagueCityName">
+                          <el-option
+                            v-for="item in leagueCityTypeAry"
+                            :key="item.dictItemName"
+                            :label="item.dictItemName"
+                            :value="item.dictItemName"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>-->
           <el-col :span="12">
             <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
@@ -46,8 +37,6 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="成品油区外调入量">
               <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferInVolume">
@@ -55,9 +44,19 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
-            <el-form-item label="成品油区外总调出量">
+            <el-form-item label="成品油总调出量">
               <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferOutVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成品油呼炼供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilRefineInVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -88,15 +87,16 @@ export default {
       leagueCityTypeAry: [],//盟市名称
       editForm: {
         recordDate: '',
-        leagueCityName: '',
+        // leagueCityName: '',
         productedOilTransferInVolume: '',
-        productedOilTransferOutVolume: ''
+        productedOilTransferOutVolume: '',
+        productedOilRefineInVolume: ''
 
       },
       rules: {
-        leagueCityName: [
+        /*leagueCityName: [
           { required: true, message: '请选择盟市名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]

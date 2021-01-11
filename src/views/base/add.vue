@@ -31,7 +31,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="所属企业">
-              <el-select v-model="editForm.enterName" placeholder="请选择">
+              <el-select v-model="editForm.groupType" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.dictItemId"
@@ -97,7 +97,7 @@ export default {
       editForm: {
         baseName: '',
         recordDate: '',
-        enterName: '',
+        groupType: '',
         enterJuridical: '',
         employeesNum: '',
         yieldMonth: '',

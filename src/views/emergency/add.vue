@@ -45,7 +45,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="">
+            <el-form-item label="调峰单位" class="">
               <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
@@ -67,7 +67,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="调峰对象" class="">
-            <el-input placeholder="请输入内容" v-model="editForm.specificMeasure">
+            <el-input placeholder="请输入内容" v-model="editForm.peakObject">
             </el-input>
             </el-form-item>
           </el-col>

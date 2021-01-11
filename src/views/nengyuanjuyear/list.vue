@@ -129,7 +129,7 @@ export default {
         { label: '盟市租赁储罐数量', param: 'tankRent', minWidth: 160 },
         { label: '盟市自建储罐数量', param: 'tankSelf', minWidth: 160 },
         { label: '天然气历史缺口量', param: 'naGasBreach', minWidth: 160 },
-        { label: '盟市储气日调用量', param: 'naGasInvoke', minWidth: 160 },
+        // { label: '盟市储气日调用量', param: 'naGasInvoke', minWidth: 160 },
         { label: '盟市气化装置数量', param: 'apparatusNum', minWidth: 160 },
         { label: '盟市气化装置日均气化量', param: 'apparatusGasContent', minWidth: 180 },
         { label: '已建储气能力', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },

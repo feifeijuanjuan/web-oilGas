@@ -69,29 +69,21 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas">
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="计划月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthSupply">
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
             <el-form-item label="区内供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
           </el-col>
+<!--          <el-col :span="12">
+            <el-form-item label="月供应量">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas">
+                <template slot="append">{{ unit }}</template>
+              </el-input>
+            </el-form-item>
+          </el-col>-->
         </el-row>
+
         <el-row>
           <el-col :span="12">
             <el-form-item label="区外供应量">
@@ -100,6 +92,13 @@
               </el-input>
             </el-form-item>
           </el-col>
+<!--          <el-col :span="12">
+            <el-form-item label="综合能源消费量">
+              <el-input placeholder="请输入内容" v-model="editForm.energyConsumption">
+                <template slot="append">{{ unit }}</template>
+              </el-input>
+            </el-form-item>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="月产能">
               <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas">
@@ -108,15 +107,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="综合能源消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.energyConsumption">
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+
       </el-form>
 
     </div>

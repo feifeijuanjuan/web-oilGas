@@ -360,6 +360,78 @@ export const constantRoutes = [
         component: () => import('@/views/bureau/add')
       }
     ]
+  },
+  // 菜单添加
+  {
+    path: '/menuListAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/menuListAdd',
+        component: () => import('@/views/sys/menuListAdd')
+      }
+    ]
+  },
+  // 组织机构添加
+  {
+    path: '/orgListAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/orgListAdd',
+        component: () => import('@/views/sys/orgListAdd')
+      }
+    ]
+  },
+  // 角色添加
+  {
+    path: '/roleListAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/roleListAdd',
+        component: () => import('@/views/sys/roleListAdd')
+      }
+    ]
+  },
+  //角色分配用户
+  {
+    path: '/userAsign',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/userAsign',
+        component: () => import('@/views/sys/userAsign')
+      }
+    ]
+  },
+  //角色分配菜单
+  {
+    path: '/menuAsign',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/menuAsign',
+        component: () => import('@/views/sys/menuAsign')
+      }
+    ]
+  },
+  //用户添加
+  {
+    path: '/userListAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/userListAdd',
+        component: () => import('@/views/sys/userListAdd')
+      }
+    ]
   }
   // 管道
 

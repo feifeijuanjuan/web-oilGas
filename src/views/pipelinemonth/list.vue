@@ -125,8 +125,8 @@ export default {
         { label: '区内终点', param: 'endInPipeline', minWidth: 180 },
         { label: '设计压力', param: 'designPressure', minWidth: 150 },
         { label: '法人代表', param: 'legalRepresentative', minWidth: 150 },
-        { label: '安全负责人', param: 'chargeUser', minWidth: 150 },
-        { label: '安全负责人电话', param: 'userPhone', minWidth: 150 },
+        { label: '负责人', param: 'chargeUser', minWidth: 150 },
+        { label: '管道长度', param: 'pipelineTotalLength', minWidth: 150 },
         { label: '是否运行', param: 'isUse', minWidth: 150 }
       ],
       selectedRows: [],

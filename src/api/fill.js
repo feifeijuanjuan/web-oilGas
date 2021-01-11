@@ -1,4 +1,4 @@
-import { get, post, deletefn } from '@/utils/request'
+import { get, post } from '@/utils/request'
 
 // 油气田企业按日填报
 // 查询
@@ -235,3 +235,62 @@ export const bureauSave = params => post('/bureau/save', params)
 export const bureauUpdate = params => get(`/bureau/select/${params}`)
 // 删除
 export const bureauSwitchs = params => post(`/bureau/switchs`, params)
+
+// 菜单管理
+
+// 新增菜单
+export const menuAdd = params => post('/sys/menu/add', params)
+// 删除菜单
+export const menuDelete = params => get('/sys/menu/delete', params)
+// 所有菜单列表
+export const menuList = () => get('/sys/menu/list')
+// 更新菜单
+export const menuUpdate = params => post('/sys/menu/update', params)
+// 通过id查询菜单回显
+export const menuShow = params => get(`/sys/menu/select/${params}`)
+
+// 组织机构管理
+// 新增组织机构
+export const orgAdd = params => post('/sys/org/add', params)
+// 删除组织机构
+export const orgDelete = params => get('/sys/org/delete', params)
+// 所有组织机构列表
+export const orgList = () => get('/sys/org/list')
+// 更新组织机构
+export const orgUpdate = params => post('/sys/org/update', params)
+// 通过id查询组织机构单回显
+export const orgShow = params => get(`/sys/org/select/${params}`)
+
+// 角色管理
+
+// 新增或修改角色
+export const roleAdd = params => post('/sys/role/add', params)
+
+// 批量删除角色
+export const delRole = params => get('/sys/role/delete', params)
+// 获取角色列表
+export const listRole = () => get('/sys/role/list')
+// 角色列表回显
+export const roleShow = params => get(`/sys/role/select/${params}`)
+// 查询角色下授权菜单
+export const resourcesRole = params => get('/sys/role/resources', params)
+// 设置角色授权的菜单资源
+export const setResourcesRole = params => get('/sys/role/setResources', params)
+// 设置角色授权的用户
+export const setUsersRole = params => get('/sys/role/setUsers', params)
+// 查询角色下授权用户
+export const usersRole = params => get('/sys/role/users', params)
+
+//用户管理
+// 用户列表
+export const userPage = params => post('/sys/user/page', params)
+// 菜单管理查询所有用户列表
+export const userList = () => get('/sys/user/list')
+// 新增用户
+export const userAdd = () => post('/sys/user/add')
+//删除用户
+export const userDelete = () => get('/sys/user/delete')
+//修改用户
+export const userUpdate = () => get('/sys/user/update')
+// 用户列表回显
+export const userShow = params => get(`/sys/user/select/${params}`)

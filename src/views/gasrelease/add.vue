@@ -45,7 +45,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit">
+            <el-form-item label="调峰单位" class="no-unit">
               <el-select v-model="editForm.enterName" clearable>
                 <el-option
                   v-for="item in enterNameAry"
@@ -63,6 +63,7 @@
               </el-input>
             </el-form-item>
           </el-col>
+
         </el-row>
         <el-row>
           <el-col :span="12">

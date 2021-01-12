@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8241827",
+      "name": "运单分配",
+      "font_class": "yundanfenpei",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "10194320",
+      "name": "分配",
+      "font_class": "fenpei",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
       "icon_id": "12163475",
       "name": "菜单管理",
       "font_class": "caidanguanli",

@@ -14,13 +14,13 @@
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
-          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleMenuAssign"><i
-            class="icon iconfont i-del"
-          >&#xe614;</i>分配菜单
+          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleMenuAssign"><i
+            class="icon iconfont i-edit"
+          >&#xe67d;</i>分配菜单
           </el-button>
-          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleUserAssign"><i
-            class="icon iconfont i-del"
-          >&#xe614;</i>分配用户
+          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleUserAssign"><i
+            class="icon iconfont i-edit"
+          >&#xe67d;</i>分配用户
           </el-button>
           <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
             class="icon iconfont i-del"

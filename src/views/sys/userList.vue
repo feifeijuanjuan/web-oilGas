@@ -58,7 +58,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import {userPage,userDelete} from '@/api/fill'
+import { userPage, userDelete } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -83,11 +83,20 @@ export default {
         { label: '工号', param: 'no' },
         { label: '邮箱', param: 'email' },
         { label: '电话', param: 'mobile' },
-        { label: '组织机构', param: 'orgId' },
-        { label: '状态', param: 'status' }
+        { label: '组织机构', param: 'orgName' },
+        {
+          label: '状态', param: 'status', formatter(row) {
+            if (row.status === 0) {
+              return '未激活'
+            } else if (row.status === 1) {
+              return '激活'
+            } else {
+              return ''
+            }
+          }
+        }
       ],
-      selectedRows: [],
-      enterNameAry:[]
+      selectedRows: []
     }
   },
   created() {
@@ -162,6 +171,7 @@ export default {
           const params = {
             userIds: this.selectedRows
           }
+          params.userIds = params.userIds.toString()
           userDelete(params).then((res) => {
             if (res.code === 0) {
               this.$message({

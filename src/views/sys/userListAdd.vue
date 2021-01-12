@@ -11,8 +11,23 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item prop="name" label="组织机构">
-              <el-input v-model="editForm.name"></el-input>
+            <el-form-item label="组织机构">
+              <el-select v-model="editForm.orgId" placeholder="请选择组织机构" ref="selectReport">
+                <el-option
+                  :label="editForm.orgName"
+                  :value="editForm.orgId"
+                  style="min-height: 200px;overflow: auto;background-color:#fff"
+                >
+                  <el-tree
+                    ref="selectTree"
+                    :data="treeData"
+                    highlight-current
+                    :props="defaultProps"
+                    node-key="orgId"
+                    @node-click="handleNodeClick"
+                  ></el-tree>
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -36,7 +51,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="邮箱">
+            <el-form-item label="邮箱" prop="email">
               <el-input v-model="editForm.email"></el-input>
             </el-form-item>
           </el-col>
@@ -49,7 +64,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="状态">
-              <el-input v-model="editForm.status"></el-input>
+              <el-select v-model="editForm.status">
+                <el-option v-for="item in statuAry" :label="item.label" :value="item.value"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -67,30 +84,44 @@
 </template>
 
 <script>
-import { userAdd, userUpdate,userShow} from '@/api/fill'
+import { userAdd, userUpdate, userShow, orgList } from '@/api/fill'
 import { Message } from 'element-ui'
+import { orgTree } from '@/utils/addMenu'
 
 export default {
   name: 'editFormAdd',
   data() {
     return {
       editForm: {
-        name:'',
-        nickName:'',
-        no:'',
-        email:'',
-        mobile:'',
-        orgId:'',
-        status:''
+        name: '',
+        nickName: '',
+        no: '',
+        email: '',
+        mobile: '',
+        orgId: '',
+        status: '',
+        orgName: ''
       },
+      statuAry: [
+        {
+          value: 0,
+          label: '未激活'
+        },
+        {
+          value: 1,
+          label: '激活'
+        }
+      ],
       rules: {
-      /*  enterName: [
-          { required: true, message: '请选择企业名称', trigger: 'change' }
-        ],
-        recordDate: [
-          { required: true, message: '请选择日期', trigger: 'change' }
-        ]*/
+        email: [
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ]
       },
+      treeData: [],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      }
     }
   },
   created() {
@@ -100,14 +131,38 @@ export default {
   mounted() {
     if (this.statu !== 'create') {
       this.update()
+    } else {
+      this.getMenu()
     }
   },
   methods: {
+    getMenu() {
+      orgList().then((res) => {
+        if (res.code === 0) {
+          this.treeData = orgTree(res.body)
+          this.$nextTick(function() {
+            this.$refs.selectTree.setCurrentKey(this.editForm.orgId)
+          })
+        } else {
+          Message({
+            message: '请求失败',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    },
+    handleNodeClick(data) {
+      this.editForm.orgName = data.label
+      this.editForm.orgId = data.id
+      this.$refs.selectReport.blur()
+    },
     // 数据回显
     update() {
       userShow(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
+          this.getMenu()
         } else {
           Message({
             message: '请求失败',

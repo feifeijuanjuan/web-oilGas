@@ -127,7 +127,7 @@ export default {
           const params = {
             roleIds: this.selectedRows
           }
-          params.ids = params.ids.toString()
+          params.roleIds = params.roleIds.toString()
           delRole(params).then((res) => {
             if (res.code === 0) {
               this.$message({

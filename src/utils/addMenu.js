@@ -93,7 +93,8 @@ export const orgTree = ((menu) => {
     if (item.children.length === 0) {
       menuList.push(
         {
-          id: item.orgId,
+          id: item.id,
+          orgId: item.orgId,
           label: item.name
         }
       )
@@ -102,14 +103,16 @@ export const orgTree = ((menu) => {
       item.children.forEach((i, idx) => {
         childList.push(
           {
-            id: i.orgId,
-            label: i.name,
+            id: i.id,
+            orgId: i.orgId,
+            label: i.name
           }
         )
       })
       menuList.push({
-        id: item.orgId,
+        id: item.id,
         label: item.name,
+        orgId: item.orgId,
         children: childList
       })
     }

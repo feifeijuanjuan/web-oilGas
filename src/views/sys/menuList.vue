@@ -92,24 +92,43 @@ export default {
       checkTree.forEach((item, index) => {
         checkTreeIds.push(item.menuId)
       })
-      const params = {
-        'menuIds': checkTreeIds
+      if (checkTreeIds.length > 0) {
+        this.$confirm('确认删除选择数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const params = {
+            'menuIds': checkTreeIds
+          }
+          params.menuIds = params.menuIds.toString()
+          menuDelete(params).then((res) => {
+            if (res.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              this.getMenu()
+            } else {
+              this.$message({
+                type: 'error',
+                message: '删除失败!'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      } else {
+        Message({
+          message: '请选择一条数据进行删除',
+          type: 'error',
+          duration: 5 * 1000
+        })
       }
-      params.menuIds = params.menuIds.toString()
-      menuDelete(params).then((res) => {
-        if (res.code === 0) {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          })
-          this.getMenu()
-        } else {
-          this.$message({
-            type: 'error',
-            message: '删除失败!'
-          })
-        }
-      })
     }
   }
 }

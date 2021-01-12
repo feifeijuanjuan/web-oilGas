@@ -22,7 +22,7 @@
                     :data="treeData"
                     highlight-current
                     :props="defaultProps"
-                    node-key="orgId"
+                    node-key="id"
                     @node-click="handleNodeClick"
                   ></el-tree>
                 </el-option>
@@ -121,8 +121,7 @@ export default {
     },
     // 数据回显
     update() {
-      console.log(this.$route.query.id)
-      orgShow(this.$route.query.id).then((res) => {
+      orgShow(this.$route.query.orgId).then((res) => {
         if (res.code === 0) {
           const data = res.body
           this.editForm.parentId = data.parentCode

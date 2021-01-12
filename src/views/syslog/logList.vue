@@ -79,8 +79,8 @@ export default {
       }
       logList(params).then((res) => {
         if (res.code === 0) {
-          this.tableData = res.body.data
-          this.total = res.body.total
+          this.tableData = res.data
+          this.total = res.total
         } else {
           Message({
             message: '网络请求失败',

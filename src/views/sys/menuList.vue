@@ -6,17 +6,22 @@
           菜单管理
         </div>
         <div>
-          <el-button size="small" native-type="button" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
-            class="icon iconfont i-add"
-          >&#xe880;</i>新增
+
+          <el-button size="small" native-type="button" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd">
+            <i
+              class="icon iconfont i-add"
+            >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" native-type="button" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+          <el-button size="small" native-type="button" class="btn-edit" style="margin-bottom: 10px;"
+                     @click="handleEdit"
+          ><i
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
-          <el-button size="small" native-type="button" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
-            class="icon iconfont i-del"
-          >&#xe614;</i>删除
+          <el-button size="small" native-type="button" class="btn-del" style="margin-bottom: 10px;" @click="handleDel">
+            <i
+              class="icon iconfont i-del"
+            >&#xe614;</i>删除
           </el-button>
         </div>
       </div>
@@ -78,15 +83,14 @@ export default {
         this.$router.push({ path: '/menuListAdd', query: param })
       } else {
         console.log(11111)
-        console.log(this.$message)
-        /*this.$message({
+        this.$message({
           message: '请选择一条数据进行编辑',
           type: 'error'
-        })*/
-          Message({
-            message: '请选择一条数据进行编辑',
-            type: 'error',
-          })
+        })
+        /* Message({
+           message: '请选择一条数据进行编辑',
+           type: 'error',
+         })*/
       }
     },
     handleDel() {
@@ -126,10 +130,9 @@ export default {
           })
         })
       } else {
-        Message({
+        this.$message({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'error'
         })
       }
     }

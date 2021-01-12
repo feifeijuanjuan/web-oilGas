@@ -21,7 +21,7 @@
                 实际日调峰量*/-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" prop="enterName">
+            <el-form-item label="调峰单位" class="no-unit" prop="enterName">
               <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
@@ -123,6 +123,33 @@
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="响应等级" class="no-unit">
+              <el-select v-model="editForm.responseLevel">
+                <el-option
+                  v-for="item in responseLevelAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+<!--          <el-col :span="12">
+            <el-form-item label="调峰对象" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.peakObject">
+              </el-input>
+            </el-form-item>
+          </el-col>-->
+          <el-col :span="12">
+            <el-form-item label="具体措施" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.specificMeasure">
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -145,8 +172,9 @@ export default {
   name: 'editFormAdd',
   data() {
     return {
+      responseLevelAry: [],
       leagueCityTypeAry: [],//盟市名称
-      enterNameAry:[],
+      enterNameAry: [],
       editForm: {
         recordDate: '',
         enterName: '',
@@ -158,11 +186,14 @@ export default {
         lngPeakLoadRegulation: '',
         gasInvoke: '',
         planPeakLoadRegulation: '',
-        peakLoadRegulation: ''
+        peakLoadRegulation: '',
+        responseLevel: '',
+        peakObject: '',
+        specificMeasure: ''
       },
       rules: {
         enterName: [
-          { required: true, message: '请选择企业名称', trigger: 'change' }
+          { required: true, message: '请选择调峰单位', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -187,8 +218,10 @@ export default {
         if (res.success) {
           const data = res.data.leagueCityType
           const enterName = res.data.chengshiranqi
+          const response = res.data.responseLevel
           this.leagueCityTypeAry = data
           this.enterNameAry = enterName
+          this.responseLevelAry = response
         } else {
           Message({
             message: '网络请求失败',

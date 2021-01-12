@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <div class="form-add"><span class="first">能源局填报</span>
+    <div class="form-add"><span class="first">油气田企业填报</span>
       <span class="first-line">></span>
-      <span class="first">应急调峰事件填报</span
+      <span class="first">气田调峰事件填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -11,16 +11,42 @@
       <el-form :model="editForm" size="small" label-width="160px" :rules="rules" ref="ruleForm"
                class="form-box clearfix"
       >
-<!--        /*league_city_name盟市名称（地区）
-        enter_name		企业（管理方）
-        response_level	响应等级
-        peak_object		调峰对象
-        specific_measure	具体措施
-        record_date		调峰时间*/-->
+        <!--        /*league_city_name盟市名称（地区）
+                enter_name		企业（管理方）
+                response_level	响应等级
+                peak_object		调峰对象
+                specific_measure	具体措施
+                record_date		调峰时间*/-->
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="" prop="leagueCityName">
+            <el-form-item label="调峰单位" class="no-unit" prop="enterName">
+              <el-select v-model="editForm.enterName">
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.dictItemId"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
+              <el-date-picker
+                v-model="editForm.recordDate"
+                placeholder="请选择日期"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="盟市名称" class="no-unit">
               <el-select v-model="editForm.leagueCityName">
                 <el-option
                   v-for="item in leagueCityTypeAry"
@@ -33,46 +59,93 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" class="" prop="recordDate">
-              <el-date-picker
-                v-model="editForm.recordDate"
-                placeholder="请选择日期"
-                value-format="yyyy-MM-dd"
-              >
-              </el-date-picker>
+            <el-form-item label="商业调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.businessPeakLoadRegulation">
+                <template slot="append">万立方米</template>
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
+
           <el-col :span="12">
-            <el-form-item label="调峰单位" class="">
-              <el-select v-model="editForm.enterName">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeId"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+            <el-form-item label="甲醇化肥调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.methanolPeakLoadRegulation">
+                <template slot="append">万立方米</template>
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="响应等级" class="">
-              <el-input placeholder="请输入内容" v-model="editForm.responseLevel">
+            <el-form-item label="可中断工业调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.interruptiblePeakLoadRegulation">
+                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="调峰对象" class="">
-            <el-input placeholder="请输入内容" v-model="editForm.peakObject">
-            </el-input>
+            <el-form-item label="不可中断工业调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.uninterruptiblePeakLoadRegulation">
+                <template slot="append">万立方米</template>
+              </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="具体措施" class="">
+            <el-form-item label="LNG调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.lngPeakLoadRegulation">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="盟市储气日调用量">
+              <el-input placeholder="请输入内容" v-model="editForm.gasInvoke">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="计划日调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.planPeakLoadRegulation">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="实际日调峰量">
+              <el-input placeholder="请输入内容" v-model="editForm.peakLoadRegulation">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="响应等级" class="no-unit">
+              <el-select v-model="editForm.responseLevel">
+                <el-option
+                  v-for="item in responseLevelAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+<!--          <el-col :span="12">
+            <el-form-item label="调峰对象" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.peakObject">
+              </el-input>
+            </el-form-item>
+          </el-col>-->
+          <el-col :span="12">
+            <el-form-item label="具体措施" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.specificMeasure">
               </el-input>
             </el-form-item>
@@ -98,12 +171,21 @@ export default {
   name: 'editFormAdd',
   data() {
     return {
+      responseLevelAry: [],
       leagueCityTypeAry: [],//盟市名称
       enterNameAry:[],
       editForm: {
-        recordDate:'',
-        leagueCityName:'',
-        enterName:'',
+        recordDate: '',
+        enterName: '',
+        leagueCityName: '',
+        businessPeakLoadRegulation: '',
+        methanolPeakLoadRegulation: '',
+        interruptiblePeakLoadRegulation: '',
+        uninterruptiblePeakLoadRegulation: '',
+        lngPeakLoadRegulation: '',
+        gasInvoke: '',
+        planPeakLoadRegulation: '',
+        peakLoadRegulation: '',
         responseLevel:'',
         peakObject:'',
         specificMeasure:''
@@ -111,8 +193,8 @@ export default {
       pageTitle: '',
       statu: '',
       rules: {
-        leagueCityName: [
-          { required: true, message: '请选择盟市名称', trigger: 'change' }
+        enterName: [
+          { required: true, message: '请选择调峰单位', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -135,9 +217,11 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName=res.data.nengyuanju
+          const enterName=res.data.groupType
+          const response = res.data.responseLevel
           this.leagueCityTypeAry = data
           this.enterNameAry=enterName
+          this.responseLevelAry = response
         } else {
           Message({
             message: '网络请求失败',

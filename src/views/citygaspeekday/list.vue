@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
+              <el-form-item label="调峰单位" label-width="90px">
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
                     v-for="item in enterNameAry"
@@ -110,8 +110,8 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: 120 },
-        { label: '企业名称', param: 'enterName', minWidth: 120 },
+        { label: '调峰时间', param: 'recordDate', minWidth: 120 },
+        { label: '调峰单位', param: 'enterName', minWidth: 120 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
         { label: '商业调峰量', param: 'businessPeakLoadRegulation', minWidth: 150 },
         { label: '甲醇化肥调峰量', param: 'methanolPeakLoadRegulation', minWidth: 150 },
@@ -120,7 +120,10 @@ export default {
         { label: 'LNG调峰量', param: 'lngPeakLoadRegulation', minWidth: 150 },
         { label: '盟市储气日调用量', param: 'gasInvoke', minWidth: 150 },
         { label: '计划日调峰量', param: 'planPeakLoadRegulation', minWidth: 150 },
-        { label: '实际日调峰量', param: 'peakLoadRegulation', minWidth: 150 }
+        { label: '实际日调峰量', param: 'peakLoadRegulation', minWidth: 150 },
+        { label: '响应等级', param: 'responseLevel', minWidth: 210 },
+        // { label: '调峰对象', param: 'peakObject', minWidth: 210 },
+        { label: '具体措施', param: 'specificMeasure', minWidth: 160 },
       ],
       selectedRows: [],
       enterNameAry:[]

@@ -13,12 +13,12 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油井名称" prop="oilWellName"  class="no-unit">
+            <el-form-item label="油井名称" prop="oilWellName" class="no-unit">
               <el-input v-model="editForm.oilWellName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期"  class="no-unit">
+            <el-form-item label="日期" class="no-unit">
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
@@ -35,7 +35,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="油井所属生产基地"  class="no-unit">
+            <el-form-item label="油井所属生产基地" class="no-unit">
               <el-input v-model="editForm.baseName" placeholder="请输入内容">
               </el-input>
             </el-form-item>
@@ -47,6 +47,19 @@
               <el-input v-model="editForm.oilWellYield" placeholder="请输入内容">
                 <template slot="append">万吨</template>
               </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="产量属性" class="no-unit">
+              <el-select v-model="editForm.yieldAttribute" placeholder="请选择产量属性" clearable>
+                <el-option
+                  v-for="item in yieldAttributeAry"
+                  :key="item.dictItemId"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -66,7 +79,7 @@
 </template>
 
 <script>
-import { oilwellSave,oilwellUpdate } from '@/api/fill'
+import { dic, oilwellSave, oilwellUpdate } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -78,8 +91,10 @@ export default {
         recordDate: '',
         oilWellCoordinate: '',
         baseName: '',
-        oilWellYield: ''
+        oilWellYield: '',
+        yieldAttribute: ''
       },
+      yieldAttributeAry: [],
       rules: {
         oilWellName: [
           { required: true, message: '请输入油井名称', trigger: 'blur' }
@@ -92,23 +107,20 @@ export default {
     this.statu = this.$route.query.statu
   },
   mounted() {
-    /*Promise.all([
+    Promise.all([
       this.dic()
     ]).then(res => {
       if (this.statu !== 'create') {
         this.update()
       }
-    })*/
-    if (this.statu !== 'create') {
-      this.update()
-    }
+    })
   },
   methods: {
-   /* dic() {
+    dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.guandao
-          this.enterNameAry = enterName
+          const yieldAtr = res.data.yieldAttribute
+          this.yieldAttributeAry = yieldAtr
         } else {
           Message({
             message: '网络请求失败',
@@ -117,7 +129,7 @@ export default {
           })
         }
       })
-    },*/
+    },
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {

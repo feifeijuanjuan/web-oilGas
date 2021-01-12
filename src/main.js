@@ -15,7 +15,7 @@ import '@/icons' // icon
 import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
 import '@/permission' // permission control
-import { message } from './utils/resetMessage'
+// import { message } from './utils/resetMessage'
 
 /**
  * If you don't want to use mock-server
@@ -36,7 +36,7 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-Vue.prototype.$message = message
+// Vue.prototype.$message = message
 new Vue({
   el: '#app',
   router,

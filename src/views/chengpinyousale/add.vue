@@ -9,7 +9,8 @@
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
       <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="140px"
-               class="form-box clearfix">
+               class="form-box clearfix"
+      >
         <!--        1企业名称、2时间、3盟市名称、
                 89#汽油销售量、92#汽油销售量、95#汽油销售量、
                 0#柴油销售量、负35#柴油销售量、负10#柴油销售量、负20#柴油销费量、
@@ -127,28 +128,35 @@
               </el-input>
             </el-form-item>
           </el-col>
-<!--          <el-col :span="12">
-            <el-form-item label="柴油消费量预测值">
-              <el-input placeholder="请输入内容" v-model="editForm.salesPlanDieselOil">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
+          <!--          <el-col :span="12">
+                      <el-form-item label="柴油消费量预测值">
+                        <el-input placeholder="请输入内容" v-model="editForm.salesPlanDieselOil">
+                          <template slot="append">万吨</template>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
         </el-row>
-<!--        <el-row>
-&lt;!&ndash;          <el-col :span="12">
-            <el-form-item label="汽油消费量预测">
-              <el-input placeholder="请输入内容" v-model="editForm.salesPlanGasoline">
-                <template slot="append">万吨</template>
-              </el-input>
-            </el-form-item>
-          </el-col>&ndash;&gt;
+        <!--        <el-row>
+        &lt;!&ndash;          <el-col :span="12">
+                    <el-form-item label="汽油消费量预测">
+                      <el-input placeholder="请输入内容" v-model="editForm.salesPlanGasoline">
+                        <template slot="append">万吨</template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>&ndash;&gt;
 
-        </el-row>-->
+                </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="成品油区外消费量">
               <el-input placeholder="请输入内容" v-model="editForm.productedOilOutAreaSales">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成品油区外调入量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferInVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -190,10 +198,11 @@ export default {
         salesPlanDieselOil: '',
         salesPlanGasoline: '',
         productedOilInAreaSales: '',
-        productedOilOutAreaSales: ''
+        productedOilOutAreaSales: '',
+        productedOilTransferInVolume: ''
       },
-      leagueCityNameAry:[],
-      enterNameAry:[],
+      leagueCityNameAry: [],
+      enterNameAry: [],
       rules: {
         enterName: [
           { required: true, message: '请选择企业名称', trigger: 'change' }
@@ -220,9 +229,9 @@ export default {
         if (res.success) {
           const data = res.data
           const leagueCityType = data.leagueCityType
-          const enterName=data.chengpinyou
+          const enterName = data.chengpinyou
           this.leagueCityNameAry = leagueCityType
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
 
         }
       })

@@ -139,6 +139,8 @@ export default {
         // { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 150 },
         // { label: '呼炼供应量', param: 'productedOilRefineInVolume', minWidth: 180 },
         // { label: '总调出量', param: 'productedOilTransferOutVolume', minWidth: 150 },
+        { label: '成品油总调出量', param: 'productedOilTransferOutVolume', minWidth: 210 },
+        { label: '成品油呼炼供应量', param: 'productedOilRefineInVolume', minWidth: 210 },
         { label: '89#汽油供应量', param: 'supplyGasoline89', minWidth: 180 },
         { label: '92#汽油供应量', param: 'supplyGasoline92', minWidth: 180 },
         { label: '95#汽油供应量', param: 'supplyGasoline95', minWidth: 180 },

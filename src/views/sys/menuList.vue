@@ -6,15 +6,15 @@
           菜单管理
         </div>
         <div>
-          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
+          <el-button size="small" native-type="button" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+          <el-button size="small" native-type="button" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
-          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+          <el-button size="small" native-type="button" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
             class="icon iconfont i-del"
           >&#xe614;</i>删除
           </el-button>

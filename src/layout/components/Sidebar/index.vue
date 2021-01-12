@@ -104,6 +104,18 @@ export default {
         return '/gaswell/list'
       } else if (path === '/bureauAdd') {
         return '/bureau/list'
+      } else if (path === '/menuListAdd') {
+        return '/sys/menuList'
+      } else if (path === '/orgListAdd') {
+        return '/sys/orgList'
+      } else if (path === '/roleListAdd') {
+        return '/sys/roleList'
+      } else if (path === '/userAsign') {
+        return '/sys/roleList'
+      } else if (path === '/menuAsign') {
+        return '/sys/roleList'
+      } else if (path === '/userListAdd') {
+        return '/sys/userList'
       } else {
         return path
       }

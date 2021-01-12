@@ -155,13 +155,29 @@
           </el-col>
         </el-row>
         <el-row>
-<!--          <el-col :span="12">
-            <el-form-item label=" 呼炼供应量">
+          <el-col :span="12">
+            <el-form-item label="成品油总调出量">
+              <el-input placeholder="请输入内容" v-model="editForm.productedOilTransferOutVolume">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="成品油呼炼供应量">
               <el-input placeholder="请输入内容" v-model="editForm.productedOilRefineInVolume">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
-          </el-col>-->
+          </el-col>
+        </el-row>
+        <el-row>
+          <!--          <el-col :span="12">
+                      <el-form-item label=" 呼炼供应量">
+                        <el-input placeholder="请输入内容" v-model="editForm.productedOilRefineInVolume">
+                          <template slot="append">万吨</template>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
           <el-col :span="12">
             <el-form-item label=" 89#汽油供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyGasoline89">
@@ -300,8 +316,7 @@ export default {
         yieldDieselOilMinus10: '',
         yieldDieselOil0: '',
         yieldAviationCoal: '',
-        productedOilTransferInVolume: '',
-        // productedOilRefineInVolume: '',
+        productedOilRefineInVolume: '',
         productedOilTransferOutVolume: '',
         supplyGasoline89: '',
         supplyGasoline92: '',

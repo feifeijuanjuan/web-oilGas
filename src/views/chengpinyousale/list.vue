@@ -120,7 +120,8 @@ export default {
         { label: '柴油消费量预测值', param: 'salesPlanDieselOil', minWidth: '180' },
         { label: '汽油消费量预测', param: 'salesPlanGasoline', minWidth: '180' },*/
         { label: '成品油区内消费量', param: 'productedOilInAreaSales', minWidth: '180' },
-        { label: '成品油区外消费量', param: 'productedOilOutAreaSales', minWidth: '180' }
+        { label: '成品油区外消费量', param: 'productedOilOutAreaSales', minWidth: '180' },
+        { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 180 }
       ],
       selectedRows:[],
       enterNameAry:[]

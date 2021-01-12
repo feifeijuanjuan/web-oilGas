@@ -5,7 +5,7 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="日志名称" label-width="90px">
+              <el-form-item label="日志名称" label-width="70px">
                 <el-input v-model="fromSearch.param"></el-input>
               </el-form-item>
             </el-col>

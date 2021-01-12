@@ -5,8 +5,8 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="日志名称" label-width="70px">
-                <el-input v-model="fromSearch.name"></el-input>
+              <el-form-item label="日志名称" label-width="90px">
+                <el-input v-model="fromSearch.param"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -37,7 +37,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { logList } from '@/api/fill'
+import { secLogList } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -50,12 +50,17 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        name: ''
+        param: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: 150 }
+        { label: 'ip地址', param: 'ip' },
+        { label: '功能名称', param: 'method' },
+        { label: '操作类型', param: 'operType' },
+        { label: '参数', param: 'args' },
+        { label: '登录id', param: 'employeeName' },
+        { label: '操作时间', param: 'visitTime' }
       ]
     }
   },
@@ -68,10 +73,11 @@ export default {
     list() {
       this.loading = true
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize
+        pageNumber: this.currentPage,
+        pageSize: this.pageSize,
+        param: this.fromSearch.param
       }
-      logList(params).then((res) => {
+      secLogList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total

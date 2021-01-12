@@ -53,7 +53,7 @@ export const handleMenu = ((menu) => {
   })
   return menuList
 })
-
+//菜单管理
 export const filterMenu = ((menu) => {
   const menuList = []
   menu.forEach((item, index) => {
@@ -80,13 +80,13 @@ export const filterMenu = ((menu) => {
         id: item.id,
         label: item.name,
         menuId: item.menuId,
-        children: childList
+        children: filterMenu(item.children)
       })
     }
   })
   return menuList
 })
-
+//组织机构管理
 export const orgTree = ((menu) => {
   const menuList = []
   menu.forEach((item, index) => {
@@ -113,7 +113,8 @@ export const orgTree = ((menu) => {
         id: item.id,
         label: item.name,
         orgId: item.orgId,
-        children: childList
+        // children: childList
+        children: orgTree(item.children)
       })
     }
   })

@@ -35,8 +35,6 @@
 import { menuList, menuDelete } from '@/api/fill'
 import { filterMenu } from '@/utils/addMenu'
 import { Message } from 'element-ui'
-import router from '@/router'
-import qs from 'qs'
 
 export default {
   data() {
@@ -79,11 +77,16 @@ export default {
         }
         this.$router.push({ path: '/menuListAdd', query: param })
       } else {
-        Message({
+        console.log(11111)
+        console.log(this.$message)
+        /*this.$message({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
-        })
+          type: 'error'
+        })*/
+          Message({
+            message: '请选择一条数据进行编辑',
+            type: 'error',
+          })
       }
     },
     handleDel() {

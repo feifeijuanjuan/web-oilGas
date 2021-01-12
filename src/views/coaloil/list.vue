@@ -106,6 +106,8 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 120 },
         { label: '企业名称', param: 'enterName', minWidth: 120 },
+        { label: '煤制油月产量', param: 'coalOilMonthProduct', minWidth: 150 },
+        { label: '计划煤制油月产量', param: 'coalOilPlanMonthProduct', minWidth: 150 },
         { label: '计划粉煤月加工量', param: 'coalProcessMonth', minWidth: 150 },
         { label: '粉煤月加工量(万吨)', param: 'pulverizedCoalProcessingCapacity', minWidth: 150 },
         { label: '平均负荷率', param: 'avgLoadRate', minWidth: 150 },
@@ -119,8 +121,6 @@ export default {
         { label: '液化气产量', param: 'yieldLpg', minWidth: 150 },
         { label: '干气产量', param: 'yieldDryGas', minWidth: 150 },
         { label: '石脑油供应量', param: 'monthSupplyNaphtha', minWidth: 150 },
-        { label: '煤制油月产量', param: 'coalOilMonthProduct', minWidth: 150 },
-        { label: '计划煤制油月产量', param: 'coalOilPlanMonthProduct', minWidth: 150 },
         { label: '柴油供应量', param: 'monthSupplyDieselOil', minWidth: 150 },
         { label: '液化气供应量', param: 'monthSupplyLpg', minWidth: 150 },
         { label: '干气供应量', param: 'monthSupplyDryGas', minWidth: 150 },

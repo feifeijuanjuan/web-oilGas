@@ -287,10 +287,15 @@ export const userPage = params => post('/sys/user/page', params)
 // 菜单管理查询所有用户列表
 export const userList = () => get('/sys/user/list')
 // 新增用户
-export const userAdd = params => post('/sys/user/add',params)
+export const userAdd = params => post('/sys/user/add', params)
 //删除用户
-export const userDelete = params => get('/sys/user/delete',params)
+export const userDelete = params => get('/sys/user/delete', params)
 //修改用户
-export const userUpdate = params => post('/sys/user/update',params)
+export const userUpdate = params => post('/sys/user/update', params)
 // 用户列表回显
 export const userShow = params => get(`/sys/user/select/${params}`)
+
+// 日志管理
+// 条件查询日志列表
+export const logList = (params) => post('/syslog/logList', params)
+export const secLogList = (params) => post('/syslog/secLogList', params)

@@ -43,10 +43,23 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="气井月产能">
+            <el-form-item label="气井月产量">
               <el-input v-model="editForm.gasWellYield" placeholder="请输入内容">
                 <template slot="append">万立方米</template>
               </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="产量属性" class="no-unit">
+              <el-select v-model="editForm.yieldAttribute" placeholder="请选择产量属性" clearable>
+                <el-option
+                  v-for="item in yieldAttributeAry"
+                  :key="item.dictItemId"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -66,13 +79,14 @@
 </template>
 
 <script>
-import {gaswellSave, gaswellUpdate } from '@/api/fill'
+import { dic, gaswellSave, gaswellUpdate } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
   name: 'EditFormAdd',
   data() {
     return {
+      yieldAttributeAry:[],
       editForm: {
         gasWellName: '',
         recordDate: '',
@@ -92,23 +106,23 @@ export default {
     this.statu = this.$route.query.statu
   },
   mounted() {
-    /*Promise.all([
+    Promise.all([
       this.dic()
     ]).then(res => {
       if (this.statu !== 'create') {
         this.update()
       }
-    })*/
+    })
     if (this.statu !== 'create') {
       this.update()
     }
   },
   methods: {
-   /* dic() {
+    dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.guandao
-          this.enterNameAry = enterName
+          const yieldAtr = res.data.yieldAttribute
+          this.yieldAttributeAry = yieldAtr
         } else {
           Message({
             message: '网络请求失败',
@@ -117,7 +131,7 @@ export default {
           })
         }
       })
-    },*/
+    },
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {

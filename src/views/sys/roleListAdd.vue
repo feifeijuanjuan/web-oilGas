@@ -27,14 +27,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="是否生效">
-              <el-input placeholder="请输入内容" v-model="editForm.usable">
-              </el-input>
+              <el-radio v-model="editForm.usable" :label="1">是</el-radio>
+              <el-radio v-model="editForm.usable" :label="0">否</el-radio>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="排序">
-              <el-input placeholder="请输入内容" v-model="editForm.sort">
-              </el-input>
+            <el-form-item label="排序" prop="sort">
+              <el-input-number v-model="editForm.sort" :min="0" :max="100"
+              ></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { roleAdd,roleShow} from '@/api/fill'
+import { roleAdd, roleShow } from '@/api/fill'
 import { Message } from 'element-ui'
 
 export default {
@@ -62,12 +62,15 @@ export default {
       editForm: {
         name: '',
         enName: '',
-        usable: '',
+        usable: 1,
         sort: ''
       },
       rules: {
         name: [
           { required: true, message: '请输入角色名称', trigger: 'blur' }
+        ],
+        sort: [
+          { required: true, message: '请选择排序序号', trigger: 'blur' }
         ]
       }
     }
@@ -87,6 +90,7 @@ export default {
       roleShow(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
+          this.editForm.usable = parseInt(this.editForm.usable)
         } else {
           Message({
             message: '请求失败',

@@ -75,6 +75,7 @@ export default {
       const params = {
         pageNumber: this.currentPage,
         pageSize: this.pageSize,
+        isPage:true,
         param: this.fromSearch.param
       }
       logList(params).then((res) => {

@@ -63,7 +63,15 @@ export default {
       tableLabel: [
         { label: '角色名称', param: 'name' },
         { label: '角色英文名称', param: 'enName' },
-        { label: '是否生效', param: 'usable' },
+        {
+          label: '是否生效', param: 'usable', formatter(row) {
+            if (row.usable == '1') {
+              return '生效'
+            } else {
+              return '不生效'
+            }
+          }
+        },
         { label: '排序', param: 'sort' }
       ],
       selectedRows: []

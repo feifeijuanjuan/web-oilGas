@@ -5,7 +5,7 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" ref="ruleForm" size="small" label-width="140px"
+      <el-form :model="editForm" ref="ruleForm" size="small" label-width="140px" :rules="rules"
                class="form-box clearfix"
       >
         <el-row>
@@ -43,8 +43,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="排序">
-              <el-input v-model="editForm.sort"></el-input>
+            <el-form-item label="排序" prop="sort">
+              <el-input-number v-model="editForm.sort" :min="0" :max="100"
+              ></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -80,6 +81,11 @@ export default {
         id: ''
       },
       treeData: [],
+      rules: {
+        sort: [
+          { required: true, message: '请选择排序序号', trigger: 'blur' }
+        ]
+      },
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -145,39 +151,51 @@ export default {
     },
     // 新增保存
     createData() {
-      orgAdd(this.editForm).then((res) => {
-        if (res.code === 0) {
-          Message({
-            message: '保存成功',
-            type: 'error',
-            duration: 5 * 1000
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          orgAdd(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '保存成功',
+                type: 'error',
+                duration: 5 * 1000
+              })
+              this.$router.push('/sys/orgList')
+            } else {
+              Message({
+                message: '保存失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
           })
-          this.$router.push('/sys/orgList')
         } else {
-          Message({
-            message: '保存失败',
-            type: 'error',
-            duration: 5 * 1000
-          })
+          return false
         }
       })
     },
     // 编辑保存
     updateData() {
-      orgUpdate(this.editForm).then((res) => {
-        if (res.code === 0) {
-          Message({
-            message: '保存成功',
-            type: 'error',
-            duration: 5 * 1000
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          orgUpdate(this.editForm).then((res) => {
+            if (res.code === 0) {
+              Message({
+                message: '保存成功',
+                type: 'error',
+                duration: 5 * 1000
+              })
+              this.$router.push('/sys/orgList')
+            } else {
+              Message({
+                message: '保存失败',
+                type: 'error',
+                duration: 5 * 1000
+              })
+            }
           })
-          this.$router.push('/sys/orgList')
         } else {
-          Message({
-            message: '保存失败',
-            type: 'error',
-            duration: 5 * 1000
-          })
+          return false
         }
       })
     }

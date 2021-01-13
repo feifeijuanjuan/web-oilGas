@@ -80,7 +80,8 @@ export default {
         { label: '时间', param: 'recordDate' },
         { label: '气井地图坐标信息', param: 'gasWellCoordinate'},
         { label: '气井所属生产基地', param: 'baseName'},
-        { label: '气井月产能', param: 'gasWellYield' }
+        { label: '气井月产量', param: 'gasWellYield' },
+        { label: '产量属性', param: 'yieldAttribute' }
       ],
       selectedRows: []
     }

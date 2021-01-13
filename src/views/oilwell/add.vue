@@ -43,7 +43,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油井月产能">
+            <el-form-item label="油井月产量">
               <el-input v-model="editForm.oilWellYield" placeholder="请输入内容">
                 <template slot="append">万吨</template>
               </el-input>

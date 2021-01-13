@@ -27,7 +27,6 @@
 <script>
 import { menuList, resourcesRole, setResourcesRole } from '@/api/fill'
 import { filterMenu } from '@/utils/addMenu'
-import { Message } from 'element-ui'
 
 export default {
   data() {
@@ -50,10 +49,10 @@ export default {
         if (res.code === 0) {
           this.treeData = filterMenu(res.body)
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -66,10 +65,10 @@ export default {
             this.$refs.selectTree.setCheckedKeys(res.body)
           })
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -91,17 +90,17 @@ export default {
       params.resourceIds=params.resourceIds.toString()
       setResourcesRole(params).then((res) => {
         if (res.code === 0) {
-          Message({
+          this.$notify({
             message: '分配菜单成功',
             type: 'success',
-            duration: 5 * 1000
+            offset: 100
           })
           this.$router.push('/sys/roleList')
         } else {
-          Message({
+          this.$notify({
             message: '分配菜单失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })

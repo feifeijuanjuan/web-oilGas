@@ -82,7 +82,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { dic, refinerylList, refinerySwitchs } from '@/api/fill'
-import { Message } from 'element-ui'
+
 /*1企业名称、2时间、3盟市名称、4状态、
 原油月加工量、原油计划月加工量、成品油产量、计划成品油月产量、计划负荷率、平均负荷率、
 89#汽油产量、92#汽油产量、95#汽油产量、
@@ -170,10 +170,10 @@ export default {
           const enterName = res.data.lianchang
           this.enterNameAry=enterName
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -193,10 +193,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -229,10 +229,10 @@ export default {
         this.$router.push({ path: '/refineryAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -250,13 +250,13 @@ export default {
           }
           refinerySwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功!'
               })
               this.list(this.currentPage, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败!'
               })
@@ -264,17 +264,17 @@ export default {
           })
 
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

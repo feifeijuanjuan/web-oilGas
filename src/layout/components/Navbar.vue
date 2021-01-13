@@ -153,14 +153,14 @@ export default {
           }
           changePwd(param).then((res) => {
             if (res.code == 2001) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '修改成功'
               })
               this.dialogVisible = false
               this.show = false
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败'
               })

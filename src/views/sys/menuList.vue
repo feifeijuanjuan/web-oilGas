@@ -14,9 +14,10 @@
           </el-button>
           <el-button size="small" class="btn-edit" style="margin-bottom: 10px;"
                      @click="handleEdit"
-          ><i
-            class="icon iconfont i-edit"
-          >&#xe630;</i>编辑
+          >
+            <i
+              class="icon iconfont i-edit"
+            >&#xe630;</i>编辑
           </el-button>
           <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel">
             <i
@@ -39,7 +40,6 @@
 <script>
 import { menuList, menuDelete } from '@/api/fill'
 import { filterMenu } from '@/utils/addMenu'
-import { Message } from 'element-ui'
 
 export default {
   data() {
@@ -59,6 +59,12 @@ export default {
       menuList().then((res) => {
         if (res.code === 0) {
           this.treeData = filterMenu(res.body)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            offset: 100,
+            type: 'error'
+          })
         }
       })
     },
@@ -82,15 +88,11 @@ export default {
         }
         this.$router.push({ path: '/menuListAdd', query: param })
       } else {
-        console.log(11111)
-        this.$message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error'
+          offset: 100,
+          type: 'warning'
         })
-        /* Message({
-           message: '请选择一条数据进行编辑',
-           type: 'error',
-         })*/
       }
     },
     handleDel() {
@@ -111,28 +113,32 @@ export default {
           params.menuIds = params.menuIds.toString()
           menuDelete(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
+              this.$notify({
+                message: '删除成功',
+                offset: 100,
+                type: 'success'
               })
               this.getMenu()
             } else {
-              this.$message({
-                type: 'error',
-                message: '删除失败!'
+              this.$notify({
+                message: '删除失败',
+                offset: 100,
+                type: 'error'
               })
             }
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
+          this.$notify({
+            message: '已取消删除',
+            offset: 100,
+            type: 'info'
           })
         })
       } else {
-        this.$message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error'
+          offset: 100,
+          type: 'warning'
         })
       }
     }

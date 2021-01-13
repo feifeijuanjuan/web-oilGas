@@ -7,7 +7,7 @@ const resetMessage = (options) => {
   if (messageInstance) {
     messageInstance.close()
   }
-  messageInstance = Message(options)
+  messageInstance = this.$notify(options)
 };
 ['error', 'success', 'info', 'warning'].forEach(type => {
   resetMessage[type] = options => {
@@ -17,7 +17,7 @@ const resetMessage = (options) => {
       }
     }
     options.type = type
-    return resetMessage(options)
+    return resetthis.$notify(options)
   }
 })
 export const message = resetMessage

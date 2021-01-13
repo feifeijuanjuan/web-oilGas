@@ -89,7 +89,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { guotuGasList, guotuSwitchs, dic } from '@/api/fill'
-import { Message } from 'element-ui'
+
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
 13预测储量、14控制储量、15油气田面积、16状态*/
@@ -187,10 +187,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -224,10 +224,10 @@ export default {
         this.$router.push({ path: '/guotuGasAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -245,30 +245,30 @@ export default {
           }
           guotuSwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功'
               })
               this.list(1, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败'
               })
             }
           })
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

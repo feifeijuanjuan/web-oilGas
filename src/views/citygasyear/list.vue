@@ -91,7 +91,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { citygasyearlList, citygasyearSwitchs, dic } from '@/api/fill'
-import { Message } from 'element-ui'
+
 /*企业名称、盟市名称、时间、状态
 已建储气能力(万立方米)
 正在建设储气能力(万立方米)
@@ -141,10 +141,10 @@ export default {
           const enterName = res.data.chengshiranqi
           this.enterNameAry = enterName
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -164,10 +164,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -201,10 +201,10 @@ export default {
         this.$router.push({ path: '/citygasyearAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -222,30 +222,30 @@ export default {
           }
           citygasyearSwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功'
               })
               this.list(1, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败'
               })
             }
           })
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

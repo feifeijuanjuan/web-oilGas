@@ -82,7 +82,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { coaloilSwitchs, coaloilList, dic } from '@/api/fill'
-import { Message } from 'element-ui'
+
 /*1企业名称、2时间、3状态、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
 7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12石脑油产量、
 13柴油产量、14液化气产量、15干气产量、16石脑油供应量、17柴油供应量、18液化气供应量、19干气供应量、20石脑油销售量、21柴油销售量、22液化气销售量、23干气销售量、24汽运供应量、25管输供应量、26工程车辆销售量、27城市交通销售量、28工业销售量、乙烯原料销售量、调合汽油销售量、重整原料销售量、原料煤价格、煤制油品价格、呼和浩特市销售量、包头市销售量、乌海市销售量、赤峰市销售量、通辽市销售量、鄂尔多斯市销售量、
@@ -167,10 +167,10 @@ export default {
           const enterName = res.data.meizhiyou
           this.enterNameAry=enterName
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -190,10 +190,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -227,10 +227,10 @@ export default {
         this.$router.push({ path: '/coaloilAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -248,30 +248,30 @@ export default {
           }
           coaloilSwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功'
               })
               this.list(1, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败'
               })
             }
           })
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

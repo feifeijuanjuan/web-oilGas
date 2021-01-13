@@ -70,7 +70,7 @@ import {
   chengpinyoudepotSwitchs, dic
 } from '@/api/fill'
 import TableCmp from '@/components/TableCmp'
-import { Message } from 'element-ui'
+
 // 1企业名称、2时间、3盟市名称、油库汽油总库存、油库柴油总库存、油库煤油总库存、油库原油总库存、状态
 export default {
   name: 'Dashboard',
@@ -113,10 +113,10 @@ export default {
           const enterName = res.data.chengpinyou
           this.enterNameAry=enterName
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -136,10 +136,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -173,10 +173,10 @@ export default {
         this.$router.push({ path: '/chengpinyoudepotAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -194,30 +194,30 @@ export default {
           }
           chengpinyoudepotSwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功'
               })
               this.list(1, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败'
               })
             }
           })
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

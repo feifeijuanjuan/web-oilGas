@@ -176,7 +176,7 @@
 
 <script>
 import { citygaspeekdaysave, citygaspeekdayUpdate, dic } from '@/api/fill'
-import { Message } from 'element-ui'
+
 
 export default {
   name: 'editFormAdd',
@@ -240,10 +240,10 @@ export default {
           this.enterNameAry = enterName
           this.responseLevelAry = response
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -254,10 +254,10 @@ export default {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
-          Message({
+          this.$notify({
             message: '请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -270,17 +270,17 @@ export default {
         if (valid) {
           citygaspeekdaysave(this.editForm).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '保存成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/citygaspeekday/list')
             } else {
-              Message({
+              this.$notify({
                 message: '保存失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })
@@ -295,17 +295,17 @@ export default {
         if (valid) {
           citygaspeekdaysave(this.editForm).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '修改成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/citygaspeekday/list')
             } else {
-              Message({
+              this.$notify({
                 message: '修改失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })

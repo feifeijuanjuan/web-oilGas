@@ -59,7 +59,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { gaswellList, gaswellSwitchs } from '@/api/fill'
-import { Message } from 'element-ui'
+
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -104,10 +104,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -141,10 +141,10 @@ export default {
         this.$router.push({ path: '/gasWellAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -161,7 +161,7 @@ export default {
           }
           gaswellSwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功'
               })
@@ -170,24 +170,24 @@ export default {
               this.currentPage = currentPage < 1 ? 1 : currentPage
               this.list(this.currentPage, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败'
               })
             }
           })
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

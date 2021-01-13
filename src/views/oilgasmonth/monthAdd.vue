@@ -134,7 +134,7 @@
 
 <script>
 import { gasmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
-import { Message } from 'element-ui'
+
 
 export default {
   name: 'editFormAdd',
@@ -234,10 +234,10 @@ export default {
             this.editForm = res.body
             this.editForm.oilGasName = [res.body.typeName, res.body.oilGasName]
           } else {
-            Message({
+            this.$notify({
               message: '请求失败',
               type: 'error',
-              duration: 5 * 1000
+              offset: 100
             })
           }
         })
@@ -257,17 +257,17 @@ export default {
           param['oilGasAreaType'] = 2
           oilgasmonthSave(param).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '保存成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/oilgasmonth/gasList')
             } else {
-              Message({
+              this.$notify({
                 message: '保存失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })
@@ -286,17 +286,17 @@ export default {
           param['oilGasAreaType'] = 2
           oilgasmonthSave(param).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '修改成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/oilgasmonth/gasList')
             } else {
-              Message({
+              this.$notify({
                 message: '修改失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })

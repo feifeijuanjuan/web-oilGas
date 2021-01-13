@@ -85,7 +85,7 @@
 
 <script>
 import { userAdd, userUpdate, userShow, orgList } from '@/api/fill'
-import { Message } from 'element-ui'
+
 import { orgTree } from '@/utils/addMenu'
 
 export default {
@@ -144,10 +144,10 @@ export default {
             this.$refs.selectTree.setCurrentKey(this.editForm.orgId)
           })
         } else {
-          Message({
+          this.$notify({
             message: '请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -164,10 +164,10 @@ export default {
           this.editForm = res.body
           this.getMenu()
         } else {
-          Message({
+          this.$notify({
             message: '请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -181,17 +181,17 @@ export default {
         if (valid) {
           userAdd(this.editForm).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '保存成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/sys/userList')
             } else {
-              Message({
+              this.$notify({
                 message: '保存失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })
@@ -206,17 +206,17 @@ export default {
         if (valid) {
           userUpdate(this.editForm).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '修改成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/sys/userList')
             } else {
-              Message({
+              this.$notify({
                 message: '修改失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })

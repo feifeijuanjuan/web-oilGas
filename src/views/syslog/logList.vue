@@ -38,7 +38,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { logList } from '@/api/fill'
-import { Message } from 'element-ui'
+
 
 export default {
   name: 'Dashboard',
@@ -83,10 +83,10 @@ export default {
           this.tableData = res.data
           this.total = res.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })

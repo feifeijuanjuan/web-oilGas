@@ -34,7 +34,6 @@
 <script>
 import { orgList, orgDelete } from '@/api/fill'
 import { orgTree } from '@/utils/addMenu'
-import { Message } from 'element-ui'
 
 export default {
   data() {
@@ -79,10 +78,10 @@ export default {
         }
         this.$router.push({ path: '/orgListAdd', query: param })
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -104,29 +103,29 @@ export default {
           params.orgIds = params.orgIds.toString()
           orgDelete(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功!'
               })
               this.getMenu()
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败!'
               })
             }
           })
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     }

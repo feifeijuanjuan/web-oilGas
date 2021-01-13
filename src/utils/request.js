@@ -32,11 +32,11 @@ service.interceptors.request.use(
     const res = response.data
 
     if (res.code !== 0) {
-      Message({
+      this.$notify({
         // message: res.message || '网络请求失败',
         message: '网络请求失败',
         type: 'error',
-        duration: 5 * 1000
+        offset: 100
       })
 
     /!*  if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
@@ -57,11 +57,11 @@ service.interceptors.request.use(
   },
   error => {
     console.log('err' + error) // for debug
-    Message({
+    this.$notify({
       // message: error.message,
       message: '网络请求失败',
       type: 'error',
-      duration: 5 * 1000
+      offset: 100
     })
     return Promise.reject(error)
   }
@@ -136,7 +136,7 @@ export function deletefn(url, params) {
     })
       .catch(err => {
         reject(err.data)
-        Message({ message: '加载失败', type: 'error' })
+        this.$notify({ message: '加载失败', type: 'error' })
       })
   })
 }

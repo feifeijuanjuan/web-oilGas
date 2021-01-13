@@ -80,7 +80,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { dic, gasmonthList, oilgasmonthSwitchs } from '@/api/fill'
-import { Message } from 'element-ui'
+
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
 13月产能、14综合能源消费量、15状态*/
@@ -175,10 +175,10 @@ export default {
           this.tableData = res.body.data
           this.total = res.body.total
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -211,10 +211,10 @@ export default {
         this.$router.push({ path: '/monthAdd', query: params })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },
@@ -232,7 +232,7 @@ export default {
           }
           oilgasmonthSwitchs(params).then((res) => {
             if (res.code === 0) {
-              this.$message({
+              this.$notify({
                 type: 'success',
                 message: '删除成功!'
               })
@@ -241,7 +241,7 @@ export default {
               this.currentPage = currentPage < 1 ? 1 : currentPage
               this.list(this.currentPage, this.pageSize)
             } else {
-              this.$message({
+              this.$notify({
                 type: 'error',
                 message: '删除失败!'
               })
@@ -249,17 +249,17 @@ export default {
           })
 
         }).catch(() => {
-          this.$message({
+          this.$notify({
             type: 'info',
             message: '已取消删除'
           })
         })
 
       } else {
-        Message({
+        this.$notify({
           message: '请选择一条数据进行删除',
-          type: 'error',
-          duration: 5 * 1000
+          type: 'info',
+          offset: 100
         })
       }
     },

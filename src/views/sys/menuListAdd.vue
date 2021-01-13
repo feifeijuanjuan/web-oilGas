@@ -80,7 +80,7 @@
 
 <script>
 import { menuList, menuAdd, menuShow, menuUpdate } from '@/api/fill'
-import { Message } from 'element-ui'
+
 import { filterMenu } from '@/utils/addMenu'
 
 export default {
@@ -132,10 +132,10 @@ export default {
             this.$refs.selectTree.setCurrentKey(this.editForm.parentId)
           })
         } else {
-          Message({
-            message: '请求失败',
-            type: 'error',
-            duration: 5 * 1000
+          this.$notify({
+            message: '网络请求失败',
+            offset: 100,
+            type: 'error'
           })
         }
       })
@@ -160,10 +160,10 @@ export default {
           this.editForm.label = data.parentName
           this.getMenu()
         } else {
-          Message({
-            message: '请求失败',
-            type: 'error',
-            duration: 5 * 1000
+          this.$notify({
+            message: '网络请求失败',
+            offset: 100,
+            type: 'error'
           })
         }
       })
@@ -178,17 +178,17 @@ export default {
         if (valid) {
           menuAdd(this.editForm).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '保存成功',
-                type: 'error',
-                duration: 5 * 1000
+                offset: 100,
+                type: 'success'
               })
               this.$router.push('/sys/menuList')
             } else {
-              Message({
+              this.$notify({
                 message: '保存失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })
@@ -203,17 +203,15 @@ export default {
         if (valid) {
           menuUpdate(this.editForm).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '保存成功',
-                type: 'error',
-                duration: 5 * 1000
+                type: 'success'
               })
               this.$router.push('/sys/menuList')
             } else {
-              Message({
+              this.$notify({
                 message: '保存失败',
-                type: 'error',
-                duration: 5 * 1000
+                type: 'error'
               })
             }
           })

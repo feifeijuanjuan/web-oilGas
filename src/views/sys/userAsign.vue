@@ -23,7 +23,7 @@
 
 <script>
 import { usersRole, userList, setUsersRole } from '@/api/fill'
-import { Message } from 'element-ui'
+
 import Qs from 'qs'
 
 export default {
@@ -46,10 +46,10 @@ export default {
         if (res.code === 0) {
           this.List = res.body
         } else {
-          Message({
+          this.$notify({
             message: '网络请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -61,10 +61,10 @@ export default {
         if (res.code === 0) {
           this.checkList = res.body
         } else {
-          Message({
+          this.$notify({
             message: '加载失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
 
@@ -83,17 +83,17 @@ export default {
       params.userIds = params.userIds.toString()
       setUsersRole(params).then((res) => {
         if (res.code === 0) {
-          Message({
+          this.$notify({
             message: '分配用户成功',
             type: 'success',
-            duration: 5 * 1000
+            offset: 100
           })
           this.$router.push('/sys/roleList')
         } else {
-          Message({
+          this.$notify({
             message: '分配用户失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })

@@ -15,7 +15,9 @@ import '@/icons' // icon
 import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
 import '@/permission' // permission control
-// import { message } from './utils/resetMessage'
+import { message } from './utils/resetMessage'
+
+Vue.prototype.$message = message
 
 /**
  * If you don't want to use mock-server

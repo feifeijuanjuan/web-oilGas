@@ -85,7 +85,7 @@
 
 <script>
 import { dic, enterpriseSave, enterpriseUpdate } from '@/api/fill'
-import { Message } from 'element-ui'
+
 
 export default {
   name: 'editFormAdd',
@@ -134,10 +134,10 @@ export default {
           this.enterpriseEconomyTypeAry = data
           this.enterNameAry=enterName
         } else {
-          Message({
+          this.$notify({
             message: '请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -148,10 +148,10 @@ export default {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
-          Message({
+          this.$notify({
             message: '请求失败',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
       })
@@ -167,17 +167,17 @@ export default {
           parms['enterpriseType'] = '煤制气企业'
           enterpriseSave(parms).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '保存成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/enterprise/coalgasList')
             } else {
-              Message({
+              this.$notify({
                 message: '保存失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })
@@ -194,17 +194,17 @@ export default {
           parms['enterpriseType'] = '煤制气企业'
           enterpriseSave(parms).then((res) => {
             if (res.code === 0) {
-              Message({
+              this.$notify({
                 message: '修改成功',
                 type: 'success',
-                duration: 5 * 1000
+                offset: 100
               })
               this.$router.push('/enterprise/coalgasList')
             } else {
-              Message({
+              this.$notify({
                 message: '修改失败',
                 type: 'error',
-                duration: 5 * 1000
+                offset: 100
               })
             }
           })

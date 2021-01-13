@@ -58,10 +58,10 @@ const actions = {
             this.loading = false
           })
         } else {
-          Message({
+          this.$notify({
             message: '用户名或密码错误',
             type: 'error',
-            duration: 5 * 1000
+            offset: 100
           })
         }
         resolve()

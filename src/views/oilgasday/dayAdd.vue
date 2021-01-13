@@ -54,7 +54,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="天然气日产量">
-              <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas">
+              <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas"
+                        type="number"
+                        @input="minMax('dayYieldNaGas',editForm.dayYieldNaGas)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -63,14 +66,19 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="天然气日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGas">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGas"
+                        type="number"
+                        @input="minMax('daySupplyNaGas',editForm.daySupplyNaGas)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="天然气计划日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas">
+              <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas"
+                        type="number"
+                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -79,14 +87,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="天然气日供气合同量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGasContract">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGasContract"
+                        type="number"
+                        @input="minMax('daySupplyNaGasContract',editForm.daySupplyNaGasContract)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="直供管道公司日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany"
+                        type="number"
+                        @input="minMax('daySupplyPipelineCompany',editForm.daySupplyPipelineCompany)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -95,14 +107,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="直供甲醇厂日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh"
+                        type="number"
+                        @input="minMax('daySupplyCh3oh',editForm.daySupplyCh3oh)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="直供合成氨日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3"
+                        type="number"
+                        @input="minMax('daySupplyNh3',editForm.daySupplyNh3)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -111,7 +127,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="直供液化工厂日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant"
+                        type="number"
+                        @input="minMax('daySupplyLiquPlant',editForm.daySupplyLiquPlant)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -183,6 +201,13 @@ export default {
     })
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

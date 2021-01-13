@@ -50,14 +50,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="储罐容积">
-              <el-input placeholder="请输入内容" v-model="editForm.tankVolume">
+              <el-input placeholder="请输入内容" v-model="editForm.tankVolume"
+                        type="number"
+                        @input="minMax('tankVolume',editForm.tankVolume)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="计划储气量">
-              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageGovernment">
+              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageGovernment"
+                        type="number"
+                        @input="minMax('plannedStorageGovernment',editForm.plannedStorageGovernment)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -66,14 +70,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="实际储气量">
-              <el-input placeholder="请输入内容" v-model="editForm.actualStorageGovernment">
+              <el-input placeholder="请输入内容" v-model="editForm.actualStorageGovernment"
+                        type="number"
+                        @input="minMax('actualStorageGovernment',editForm.actualStorageGovernment)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="盟市租赁储罐数量">
-              <el-input placeholder="请输入内容" v-model="editForm.tankRent">
+              <el-input placeholder="请输入内容" v-model="editForm.tankRent"
+                        type="number"
+                        @input="minMax('tankRent',editForm.tankRent)">
                 <template slot="append">个</template>
               </el-input>
             </el-form-item>
@@ -82,37 +90,39 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市自建储罐数量">
-              <el-input placeholder="请输入内容" v-model="editForm.tankSelf">
+              <el-input placeholder="请输入内容" v-model="editForm.tankSelf"
+                        type="number"
+                        @input="minMax('tankSelf',editForm.tankSelf)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="天然气历史缺口量">
-              <el-input placeholder="请输入内容" v-model="editForm.naGasBreach">
+              <el-input placeholder="请输入内容" v-model="editForm.naGasBreach"
+                        type="number"
+                        @input="minMax('naGasBreach',editForm.naGasBreach)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-<!--          <el-col :span="12">
-            <el-form-item label="盟市储气日调用量">
-              <el-input placeholder="请输入内容" v-model="editForm.naGasInvoke">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
+
           <el-col :span="12">
             <el-form-item label="盟市气化装置数量">
-              <el-input placeholder="请输入内容" v-model="editForm.apparatusNum">
+              <el-input placeholder="请输入内容" v-model="editForm.apparatusNum"
+                        type="number"
+                        @input="minMax('apparatusNum',editForm.apparatusNum)">
                 <template slot="append">个</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="盟市气化装置日均气化量">
-              <el-input placeholder="请输入内容" v-model="editForm.apparatusGasContent">
+              <el-input placeholder="请输入内容" v-model="editForm.apparatusGasContent"
+                        type="number"
+                        @input="minMax('apparatusGasContent',editForm.apparatusGasContent)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -122,14 +132,18 @@
 
           <el-col :span="12">
             <el-form-item label="已建储气能力">
-              <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt">
+              <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt"
+                        type="number"
+                        @input="minMax('gasStorageCapacityHaveBuilt',editForm.gasStorageCapacityHaveBuilt)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="正在建设储气能力">
-              <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction">
+              <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction"
+                        type="number"
+                        @input="minMax('gasStorageCapacityUnderConstruction',editForm.gasStorageCapacityUnderConstruction)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -138,7 +152,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="待建设储气能力">
-              <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityToBuild">
+              <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityToBuild"
+                        type="number"
+                        @input="minMax('gasStorageCapacityToBuild',editForm.gasStorageCapacityToBuild)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -205,6 +221,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

@@ -60,7 +60,9 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="商业调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.businessPeakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.businessPeakLoadRegulation"
+                        type="number"
+                        @input="minMax('businessPeakLoadRegulation',editForm.businessPeakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -70,14 +72,18 @@
 
           <el-col :span="12">
             <el-form-item label="甲醇化肥调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.methanolPeakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.methanolPeakLoadRegulation"
+                        type="number"
+                        @input="minMax('methanolPeakLoadRegulation',editForm.methanolPeakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="可中断工业调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.interruptiblePeakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.interruptiblePeakLoadRegulation"
+                        type="number"
+                        @input="minMax('interruptiblePeakLoadRegulation',editForm.interruptiblePeakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -86,14 +92,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="不可中断工业调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.uninterruptiblePeakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.uninterruptiblePeakLoadRegulation"
+                        type="number"
+                        @input="minMax('uninterruptiblePeakLoadRegulation',editForm.uninterruptiblePeakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="LNG调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.lngPeakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.lngPeakLoadRegulation"
+                        type="number"
+                        @input="minMax('lngPeakLoadRegulation',editForm.lngPeakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -102,14 +112,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市储气日调用量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasInvoke">
+              <el-input placeholder="请输入内容" v-model="editForm.gasInvoke"
+                        type="number"
+                        @input="minMax('gasInvoke',editForm.gasInvoke)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="计划日调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.planPeakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.planPeakLoadRegulation"
+                        type="number"
+                        @input="minMax('planPeakLoadRegulation',editForm.planPeakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -118,7 +132,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="实际日调峰量">
-              <el-input placeholder="请输入内容" v-model="editForm.peakLoadRegulation">
+              <el-input placeholder="请输入内容" v-model="editForm.peakLoadRegulation"
+                        type="number"
+                        @input="minMax('peakLoadRegulation',editForm.peakLoadRegulation)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -138,12 +154,6 @@
           </el-col>
         </el-row>
         <el-row>
-<!--          <el-col :span="12">
-            <el-form-item label="调峰对象" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.peakObject">
-              </el-input>
-            </el-form-item>
-          </el-col>-->
           <el-col :span="12">
             <el-form-item label="具体措施" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.specificMeasure">
@@ -213,6 +223,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

@@ -59,7 +59,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="释放气量" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.releaseVolumn">
+              <el-input placeholder="请输入内容" v-model="editForm.releaseVolumn"
+                        type="number"
+                        @input="minMax('releaseVolumn',editForm.releaseVolumn)"
+              >
               </el-input>
             </el-form-item>
           </el-col>
@@ -74,7 +77,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="剩余气量" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.surplusVolumn">
+              <el-input placeholder="请输入内容" v-model="editForm.surplusVolumn"
+                        type="number"
+                        @input="minMax('surplusVolumn',editForm.surplusVolumn)"
+              >
               </el-input>
             </el-form-item>
           </el-col>
@@ -132,6 +138,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

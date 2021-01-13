@@ -62,7 +62,9 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas">
+              <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
+                        type="number"
+                        @input="minMax('yieldOilGas',editForm.yieldOilGas)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -71,14 +73,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="计划月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield"
+                        type="number"
+                        @input="minMax('oilGasPlanMonthYield',editForm.oilGasPlanMonthYield)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas"
+                        type="number"
+                        @input="minMax('supplyOilGas',editForm.supplyOilGas)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -87,14 +93,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="计划月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthSupply">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthSupply"
+                        type="number"
+                        @input="minMax('oilGasPlanMonthSupply',editForm.oilGasPlanMonthSupply)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="区内供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas"
+                        type="number"
+                        @input="minMax('supplyInOilGas',editForm.supplyInOilGas)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -103,14 +113,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="区外供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyOutOilGas">
+              <el-input placeholder="请输入内容" v-model="editForm.supplyOutOilGas"
+                        type="number"
+                        @input="minMax('supplyOutOilGas',editForm.supplyOutOilGas)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="月产能">
-              <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas">
+              <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
+                        type="number"
+                        @input="minMax('capacityOilGas',editForm.capacityOilGas)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -120,7 +134,9 @@
 
           <el-col :span="12">
             <el-form-item label="综合能源消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.energyConsumption">
+              <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
+                        type="number"
+                        @input="minMax('energyConsumption',editForm.energyConsumption)">
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -196,6 +212,13 @@ export default {
     })
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

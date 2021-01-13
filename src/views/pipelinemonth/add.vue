@@ -68,7 +68,10 @@
                     </el-col>-->
           <el-col :span="12">
             <el-form-item label="管径">
-              <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容">
+              <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('pipelineDiamete',editForm.pipelineDiamete)"
+              >
                 <template slot="append">毫米</template>
               </el-input>
             </el-form-item>
@@ -87,14 +90,20 @@
 
           <el-col :span="12">
             <el-form-item label="境内里程">
-              <el-input v-model="editForm.pipelineLength" placeholder="请输入内容">
+              <el-input v-model="editForm.pipelineLength" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('pipelineLength',editForm.pipelineLength)"
+              >
                 <template slot="append">公里</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="设计运输能力">
-              <el-input v-model="editForm.transportPower" placeholder="请输入内容">
+              <el-input v-model="editForm.transportPower" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('transportPower',editForm.transportPower)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -141,7 +150,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="设计压力">
-              <el-input v-model="editForm.designPressure" placeholder="请输入内容">
+              <el-input v-model="editForm.designPressure" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('designPressure',editForm.designPressure)"
+              >
                 <template slot="append">Mpa</template>
               </el-input>
             </el-form-item>
@@ -162,8 +174,11 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="管道长度" >
-              <el-input v-model="editForm.pipelineTotalLength" placeholder="请输入内容">
+            <el-form-item label="管道长度">
+              <el-input v-model="editForm.pipelineTotalLength" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('pipelineTotalLength',editForm.pipelineTotalLength)"
+              >
                 <template slot="append">千米</template>
               </el-input>
             </el-form-item>
@@ -249,12 +264,19 @@ export default {
     })
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     //更换单位
-    changeUnit(val){
-      if(val=='天然气管线'){
-        this.unit='亿立方米/年'
-      }else{
-        this.unit='万吨/年'
+    changeUnit(val) {
+      if (val == '天然气管线') {
+        this.unit = '亿立方米/年'
+      } else {
+        this.unit = '万吨/年'
       }
     },
     dic() {

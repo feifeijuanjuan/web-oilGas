@@ -30,7 +30,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="组织机构名称">
+            <el-form-item label="组织机构名称" prop="name">
               <el-input v-model="editForm.name"></el-input>
             </el-form-item>
           </el-col>
@@ -84,6 +84,9 @@ export default {
       rules: {
         sort: [
           { required: true, message: '请选择排序序号', trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: '请输入组织机构名称', trigger: 'blur' }
         ]
       },
       defaultProps: {

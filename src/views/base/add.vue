@@ -52,13 +52,17 @@
 
           <el-col :span="12">
             <el-form-item label="基地员工数量">
-              <el-input v-model="editForm.employeesNum" placeholder="请输入内容">
+              <el-input v-model="editForm.employeesNum" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('employeesNum',editForm.employeesNum)">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="当月产量">
-              <el-input v-model="editForm.yieldMonth" placeholder="请输入内容">
+              <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('yieldMonth',editForm.yieldMonth)">
               </el-input>
             </el-form-item>
           </el-col>
@@ -66,7 +70,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="年度累计产量">
-              <el-input v-model="editForm.yieldYear" placeholder="请输入内容">
+              <el-input v-model="editForm.yieldYear" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('yieldYear',editForm.yieldYear)">
               </el-input>
             </el-form-item>
           </el-col>
@@ -125,6 +131,13 @@ export default {
     })
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

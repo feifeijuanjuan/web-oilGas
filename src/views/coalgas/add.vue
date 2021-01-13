@@ -57,7 +57,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="煤制气产量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasYield">
+              <el-input placeholder="请输入内容" v-model="editForm.gasYield"
+                        type="number"
+                        @input="minMax('gasYield',editForm.gasYield)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -67,14 +70,20 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="计划煤制气（天然气）产量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthProduct">
+              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthProduct"
+                        type="number"
+                        @input="minMax('gasPlanMonthProduct',editForm.gasPlanMonthProduct)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="粉煤月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.pulverizedCoalProcessingCapacity">
+              <el-input placeholder="请输入内容" v-model="editForm.pulverizedCoalProcessingCapacity"
+                        type="number"
+                        @input="minMax('pulverizedCoalProcessingCapacity',editForm.pulverizedCoalProcessingCapacity)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -84,14 +93,20 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="计划粉煤月加工量">
-              <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth">
+              <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth"
+                        type="number"
+                        @input="minMax('coalProcessMonth',editForm.coalProcessMonth)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="平均负荷率">
-              <el-input placeholder="请输入内容" v-model="editForm.avgLoadRate">
+              <el-input placeholder="请输入内容" v-model="editForm.avgLoadRate"
+                        type="number"
+                        @input="minMax('avgLoadRate',editForm.avgLoadRate)"
+              >
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -100,14 +115,20 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="计划平均负荷率">
-              <el-input placeholder="请输入内容" v-model="editForm.planAvgLoadRate">
+              <el-input placeholder="请输入内容" v-model="editForm.planAvgLoadRate"
+                        type="number"
+                        @input="minMax('planAvgLoadRate',editForm.planAvgLoadRate)"
+              >
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="水资源用量">
-              <el-input placeholder="请输入内容" v-model="editForm.waterUse">
+              <el-input placeholder="请输入内容" v-model="editForm.waterUse"
+                        type="number"
+                        @input="minMax('waterUse',editForm.waterUse)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -116,14 +137,20 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="单位产品原料消耗">
-              <el-input placeholder="请输入内容" v-model="editForm.unitProductRawSales">
+              <el-input placeholder="请输入内容" v-model="editForm.unitProductRawSales"
+                        type="number"
+                        @input="minMax('unitProductRawSales',editForm.unitProductRawSales)"
+              >
                 <template slot="append">吨标煤/吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="单位产品综合能耗">
-              <el-input placeholder="请输入内容" v-model="editForm.unitProductComprehensiveEnergySales">
+              <el-input placeholder="请输入内容" v-model="editForm.unitProductComprehensiveEnergySales"
+                        type="number"
+                        @input="minMax('unitProductComprehensiveEnergySales',editForm.unitProductComprehensiveEnergySales)"
+              >
                 <template slot="append">吨标煤/吨</template>
               </el-input>
             </el-form-item>
@@ -132,14 +159,19 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="单位产品新鲜水耗">
-              <el-input placeholder="请输入内容" v-model="editForm.unitProductFreshWaterSales">
+              <el-input placeholder="请输入内容" v-model="editForm.unitProductFreshWaterSales"
+                        type="number"
+                        @input="minMax('unitProductFreshWaterSales',editForm.unitProductFreshWaterSales)"
+              >
                 <template slot="append">吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="煤制气供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasSupply">
+              <el-input placeholder="请输入内容" v-model="editForm.gasSupply"
+                        type="number"
+                        @input="minMax('gasSupply',editForm.gasSupply)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -149,14 +181,18 @@
 
           <el-col :span="12">
             <el-form-item label="煤制气计划月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthSupply">
+              <el-input placeholder="请输入内容" v-model="editForm.gasPlanMonthSupply"
+                        type="number"
+                        @input="minMax('gasPlanMonthSupply',editForm.gasPlanMonthSupply)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="管道气供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.pipelineGasSupply">
+              <el-input placeholder="请输入内容" v-model="editForm.pipelineGasSupply"
+                        type="number"
+                        @input="minMax('pipelineGasSupply',editForm.pipelineGasSupply)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -166,14 +202,18 @@
 
           <el-col :span="12">
             <el-form-item label="CNG供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.cngSupply">
+              <el-input placeholder="请输入内容" v-model="editForm.cngSupply"
+                        type="number"
+                        @input="minMax('cngSupply',editForm.cngSupply)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="LNG供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.lngSupply">
+              <el-input placeholder="请输入内容" v-model="editForm.lngSupply"
+                        type="number"
+                        @input="minMax('lngSupply',editForm.lngSupply)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -183,14 +223,18 @@
 
           <el-col :span="12">
             <el-form-item label="煤制气消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.gasConsumption">
+              <el-input placeholder="请输入内容" v-model="editForm.gasConsumption"
+                        type="number"
+                        @input="minMax('gasConsumption',editForm.gasConsumption)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="终端消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.householdSales">
+              <el-input placeholder="请输入内容" v-model="editForm.householdSales"
+                        type="number"
+                        @input="minMax('householdSales',editForm.householdSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -200,14 +244,18 @@
 
           <el-col :span="12">
             <el-form-item label="化工消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.chemicalConsumption">
+              <el-input placeholder="请输入内容" v-model="editForm.chemicalConsumption"
+                        type="number"
+                        @input="minMax('chemicalConsumption',editForm.chemicalConsumption)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="火力发电消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.thermalPowerSales">
+              <el-input placeholder="请输入内容" v-model="editForm.thermalPowerSales"
+                        type="number"
+                        @input="minMax('thermalPowerSales',editForm.thermalPowerSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -217,14 +265,18 @@
 
           <el-col :span="12">
             <el-form-item label="工业消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.industrySales">
+              <el-input placeholder="请输入内容" v-model="editForm.industrySales"
+                        type="number"
+                        @input="minMax('industrySales',editForm.industrySales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="供热消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.heatingSales">
+              <el-input placeholder="请输入内容" v-model="editForm.heatingSales"
+                        type="number"
+                        @input="minMax('heatingSales',editForm.heatingSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -233,14 +285,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="建筑业消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.constructionIndustrySales">
+              <el-input placeholder="请输入内容" v-model="editForm.constructionIndustrySales"
+                        type="number"
+                        @input="minMax('constructionIndustrySales',editForm.constructionIndustrySales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="商业消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.businessSales">
+              <el-input placeholder="请输入内容" v-model="editForm.businessSales"
+                        type="number"
+                        @input="minMax('businessSales',editForm.businessSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -249,14 +305,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="交通消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.trafficSales">
+              <el-input placeholder="请输入内容" v-model="editForm.trafficSales"
+                        type="number"
+                        @input="minMax('trafficSales',editForm.trafficSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="生活消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.lifeSales">
+              <el-input placeholder="请输入内容" v-model="editForm.lifeSales"
+                        type="number"
+                        @input="minMax('lifeSales',editForm.lifeSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -266,7 +326,9 @@
 
           <el-col :span="12">
             <el-form-item label="调峰煤制气用量">
-              <el-input placeholder="请输入内容" v-model="editForm.peakShavingSales">
+              <el-input placeholder="请输入内容" v-model="editForm.peakShavingSales"
+                        type="number"
+                        @input="minMax('peakShavingSales',editForm.peakShavingSales)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -332,8 +394,8 @@ export default {
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
       },
-      enterNameAry:[],
-      leagueCityNameAry:[]
+      enterNameAry: [],
+      leagueCityNameAry: []
     }
   },
   created() {
@@ -347,6 +409,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -354,7 +423,7 @@ export default {
           const enterName = data.meizhiqi
           const leagueCityType = data.leagueCityType
           this.leagueCityNameAry = leagueCityType
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         }
       })
     },

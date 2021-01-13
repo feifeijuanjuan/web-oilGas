@@ -70,14 +70,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="油库汽油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.gasolineInventoryOilDepot">
+              <el-input placeholder="请输入内容" v-model="editForm.gasolineInventoryOilDepot"
+                        type="number"
+                        @input="minMax('gasolineInventoryOilDepot',editForm.gasolineInventoryOilDepot)">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="油库柴油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.dieselInventoryOilDepot">
+              <el-input placeholder="请输入内容" v-model="editForm.dieselInventoryOilDepot"
+                        type="number"
+                        @input="minMax('dieselInventoryOilDepot',editForm.dieselInventoryOilDepot)">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -86,14 +90,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="油库煤油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.aviationCoalInventoryOilDepot">
+              <el-input placeholder="请输入内容" v-model="editForm.aviationCoalInventoryOilDepot"
+                        type="number"
+                        @input="minMax('aviationCoalInventoryOilDepot',editForm.aviationCoalInventoryOilDepot)">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="油库原油总库存">
-              <el-input placeholder="请输入内容" v-model="editForm.crudeInventoryOilDepot">
+              <el-input placeholder="请输入内容" v-model="editForm.crudeInventoryOilDepot"
+                        type="number"
+                        @input="minMax('crudeInventoryOilDepot',editForm.crudeInventoryOilDepot)">
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -154,6 +162,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

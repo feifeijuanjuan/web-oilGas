@@ -60,7 +60,9 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="城燃企业5%计划储气量">
-              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise">
+              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise"
+                        type="number"
+                        @input="minMax('plannedStorageEnterprise',editForm.plannedStorageEnterprise)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -153,6 +155,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

@@ -52,14 +52,18 @@
           </el-col>-->
           <el-col :span="12">
             <el-form-item label="累计探明地质储量">
-              <el-input placeholder="请输入内容" v-model="editForm.reservesCumulativeKnow">
+              <el-input placeholder="请输入内容" v-model="editForm.reservesCumulativeKnow"
+                        type="number"
+                        @input="minMax('reservesCumulativeKnow',editForm.reservesCumulativeKnow)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="剩余技术可采储量">
-              <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusTech">
+              <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusTech"
+                        type="number"
+                        @input="minMax('recoveryReservesSurplusTech',editForm.recoveryReservesSurplusTech)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -68,14 +72,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="剩余经济可采储量">
-              <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusEcon">
+              <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusEcon"
+                        type="number"
+                        @input="minMax('recoveryReservesSurplusEcon',editForm.recoveryReservesSurplusEcon)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="储采比">
-              <el-input placeholder="请输入内容" v-model="editForm.reserveProductionRatio">
+              <el-input placeholder="请输入内容" v-model="editForm.reserveProductionRatio"
+                        type="number"
+                        @input="minMax('reserveProductionRatio',editForm.reserveProductionRatio)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -84,13 +92,17 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="气田人数" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.peopleNum">
+              <el-input placeholder="请输入内容" v-model="editForm.peopleNum"
+                        type="number"
+                        @input="minMax('peopleNum',editForm.peopleNum)">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="远景资源量">
-              <el-input placeholder="请输入内容" v-model="editForm.prospectiveResources">
+              <el-input placeholder="请输入内容" v-model="editForm.prospectiveResources"
+                        type="number"
+                        @input="minMax('prospectiveResources',editForm.prospectiveResources)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -99,14 +111,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="预测储量">
-              <el-input placeholder="请输入内容" v-model="editForm.predictedReserves">
+              <el-input placeholder="请输入内容" v-model="editForm.predictedReserves"
+                        type="number"
+                        @input="minMax('predictedReserves',editForm.predictedReserves)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="控制储量">
-              <el-input placeholder="请输入内容" v-model="editForm.controlReserve">
+              <el-input placeholder="请输入内容" v-model="editForm.controlReserve"
+                        type="number"
+                        @input="minMax('controlReserve',editForm.controlReserve)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -115,7 +131,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="气田面积">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasSize">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
+                        type="number"
+                        @input="minMax('oilGasSize',editForm.oilGasSize)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -187,6 +205,13 @@ export default {
     })
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

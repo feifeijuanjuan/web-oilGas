@@ -44,7 +44,9 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="气井月产量">
-              <el-input v-model="editForm.gasWellYield" placeholder="请输入内容">
+              <el-input v-model="editForm.gasWellYield" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('gasWellYield',editForm.gasWellYield)">
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -118,6 +120,13 @@ export default {
     }
   },
   methods: {
+    minMax(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

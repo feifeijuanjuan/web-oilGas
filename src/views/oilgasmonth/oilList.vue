@@ -120,8 +120,8 @@ export default {
         { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
         { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
         { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
-        { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
-        { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
+      /*  { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
+        { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }*/
       ],
       selectedRows: [],
       oilTypesAry: [],

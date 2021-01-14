@@ -117,7 +117,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="月产能">
               <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
                         type="number"
@@ -126,11 +126,11 @@
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
         <el-row>
 
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="综合能源消费量">
               <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
                         type="number"
@@ -139,7 +139,7 @@
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
       </el-form>
 

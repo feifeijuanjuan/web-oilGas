@@ -304,3 +304,13 @@ export const secLogList = (params) => post('/syslog/secLogList', params)
 
 export const chengpinDownLoad = () => get('/chengpinyoudepot/excel/template')
 export const chengpinUpload = (params) => postParams('/chengpinyoudepot/test',params)
+
+//年度产量信息填报
+// 查询
+export const yieldyearList = params => post('/yieldyear/list', params)
+// 保存
+export const yieldyearSave = params => post('/yieldyear/save', params)
+// 更新
+export const yieldyearUpdate = params => get(`/yieldyear/select/${params}`)
+// 删除
+export const yieldyearSwitchs = params => post(`/yieldyear/switchs`, params)

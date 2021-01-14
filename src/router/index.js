@@ -436,6 +436,18 @@ export const constantRoutes = [
         component: () => import('@/views/sys/userListAdd')
       }
     ]
+  },
+  //年度产量信息添加
+  {
+    path: '/yieldyearAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/yieldyearAdd',
+        component: () => import('@/views/yieldyear/add')
+      }
+    ]
   }
   // 管道
 

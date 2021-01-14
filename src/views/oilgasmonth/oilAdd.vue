@@ -18,15 +18,6 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="油田名称" class="no-unit" prop="oilGasName">
-              <!--              <el-select v-model="editForm.oilGasName" placeholder="请选择油田名称" clearable>
-                              <el-option
-                                v-for="item in oilTypesAry"
-                                :key="item.typeName"
-                                :label="item.typeName"
-                                :value="item.typeName"
-                              >
-                              </el-option>
-                            </el-select>-->
               <el-cascader
                 v-model="editForm.oilGasName"
                 placeholder="请选择油田名称"
@@ -39,7 +30,7 @@
               <el-date-picker
                 v-model="editForm.recordDate"
                 type="month"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy-MM"
                 placeholder="请选择日期"
               >
               </el-date-picker>
@@ -64,7 +55,8 @@
             <el-form-item label="月产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
                         type="number"
-                        @input="minMax('yieldOilGas',editForm.yieldOilGas)">
+                        @input="minMax('yieldOilGas',editForm.yieldOilGas)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -75,7 +67,8 @@
             <el-form-item label="计划月产量">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield"
                         type="number"
-                        @input="minMax('oilGasPlanMonthYield',editForm.oilGasPlanMonthYield)">
+                        @input="minMax('oilGasPlanMonthYield',editForm.oilGasPlanMonthYield)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -84,7 +77,8 @@
             <el-form-item label="月供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas"
                         type="number"
-                        @input="minMax('supplyOilGas',editForm.supplyOilGas)">
+                        @input="minMax('supplyOilGas',editForm.supplyOilGas)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -95,7 +89,8 @@
             <el-form-item label="计划月供应量">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthSupply"
                         type="number"
-                        @input="minMax('oilGasPlanMonthSupply',editForm.oilGasPlanMonthSupply)">
+                        @input="minMax('oilGasPlanMonthSupply',editForm.oilGasPlanMonthSupply)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -104,7 +99,8 @@
             <el-form-item label="区内供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas"
                         type="number"
-                        @input="minMax('supplyInOilGas',editForm.supplyInOilGas)">
+                        @input="minMax('supplyInOilGas',editForm.supplyInOilGas)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -115,7 +111,8 @@
             <el-form-item label="区外供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyOutOilGas"
                         type="number"
-                        @input="minMax('supplyOutOilGas',editForm.supplyOutOilGas)">
+                        @input="minMax('supplyOutOilGas',editForm.supplyOutOilGas)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -124,7 +121,8 @@
             <el-form-item label="月产能">
               <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
                         type="number"
-                        @input="minMax('capacityOilGas',editForm.capacityOilGas)">
+                        @input="minMax('capacityOilGas',editForm.capacityOilGas)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -136,7 +134,8 @@
             <el-form-item label="综合能源消费量">
               <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
                         type="number"
-                        @input="minMax('energyConsumption',editForm.energyConsumption)">
+                        @input="minMax('energyConsumption',editForm.energyConsumption)"
+              >
                 <template slot="append">{{ unit }}</template>
               </el-input>
             </el-form-item>
@@ -158,7 +157,6 @@
 
 <script>
 import { oilmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
-
 
 export default {
   name: 'editFormAdd',
@@ -277,7 +275,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 1
           oilgasmonthSave(param).then((res) => {
@@ -305,7 +303,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 1
           oilgasmonthSave(param).then((res) => {

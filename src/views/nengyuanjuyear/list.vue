@@ -111,7 +111,7 @@ export default {
       count: 3,
       total: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 10,
       leagueCityTypeAry: [],//盟市名称
       fromSearch: {
         leagueCityName: '',
@@ -234,21 +234,24 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功'
+                message: '删除成功',
+                offset: 100
               })
               this.list(1, this.pageSize)
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败',
+                offset: 100
               })
             }
           })
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

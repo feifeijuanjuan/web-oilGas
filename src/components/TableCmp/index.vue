@@ -136,7 +136,7 @@ export default {
     },
     pageSize: {
       type: Number,
-      default: 50
+      default: 10
     },
     loading: {
       type: Boolean,

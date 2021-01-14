@@ -27,7 +27,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd"
-                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -96,7 +95,7 @@ export default {
       count: 3,
       total: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 10,
       fromSearch: {
         enterName: '',
         time: ''
@@ -152,7 +151,7 @@ export default {
         { label: '兴安盟销售量', param: 'xinganmengSales', minWidth: 150 }
       ],
       selectedRows: [],
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {
@@ -165,7 +164,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const enterName = res.data.meizhiyou
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -181,8 +180,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
       coaloilList(params).then((res) => {
@@ -250,21 +249,24 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功'
+                message: '删除成功',
+                offset: 100
               })
               this.list(1, this.pageSize)
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败',
+                offset: 100
               })
             }
           })
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

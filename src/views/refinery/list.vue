@@ -27,7 +27,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd"
-                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -155,7 +154,7 @@ export default {
         { label: '农业的成品油供应量', param: 'agriculturalProductedOilSupply', minWidth: 180 }
       ],
       selectedRows: [],
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {
@@ -168,7 +167,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const enterName = res.data.lianchang
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -184,8 +183,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
       refinerylList(params).then((res) => {
@@ -265,9 +264,10 @@ export default {
 
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

@@ -1,4 +1,4 @@
-import { get, post } from '@/utils/request'
+import { get, post,postParams } from '@/utils/request'
 
 // 油气田企业按日填报
 // 查询
@@ -288,9 +288,9 @@ export const userPage = params => post('/sys/user/page', params)
 export const userList = () => get('/sys/user/list')
 // 新增用户
 export const userAdd = params => post('/sys/user/add', params)
-//删除用户
+// 删除用户
 export const userDelete = params => get('/sys/user/delete', params)
-//修改用户
+// 修改用户
 export const userUpdate = params => post('/sys/user/update', params)
 // 用户列表回显
 export const userShow = params => get(`/sys/user/select/${params}`)
@@ -299,3 +299,8 @@ export const userShow = params => get(`/sys/user/select/${params}`)
 // 条件查询日志列表
 export const logList = (params) => post('/syslog/logList', params)
 export const secLogList = (params) => post('/syslog/secLogList', params)
+
+// 成品油销售企业库存填报导入接口
+
+export const chengpinDownLoad = () => get('/chengpinyoudepot/excel/template')
+export const chengpinUpload = (params) => postParams('/chengpinyoudepot/test',params)

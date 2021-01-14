@@ -26,7 +26,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd"
-                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -35,7 +34,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="gaslist((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -92,7 +91,7 @@ export default {
       checkbox: true,
       total: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 10,
       fromSearch: {
         oilGasName: null,
         time: ''
@@ -112,7 +111,7 @@ export default {
         // { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
         { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
         { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
-        { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
+        { label: '月产能', param: 'capacityOilGas', minWidth: '150' }
         // { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }
       ],
       selectedRows: [],
@@ -166,8 +165,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         oilGasName: this.fromSearch.oilGasName
       }
       gasmonthList(params).then((res) => {
@@ -250,9 +249,10 @@ export default {
 
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

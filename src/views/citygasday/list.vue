@@ -27,7 +27,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd"
-                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -109,9 +108,9 @@ export default {
         { label: '时间', param: 'recordDate', minWidth: 120 },
         { label: '企业名称', param: 'enterName', minWidth: 120 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
-       /* { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
-        { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
-        { label: '天然气供应合同量', param: 'supplyNaGasContract', minWidth: 150 },*/
+        /* { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
+         { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
+         { label: '天然气供应合同量', param: 'supplyNaGasContract', minWidth: 150 },*/
         { label: '天然气实际日供气量', param: 'supplyNaGasContract', minWidth: 150 },
         { label: '天然气计划日供气量', param: 'naturalGasPlanSupply', minWidth: 150 },
         { label: '可中断工业消费量', param: 'interruptibleUserSales', minWidth: 150 },
@@ -156,8 +155,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
       citygasdaylList(params).then((res) => {
@@ -223,7 +222,8 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功'
+                message: '删除成功',
+                offset: 100
               })
               const totalPage = Math.ceil((this.total - 1) / this.pageSize)
               const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
@@ -232,15 +232,17 @@ export default {
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败',
+                offset: 100
               })
             }
           })
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

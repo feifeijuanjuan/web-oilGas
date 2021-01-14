@@ -35,7 +35,7 @@
             <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
                 type="month"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy-MM"
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
               >

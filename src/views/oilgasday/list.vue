@@ -16,7 +16,7 @@
                 ></el-cascader>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="9">
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
@@ -26,7 +26,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd"
-                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -171,8 +170,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         oilGasName: this.fromSearch.oilGasName
       }
       list(params).then((res) => {
@@ -235,10 +234,10 @@ export default {
           }
           oilgasdaySwitchs(params).then((res) => {
             if (res.code === 0) {
-              console.log(111)
               this.$notify({
                 type: 'success',
-                message: '删除成功'
+                message: '删除成功',
+                offset: 100
               })
               const totalPage = Math.ceil((this.total - 1) / this.pageSize)
               const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
@@ -247,17 +246,18 @@ export default {
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败',
+                offset: 100
               })
             }
           })
         }).catch(() => {
           this.$notify({
             type: 'info',
-            message: '已取消删除'
+            message: '已取消删除',
+            offset: 100
           })
         })
-
       } else {
         this.$notify({
           message: '请选择一条数据进行删除',

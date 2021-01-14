@@ -78,7 +78,8 @@
             <el-form-item label="天然气计划日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas"
                         type="number"
-                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)">
+                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -89,7 +90,8 @@
             <el-form-item label="天然气日供气合同量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGasContract"
                         type="number"
-                        @input="minMax('daySupplyNaGasContract',editForm.daySupplyNaGasContract)">
+                        @input="minMax('daySupplyNaGasContract',editForm.daySupplyNaGasContract)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -98,7 +100,8 @@
             <el-form-item label="直供管道公司日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany"
                         type="number"
-                        @input="minMax('daySupplyPipelineCompany',editForm.daySupplyPipelineCompany)">
+                        @input="minMax('daySupplyPipelineCompany',editForm.daySupplyPipelineCompany)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -109,7 +112,8 @@
             <el-form-item label="直供甲醇厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh"
                         type="number"
-                        @input="minMax('daySupplyCh3oh',editForm.daySupplyCh3oh)">
+                        @input="minMax('daySupplyCh3oh',editForm.daySupplyCh3oh)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -118,7 +122,8 @@
             <el-form-item label="直供合成氨日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3"
                         type="number"
-                        @input="minMax('daySupplyNh3',editForm.daySupplyNh3)">
+                        @input="minMax('daySupplyNh3',editForm.daySupplyNh3)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -129,7 +134,8 @@
             <el-form-item label="直供液化工厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant"
                         type="number"
-                        @input="minMax('daySupplyLiquPlant',editForm.daySupplyLiquPlant)">
+                        @input="minMax('daySupplyLiquPlant',editForm.daySupplyLiquPlant)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -149,7 +155,6 @@
 
 <script>
 import { update, save, dic } from '@/api/fill'
-
 
 export default {
   name: 'editFormAdd',
@@ -265,7 +270,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           save(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
@@ -291,7 +296,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           save(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({

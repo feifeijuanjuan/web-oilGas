@@ -162,7 +162,8 @@ export default {
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败',
+                offset: 100
               })
             }
           })

@@ -47,7 +47,6 @@
 import TableCmp from '@/components/TableCmp'
 import { listRole, delRole } from '@/api/fill'
 
-
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -153,9 +152,10 @@ export default {
 
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

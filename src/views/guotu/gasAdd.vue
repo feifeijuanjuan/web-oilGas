@@ -29,7 +29,7 @@
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
                 type="year"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy"
               >
               </el-date-picker>
             </el-form-item>
@@ -37,24 +37,25 @@
         </el-row>
         <el-row>
 
-<!--          <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit">
-              <el-select v-model="editForm.leagueCityName" placeholder="请选择">
-                <el-option
-                  v-for="item in leagueCityNameAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>-->
+          <!--          <el-col :span="12">
+                      <el-form-item label="盟市名称" class="no-unit">
+                        <el-select v-model="editForm.leagueCityName" placeholder="请选择">
+                          <el-option
+                            v-for="item in leagueCityNameAry"
+                            :key="item.dictItemName"
+                            :label="item.dictItemName"
+                            :value="item.dictItemName"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>-->
           <el-col :span="12">
             <el-form-item label="累计探明地质储量">
               <el-input placeholder="请输入内容" v-model="editForm.reservesCumulativeKnow"
                         type="number"
-                        @input="minMax('reservesCumulativeKnow',editForm.reservesCumulativeKnow)">
+                        @input="minMax('reservesCumulativeKnow',editForm.reservesCumulativeKnow)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -63,7 +64,8 @@
             <el-form-item label="剩余技术可采储量">
               <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusTech"
                         type="number"
-                        @input="minMax('recoveryReservesSurplusTech',editForm.recoveryReservesSurplusTech)">
+                        @input="minMax('recoveryReservesSurplusTech',editForm.recoveryReservesSurplusTech)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -74,7 +76,8 @@
             <el-form-item label="剩余经济可采储量">
               <el-input placeholder="请输入内容" v-model="editForm.recoveryReservesSurplusEcon"
                         type="number"
-                        @input="minMax('recoveryReservesSurplusEcon',editForm.recoveryReservesSurplusEcon)">
+                        @input="minMax('recoveryReservesSurplusEcon',editForm.recoveryReservesSurplusEcon)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -83,7 +86,8 @@
             <el-form-item label="储采比">
               <el-input placeholder="请输入内容" v-model="editForm.reserveProductionRatio"
                         type="number"
-                        @input="minMax('reserveProductionRatio',editForm.reserveProductionRatio)">
+                        @input="minMax('reserveProductionRatio',editForm.reserveProductionRatio)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -94,7 +98,8 @@
             <el-form-item label="气田人数" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.peopleNum"
                         type="number"
-                        @input="minMax('peopleNum',editForm.peopleNum)">
+                        @input="minMax('peopleNum',editForm.peopleNum)"
+              >
               </el-input>
             </el-form-item>
           </el-col>
@@ -102,7 +107,8 @@
             <el-form-item label="远景资源量">
               <el-input placeholder="请输入内容" v-model="editForm.prospectiveResources"
                         type="number"
-                        @input="minMax('prospectiveResources',editForm.prospectiveResources)">
+                        @input="minMax('prospectiveResources',editForm.prospectiveResources)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -113,7 +119,8 @@
             <el-form-item label="预测储量">
               <el-input placeholder="请输入内容" v-model="editForm.predictedReserves"
                         type="number"
-                        @input="minMax('predictedReserves',editForm.predictedReserves)">
+                        @input="minMax('predictedReserves',editForm.predictedReserves)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -122,7 +129,8 @@
             <el-form-item label="控制储量">
               <el-input placeholder="请输入内容" v-model="editForm.controlReserve"
                         type="number"
-                        @input="minMax('controlReserve',editForm.controlReserve)">
+                        @input="minMax('controlReserve',editForm.controlReserve)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -133,7 +141,8 @@
             <el-form-item label="气田面积">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
                         type="number"
-                        @input="minMax('oilGasSize',editForm.oilGasSize)">
+                        @input="minMax('oilGasSize',editForm.oilGasSize)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -154,7 +163,6 @@
 
 <script>
 import { dic, guotuSave, guotuGasUpdate } from '@/api/fill'
-
 
 export default {
   name: 'editFormAdd',
@@ -267,7 +275,8 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          this.editForm.oilGasName =
+            Array.isArray(this.editForm.oilGasName)?this.editForm.oilGasName[this.editForm.oilGasName.length - 1]:this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 2
           guotuSave(param).then((res) => {
@@ -295,7 +304,8 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.editForm.oilGasName = this.editForm.oilGasName[this.editForm.oilGasName.length - 1]
+          this.editForm.oilGasName =
+            Array.isArray(this.editForm.oilGasName)?this.editForm.oilGasName[this.editForm.oilGasName.length - 1]:this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 2
           guotuSave(param).then((res) => {

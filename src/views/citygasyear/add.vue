@@ -37,7 +37,7 @@
               <el-date-picker
                 v-model="editForm.recordDate"
                 type="year"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy"
                 placeholder="请选择日期"
               >
               </el-date-picker>

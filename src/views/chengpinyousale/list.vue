@@ -27,7 +27,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   value-format="yyyy-MM-dd"
-                  :clearable="false"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -44,7 +43,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-         销售按月填报
+          销售按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -123,8 +122,8 @@ export default {
         { label: '成品油区外消费量', param: 'productedOilOutAreaSales', minWidth: '180' },
         { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 180 }
       ],
-      selectedRows:[],
-      enterNameAry:[]
+      selectedRows: [],
+      enterNameAry: []
     }
   },
   created() {
@@ -137,7 +136,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const enterName = res.data.chengpinyou
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -153,8 +152,8 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.beginTime,
-        endTime: this.fromSearch.endTime,
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
       chengpinyousalelList(params).then((res) => {
@@ -222,7 +221,8 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功'
+                message: '删除成功',
+                offset: 100
               })
               const totalPage = Math.ceil((this.total - 1) / this.pageSize)
               const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
@@ -231,15 +231,17 @@ export default {
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败'
+                message: '删除失败',
+                offset: 100
               })
             }
           })
         }).catch(() => {
           this.$notify({
-            type: 'info',
-            message: '已取消删除'
-          })
+                type: 'info',
+                message: '已取消删除',
+                offset: 100
+              })
         })
 
       } else {

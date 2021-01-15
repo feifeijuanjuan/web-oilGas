@@ -129,7 +129,7 @@ export const orgCascader = ((data) => {
     orgOptions.push({
       value: item.id,
       label: item.name,
-      children: orgCascader(item.children)
+      children: item.children.length > 0 ? orgCascader(item.children) : ''
     })
   })
   return orgOptions

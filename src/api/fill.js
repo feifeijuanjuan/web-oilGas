@@ -1,4 +1,4 @@
-import { get, post,postParams } from '@/utils/request'
+import { get, post, postParams } from '@/utils/request'
 
 // 油气田企业按日填报
 // 查询
@@ -260,6 +260,8 @@ export const orgList = () => get('/sys/org/list')
 export const orgUpdate = params => post('/sys/org/update', params)
 // 通过id查询组织机构单回显
 export const orgShow = params => get(`/sys/org/select/${params}`)
+// 通过id查询该机构下的用户
+export const selectUser = params => get(`/sys/org/selectUser/${params}`)
 
 // 角色管理
 
@@ -303,7 +305,7 @@ export const secLogList = (params) => post('/syslog/secLogList', params)
 // 成品油销售企业库存填报导入接口
 
 export const chengpinDownLoad = () => get('/chengpinyoudepot/excel/template')
-export const chengpinUpload = (params) => postParams('/chengpinyoudepot/test',params)
+export const chengpinUpload = (params) => postParams('/chengpinyoudepot/test', params)
 
 //年度产量信息填报
 // 查询
@@ -314,3 +316,4 @@ export const yieldyearSave = params => post('/yieldyear/save', params)
 export const yieldyearUpdate = params => get(`/yieldyear/select/${params}`)
 // 删除
 export const yieldyearSwitchs = params => post(`/yieldyear/switchs`, params)
+

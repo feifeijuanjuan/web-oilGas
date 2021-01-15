@@ -25,23 +25,60 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list()">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
-      <table-cmp
-        :loading="loading"
-        :table-data="tableData"
-        :table-label="tableLabel"
-        :total="total"
-        :checkbox="checkbox"
-        :pageSize="pageSize"
-        :currentPage="currentPage"
-        @handleSelectionChange="handleSelectionChange"
-        @handleCurrentChange="handleCurrentChange"
-        @handleSizeChange="handleSizeChange"
+      <el-table
+        ref="multipleTable"
+        :data="tableData"
+        v-loading="loading"
+        size="medium"
+        element-loading-text="Loading"
+        :stripe="true"
+        fit
+        highlight-current-row
+        tooltip-effect="dark"
+        style="width:100%"
+        @selection-change="handleSelectionChange"
       >
-      </table-cmp>
+        <el-table-column
+          type="selection"
+          width="55"
+        >
+        </el-table-column>
+        <el-table-column
+          label="用户名称"
+          prop="name"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="nickName"
+          label="登录用户名"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="no"
+          label="工号"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="email"
+          label="邮箱"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="mobile"
+          label="电话"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="orgName"
+          label="组织机构"
+        >
+        </el-table-column>
+      </el-table>
+
     </div>
     <div class="form-footer-btn">
       <el-button class="close-btn" @click="close">取 消</el-button>
@@ -54,21 +91,13 @@
 </template>
 
 <script>
-import { usersRole, userList, setUsersRole, orgList, dic } from '@/api/fill'
-import TableCmp from '@/components/TableCmp'
+import { usersRole, userList, selectUser, orgList, dic, setUsersRole } from '@/api/fill'
 import { orgCascader } from '@/utils/addMenu'
 
 export default {
   name: 'userAsign',
-  components: { TableCmp },
   data() {
     return {
-      /* checkList: [],
-       List: [] //用户列表数组*/
-      total: 0,
-      checkbox: true,
-      currentPage: 1,
-      pageSize: 10,
       fromSearch: {
         orgName: null,
         time: '',
@@ -77,29 +106,26 @@ export default {
       },
       loading: false,
       tableData: [],
-      tableLabel: [
-        { label: '用户名称', param: 'name' },
-        { label: '登录用户名', param: 'nickName' },
-        { label: '工号', param: 'no' },
-        { label: '邮箱', param: 'email' },
-        { label: '电话', param: 'mobile' },
-        { label: '组织机构', param: 'orgName' }
-      ],
       selectedRows: [],
       orgOptions: []
     }
   },
   created() {
     this.orgList()
-    this.usersRole()
   },
   methods: {
+    //组织机构级联下拉
     orgList() {
       orgList().then((res) => {
         if (res.code === 0) {
           const data = res.body
           this.orgOptions = orgCascader(data)
-          console.log(this.orgOptions)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
         }
       })
     },
@@ -110,28 +136,22 @@ export default {
         this.fromSearch.orgName = ''
       }
     },
-    handleCurrentChange(val) {
-      this.currentPage = val
-      this.list(val, this.pageSize)
-    },
-    handleSizeChange(val) {
-      this.pageSize = val
-      this.currentPage = 1
-      this.list(this.currentPage, val)
-    },
+    //复选框选中
     handleSelectionChange(val) {
       const arr = []
-      val.map((item) => {
-        arr.push(item.id)
-      })
+      if (val[0]) {
+        val.map((item) => {
+          arr.push(item.id)
+        })
+      }
       this.selectedRows = arr
     },
-    // 查询所有用户列表
+    // 根据组织机构查询用户列表
     list() {
-      this.loading = true
-      userList().then((res) => {
+      selectUser(this.fromSearch.orgName).then((res) => {
         if (res.code === 0) {
-          this.List = res.body
+          this.tableData = res.body
+          this.usersRole()
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -147,6 +167,13 @@ export default {
       usersRole({ id: this.$route.query.id }).then((res) => {
         if (res.code === 0) {
           this.checkList = res.body
+          this.checkList.forEach((item, idx) => {
+            this.tableData.forEach((i, index) => {
+              if (item == i.id) {
+                this.$refs.multipleTable.toggleRowSelection(this.tableData[index])
+              }
+            })
+          })
         } else {
           this.$notify({
             message: '加载失败',
@@ -163,9 +190,10 @@ export default {
     },
     //分 配用户
     assign() {
+      console.log(this.selectedRows)
       const params = {
         roleId: this.$route.query.id,
-        userIds: this.checkList
+        userIds: this.selectedRows
       }
       params.userIds = params.userIds.toString()
       setUsersRole(params).then((res) => {
@@ -190,5 +218,8 @@ export default {
 </script>
 
 <style scoped>
-
+.footer-pagination {
+  margin-top: 10px;
+  text-align: center;
+}
 </style>

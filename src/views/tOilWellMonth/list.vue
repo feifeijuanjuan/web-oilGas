@@ -58,8 +58,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { oilwellList, oilwellSwitchs } from '@/api/fill'
-
+import { tOilWellMonthList, tOilWellMonthSwitchs } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -78,11 +77,11 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '油井名称', param: 'oilWellName' },
-        // { label: '时间', param: 'recordDate' },
-        { label: '油井地图坐标信息', param: 'oilWellCoordinate' },
-        { label: '油井所属生产基地', param: 'baseName' },
-        // { label: '油井月产量(万吨)', param: 'oilWellYield' },
-        // { label: '产量属性', param: 'yieldAttribute' }
+        { label: '时间', param: 'recordDate' },
+        // { label: '油井地图坐标信息', param: 'oilWellCoordinate' },
+        // { label: '油井所属生产基地', param: 'baseName' },
+        { label: '油井月产量(万吨)', param: 'oilWellYield' },
+        { label: '产量属性', param: 'yieldAttribute' }
       ],
       selectedRows: []
     }
@@ -98,9 +97,9 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        oilWellName: this.fromSearch.oilWellName,
+        oilWellName: this.fromSearch.oilWellName
       }
-      oilwellList(params).then((res) => {
+      tOilWellMonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -128,7 +127,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/oilWellAdd', query: params })
+      this.$router.push({ path: '/tOilWellMonthAdd', query: params })
 
     },
     // 编辑
@@ -139,7 +138,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/oilWellAdd', query: params })
+        this.$router.push({ path: '/tOilWellMonthAdd', query: params })
 
       } else {
         this.$notify({
@@ -160,7 +159,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilwellSwitchs(params).then((res) => {
+          tOilWellMonthSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
@@ -181,10 +180,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

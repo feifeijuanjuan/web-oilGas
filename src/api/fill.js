@@ -317,3 +317,22 @@ export const yieldyearUpdate = params => get(`/yieldyear/select/${params}`)
 // 删除
 export const yieldyearSwitchs = params => post(`/yieldyear/switchs`, params)
 
+// 气井月度产量信息填报
+// 查询
+export const tGasWellMonthList = params => post('/tGasWellMonth/list', params)
+// 保存
+export const tGasWellMonthSave = params => post('/tGasWellMonth/save', params)
+// 更新
+export const tGasWellMonthUpdate = params => get(`/tGasWellMonth/select/${params}`)
+// 删除
+export const tGasWellMonthSwitchs = params => post(`/tGasWellMonth/switchs`, params)
+
+// 油井月度产量信息填报
+// 查询
+export const tOilWellMonthList = params => post('/tOilWellMonth/list', params)
+// 保存
+export const tOilWellMonthSave = params => post('/tOilWellMonth/save', params)
+// 更新
+export const tOilWellMonthUpdate = params => get(`/tOilWellMonth/select/${params}`)
+// 删除
+export const tOilWellMonthSwitchs = params => post(`/tOilWellMonth/switchs`, params)

@@ -58,11 +58,6 @@
         >
         </el-table-column>
         <el-table-column
-          prop="no"
-          label="工号"
-        >
-        </el-table-column>
-        <el-table-column
           prop="email"
           label="邮箱"
         >

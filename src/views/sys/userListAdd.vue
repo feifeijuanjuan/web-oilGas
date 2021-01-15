@@ -11,7 +11,7 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="组织机构">
+            <el-form-item label="组织机构" prop="orgId">
               <el-select v-model="editForm.orgId" placeholder="请选择组织机构" ref="selectReport">
                 <el-option
                   :label="editForm.orgName"
@@ -39,7 +39,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="登录用户名">
+            <el-form-item label="登录用户名" prop="nickName">
               <el-input v-model="editForm.nickName"></el-input>
             </el-form-item>
           </el-col>
@@ -99,7 +99,7 @@ export default {
         email: '',
         mobile: '',
         orgId: '',
-        status: '',
+        status: 1,
         orgName: ''
       },
       statuAry: [
@@ -115,6 +115,15 @@ export default {
       rules: {
         email: [
           { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ],
+        orgId: [
+          { required: true, message: '选择组织机构', trigger: ['blur', 'change'] }
+        ],
+        name: [
+          { required: true, message: '请输入用户名称', trigger: ['blur', 'change'] }
+        ],
+        nickName: [
+          { required: true, message: '请输入登录用户名', trigger: ['blur', 'change'] }
         ]
       },
       treeData: [],

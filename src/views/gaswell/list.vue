@@ -77,11 +77,11 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '气井名称', param: 'gasWellName' },
-        { label: '时间', param: 'recordDate' },
+        // { label: '时间', param: 'recordDate' },
         { label: '气井地图坐标信息', param: 'gasWellCoordinate'},
         { label: '气井所属生产基地', param: 'baseName'},
-        { label: '气井月产量(万立方米)', param: 'gasWellYield' },
-        { label: '产量属性', param: 'yieldAttribute' }
+        // { label: '气井月产量(万立方米)', param: 'gasWellYield' },
+        // { label: '产量属性', param: 'yieldAttribute' }
       ],
       selectedRows: []
     }

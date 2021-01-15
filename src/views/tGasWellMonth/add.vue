@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="form-add"><span class="first">油气田企业填报</span>
       <span class="first-line">></span>
-      <span class="first">生产基地信息填报</span
+      <span class="first">气井月度产量信息填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -13,12 +13,12 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="基地(单位-部门)" prop="baseName">
-              <el-input v-model="editForm.baseName"></el-input>
+            <el-form-item label="气井名称" prop="gasWellName" class="no-unit">
+              <el-input v-model="editForm.gasWellName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" prop="recordDate">
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
@@ -29,55 +29,41 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <!--        <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="气井地图坐标信息" class="no-unit">
+                      <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="气井所属生产基地" class="no-unit">
+                      <el-input v-model="editForm.baseName" placeholder="请输入内容">
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="所属企业">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
+            <el-form-item label="气井月产量">
+              <el-input v-model="editForm.gasWellYield" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('gasWellYield',editForm.gasWellYield)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="产量属性" class="no-unit">
+              <el-select v-model="editForm.yieldAttribute" placeholder="请选择产量属性" clearable>
                 <el-option
-                  v-for="item in enterNameAry"
+                  v-for="item in yieldAttributeAry"
                   :key="item.dictItemId"
                   :label="item.dictItemName"
                   :value="item.dictItemName"
                 >
                 </el-option>
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="企业法人">
-              <el-input v-model="editForm.enterJuridical" placeholder="请输入内容"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-
-          <el-col :span="12">
-            <el-form-item label="基地员工数量">
-              <el-input v-model="editForm.employeesNum" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('employeesNum',editForm.employeesNum)"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="当月产量">
-              <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('yieldMonth',editForm.yieldMonth)"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="年度累计产量">
-              <el-input v-model="editForm.yieldYear" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('yieldYear',editForm.yieldYear)"
-              >
-              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -97,25 +83,24 @@
 </template>
 
 <script>
-import { dic, baseUpdate, baseSave } from '@/api/fill'
+import { dic, tGasWellMonthSave, tGasWellMonthUpdate } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
   data() {
     return {
+      yieldAttributeAry: [],
       editForm: {
-        baseName: '',
+        gasWellName: '',
         recordDate: '',
-        groupType: '',
-        enterJuridical: '',
-        employeesNum: '',
-        yieldMonth: '',
-        yieldYear: ''
+        // gasWellCoordinate: '',
+        // baseName: '',
+        yieldAttribute: '',
+        gasWellYield: ''
       },
-      enterNameAry: [],
       rules: {
-        baseName: [
-          { required: true, message: '请输入基地(单位-部门)', trigger: 'blur' }
+        gasWellName: [
+          { required: true, message: '请输入气井名称', trigger: 'blur' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -135,6 +120,9 @@ export default {
         this.update()
       }
     })
+    if (this.statu !== 'create') {
+      this.update()
+    }
   },
   methods: {
     minMax(name, value) {
@@ -147,8 +135,8 @@ export default {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.groupType
-          this.enterNameAry = enterName
+          const yieldAtr = res.data.yieldAttribute
+          this.yieldAttributeAry = yieldAtr
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -161,7 +149,7 @@ export default {
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {
-        baseUpdate(this.$route.query.id).then((res) => {
+        tGasWellMonthUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
           } else {
@@ -175,20 +163,20 @@ export default {
       })
     },
     close() {
-      this.$router.push('/base/list')
+      this.$router.push('/tGasWellMonth/list')
     },
     // 新增保存
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          baseSave(this.editForm).then((res) => {
+          tGasWellMonthSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/base/list')
+              this.$router.push('/tGasWellMonth/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -206,14 +194,14 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          baseSave(this.editForm).then((res) => {
+          tGasWellMonthSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/base/list')
+              this.$router.push('/tGasWellMonth/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

@@ -17,7 +17,7 @@
               <el-input v-model="editForm.gasWellName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="日期" class="no-unit">
               <el-date-picker
                 v-model="editForm.recordDate"
@@ -27,14 +27,15 @@
               >
               </el-date-picker>
             </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="气井地图坐标信息" class="no-unit">
               <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="气井所属生产基地" class="no-unit">
               <el-input v-model="editForm.baseName" placeholder="请输入内容">
@@ -42,7 +43,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+<!--        <el-row>
           <el-col :span="12">
             <el-form-item label="气井月产量">
               <el-input v-model="editForm.gasWellYield" placeholder="请输入内容"
@@ -65,7 +66,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
       </el-form>
     </div>
     <div class="form-footer-btn">

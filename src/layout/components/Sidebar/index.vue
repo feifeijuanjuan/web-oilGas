@@ -118,6 +118,10 @@ export default {
         return '/sys/userList'
       } else if (path === '/yieldyearAdd') {
         return '/yieldyear/list'
+      } else if (path === '/tGasWellMonthAdd') {
+        return '/tGasWellMonth/list'
+      } else if (path === '/tOilWellMonthAdd') {
+        return '/tOilWellMonth/list'
       } else {
         return path
       }

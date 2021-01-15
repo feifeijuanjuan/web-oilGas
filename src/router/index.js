@@ -448,6 +448,30 @@ export const constantRoutes = [
         component: () => import('@/views/yieldyear/add')
       }
     ]
+  },
+  //气井月度产量信息添加
+  {
+    path: '/tGasWellMonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/tGasWellMonthAdd',
+        component: () => import('@/views/tGasWellMonth/add')
+      }
+    ]
+  },
+  //油井月度产量信息添加
+  {
+    path: '/tOilWellMonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/tOilWellMonthAdd',
+        component: () => import('@/views/tOilWellMonth/add')
+      }
+    ]
   }
   // 管道
 

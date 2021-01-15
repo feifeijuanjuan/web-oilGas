@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="form-add"><span class="first">油气田企业填报</span>
       <span class="first-line">></span>
-      <span class="first">生产基地信息填报</span
+      <span class="first">油井月度产量信息填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -13,12 +13,12 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="基地(单位-部门)" prop="baseName">
-              <el-input v-model="editForm.baseName"></el-input>
+            <el-form-item label="油井名称" prop="oilWellName" class="no-unit">
+              <el-input v-model="editForm.oilWellName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" prop="recordDate">
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
@@ -29,55 +29,40 @@
             </el-form-item>
           </el-col>
         </el-row>
+<!--        <el-row>
+          <el-col :span="12">
+            <el-form-item label="油井地图坐标信息" class="no-unit">
+              <el-input v-model="editForm.oilWellCoordinate" placeholder="请输入内容"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="油井所属生产基地" class="no-unit">
+              <el-input v-model="editForm.baseName" placeholder="请输入内容">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="所属企业">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
+            <el-form-item label="油井月产量">
+              <el-input v-model="editForm.oilWellYield" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('oilWellYield',editForm.oilWellYield)">
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="产量属性" class="no-unit">
+              <el-select v-model="editForm.yieldAttribute" placeholder="请选择产量属性" clearable>
                 <el-option
-                  v-for="item in enterNameAry"
+                  v-for="item in yieldAttributeAry"
                   :key="item.dictItemId"
                   :label="item.dictItemName"
                   :value="item.dictItemName"
                 >
                 </el-option>
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="企业法人">
-              <el-input v-model="editForm.enterJuridical" placeholder="请输入内容"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-
-          <el-col :span="12">
-            <el-form-item label="基地员工数量">
-              <el-input v-model="editForm.employeesNum" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('employeesNum',editForm.employeesNum)"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="当月产量">
-              <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('yieldMonth',editForm.yieldMonth)"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="年度累计产量">
-              <el-input v-model="editForm.yieldYear" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('yieldYear',editForm.yieldYear)"
-              >
-              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -97,25 +82,25 @@
 </template>
 
 <script>
-import { dic, baseUpdate, baseSave } from '@/api/fill'
+import { dic, tOilWellMonthSave, tOilWellMonthUpdate } from '@/api/fill'
+
 
 export default {
   name: 'EditFormAdd',
   data() {
     return {
       editForm: {
-        baseName: '',
+        oilWellName: '',
         recordDate: '',
-        groupType: '',
-        enterJuridical: '',
-        employeesNum: '',
-        yieldMonth: '',
-        yieldYear: ''
+        // oilWellCoordinate: '',
+        // baseName: '',
+        oilWellYield: '',
+        yieldAttribute: ''
       },
-      enterNameAry: [],
+      yieldAttributeAry: [],
       rules: {
-        baseName: [
-          { required: true, message: '请输入基地(单位-部门)', trigger: 'blur' }
+        oilWellName: [
+          { required: true, message: '请输入油井名称', trigger: 'blur' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -147,8 +132,8 @@ export default {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.groupType
-          this.enterNameAry = enterName
+          const yieldAtr = res.data.yieldAttribute
+          this.yieldAttributeAry = yieldAtr
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -161,7 +146,7 @@ export default {
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {
-        baseUpdate(this.$route.query.id).then((res) => {
+        tOilWellMonthUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
           } else {
@@ -175,20 +160,20 @@ export default {
       })
     },
     close() {
-      this.$router.push('/base/list')
+      this.$router.push('/tOilWellMonth/list')
     },
     // 新增保存
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          baseSave(this.editForm).then((res) => {
+          tOilWellMonthSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/base/list')
+              this.$router.push('/tOilWellMonth/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -206,14 +191,14 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          baseSave(this.editForm).then((res) => {
+          tOilWellMonthSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/base/list')
+              this.$router.push('/tOilWellMonth/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

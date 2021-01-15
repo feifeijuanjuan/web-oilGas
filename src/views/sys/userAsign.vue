@@ -4,12 +4,43 @@
       <span class="first-line">></span>
       <span class="first">分配用户</span>
     </div>
-    <div class="form-wrapper">
-      <el-form class="form-box clearfix">
-        <el-checkbox-group v-model="checkList">
-          <el-checkbox v-for="item in List" :label="item.id">{{ item.name }}</el-checkbox>
-        </el-checkbox-group>
+
+    <div class="table-wrapper">
+      <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
+        <div class="search-input">
+          <el-row :gutter="20">
+            <el-col :span="10">
+              <el-form-item label="组织机构" label-width="90px">
+                <el-cascader
+                  v-model="fromSearch.oilGasName"
+                  placeholder="请选择组织机构"
+                  :options="orgOptions"
+                  @change="handleChange"
+                  clearable
+                ></el-cascader>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="search-btn">
+          <el-form-item label-width="0">
+            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+          </el-form-item>
+        </div>
       </el-form>
+      <table-cmp
+        :loading="loading"
+        :table-data="tableData"
+        :table-label="tableLabel"
+        :total="total"
+        :checkbox="checkbox"
+        :pageSize="pageSize"
+        :currentPage="currentPage"
+        @handleSelectionChange="handleSelectionChange"
+        @handleCurrentChange="handleCurrentChange"
+        @handleSizeChange="handleSizeChange"
+      >
+      </table-cmp>
     </div>
     <div class="form-footer-btn">
       <el-button class="close-btn" @click="close">取 消</el-button>
@@ -22,23 +53,94 @@
 </template>
 
 <script>
-import { usersRole, userList, setUsersRole } from '@/api/fill'
-
-import Qs from 'qs'
+import { usersRole, userList, setUsersRole, orgList, dic } from '@/api/fill'
+import TableCmp from '@/components/TableCmp'
 
 export default {
   name: 'userAsign',
+  components: { TableCmp },
   data() {
     return {
-      checkList: [],
-      List: [] //用户列表数组
+      /* checkList: [],
+       List: [] //用户列表数组*/
+      total: 0,
+      checkbox: true,
+      currentPage: 1,
+      pageSize: 10,
+      fromSearch: {
+        oilGasName: null,
+        time: '',
+        name: '',
+        name1: ''
+      },
+      loading: false,
+      tableData: [],
+      tableLabel: [
+        { label: '用户名称', param: 'name' },
+        { label: '登录用户名', param: 'nickName' },
+        { label: '工号', param: 'no' },
+        { label: '邮箱', param: 'email' },
+        { label: '电话', param: 'mobile' },
+        { label: '组织机构', param: 'orgName' },
+      ],
+      selectedRows: [],
+      orgOptions: []
     }
   },
   created() {
-    this.list()
+    this.orgList()
     this.usersRole()
   },
   methods: {
+    orgList() {
+      orgList().then((res) => {
+        if (res.success) {
+          const data = res.body
+          this.orgOptions = []
+          data.forEach(item => {
+            const childList = []
+            if (item.childrenProjectType) {
+              item.childrenProjectType.forEach((i, idx) => {
+                childList.push(
+                  {
+                    value: i.typeName,
+                    label: i.typeName
+                  }
+                )
+              })
+            }
+            this.orgOptions.push({
+              value: item.typeName,
+              label: item.typeName,
+              children: childList
+            })
+          })
+        }
+      })
+    },
+    handleChange(val) {
+      if (val.length > 0) {
+        this.fromSearch.oilGasName = val[val.length - 1]
+      } else {
+        this.fromSearch.oilGasName = ''
+      }
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.list(val, this.pageSize)
+    },
+    handleSizeChange(val) {
+      this.pageSize = val
+      this.currentPage = 1
+      this.list(this.currentPage, val)
+    },
+    handleSelectionChange(val) {
+      const arr = []
+      val.map((item) => {
+        arr.push(item.id)
+      })
+      this.selectedRows = arr
+    },
     // 查询所有用户列表
     list() {
       this.loading = true
@@ -55,7 +157,7 @@ export default {
       })
       this.loading = false
     },
-    //查询当前角色下的用户
+    // 查询当前角色下的用户
     usersRole() {
       usersRole({ id: this.$route.query.id }).then((res) => {
         if (res.code === 0) {
@@ -74,7 +176,7 @@ export default {
     close() {
       this.$router.push('/sys/roleList')
     },
-    //分配用户
+    //分 配用户
     assign() {
       const params = {
         roleId: this.$route.query.id,

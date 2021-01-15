@@ -116,6 +116,8 @@ export default {
         return '/sys/roleList'
       } else if (path === '/userListAdd') {
         return '/sys/userList'
+      } else if (path === '/yieldyearAdd') {
+        return '/yieldyear/list'
       } else {
         return path
       }

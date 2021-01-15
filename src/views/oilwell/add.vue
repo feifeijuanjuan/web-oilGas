@@ -173,7 +173,7 @@ export default {
               this.$router.push('/oilwell/list')
             } else {
               this.$notify({
-                message: '保存失败',
+                message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
                 type: 'error',
                 offset: 100
               })
@@ -198,7 +198,7 @@ export default {
               this.$router.push('/oilwell/list')
             } else {
               this.$notify({
-                message: '修改失败',
+                message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
                 type: 'error',
                 offset: 100
               })

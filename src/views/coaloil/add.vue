@@ -363,7 +363,7 @@
               <el-input placeholder="请输入内容" v-model="editForm.rawCoalPrice"
                         type="number"
                         @input="minMax('rawCoalPrice',editForm.rawCoalPrice)">
-                <template slot="append">万吨</template>
+                <template slot="append">元/吨标煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -372,7 +372,7 @@
               <el-input placeholder="请输入内容" v-model="editForm.coalOilPrice"
                         type="number"
                         @input="minMax('coalOilPrice',editForm.coalOilPrice)">
-                <template slot="append">万吨</template>
+                <template slot="append">元/吨标煤</template>
               </el-input>
             </el-form-item>
           </el-col>

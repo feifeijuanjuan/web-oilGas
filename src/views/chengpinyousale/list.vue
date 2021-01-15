@@ -108,19 +108,19 @@ export default {
         { label: '时间', param: 'recordDate', minWidth: '150' },
         { label: '企业名称', param: 'enterName', minWidth: '150' },
         { label: '盟市', param: 'leagueCityName', minWidth: '150' },
-        { label: '89#汽油消费量', param: 'salesGasoline89', minWidth: '180' },
-        { label: '92#汽油消费量', param: 'salesGasoline92', minWidth: '180' },
-        { label: '95#汽油消费量', param: 'salesGasoline95', minWidth: '180' },
-        { label: '0#柴油消费量', param: 'salesDieselOil0', minWidth: '180' },
-        { label: '负35#柴油消费量', param: 'salesDieselOilMinus35', minWidth: '180' },
-        { label: '负10#柴油消费量', param: 'salesDieselOilMinus10', minWidth: '180' },
-        { label: '负20#柴油消费量', param: 'salesDieselOilMinus20', minWidth: '180' },
-        { label: '煤油消费量', param: 'aviationCoalSales', minWidth: '180' },/*
+        { label: '89#汽油消费量(万吨)', param: 'salesGasoline89', minWidth: '180' },
+        { label: '92#汽油消费量(万吨)', param: 'salesGasoline92', minWidth: '180' },
+        { label: '95#汽油消费量(万吨)', param: 'salesGasoline95', minWidth: '180' },
+        { label: '0#柴油消费量(万吨)', param: 'salesDieselOil0', minWidth: '180' },
+        { label: '负35#柴油消费量(万吨)', param: 'salesDieselOilMinus35', minWidth: '180' },
+        { label: '负10#柴油消费量(万吨)', param: 'salesDieselOilMinus10', minWidth: '180' },
+        { label: '负20#柴油消费量(万吨)', param: 'salesDieselOilMinus20', minWidth: '180' },
+        { label: '煤油消费量(万吨)', param: 'aviationCoalSales', minWidth: '180' },/*
         { label: '柴油消费量预测值', param: 'salesPlanDieselOil', minWidth: '180' },
         { label: '汽油消费量预测', param: 'salesPlanGasoline', minWidth: '180' },*/
-        { label: '成品油区内消费量', param: 'productedOilInAreaSales', minWidth: '180' },
-        { label: '成品油区外消费量', param: 'productedOilOutAreaSales', minWidth: '180' },
-        { label: '成品油区外调入量', param: 'productedOilTransferInVolume', minWidth: 180 }
+        { label: '成品油区内消费量(万吨)', param: 'productedOilInAreaSales', minWidth: '180' },
+        { label: '成品油区外消费量(万吨)', param: 'productedOilOutAreaSales', minWidth: '180' },
+        { label: '成品油区外调入量(万吨)', param: 'productedOilTransferInVolume', minWidth: 180 }
       ],
       selectedRows: [],
       enterNameAry: []

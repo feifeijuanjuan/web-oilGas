@@ -12,8 +12,9 @@
             <el-col :span="10">
               <el-form-item label="组织机构" label-width="90px">
                 <el-cascader
-                  v-model="fromSearch.oilGasName"
+                  v-model="fromSearch.orgName"
                   placeholder="请选择组织机构"
+                  :props="{ checkStrictly: true }"
                   :options="orgOptions"
                   @change="handleChange"
                   clearable
@@ -55,6 +56,7 @@
 <script>
 import { usersRole, userList, setUsersRole, orgList, dic } from '@/api/fill'
 import TableCmp from '@/components/TableCmp'
+import { orgCascader } from '@/utils/addMenu'
 
 export default {
   name: 'userAsign',
@@ -68,7 +70,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        oilGasName: null,
+        orgName: null,
         time: '',
         name: '',
         name1: ''
@@ -81,7 +83,7 @@ export default {
         { label: '工号', param: 'no' },
         { label: '邮箱', param: 'email' },
         { label: '电话', param: 'mobile' },
-        { label: '组织机构', param: 'orgName' },
+        { label: '组织机构', param: 'orgName' }
       ],
       selectedRows: [],
       orgOptions: []
@@ -94,35 +96,18 @@ export default {
   methods: {
     orgList() {
       orgList().then((res) => {
-        if (res.success) {
+        if (res.code === 0) {
           const data = res.body
-          this.orgOptions = []
-          data.forEach(item => {
-            const childList = []
-            if (item.childrenProjectType) {
-              item.childrenProjectType.forEach((i, idx) => {
-                childList.push(
-                  {
-                    value: i.typeName,
-                    label: i.typeName
-                  }
-                )
-              })
-            }
-            this.orgOptions.push({
-              value: item.typeName,
-              label: item.typeName,
-              children: childList
-            })
-          })
+          this.orgOptions = orgCascader(data)
+          console.log(this.orgOptions)
         }
       })
     },
     handleChange(val) {
       if (val.length > 0) {
-        this.fromSearch.oilGasName = val[val.length - 1]
+        this.fromSearch.orgName = val[val.length - 1]
       } else {
-        this.fromSearch.oilGasName = ''
+        this.fromSearch.orgName = ''
       }
     },
     handleCurrentChange(val) {

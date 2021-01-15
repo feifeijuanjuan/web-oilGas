@@ -123,18 +123,18 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 120 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
-        { label: '储罐容积', param: 'tankVolume', minWidth: 180 },
-        { label: '计划储气量', param: 'plannedStorageGovernment', minWidth: 210 },
-        { label: '实际储气量', param: 'actualStorageGovernment', minWidth: 210 },
-        { label: '盟市租赁储罐数量', param: 'tankRent', minWidth: 160 },
-        { label: '盟市自建储罐数量', param: 'tankSelf', minWidth: 160 },
-        { label: '天然气历史缺口量', param: 'naGasBreach', minWidth: 160 },
+        { label: '储罐容积(万立方米)', param: 'tankVolume', minWidth: 180 },
+        { label: '计划储气量(万立方米)', param: 'plannedStorageGovernment', minWidth: 210 },
+        { label: '实际储气量(万立方米)', param: 'actualStorageGovernment', minWidth: 210 },
+        { label: '盟市租赁储罐数量(个)', param: 'tankRent', minWidth: 160 },
+        { label: '盟市自建储罐数量(个)', param: 'tankSelf', minWidth: 160 },
+        { label: '天然气历史缺口量(万立方米)', param: 'naGasBreach', minWidth: 160 },
         // { label: '盟市储气日调用量', param: 'naGasInvoke', minWidth: 160 },
-        { label: '盟市气化装置数量', param: 'apparatusNum', minWidth: 160 },
-        { label: '盟市气化装置日均气化量', param: 'apparatusGasContent', minWidth: 180 },
-        { label: '已建储气能力', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
-        { label: '正在建设储气能力', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
-        { label: '待建设储气能力', param: 'gasStorageCapacityToBuild', minWidth: 150 }
+        { label: '盟市气化装置数量(万立方米)', param: 'apparatusNum', minWidth: 160 },
+        { label: '盟市气化装置日均气化量(万立方米)', param: 'apparatusGasContent', minWidth: 180 },
+        { label: '已建储气能力(万立方米)', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
+        { label: '正在建设储气能力(万立方米)', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
+        { label: '待建设储气能力(万立方米)', param: 'gasStorageCapacityToBuild', minWidth: 150 }
       ]
     }
   },

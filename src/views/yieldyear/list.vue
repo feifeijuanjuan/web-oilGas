@@ -97,9 +97,9 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate' },
-        { label: '综合能源年产量', param: 'energyConsumption' },
-        { label: '天然气年产量', param: 'yieldGasYear' },
-        { label: '原油年产量', param: 'yieldOilYear' }
+        { label: '综合能源年产量(吨标煤)', param: 'energyConsumption' },
+        { label: '天然气年产量(吨标煤)', param: 'yieldGasYear' },
+        { label: '原油年产量(吨标煤)', param: 'yieldOilYear' }
 
       ],
       selectedRows: []

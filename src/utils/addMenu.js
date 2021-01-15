@@ -1,6 +1,7 @@
 import Layout from '@/layout'
 import router from '@/router'
 import store from '@/store'
+import { orgList } from '@/api/fill'
 
 export const initMenu = ((menu) => {
   let filterMenu = handleMenu(menu)
@@ -119,4 +120,17 @@ export const orgTree = ((menu) => {
     }
   })
   return menuList
+})
+
+// 组织机构管理级联下拉
+export const orgCascader = ((data) => {
+  const orgOptions = []
+  data.forEach(item => {
+    orgOptions.push({
+      value: item.id,
+      label: item.name,
+      children: orgCascader(item.children)
+    })
+  })
+  return orgOptions
 })

@@ -93,12 +93,12 @@ export default {
         { label: '企业名称', param: 'enterName' },
         { label: '盟市', param: 'leagueCityName' },
         { label: '企业结构', param: 'groupType' },
-        { label: '油库汽油总库存', param: 'gasolineInventoryOilDepot' },
-        { label: '油库柴油总库存', param: 'dieselInventoryOilDepot' },
-        { label: '油库煤油总库存', param: 'aviationCoalInventoryOilDepot' },
-        { label: '油库原油总库存', param: 'crudeInventoryOilDepot' }
+        { label: '油库汽油总库存(万吨)', param: 'gasolineInventoryOilDepot' },
+        { label: '油库柴油总库存(万吨)', param: 'dieselInventoryOilDepot' },
+        { label: '油库煤油总库存(万吨)', param: 'aviationCoalInventoryOilDepot' },
+        { label: '油库原油总库存(万吨)', param: 'crudeInventoryOilDepot' }
       ],
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {
@@ -111,7 +111,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const enterName = res.data.chengpinyou
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -210,10 +210,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

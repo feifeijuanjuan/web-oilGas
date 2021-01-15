@@ -114,12 +114,12 @@ export default {
          { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
         { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
-        { label: '月产量', param: 'yieldOilGas', minWidth: '150' },
-        { label: '计划月产量', param: 'oilGasPlanMonthYield', minWidth: '150' },
-        { label: '月供应量', param: 'supplyOilGas', minWidth: '150' },
-        { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
-        { label: '区内供应量', param: 'supplyInOilGas', minWidth: '150' },
-        { label: '区外供应量', param: 'supplyOutOilGas', minWidth: '150' },
+        { label: '月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
+        { label: '计划月产量(万吨)', param: 'oilGasPlanMonthYield', minWidth: '150' },
+        { label: '月供应量(万吨)', param: 'supplyOilGas', minWidth: '150' },
+        { label: '计划月供应量(万吨)', param: 'oilGasPlanMonthSupply', minWidth: '150' },
+        { label: '区内供应量(万吨)', param: 'supplyInOilGas', minWidth: '150' },
+        { label: '区外供应量(万吨)', param: 'supplyOutOilGas', minWidth: '150' },
       /*  { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
         { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }*/
       ],

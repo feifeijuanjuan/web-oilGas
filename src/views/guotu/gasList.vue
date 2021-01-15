@@ -117,15 +117,15 @@ export default {
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '150' },*/
         // { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
-        { label: '累计探明地质储量', param: 'reservesCumulativeKnow', minWidth: '180' },
-        { label: '剩余技术可采储量', param: 'recoveryReservesSurplusTech', minWidth: '180' },
-        { label: '剩余经济可采储量', param: 'recoveryReservesSurplusEcon', minWidth: '180' },
-        { label: '储采比', param: 'reserveProductionRatio', minWidth: '150' },
+        { label: '累计探明地质储量(万立方米)', param: 'reservesCumulativeKnow', minWidth: '200' },
+        { label: '剩余技术可采储量(万立方米)', param: 'recoveryReservesSurplusTech', minWidth: '200' },
+        { label: '剩余经济可采储量(万立方米)', param: 'recoveryReservesSurplusEcon', minWidth: '200' },
+        { label: '储采比(万立方米)', param: 'reserveProductionRatio', minWidth: '200' },
         { label: '气田人数', param: 'peopleNum', minWidth: '150' },
-        { label: '远景资源量', param: 'prospectiveResources', minWidth: '150' },
-        { label: '预测储量', param: 'predictedReserves', minWidth: '150' },
-        { label: '控制储量', param: 'controlReserve', minWidth: '150' },
-        { label: '气田面积', param: 'oilGasSize', minWidth: '150' }
+        { label: '远景资源量(万立方米)', param: 'prospectiveResources', minWidth: '200' },
+        { label: '预测储量(万立方米)', param: 'predictedReserves', minWidth: '200' },
+        { label: '控制储量(万立方米)', param: 'controlReserve', minWidth: '200' },
+        { label: '气田面积(万立方米)', param: 'oilGasSize', minWidth: '200' }
       ],
       selectedRows: [],
       gasTypesAry: [],

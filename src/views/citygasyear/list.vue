@@ -123,7 +123,7 @@ export default {
         // { label: '正在建设储气能力', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
         // { label: '待建设储气能力', param: 'gasStorageCapacityToBuild', minWidth: 150 },
         // { label: '城燃企业5%实际储气量', param: 'actualStorageEnterprise', minWidth: 150 },
-        { label: '城燃企业5%计划储气量', param: 'plannedStorageEnterprise', minWidth: 150 }
+        { label: '城燃企业5%计划储气量(万立方米)', param: 'plannedStorageEnterprise', minWidth: 150 }
       ],
       selectedRows: [],
       enterNameAry:[]

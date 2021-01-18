@@ -49,11 +49,11 @@
         </el-table-column>
         <el-table-column
           label="用户名称"
-          prop="name"
+          prop="nickName"
         >
         </el-table-column>
         <el-table-column
-          prop="nickName"
+          prop="name"
           label="登录用户名"
         >
         </el-table-column>

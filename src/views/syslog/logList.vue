@@ -6,7 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="用户名" label-width="70px">
-                <el-input v-model="fromSearch.employeeName"></el-input>
+                <el-input v-model="fromSearch.param"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="9">
@@ -63,7 +63,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        employeeName: '',
+        param: '',
         time: ''
       },
       loading: false,
@@ -90,8 +90,8 @@ export default {
         pageNumber: this.currentPage,
         pageSize: this.pageSize,
         isPage: true,
-        employeeName: this.fromSearch.employeeName,
-        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        param: this.fromSearch.param,
+        startTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null
       }
       logList(params).then((res) => {

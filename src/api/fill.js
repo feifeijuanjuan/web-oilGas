@@ -82,8 +82,10 @@ export const chengpinyousaleSwitchs = params => post(`/chengpinyousale/switchs`,
 // 成品油销售企业库存填报
 // 查询
 export const chengpinyoudepotlList = params => post('/chengpinyoudepot/list', params)
-// 保存
+// 新增保存
 export const chengpinyoudepotSave = params => post('/chengpinyoudepot/save', params)
+// 更新保存
+export const chengpinyoudepotUpdateSave = params => post('/chengpinyoudepot/update', params)
 // 更新
 export const chengpinyoudepotUpdate = params => get(`/chengpinyoudepot/select/${params}`)
 // 删除

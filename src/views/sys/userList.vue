@@ -77,8 +77,8 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '用户名称', param: 'name' },
-        { label: '登录用户名', param: 'nickName' },
+        { label: '用户名称', param: 'nickName' },
+        { label: '登录用户名', param: 'name' },
         // { label: '工号', param: 'no' },
         { label: '邮箱', param: 'email' },
         { label: '电话', param: 'mobile' },

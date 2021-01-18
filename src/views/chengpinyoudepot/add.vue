@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import { chengpinyoudepotSave, chengpinyoudepotUpdate, dic } from '@/api/fill'
+import { chengpinyoudepotSave, chengpinyoudepotUpdate, dic,chengpinyoudepotUpdateSave } from '@/api/fill'
 
 
 export default {
@@ -227,7 +227,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          chengpinyoudepotSave(this.editForm).then((res) => {
+          chengpinyoudepotUpdateSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',

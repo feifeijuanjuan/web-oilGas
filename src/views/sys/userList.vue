@@ -80,7 +80,7 @@ export default {
       tableLabel: [
         { label: '用户名称', param: 'name' },
         { label: '登录用户名', param: 'nickName' },
-        { label: '工号', param: 'no' },
+        // { label: '工号', param: 'no' },
         { label: '邮箱', param: 'email' },
         { label: '电话', param: 'mobile' },
         { label: '组织机构', param: 'orgName' },

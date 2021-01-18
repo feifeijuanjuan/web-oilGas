@@ -36,12 +36,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="是否显示">
               <el-radio v-model="editForm.isShow" :label=true>是</el-radio>
               <el-radio v-model="editForm.isShow" :label=false>否</el-radio>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="排序" prop="sort">
               <el-input-number v-model="editForm.sort" :min="0" :max="100"
@@ -75,7 +75,7 @@ export default {
       editForm: {
         parentId: '',
         label: '',
-        isShow: true,
+        // isShow: true,
         sort: '',
         name: '',
         id: ''

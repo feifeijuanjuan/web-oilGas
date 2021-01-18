@@ -44,24 +44,17 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工号">
-              <el-input v-model="editForm.no"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="editForm.email"></el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="电话">
               <el-input v-model="editForm.mobile"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="状态">
               <el-select v-model="editForm.status">

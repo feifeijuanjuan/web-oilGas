@@ -30,21 +30,21 @@
                 </el-select>
               </el-form-item>
             </el-col>
-<!--            <el-col :span="8">
-              <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  :clearable="false"
-                >
-                </el-date-picker>
-              </el-form-item>
-            </el-col>-->
+            <!--            <el-col :span="8">
+                          <el-form-item label="起止日期">
+                            <el-date-picker
+                              v-model="fromSearch.time"
+                              type="daterange"
+                              unlink-panels
+                              range-separator="至"
+                              start-placeholder="开始日期"
+                              end-placeholder="结束日期"
+                              value-format="yyyy-MM-dd"
+                              :clearable="false"
+                            >
+                            </el-date-picker>
+                          </el-form-item>
+                        </el-col>-->
           </el-row>
 
         </div>
@@ -133,10 +133,10 @@ export default {
         { label: '实际日调峰量(万立方米)', param: 'peakLoadRegulation', minWidth: 200 },
         { label: '响应等级', param: 'responseLevel', minWidth: 210 },
         // { label: '调峰对象', param: 'peakObject', minWidth: 210 },
-        { label: '具体措施', param: 'specificMeasure', minWidth: 160 }
+        { label: '具体措施', param: 'specificMeasure', minWidth: 280, showOverflowTooltip: true }
       ],
       leagueCityTypeAry: [],//盟市名称
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {
@@ -151,7 +151,7 @@ export default {
           const data = res.data.leagueCityType
           const enterName = res.data.groupType
           this.leagueCityTypeAry = data
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -167,10 +167,10 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-       /* beginTime: this.fromSearch.time[0],
-        endTime: this.fromSearch.time[1],*/
+        /* beginTime: this.fromSearch.time[0],
+         endTime: this.fromSearch.time[1],*/
         leagueCityName: this.fromSearch.leagueCityName,
-        enterName:this.fromSearch.enterName
+        enterName: this.fromSearch.enterName
       }
       emergencyList(params).then((res) => {
         if (res.code === 0) {
@@ -254,10 +254,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

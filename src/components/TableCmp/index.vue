@@ -33,6 +33,7 @@
         :label="item.label"
         :prop="item.param"
         :sortable="item.sortable ? 'custom' : false"
+        :show-overflow-tooltip="item.showOverflowTooltip"
       >
         <template slot-scope="scope">
           <span
@@ -53,6 +54,7 @@
             :label="list.label"
             :prop="list.param"
             :sortable="list.sortable ? 'custom' : false"
+            :show-overflow-tooltip="item.showOverflowTooltip"
           >
             <template slot-scope="scope">
               <span

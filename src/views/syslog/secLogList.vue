@@ -5,8 +5,22 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="日志名称" label-width="70px">
-                <el-input v-model="fromSearch.param"></el-input>
+              <el-form-item label="用户名" label-width="70px">
+                <el-input v-model="fromSearch.employeeName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  type="daterange"
+                  unlink-panels
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                >
+                </el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
@@ -50,16 +64,17 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        param: ''
+        employeeName: '',
+        time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
+        { label: '登录用户名', param: 'employeeName' },
         { label: 'ip地址', param: 'ip' },
-        { label: '功能名称', param: 'method' },
+        // { label: '功能名称', param: 'method' },
         { label: '操作类型', param: 'operType' },
-        { label: '参数', param: 'args' },
-        { label: '登录id', param: 'employeeName' },
+        // { label: '参数', param: 'args' },
         { label: '操作时间', param: 'visitTime' }
       ]
     }

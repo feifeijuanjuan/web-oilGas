@@ -32,7 +32,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item prop="name" label="用户名称">
-              <el-input v-model="editForm.name"></el-input>
+              <el-input v-model="editForm.name"
+                        @input="chinese"
+                        placeholder="请输入中文"
+              ></el-input>
             </el-form-item>
 
           </el-col>
@@ -40,7 +43,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="登录用户名" prop="nickName">
-              <el-input v-model="editForm.nickName"></el-input>
+              <el-input v-model="editForm.nickName" placeholder="请输入汉语拼音" @input="pinYin"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -51,7 +54,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="电话">
+            <el-form-item label="电话" prop="mobile">
               <el-input v-model="editForm.mobile"></el-input>
             </el-form-item>
           </el-col>
@@ -84,6 +87,18 @@ import { orgTree } from '@/utils/addMenu'
 export default {
   name: 'editFormAdd',
   data() {
+    var contactPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      } else {
+        const reg = /^1[3|4|5|7|8][0-9]\d{8}$/
+        if (reg.test(value)) {
+          callback()
+        } else {
+          return callback(new Error('请输入正确的手机号'))
+        }
+      }
+    }
     return {
       editForm: {
         name: '',
@@ -117,7 +132,8 @@ export default {
         ],
         nickName: [
           { required: true, message: '请输入登录用户名', trigger: ['blur', 'change'] }
-        ]
+        ],
+        mobile: [{ validator: contactPhone, trigger: 'blur' }]
       },
       treeData: [],
       defaultProps: {
@@ -138,6 +154,13 @@ export default {
     }
   },
   methods: {
+    chinese() {
+      this.editForm.name = this.editForm.name.replace(/[^\u4E00-\u9FA5]/g, '')
+    },
+    pinYin() {
+      console.log(this.editForm.nickName)
+      this.editForm.nickName = this.editForm.nickName.replace(/[^[A-Za-z]/g, '')
+    },
     getMenu() {
       orgList().then((res) => {
         if (res.code === 0) {

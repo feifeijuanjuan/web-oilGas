@@ -5,7 +5,7 @@
         <div class="submenu-title">
           菜单管理
         </div>
-        <div>
+        <div v-if="$store.getters.name=='root'">
 
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd">
             <i

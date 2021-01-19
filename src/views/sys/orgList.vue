@@ -105,13 +105,15 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功!'
+                message: '删除成功!',
+                offset: 100
               })
               this.getMenu()
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败!'
+                message: '删除失败!',
+                offset: 100
               })
             }
           })

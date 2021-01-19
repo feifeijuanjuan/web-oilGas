@@ -43,13 +43,13 @@
               <el-input v-model="editForm.href"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="菜单图标">
               <el-input v-model="editForm.icon"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
-        <el-row>
+<!--        <el-row>
           <el-col :span="12">
             <el-form-item label="是否显示">
               <el-radio v-model="editForm.isShow" :label=true>是</el-radio>
@@ -58,12 +58,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="排序" prop="sort">
-              <!--              <el-input v-model="editForm.sort"></el-input>-->
+              &lt;!&ndash;              <el-input v-model="editForm.sort"></el-input>&ndash;&gt;
               <el-input-number v-model="editForm.sort" :min="0" :max="100"
               ></el-input-number>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
 
       </el-form>
     </div>
@@ -91,16 +91,16 @@ export default {
         parentId: '',
         href: '',
         label: '',
-        icon: '',
-        isShow: true,
-        sort: '',
+        // icon: '',
+        // isShow: true,
+        sort: 1,
         name: '',
         id: ''
       },
       rules: {
-        sort: [
+      /*  sort: [
           { required: true, message: '请选择排序序号', trigger: 'blur' }
-        ],
+        ],*/
         name: [
           { required: true, message: '请输入菜单名称', trigger: 'blur' }
         ]

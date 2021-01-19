@@ -66,6 +66,15 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否锁定">
+              <el-select v-model="editForm.isLocked">
+                <el-option v-for="item in isLockedAry" :label="item.label" :value="item.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </div>
     <div class="form-footer-btn">
@@ -108,7 +117,8 @@ export default {
         mobile: '',
         orgId: '',
         status: 1,
-        orgName: ''
+        orgName: '',
+        isLocked: 1
       },
       statuAry: [
         {
@@ -118,6 +128,16 @@ export default {
         {
           value: 1,
           label: '激活'
+        }
+      ],
+      isLockedAry: [
+        {
+          value: 0,
+          label: '锁定'
+        },
+        {
+          value: 1,
+          label: '解锁'
         }
       ],
       rules: {
@@ -213,7 +233,7 @@ export default {
               this.$router.push('/sys/userList')
             } else {
               this.$notify({
-                message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
+                message: res.body.msg == '添加失败，登录用户名重复' ? res.body.msg : '保存失败',
                 type: 'error',
                 offset: 100
               })

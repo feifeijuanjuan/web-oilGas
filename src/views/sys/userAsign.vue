@@ -67,11 +67,6 @@
           label="电话"
         >
         </el-table-column>
-        <el-table-column
-          prop="orgName"
-          label="组织机构"
-        >
-        </el-table-column>
       </el-table>
 
     </div>

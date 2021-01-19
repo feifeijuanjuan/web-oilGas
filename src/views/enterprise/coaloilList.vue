@@ -120,7 +120,7 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        oilGasName: this.fromSearch.oilGasName
+        enterName: this.fromSearch.enterName
       }
       coaloilEnterpriseList(params).then((res) => {
         if (res.code === 0) {

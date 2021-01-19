@@ -42,12 +42,12 @@
               <el-radio v-model="editForm.isShow" :label=false>否</el-radio>
             </el-form-item>
           </el-col>-->
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="排序" prop="sort">
               <el-input-number v-model="editForm.sort" :min="0" :max="100"
               ></el-input-number>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
 
       </el-form>
@@ -76,15 +76,15 @@ export default {
         parentId: '',
         label: '',
         // isShow: true,
-        sort: '',
+        sort: 1,
         name: '',
         id: ''
       },
       treeData: [],
       rules: {
-        sort: [
+        /*sort: [
           { required: true, message: '请选择排序序号', trigger: 'blur' }
-        ],
+        ],*/
         name: [
           { required: true, message: '请输入组织机构名称', trigger: 'blur' }
         ]
@@ -160,7 +160,7 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
-                type: 'error',
+                type: 'success',
                 offset: 100
               })
               this.$router.push('/sys/orgList')

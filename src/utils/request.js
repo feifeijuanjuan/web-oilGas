@@ -2,12 +2,13 @@ import axios from 'axios'
 import Qs from 'qs'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
+
 
 const service = axios.create({
-  baseURL: 'http://210.73.216.32:8081/oilgas-background/',
-  // baseURL: 'http://t95vuv.natappfree.cc/oilgas-background',
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: 'http://210.73.216.32:8081/oilgas-background/',
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
   crossDomain: true
@@ -27,45 +28,32 @@ service.interceptors.request.use(
 )
 
 // response interceptor
+// response interceptor
 /*service.interceptors.response.use(
   response => {
-    const res = response.data
-
-    if (res.code !== 0) {
+    if (response.data.code === 2001) {
+      console.log(1222)
+      //token过期失效，跳转登录页
       this.$notify({
-        // message: res.message || '网络请求失败',
-        message: '网络请求失败',
+        message: 'token失效，请重新登录',
         type: 'error',
         offset: 100
       })
-
-    /!*  if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
-      return Promise.reject(new Error(res.message || 'Error'))*!/
-    } else {
-      return res
+      removeToken() // must remove  token  first
+      resetRouter()
+      // this.$store.getters.commit('RESET_STATE')
+      location.reload()
     }
+    return response
   },
   error => {
-    console.log('err' + error) // for debug
     this.$notify({
-      // message: error.message,
       message: '网络请求失败',
       type: 'error',
       offset: 100
     })
-    return Promise.reject(error)
   }
-)*/
+);*/
 
 // 封装get方法
 export function get(url, params) {

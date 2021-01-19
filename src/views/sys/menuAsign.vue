@@ -4,13 +4,14 @@
       <span class="first-line">></span>
       <span class="first">分配菜单</span>
     </div>
+<!--    :check-strictly=true-->
     <div class="form-wrapper">
       <el-tree
         ref="selectTree"
         :data="treeData"
         :props="defaultProps"
         show-checkbox
-        :check-strictly=true
+
         node-key="menuId"
       ></el-tree>
     </div>

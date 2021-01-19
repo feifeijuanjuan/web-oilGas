@@ -5,8 +5,8 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="用户名称" label-width="90px">
-                <el-input v-model="fromSearch.nickName"></el-input>
+              <el-form-item label="登录用户名" label-width="90px">
+                <el-input v-model="fromSearch.name"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -71,7 +71,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        nickName: ''
+        name: ''
       },
       loading: false,
       tableData: [],
@@ -108,7 +108,7 @@ export default {
       const params = {
         pageNo: this.currentPage,
         pageSize: this.pageSize,
-        key: this.fromSearch.nickName
+        key: this.fromSearch.name
       }
       userPage(params).then((res) => {
         if (res.code === 0) {

@@ -55,14 +55,11 @@ const actions = {
           userList().then(res => {
             initMenu(res.body)
             router.push({ path: this.redirect || store.getters.setRouters[0].children[0].path })
-            this.loading = false
+            // this.loading = false
           })
         } else {
-          this.$notify({
-            message: '用户名或密码错误',
-            type: 'error',
-            offset: 100
-          })
+          Message.error(response.body)
+          // this.loading = false
         }
         resolve()
       }).catch(error => {

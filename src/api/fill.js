@@ -299,6 +299,9 @@ export const userUpdate = params => post('/sys/user/update', params)
 // 用户列表回显
 export const userShow = params => get(`/sys/user/select/${params}`)
 
+// 重置密码
+export const resetPwd = params => get(`/password/resetPwd/${params}`)
+
 // 日志管理
 // 条件查询日志列表
 export const logList = (params) => post('/syslog/logList', params)

@@ -273,7 +273,7 @@ export default {
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/pipelineday/list')
+              this.$router.push('/pipelineday/productList')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

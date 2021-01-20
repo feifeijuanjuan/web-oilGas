@@ -74,6 +74,11 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="重置密码">
+              <el-button type="primary" @click="resetPwd">重置密码</el-button>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -89,7 +94,7 @@
 </template>
 
 <script>
-import { userAdd, userUpdate, userShow, orgList } from '@/api/fill'
+import { userAdd, userUpdate, userShow, orgList, resetPwd } from '@/api/fill'
 
 import { orgTree } from '@/utils/addMenu'
 
@@ -174,6 +179,25 @@ export default {
     }
   },
   methods: {
+    //重置密码
+    resetPwd() {
+      const userId = this.$store.getters.userId
+      resetPwd(userId).then((res) => {
+        if (res.code === 0) {
+          this.$notify({
+            message: '重置密码成功,' + res.body,
+            type: 'success',
+            offset: 100
+          })
+        } else {
+          this.$notify({
+            message: '重置密码失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     chinese() {
       this.editForm.nickName = this.editForm.nickName.replace(/[^\u4E00-\u9FA5]/g, '')
     },

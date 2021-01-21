@@ -12,6 +12,7 @@
             <el-col :span="10">
               <el-form-item label="组织机构" label-width="90px">
                 <el-cascader
+                  ref="cascaderMenu"
                   v-model="fromSearch.orgName"
                   placeholder="请选择组织机构"
                   :props="{ checkStrictly: true }"
@@ -119,7 +120,10 @@ export default {
         }
       })
     },
+
     handleChange(val) {
+      // 目的是选择之后将下拉界面收起
+      this.$refs.cascaderMenu.toggleDropDownVisible();
       if (val.length > 0) {
         this.fromSearch.orgName = val[val.length - 1]
       } else {

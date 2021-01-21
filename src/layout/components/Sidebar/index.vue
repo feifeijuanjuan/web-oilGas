@@ -122,6 +122,10 @@ export default {
         return '/tGasWellMonth/list'
       } else if (path === '/tOilWellMonthAdd') {
         return '/tOilWellMonth/list'
+      } else if (path === '/gasYearListAdd') {
+        return '/gasyear/list'
+      } else if (path === '/governmentyearAdd') {
+        return '/governmentyear/list'
       } else {
         return path
       }

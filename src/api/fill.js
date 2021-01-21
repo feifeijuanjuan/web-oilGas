@@ -341,3 +341,23 @@ export const tOilWellMonthSave = params => post('/tOilWellMonth/save', params)
 export const tOilWellMonthUpdate = params => get(`/tOilWellMonth/select/${params}`)
 // 删除
 export const tOilWellMonthSwitchs = params => post(`/tOilWellMonth/switchs`, params)
+
+// 地方政府储气填报
+// 查询
+export const governmentyearList = params => post('/governmentyear/list', params)
+// 保存
+export const governmentyearSave = params => post('/governmentyear/save', params)
+// 更新
+export const governmentyearUpdate = params => get(`/governmentyear/select/${params}`)
+// 删除
+export const governmentyearSwitchs = params => post(`/governmentyear/switchs`, params)
+
+// 地方政府储气填报
+// 查询
+export const gasyearList = params => post('/gasyear/list', params)
+// 保存
+export const gasyearSave = params => post('/gasyear/save', params)
+// 更新
+export const gasyearUpdate = params => get(`/gasyear/select/${params}`)
+// 删除
+export const gasyearSwitchs = params => post(`/gasyear/switchs`, params)

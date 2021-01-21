@@ -116,17 +116,18 @@ export default {
       },
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: 120 },
-        { label: '企业名称', param: 'enterName', minWidth: 120 },
-        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        { label: '时间', param: 'recordDate' },
+        { label: '企业名称', param: 'enterName' },
+        { label: '盟市', param: 'leagueCityName' },
         // { label: '已建储气能力', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
         // { label: '正在建设储气能力', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
         // { label: '待建设储气能力', param: 'gasStorageCapacityToBuild', minWidth: 150 },
         // { label: '城燃企业5%实际储气量', param: 'actualStorageEnterprise', minWidth: 150 },
-        { label: '城燃企业5%计划储气量(万立方米)', param: 'plannedStorageEnterprise', minWidth: 150 }
+        { label: '城燃企业5%计划储气量(万立方米)', param: 'plannedStorageEnterprise' },
+        { label: '合同量(万立方米)', param: 'enterpriseContract' }
       ],
       selectedRows: [],
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {
@@ -238,10 +239,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

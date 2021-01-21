@@ -154,7 +154,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="甲醇天然气日消费量">
+            <el-form-item label="甲醛化肥企业日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.methanolSalesDay"
                         type="number"
                         @input="minMax('methanolSalesDay',editForm.methanolSalesDay)">
@@ -162,7 +162,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="化肥天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.fertilizerSalesDay"
                         type="number"
@@ -170,10 +170,7 @@
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="LNG天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.lngSalesDay"
@@ -183,6 +180,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="城燃企业5%实际储气量">
               <el-input placeholder="请输入内容" v-model="editForm.actualStorageEnterprise"

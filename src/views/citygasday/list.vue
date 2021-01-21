@@ -120,8 +120,8 @@ export default {
         { label: '社会车辆用气天然气日消费量(万立方米)', param: 'cityTrafficSalesDay', minWidth: 200 },
         { label: '商业用户天然气日消费量(万立方米)', param: 'businessSalesDay', minWidth: 180 },
         { label: '工业燃料天然气日消费量(万立方米)', param: 'industrySalesDay', minWidth: 180 },
-        { label: '甲醇天然气日消费量(万立方米)', param: 'methanolSalesDay', minWidth: 180 },
-        { label: '化肥天然气日消费量(万立方米)', param: 'fertilizerSalesDay', minWidth: 180 },
+        { label: '甲醛化肥企业日消费量(万立方米)', param: 'methanolSalesDay', minWidth: 180 },
+        // { label: '化肥天然气日消费量(万立方米)', param: 'fertilizerSalesDay', minWidth: 180 },
         { label: 'LNG天然气日消费量(万立方米)', param: 'lngSalesDay', minWidth: 180 },
         { label: '城燃企业5%实际储气量(万立方米)', param: 'actualStorageEnterprise', minWidth: 180 }
       ],

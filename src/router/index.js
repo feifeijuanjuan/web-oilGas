@@ -472,6 +472,30 @@ export const constantRoutes = [
         component: () => import('@/views/tOilWellMonth/add')
       }
     ]
+  },
+  // 气田按年合同报表
+  {
+    path: '/gasYearListAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasYearListAdd',
+        component: () => import('@/views/gasyear/add')
+      }
+    ]
+  },
+  // 气田地方政府储气新增
+  {
+    path: '/governmentyearAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/governmentyearAdd',
+        component: () => import('@/views/governmentyear/add')
+      }
+    ]
   }
   // 管道
 

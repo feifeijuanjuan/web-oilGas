@@ -340,6 +340,28 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="原料煤价格">
+              <el-input placeholder="请输入内容" v-model="editForm.rawCoalPrice"
+                        type="number"
+                        @input="minMax('rawCoalPrice',editForm.rawCoalPrice)"
+              >
+                <template slot="append">元/吨标煤</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="煤制气价格">
+              <el-input placeholder="请输入内容" v-model="editForm.coalGasPrice"
+                        type="number"
+                        @input="minMax('coalGasPrice',editForm.coalGasPrice)"
+              >
+                <template slot="append">元/吨标煤</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
 
       </el-form>
     </div>
@@ -390,7 +412,9 @@ export default {
         trafficSales: '',
         peakShavingSales: '',
         gasPlanMonthSupply: '',
-        gasConsumption: ''
+        gasConsumption: '',
+        coalGasPrice: '',
+        rawCoalPrice: ''
       },
       rules: {
         enterName: [

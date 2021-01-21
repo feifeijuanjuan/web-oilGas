@@ -86,7 +86,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="天然气日供气合同量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGasContract"
                         type="number"
@@ -95,7 +95,7 @@
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="直供管道公司日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany"
@@ -106,8 +106,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="直供甲醇厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh"
@@ -118,6 +116,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="直供合成氨日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3"
@@ -128,8 +128,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="直供液化工厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant"
@@ -169,7 +167,7 @@ export default {
         dayYieldNaGas: '',
         daySupplyNaGas: '',
         dayPlanSupplyNaGas: '',
-        daySupplyNaGasContract: '',
+        // daySupplyNaGasContract: '',
         daySupplyPipelineCompany: '',
         daySupplyCh3oh: '',
         daySupplyNh3: '',

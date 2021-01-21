@@ -1,33 +1,44 @@
 <template>
-  <!--  油气田企业按日填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="气田名称" label-width="90px">
-                <el-cascader
-                  v-model="fromSearch.oilGasName"
-                  placeholder="请选择气田名称"
-                  :options="oilGasOptions"
-                  @change="handleChange"
-                  clearable
-                ></el-cascader>
+              <el-form-item label="企业名称" label-width="90px">
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.typeName"
+                    :label="item.typeName"
+                    :value="item.typeName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="9">
               <el-form-item label="起止日期">
-                <el-date-picker
-                  v-model="fromSearch.time"
-                  type="daterange"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                >
-                </el-date-picker>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.beginTime"
+                    type="year"
+                    placeholder="开始日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">至</el-col>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.endTime"
+                    type="year"
+                    placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+
               </el-form-item>
             </el-col>
           </el-row>
@@ -42,18 +53,18 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按日填报
+          按年填报
         </div>
         <div>
-          <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
           </el-button>
-          <el-button size="small" class="btn-edit" style="margin-bottom: 10px;" @click="handleEdit"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleEdit"><i
             class="icon iconfont i-edit"
           >&#xe630;</i>编辑
           </el-button>
-          <el-button size="small" class="btn-del" style="margin-bottom: 10px;" @click="handleDel"><i
+          <el-button size="small" style="margin-bottom: 10px;" @click="handleDel"><i
             class="icon iconfont i-del"
           >&#xe614;</i>删除
           </el-button>
@@ -73,54 +84,38 @@
       >
       </table-cmp>
     </div>
+
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { MessageBox, Message } from 'element-ui'
-import { list, oilgasdaySwitchs, dic } from '@/api/fill'
-/*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
-7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
-12直供甲醇厂日供气量、
-13直供合成氨日供气量、
-14直供液化工厂日供气量、15状态*/
+import { gasyearList, gasyearSwitchs, dic } from '@/api/fill'
+
 export default {
   name: 'Dashboard',
   components: { TableCmp },
   data() {
     return {
-      total: 0,
       checkbox: true,
+      count: 3,
+      total: 0,
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        oilGasName: null,
-        time: '',
-        name: '',
-        name1: ''
+        enterName: '',
+        beginTime: null,
+        endTime: null
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: '150' },
-        { label: '气田名称', param: 'oilGasName', minWidth: '150' },
-        /*{ label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
-        { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
-        { label: '企业结构', param: 'groupType', minWidth: '180' },
-        // { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
-        { label: '天然气日产量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' },
-        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
-        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
-        // { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
-        { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
-        { label: '直供甲醛厂日供气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
-        { label: '直供合成氨日供气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
-        { label: '直供液化工厂日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' }
+        { label: '时间', param: 'recordDate' },
+        { label: '企业名称', param: 'enterName' },
+        { label: '天然气供气合同量(万立方米)', param: 'yearSupplyNaGasContract' }
       ],
       selectedRows: [],
-      gasTypesAry: [],
-      oilGasOptions: []
+      enterNameAry: []
     }
   },
   created() {
@@ -129,37 +124,16 @@ export default {
     this.dic()
   },
   methods: {
-
-    handleChange(val) {
-      if (val.length > 0) {
-        this.fromSearch.oilGasName = val[val.length - 1]
-      } else {
-        this.fromSearch.oilGasName = ''
-      }
-    },
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const data = res.data.gasTypes
-          // this.gasTypesAry = data
-          this.oilGasOptions = []
-          data.forEach(item => {
-            const childList = []
-            if (item.childrenProjectType) {
-              item.childrenProjectType.forEach((i, idx) => {
-                childList.push(
-                  {
-                    value: i.typeName,
-                    label: i.typeName
-                  }
-                )
-              })
-            }
-            this.oilGasOptions.push({
-              value: item.typeName,
-              label: item.typeName,
-              children: childList
-            })
+          const enterName = res.data.chengpinyou
+          this.enterNameAry = enterName
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
           })
         }
       })
@@ -170,11 +144,11 @@ export default {
       const params = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
-        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        oilGasName: this.fromSearch.oilGasName
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime,
+        enterName: this.fromSearch.enterName
       }
-      list(params).then((res) => {
+      gasyearList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -189,6 +163,7 @@ export default {
       this.loading = false
     },
     handleCurrentChange(val) {
+      console.log(val)
       this.currentPage = val
       this.list(val, this.pageSize)
     },
@@ -197,13 +172,12 @@ export default {
       this.currentPage = 1
       this.list(this.currentPage, val)
     },
-    //新增
     handleAdd() {
       const params = {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/dayAdd', query: params })
+      this.$router.push({ path: '/gasYearListAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -213,14 +187,17 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/dayAdd', query: params })
+        this.$router.push({ path: '/gasYearListAdd', query: params })
+
       } else {
         this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error'
+          type: 'info',
+          offset: 100
         })
       }
     },
+    // 删除
     handleDel() {
       if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
@@ -232,17 +209,14 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilgasdaySwitchs(params).then((res) => {
+          gasyearSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
                 message: '删除成功',
                 offset: 100
               })
-              const totalPage = Math.ceil((this.total - 1) / this.pageSize)
-              const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
-              this.currentPage = currentPage < 1 ? 1 : currentPage
-              this.list(this.currentPage, this.pageSize)
+              this.list(1, this.pageSize)
             } else {
               this.$notify({
                 type: 'error',
@@ -258,6 +232,7 @@ export default {
             offset: 100
           })
         })
+
       } else {
         this.$notify({
           message: '请选择一条数据进行删除',
@@ -272,9 +247,6 @@ export default {
         arr.push(item.id)
       })
       this.selectedRows = arr
-    },
-    handleNodeClick() {
-
     }
   }
 }

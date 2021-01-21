@@ -130,7 +130,9 @@ export default {
         { label: '交通消费量(万立方米)', param: 'trafficSales', minWidth: 150 },
         { label: '调峰煤制气用量(万立方米)', param: 'peakShavingSales', minWidth: 150 },
         { label: '煤制气计划月供应量(万立方米)', param: 'gasPlanMonthSupply', minWidth: 150 },
-        { label: '煤制气消费量(万立方米)', param: 'gasConsumption', minWidth: 150 }
+        { label: '煤制气消费量(万立方米)', param: 'gasConsumption', minWidth: 150 },
+        { label: '原料煤价格(元/吨标煤)', param: 'rawCoalPrice', minWidth: 150 },
+        { label: '煤制气价格(元/吨标煤)', param: 'coalGasPrice', minWidth: 150 },
       ],
       selectedRows: [],
       enterNameAry: []

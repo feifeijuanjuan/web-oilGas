@@ -4,7 +4,7 @@
       <span class="first-line">></span>
       <span class="first">分配菜单</span>
     </div>
-<!--    :check-strictly=true-->
+    <!--    :check-strictly=true-->
     <div class="form-wrapper">
       <el-tree
         ref="selectTree"
@@ -80,15 +80,19 @@ export default {
     //分配菜单
     assign() {
       const checkTree = this.$refs.selectTree.getCheckedNodes()
+      const getHalfNode = this.$refs.selectTree.getHalfCheckedNodes()
       const checkTreeIds = []
       checkTree.forEach((item, index) => {
+        checkTreeIds.push(item.menuId)
+      })
+      getHalfNode.forEach((item, index) => {
         checkTreeIds.push(item.menuId)
       })
       const params = {
         roleId: this.$route.query.id,
         resourceIds: checkTreeIds
       }
-      params.resourceIds=params.resourceIds.toString()
+      params.resourceIds = params.resourceIds.toString()
       setResourcesRole(params).then((res) => {
         if (res.code === 0) {
           this.$notify({

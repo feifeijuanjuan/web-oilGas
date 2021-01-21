@@ -98,7 +98,8 @@ export default {
         { label: '油库煤油总库存(万吨)', param: 'aviationCoalInventoryOilDepot' },
         { label: '油库原油总库存(万吨)', param: 'crudeInventoryOilDepot' }
       ],
-      enterNameAry: []
+      enterNameAry: [],
+      selectedRows: []
     }
   },
   created() {

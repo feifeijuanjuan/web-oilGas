@@ -152,6 +152,16 @@
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="预测资源量">
+              <el-input placeholder="请输入内容" v-model="editForm.predictedResources"
+                        type="number"
+                        @input="minMax('predictedResources',editForm.predictedResources)"
+              >
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -188,7 +198,8 @@ export default {
         prospectiveResources: '',
         predictedReserves: '',
         controlReserve: '',
-        oilGasSize: ''
+        oilGasSize: '',
+        predictedResources: ''
       },
       optionsGroupType: [],
       rules: {

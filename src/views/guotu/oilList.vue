@@ -125,7 +125,8 @@ export default {
         { label: '远景资源量(万吨)', param: 'prospectiveResources', minWidth: '150' },
         { label: '预测储量(万吨)', param: 'predictedReserves', minWidth: '150' },
         { label: '控制储量(万吨)', param: 'controlReserve', minWidth: '150' },
-        { label: '油田面积(万立方米)', param: 'oilGasSize', minWidth: '150' }
+        { label: '油田面积(万立方米)', param: 'oilGasSize', minWidth: '150' },
+        { label: '预测资源量(万吨)', param: 'predictedResources', minWidth: '200' }
       ],
       selectedRows: [],
       oilTypesAry:[],

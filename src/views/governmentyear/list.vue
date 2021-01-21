@@ -5,19 +5,6 @@
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="地方政府" label-width="90px">
-                <el-select v-model="fromSearch.enterName" clearable>
-                  <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.typeId"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
               <el-form-item label="盟市名称" label-width="90px">
                 <el-select v-model="fromSearch.leagueCityName" clearable>
                   <el-option
@@ -28,6 +15,30 @@
                   >
                   </el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="起止日期">
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.beginTime"
+                    type="year"
+                    placeholder="开始日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">至</el-col>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.endTime"
+                    type="year"
+                    placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+
               </el-form-item>
             </el-col>
           </el-row>
@@ -94,19 +105,21 @@ export default {
       pageSize: 10,
       fromSearch: {
         leagueCityName: '',
-        enterName: ''
+        beginTime: null,
+        endTime: null
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate' },
-        { label: '地方政府', param: 'enterName' },
+        { label: '地方政府', param: 'governmentName' },
         { label: '盟市', param: 'leagueCityName' },
         { label: '地方政府3天计划储气量(万立方米)', param: 'plannedStorageGovernment' },
         { label: '地方政府3天实际储气量(万立方米)', param: 'actualStorageGovernment' }
       ],
       leagueCityTypeAry: [],
-      enterNameAry: []
+      enterNameAry: [],
+      selectedRows: []
     }
   },
   created() {
@@ -138,7 +151,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
         leagueCityName: this.fromSearch.leagueCityName,
-        enterName: this.fromSearch.enterName
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime
       }
       governmentyearList(params).then((res) => {
         if (res.code === 0) {

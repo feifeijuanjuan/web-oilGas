@@ -136,7 +136,8 @@ export default {
         { label: '具体措施', param: 'specificMeasure', minWidth: 280, showOverflowTooltip: true }
       ],
       leagueCityTypeAry: [],//盟市名称
-      enterNameAry: []
+      enterNameAry: [],
+      selectedRows: []
     }
   },
   created() {

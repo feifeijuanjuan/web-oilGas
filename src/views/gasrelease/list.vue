@@ -129,7 +129,8 @@ export default {
         { label: '剩余气量', param: 'surplusVolumn', minWidth: 160 }
       ],
       leagueCityTypeAry: [],
-      enterNameAry: []
+      enterNameAry: [],
+      selectedRows: []
     }
   },
   created() {

@@ -90,7 +90,7 @@ export default {
   data() {
     return {
       fromSearch: {
-        orgName: null,
+        orgName: '',
         time: '',
         name: '',
         name1: ''
@@ -103,6 +103,7 @@ export default {
   },
   created() {
     this.orgList()
+    this.list()
   },
   methods: {
     //组织机构级联下拉
@@ -123,7 +124,7 @@ export default {
 
     handleChange(val) {
       // 目的是选择之后将下拉界面收起
-      this.$refs.cascaderMenu.toggleDropDownVisible();
+      this.$refs.cascaderMenu.toggleDropDownVisible()
       if (val.length > 0) {
         this.fromSearch.orgName = val[val.length - 1]
       } else {
@@ -142,7 +143,8 @@ export default {
     },
     // 根据组织机构查询用户列表
     list() {
-      selectUser(this.fromSearch.orgName).then((res) => {
+      const params = this.fromSearch.orgName == '' ? '0' : this.fromSearch.orgName
+      selectUser(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body
           this.usersRole()

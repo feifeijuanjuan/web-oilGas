@@ -31,7 +31,7 @@
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy"
               >
               </el-date-picker>
             </el-form-item>
@@ -40,7 +40,8 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="地方政府" class="no-unit">
-              <el-select v-model="editForm.enterName" clearable>
+              <el-input v-model="editForm.governmentName" placeholder="请输入地方政府"></el-input>
+<!--              <el-select v-model="editForm.governmentName" clearable>
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.typeId"
@@ -48,7 +49,7 @@
                   :value="item.typeName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -101,7 +102,7 @@ export default {
       editForm: {
         recordDate: '',
         leagueCityName: '',
-        enterName: '',
+        governmentName: '',
         actualStorageGovernment: '',
         plannedStorageGovernment: ''
       },

@@ -135,7 +135,8 @@ export default {
         { label: '已建储气能力(万立方米)', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
         { label: '正在建设储气能力(万立方米)', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
         { label: '待建设储气能力(万立方米)', param: 'gasStorageCapacityToBuild', minWidth: 150 }
-      ]
+      ],
+      selectedRows: []
     }
   },
   created() {

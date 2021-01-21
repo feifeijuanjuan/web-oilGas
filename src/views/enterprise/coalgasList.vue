@@ -91,7 +91,8 @@ export default {
         { label: '税收', param: 'taxRevenue' },
         { label: '企业人数', param: 'employeesNum' }
       ],
-      enterNameAry:[]
+      enterNameAry:[],
+      selectedRows: []
     }
   },
   created() {

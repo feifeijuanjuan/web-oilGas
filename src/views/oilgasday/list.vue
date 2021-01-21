@@ -217,7 +217,8 @@ export default {
       } else {
         this.$notify({
           message: '请选择一条数据进行编辑',
-          type: 'error'
+          type: 'info',
+          offset: 100
         })
       }
     },

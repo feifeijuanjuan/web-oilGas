@@ -8,7 +8,7 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="140px"
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="180px"
                class="form-box clearfix"
       >
         <!--        /*1企业名称、2时间、3状态、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
@@ -49,7 +49,8 @@
             <el-form-item label="煤制油月产量">
               <el-input placeholder="请输入内容" v-model="editForm.coalOilMonthProduct"
                         type="number"
-                        @input="minMax('coalOilMonthProduct',editForm.coalOilMonthProduct)">
+                        @input="minMax('coalOilMonthProduct',editForm.coalOilMonthProduct)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -58,7 +59,8 @@
             <el-form-item label="计划煤制油月产量">
               <el-input placeholder="请输入内容" v-model="editForm.coalOilPlanMonthProduct"
                         type="number"
-                        @input="minMax('coalOilPlanMonthProduct',editForm.coalOilPlanMonthProduct)">
+                        @input="minMax('coalOilPlanMonthProduct',editForm.coalOilPlanMonthProduct)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -69,7 +71,8 @@
             <el-form-item label="粉煤月加工量">
               <el-input placeholder="请输入内容" v-model="editForm.pulverizedCoalProcessingCapacity"
                         type="number"
-                        @input="minMax('pulverizedCoalProcessingCapacity',editForm.pulverizedCoalProcessingCapacity)">
+                        @input="minMax('pulverizedCoalProcessingCapacity',editForm.pulverizedCoalProcessingCapacity)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -78,7 +81,8 @@
             <el-form-item label="计划粉煤月加工量">
               <el-input placeholder="请输入内容" v-model="editForm.coalProcessMonth"
                         type="number"
-                        @input="minMax('coalProcessMonth',editForm.coalProcessMonth)">
+                        @input="minMax('coalProcessMonth',editForm.coalProcessMonth)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -91,7 +95,8 @@
             <el-form-item label="平均负荷率">
               <el-input placeholder="请输入内容" v-model="editForm.avgLoadRate"
                         type="number"
-                        @input="minMax('avgLoadRate',editForm.avgLoadRate)">
+                        @input="minMax('avgLoadRate',editForm.avgLoadRate)"
+              >
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -100,7 +105,8 @@
             <el-form-item label="计划平均负荷率">
               <el-input placeholder="请输入内容" v-model="editForm.planAvgLoadRate"
                         type="number"
-                        @input="minMax('planAvgLoadRate',editForm.planAvgLoadRate)">
+                        @input="minMax('planAvgLoadRate',editForm.planAvgLoadRate)"
+              >
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -112,16 +118,18 @@
             <el-form-item label="水资源用量">
               <el-input placeholder="请输入内容" v-model="editForm.waterUse"
                         type="number"
-                        @input="minMax('waterUse',editForm.waterUse)">
+                        @input="minMax('waterUse',editForm.waterUse)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位产品原料消耗">
-              <el-input placeholder="请输入内容" v-model="editForm.rawCoalConsumption"
+            <el-form-item label="石脑油单位产品原料煤耗">
+              <el-input placeholder="请输入内容" v-model="editForm.naphthaRawCoalConsumption"
                         type="number"
-                        @input="minMax('rawCoalConsumption',editForm.rawCoalConsumption)">
+                        @input="minMax('naphthaRawCoalConsumption',editForm.naphthaRawCoalConsumption)"
+              >
                 <template slot="append">吨标煤/吨</template>
               </el-input>
             </el-form-item>
@@ -130,19 +138,90 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="单位产品综合能耗">
-              <el-input placeholder="请输入内容" v-model="editForm.unitProductComprehensiveEnergySales"
+            <el-form-item label="柴油单位产品原料煤耗">
+              <el-input placeholder="请输入内容" v-model="editForm.dieselRawCoalConsumption"
                         type="number"
-                        @input="minMax('unitProductComprehensiveEnergySales',editForm.unitProductComprehensiveEnergySales)">
+                        @input="minMax('dieselRawCoalConsumption',editForm.dieselRawCoalConsumption)"
+              >
                 <template slot="append">吨标煤/吨</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位产品新鲜水耗">
-              <el-input placeholder="请输入内容" v-model="editForm.unitProductFreshWaterConsumption"
+            <el-form-item label="液化气单位产品原料煤耗">
+              <el-input placeholder="请输入内容" v-model="editForm.lpgRawCoalConsumption"
                         type="number"
-                        @input="minMax('unitProductFreshWaterConsumption',editForm.unitProductFreshWaterConsumption)">
+                        @input="minMax('lpgRawCoalConsumption',editForm.lpgRawCoalConsumption)"
+              >
+                <template slot="append">吨标煤/吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="石脑油单位产品综合能耗">
+              <el-input placeholder="请输入内容" v-model="editForm.naphthaUnitProductComprehensiveEnergySales"
+                        type="number"
+                        @input="minMax('naphthaUnitProductComprehensiveEnergySales',editForm.naphthaUnitProductComprehensiveEnergySales)"
+              >
+                <template slot="append">吨标煤/吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="柴油单位产品综合能耗">
+              <el-input placeholder="请输入内容" v-model="editForm.dieselUnitProductComprehensiveEnergySales"
+                        type="number"
+                        @input="minMax('dieselUnitProductComprehensiveEnergySales',editForm.dieselUnitProductComprehensiveEnergySales)"
+              >
+                <template slot="append">吨标煤/吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="液化气单位产品综合能耗">
+              <el-input placeholder="请输入内容" v-model="editForm.lpgUnitProductComprehensiveEnergySales"
+                        type="number"
+                        @input="minMax('lpgUnitProductComprehensiveEnergySales',editForm.lpgUnitProductComprehensiveEnergySales)"
+              >
+                <template slot="append">吨标煤/吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="石脑油单位产品新鲜水耗">
+              <el-input placeholder="请输入内容" v-model="editForm.naphthaUnitProductFreshWaterConsumption"
+                        type="number"
+                        @input="minMax('naphthaUnitProductFreshWaterConsumption',editForm.naphthaUnitProductFreshWaterConsumption)"
+              >
+                <template slot="append">吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="柴油单位产品新鲜水耗">
+              <el-input placeholder="请输入内容" v-model="editForm.dieselUnitProductFreshWaterConsumption"
+                        type="number"
+                        @input="minMax('dieselUnitProductFreshWaterConsumption',editForm.dieselUnitProductFreshWaterConsumption)"
+              >
+                <template slot="append">吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="液化气单位产品新鲜水耗">
+              <el-input placeholder="请输入内容" v-model="editForm.lpgUnitProductFreshWwaterConsumption"
+                        type="number"
+                        @input="minMax('lpgUnitProductFreshWwaterConsumption',editForm.lpgUnitProductFreshWwaterConsumption)"
+              >
                 <template slot="append">吨</template>
               </el-input>
             </el-form-item>
@@ -154,7 +233,8 @@
             <el-form-item label="石脑油产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldNaphtha"
                         type="number"
-                        @input="minMax('yieldNaphtha',editForm.yieldNaphtha)">
+                        @input="minMax('yieldNaphtha',editForm.yieldNaphtha)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -163,7 +243,8 @@
             <el-form-item label="柴油产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldDieselOil"
                         type="number"
-                        @input="minMax('yieldDieselOil',editForm.yieldDieselOil)">
+                        @input="minMax('yieldDieselOil',editForm.yieldDieselOil)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -175,7 +256,8 @@
             <el-form-item label="液化气产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldLpg"
                         type="number"
-                        @input="minMax('yieldLpg',editForm.yieldLpg)">
+                        @input="minMax('yieldLpg',editForm.yieldLpg)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -184,7 +266,8 @@
             <el-form-item label="干气产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldDryGas"
                         type="number"
-                        @input="minMax('yieldDryGas',editForm.yieldDryGas)">
+                        @input="minMax('yieldDryGas',editForm.yieldDryGas)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -196,7 +279,8 @@
             <el-form-item label="石脑油供应量">
               <el-input placeholder="请输入内容" v-model="editForm.monthSupplyNaphtha"
                         type="number"
-                        @input="minMax('monthSupplyNaphtha',editForm.monthSupplyNaphtha)">
+                        @input="minMax('monthSupplyNaphtha',editForm.monthSupplyNaphtha)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -205,7 +289,8 @@
             <el-form-item label="柴油供应量">
               <el-input placeholder="请输入内容" v-model="editForm.monthSupplyDieselOil"
                         type="number"
-                        @input="minMax('monthSupplyDieselOil',editForm.monthSupplyDieselOil)">
+                        @input="minMax('monthSupplyDieselOil',editForm.monthSupplyDieselOil)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -217,7 +302,8 @@
             <el-form-item label="液化气供应量">
               <el-input placeholder="请输入内容" v-model="editForm.monthSupplyLpg"
                         type="number"
-                        @input="minMax('monthSupplyLpg',editForm.monthSupplyLpg)">
+                        @input="minMax('monthSupplyLpg',editForm.monthSupplyLpg)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -226,7 +312,8 @@
             <el-form-item label="干气供应量">
               <el-input placeholder="请输入内容" v-model="editForm.monthSupplyDryGas"
                         type="number"
-                        @input="minMax('monthSupplyDryGas',editForm.monthSupplyDryGas)">
+                        @input="minMax('monthSupplyDryGas',editForm.monthSupplyDryGas)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -238,7 +325,8 @@
             <el-form-item label="汽运供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyBusTrans"
                         type="number"
-                        @input="minMax('supplyBusTrans',editForm.supplyBusTrans)">
+                        @input="minMax('supplyBusTrans',editForm.supplyBusTrans)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -247,7 +335,8 @@
             <el-form-item label="管输供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyPipeTrans"
                         type="number"
-                        @input="minMax('supplyPipeTrans',editForm.supplyPipeTrans)">
+                        @input="minMax('supplyPipeTrans',editForm.supplyPipeTrans)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -259,7 +348,8 @@
             <el-form-item label="柴油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.dieselOilSales"
                         type="number"
-                        @input="minMax('dieselOilSales',editForm.dieselOilSales)">
+                        @input="minMax('dieselOilSales',editForm.dieselOilSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -268,7 +358,8 @@
             <el-form-item label="液化气销售量">
               <el-input placeholder="请输入内容" v-model="editForm.lgpSales"
                         type="number"
-                        @input="minMax('lgpSales',editForm.lgpSales)">
+                        @input="minMax('lgpSales',editForm.lgpSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -279,7 +370,8 @@
             <el-form-item label="石脑油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.naphthaSales"
                         type="number"
-                        @input="minMax('naphthaSales',editForm.naphthaSales)">
+                        @input="minMax('naphthaSales',editForm.naphthaSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -288,7 +380,8 @@
             <el-form-item label="干气销售量">
               <el-input placeholder="请输入内容" v-model="editForm.dryGasSales"
                         type="number"
-                        @input="minMax('dryGasSales',editForm.dryGasSales)">
+                        @input="minMax('dryGasSales',editForm.dryGasSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -299,7 +392,8 @@
             <el-form-item label="工程车辆销售量">
               <el-input placeholder="请输入内容" v-model="editForm.projectBusSales"
                         type="number"
-                        @input="minMax('projectBusSales',editForm.projectBusSales)">
+                        @input="minMax('projectBusSales',editForm.projectBusSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -308,7 +402,8 @@
             <el-form-item label="城市交通销售量">
               <el-input placeholder="请输入内容" v-model="editForm.cityTrafficSales"
                         type="number"
-                        @input="minMax('cityTrafficSales',editForm.cityTrafficSales)">
+                        @input="minMax('cityTrafficSales',editForm.cityTrafficSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -320,7 +415,8 @@
             <el-form-item label="工业销售量">
               <el-input placeholder="请输入内容" v-model="editForm.industrySales"
                         type="number"
-                        @input="minMax('industrySales',editForm.industrySales)">
+                        @input="minMax('industrySales',editForm.industrySales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -329,7 +425,8 @@
             <el-form-item label="乙烯原料销售量">
               <el-input placeholder="请输入内容" v-model="editForm.c2h4MaterialSales"
                         type="number"
-                        @input="minMax('c2h4MaterialSales',editForm.c2h4MaterialSales)">
+                        @input="minMax('c2h4MaterialSales',editForm.c2h4MaterialSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -341,7 +438,8 @@
             <el-form-item label="调合汽油销售量">
               <el-input placeholder="请输入内容" v-model="editForm.mixGasolineSales"
                         type="number"
-                        @input="minMax('mixGasolineSales',editForm.mixGasolineSales)">
+                        @input="minMax('mixGasolineSales',editForm.mixGasolineSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -350,7 +448,8 @@
             <el-form-item label="重整原料销售量">
               <el-input placeholder="请输入内容" v-model="editForm.reformMaterialSales"
                         type="number"
-                        @input="minMax('reformMaterialSales',editForm.reformMaterialSales)">
+                        @input="minMax('reformMaterialSales',editForm.reformMaterialSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -362,7 +461,8 @@
             <el-form-item label="原料煤价格">
               <el-input placeholder="请输入内容" v-model="editForm.rawCoalPrice"
                         type="number"
-                        @input="minMax('rawCoalPrice',editForm.rawCoalPrice)">
+                        @input="minMax('rawCoalPrice',editForm.rawCoalPrice)"
+              >
                 <template slot="append">元/吨标煤</template>
               </el-input>
             </el-form-item>
@@ -371,7 +471,8 @@
             <el-form-item label="煤制油品价格">
               <el-input placeholder="请输入内容" v-model="editForm.coalOilPrice"
                         type="number"
-                        @input="minMax('coalOilPrice',editForm.coalOilPrice)">
+                        @input="minMax('coalOilPrice',editForm.coalOilPrice)"
+              >
                 <template slot="append">元/吨标煤</template>
               </el-input>
             </el-form-item>
@@ -382,7 +483,8 @@
             <el-form-item label="呼和浩特市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.huhehaoteSales"
                         type="number"
-                        @input="minMax('huhehaoteSales',editForm.huhehaoteSales)">
+                        @input="minMax('huhehaoteSales',editForm.huhehaoteSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -391,7 +493,8 @@
             <el-form-item label="包头市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.baotouSales"
                         type="number"
-                        @input="minMax('baotouSales',editForm.baotouSales)">
+                        @input="minMax('baotouSales',editForm.baotouSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -403,7 +506,8 @@
             <el-form-item label="乌海市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.wuhaiSales"
                         type="number"
-                        @input="minMax('wuhaiSales',editForm.wuhaiSales)">
+                        @input="minMax('wuhaiSales',editForm.wuhaiSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -412,7 +516,8 @@
             <el-form-item label="赤峰市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.chifengSales"
                         type="number"
-                        @input="minMax('chifengSales',editForm.chifengSales)">
+                        @input="minMax('chifengSales',editForm.chifengSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -423,7 +528,8 @@
             <el-form-item label="通辽市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.tongliaoSales"
                         type="number"
-                        @input="minMax('tongliaoSales',editForm.tongliaoSales)">
+                        @input="minMax('tongliaoSales',editForm.tongliaoSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -432,7 +538,8 @@
             <el-form-item label="鄂尔多斯市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.eerduosiSales"
                         type="number"
-                        @input="minMax('eerduosiSales',editForm.eerduosiSales)">
+                        @input="minMax('eerduosiSales',editForm.eerduosiSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -443,7 +550,8 @@
             <el-form-item label="呼伦贝尔市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.hulunbeierSales"
                         type="number"
-                        @input="minMax('hulunbeierSales',editForm.hulunbeierSales)">
+                        @input="minMax('hulunbeierSales',editForm.hulunbeierSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -452,7 +560,8 @@
             <el-form-item label="巴彦淖尔市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.bayannaoerSales"
                         type="number"
-                        @input="minMax('bayannaoerSales',editForm.bayannaoerSales)">
+                        @input="minMax('bayannaoerSales',editForm.bayannaoerSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -463,7 +572,8 @@
             <el-form-item label="乌兰察布市销售量">
               <el-input placeholder="请输入内容" v-model="editForm.wulanchabuSales"
                         type="number"
-                        @input="minMax('wulanchabuSales',editForm.wulanchabuSales)">
+                        @input="minMax('wulanchabuSales',editForm.wulanchabuSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -472,7 +582,8 @@
             <el-form-item label="锡林格勒盟销售量">
               <el-input placeholder="请输入内容" v-model="editForm.xilingelemengSales"
                         type="number"
-                        @input="minMax('xilingelemengSales',editForm.xilingelemengSales)">
+                        @input="minMax('xilingelemengSales',editForm.xilingelemengSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -483,7 +594,8 @@
             <el-form-item label="阿拉善盟销售量">
               <el-input placeholder="请输入内容" v-model="editForm.alashanmengSales"
                         type="number"
-                        @input="minMax('alashanmengSales',editForm.alashanmengSales)">
+                        @input="minMax('alashanmengSales',editForm.alashanmengSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -492,7 +604,8 @@
             <el-form-item label="兴安盟销售量">
               <el-input placeholder="请输入内容" v-model="editForm.xinganmengSales"
                         type="number"
-                        @input="minMax('xinganmengSales',editForm.xinganmengSales)">
+                        @input="minMax('xinganmengSales',editForm.xinganmengSales)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -513,7 +626,6 @@
 
 <script>
 import { coaloilSave, coaloilUpdate, dic } from '@/api/fill'
-
 
 export default {
   name: 'editFormAdd',
@@ -565,8 +677,16 @@ export default {
         xinganmengSales: '',
         coalOilMonthProduct: '',
         tongliaoSales: '',
-        coalOilPlanMonthProduct: ''
-
+        coalOilPlanMonthProduct: '',
+        naphthaRawCoalConsumption: '',
+        dieselRawCoalConsumption: '',
+        lpgRawCoalConsumption: '',
+        naphthaUnitProductComprehensiveEnergySales: '',
+        dieselUnitProductComprehensiveEnergySales: '',
+        lpgUnitProductComprehensiveEnergySales: '',
+        naphthaUnitProductFreshWaterConsumption: '',
+        dieselUnitProductFreshWaterConsumption: '',
+        lpgUnitProductFreshWwaterConsumption: ''
       },
       rules: {
         enterName: [

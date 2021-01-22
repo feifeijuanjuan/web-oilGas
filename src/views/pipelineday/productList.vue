@@ -4,19 +4,19 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-<!--            <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-select v-model="fromSearch.enterName" placeholder="请选择企业名称" clearable>
-                  <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>-->
+            <!--            <el-col :span="8">
+                          <el-form-item label="企业名称" label-width="90px">
+                            <el-select v-model="fromSearch.enterName" placeholder="请选择企业名称" clearable>
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>
+                          </el-form-item>
+                        </el-col>-->
             <el-col :span="8">
               <el-form-item label="管线名" label-width="90px">
                 <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
@@ -34,7 +34,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -125,7 +125,7 @@ export default {
       ],
       selectedRows: [],
       pipelineNameTypeAry: [],
-      enterNameAry:[]
+      enterNameAry: []
     }
   },
   created() {
@@ -139,9 +139,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const pipelineNameType = res.data.chengpinyouguandao
-          const enterName=res.data.guandao
+          const enterName = res.data.guandao
           this.pipelineNameTypeAry = pipelineNameType
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -152,12 +152,12 @@ export default {
       })
     },
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        // enterName: this.fromSearch.enterName,
+        pageNum: val,
+        pageSize: pageSize,
         pipelineName: this.fromSearch.pipelineName
       }
       productList(params).then((res) => {
@@ -240,10 +240,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

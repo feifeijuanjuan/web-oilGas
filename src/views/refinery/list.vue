@@ -35,7 +35,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -151,7 +151,19 @@ export default {
         { label: '商业的成品油供应量(万吨)', param: 'businessProductedOilSupply', minWidth: 150 },
         { label: '交通的成品油供应量(万吨)', param: 'trafficProductedOilSupply', minWidth: 180 },
         { label: '工业的成品油供应量(万吨)', param: 'industryProductedOilSupply', minWidth: 180 },
-        { label: '农业的成品油供应量(万吨)', param: 'agriculturalProductedOilSupply', minWidth: 180 }
+        { label: '农业的成品油供应量(万吨)', param: 'agriculturalProductedOilSupply', minWidth: 180 },
+        { label: '呼和浩特市成品油供应量(万吨)', param: 'huhehaoteSupply', minWidth: 150 },
+        { label: '包头市成品油供应量(万吨)', param: 'baotouSupply', minWidth: 180 },
+        { label: '乌海市成品油供应量(万吨)', param: 'wuhaiSupply', minWidth: 180 },
+        { label: '赤峰市成品油供应量(万吨)', param: 'chifengSupply', minWidth: 180 },
+        { label: '通辽市成品油供应量(万吨)', param: 'tongliaoSupply', minWidth: 150 },
+        { label: '鄂尔多斯市成品油供应量(万吨)', param: 'eerduosiSupply', minWidth: 180 },
+        { label: '呼伦贝尔市成品油供应量(万吨)', param: 'hulunbeierSupply', minWidth: 180 },
+        { label: '巴彦淖尔市成品油供应量(万吨)', param: 'bayannaoerSupply', minWidth: 180 },
+        { label: '乌兰察布市成品油供应量(万吨)', param: 'wulanchabuSupply', minWidth: 150 },
+        { label: '锡林格勒盟成品油供应量(万吨)', param: 'xilingelemengSupply', minWidth: 180 },
+        { label: '阿拉善盟销成品油供应量(万吨)', param: 'alashanmengSupply', minWidth: 180 },
+        { label: '兴安盟成品油供应量(万吨)', param: 'xinganmengSupply', minWidth: 180 }
       ],
       selectedRows: [],
       enterNameAry: []
@@ -178,11 +190,12 @@ export default {
       })
     },
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
+        pageNum: val,
+        pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
@@ -264,10 +277,10 @@ export default {
 
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

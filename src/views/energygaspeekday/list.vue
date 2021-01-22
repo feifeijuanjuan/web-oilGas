@@ -1,36 +1,28 @@
 <template>
-  <!--  油气田油田按月填报-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="油田名称" label-width="90px">
-                <!--                <el-select v-model="fromSearch.oilGasName" placeholder="请选择油田名称" clearable>
-                                  <el-option
-                                    v-for="item in oilTypesAry"
-                                    :key="item.typeName"
-                                    :label="item.typeName"
-                                    :value="item.typeName"
-                                  >
-                                  </el-option>
-                                </el-select>-->
-                <el-cascader
-                  v-model="fromSearch.oilGasName"
-                  placeholder="请选择油田名称"
-                  :options="oilGasOptions"
-                  clearable
-                  @change="handleChange"
-                ></el-cascader>
+              <el-form-item label="调峰单位" label-width="90px">
+                <el-select v-model="fromSearch.enterName" clearable>
+                  <el-option
+                    v-for="item in enterNameAry"
+                    :key="item.typeName"
+                    :label="item.typeName"
+                    :value="item.typeName"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
+                  type="daterange"
                   unlink-panels
-                  type="monthrange"
                   range-separator="至"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -51,7 +43,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按月填报
+          调峰按日填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -82,50 +74,58 @@
       >
       </table-cmp>
     </div>
+
   </div>
 </template>
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, oilmonthList, oilgasmonthSwitchs } from '@/api/fill'
+import { energygaspeekdaySwitchs, energygaspeekdayList, dic } from '@/api/fill'
 
-/*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
-7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
-13月产能、14综合能源消费量、15状态*/
+/*企业名称、盟市名称、时间、状态
+商业调峰量
+甲醇化肥调峰量
+可中断工业调峰量
+不可中断工业调峰量
+LNG调峰量
+盟市储气日调用量（释放气量）
+计划日调峰量
+实际日调峰量*/
+
 export default {
   name: 'Dashboard',
   components: { TableCmp },
   data() {
     return {
       checkbox: true,
+      count: 3,
       total: 0,
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        oilGasName: null,
+        enterName: '',
         time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: '150' },
-        { label: '油田名称', param: 'oilGasName', minWidth: '150' },
-        /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
-         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
-        { label: '企业结构', param: 'groupType', minWidth: '150' },
-        // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
-        { label: '月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
-        { label: '计划月产量(万吨)', param: 'oilGasPlanMonthYield', minWidth: '150' },
-        { label: '月供应量(万吨)', param: 'supplyOilGas', minWidth: '150' },
-        { label: '计划月供应量(万吨)', param: 'oilGasPlanMonthSupply', minWidth: '150' },
-        { label: '区内供应量(万吨)', param: 'supplyInOilGas', minWidth: '150' },
-        { label: '区外供应量(万吨)', param: 'supplyOutOilGas', minWidth: '150' }
-        /*  { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
-          { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }*/
+        { label: '调峰时间', param: 'recordDate', minWidth: 120 },
+        { label: '调峰单位', param: 'enterName', minWidth: 120 },
+        { label: '盟市', param: 'leagueCityName', minWidth: 120 },
+        { label: '商业调峰量(万立方米)', param: 'businessPeakLoadRegulation', minWidth: 150 },
+        { label: '甲醇化肥调峰量(万立方米)', param: 'methanolPeakLoadRegulation', minWidth: 150 },
+        { label: '可中断工业调峰量(万立方米)', param: 'interruptiblePeakLoadRegulation', minWidth: 150 },
+        { label: '不可中断工业调峰量(万立方米)', param: 'uninterruptiblePeakLoadRegulation', minWidth: 150 },
+        { label: 'LNG调峰量(万立方米)', param: 'lngPeakLoadRegulation', minWidth: 150 },
+        { label: '盟市储气日调用量(万立方米)', param: 'gasInvoke', minWidth: 150 },
+        { label: '计划日调峰量(万立方米)', param: 'planPeakLoadRegulation', minWidth: 150 },
+        { label: '实际日调峰量(万立方米)', param: 'peakLoadRegulation', minWidth: 150 },
+        { label: '响应等级', param: 'responseLevel', minWidth: 210 },
+        // { label: '调峰对象', param: 'peakObject', minWidth: 210 },
+        { label: '具体措施', param: 'specificMeasure', minWidth: 160 }
       ],
       selectedRows: [],
-      oilTypesAry: [],
-      oilGasOptions: []
+      enterNameAry: []
     }
   },
   created() {
@@ -134,35 +134,16 @@ export default {
     this.dic()
   },
   methods: {
-    handleChange(val) {
-      if (val.length > 0) {
-        this.fromSearch.oilGasName = val[val.length - 1]
-      } else {
-        this.fromSearch.oilGasName = ''
-      }
-    },
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const data = res.data.oilTypes
-          this.oilGasOptions = []
-          data.forEach(item => {
-            const childList = []
-            if (item.childrenProjectType) {
-              item.childrenProjectType.forEach((i, idx) => {
-                childList.push(
-                  {
-                    value: i.typeName,
-                    label: i.typeName
-                  }
-                )
-              })
-            }
-            this.oilGasOptions.push({
-              value: item.typeName,
-              label: item.typeName,
-              children: childList
-            })
+          const enterName = res.data.nengyuanju
+          this.enterNameAry = enterName
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
           })
         }
       })
@@ -176,9 +157,9 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        oilGasName: this.fromSearch.oilGasName
+        enterName: this.fromSearch.enterName
       }
-      oilmonthList(params).then((res) => {
+      energygaspeekdayList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -193,6 +174,7 @@ export default {
       this.loading = false
     },
     handleCurrentChange(val) {
+      console.log(val)
       this.currentPage = val
       this.list(val, this.pageSize)
     },
@@ -206,7 +188,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/oilAdd', query: params })
+      this.$router.push({ path: '/energygaspeekdayAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -216,7 +198,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/oilAdd', query: params })
+        this.$router.push({ path: '/energygaspeekdayAdd', query: params })
 
       } else {
         this.$notify({
@@ -238,24 +220,22 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilgasmonthSwitchs(params).then((res) => {
+          energygaspeekdaySwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功!'
+                message: '删除成功',
+                offset: 100
               })
-              const totalPage = Math.ceil((this.total - 1) / this.pageSize)
-              const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
-              this.currentPage = currentPage < 1 ? 1 : currentPage
-              this.list(this.currentPage, this.pageSize)
+              this.list(1, this.pageSize)
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败!'
+                message: '删除失败',
+                offset: 100
               })
             }
           })
-
         }).catch(() => {
           this.$notify({
             type: 'info',

@@ -4,19 +4,19 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-<!--            <el-col :span="8">
-              <el-form-item label="盟市名称" label-width="90px">
-                <el-select v-model="fromSearch.leagueCityName" clearable>
-                  <el-option
-                    v-for="item in leagueCityTypeAry"
-                    :key="item.dictItemName"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>-->
+            <!--            <el-col :span="8">
+                          <el-form-item label="盟市名称" label-width="90px">
+                            <el-select v-model="fromSearch.leagueCityName" clearable>
+                              <el-option
+                                v-for="item in leagueCityTypeAry"
+                                :key="item.dictItemName"
+                                :label="item.dictItemName"
+                                :value="item.dictItemName"
+                              >
+                              </el-option>
+                            </el-select>
+                          </el-form-item>
+                        </el-col>-->
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
@@ -36,7 +36,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -82,7 +82,6 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { bureauSwitchs, bureauList, dic } from '@/api/fill'
-
 
 export default {
   name: 'Dashboard',
@@ -133,13 +132,14 @@ export default {
       })
     },
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
+        pageNum: val,
+        pageSize: pageSize,
         beginTime: this.fromSearch.beginTime,
-        endTime: this.fromSearch.endTime,
+        endTime: this.fromSearch.endTime
         // leagueCityName: this.fromSearch.leagueCityName
       }
       bureauList(params).then((res) => {
@@ -221,10 +221,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

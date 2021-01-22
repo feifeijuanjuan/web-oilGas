@@ -21,7 +21,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -66,7 +66,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { coaloilEnterpriseList, enterpriseSwitchs,dic } from '@/api/fill'
+import { coaloilEnterpriseList, enterpriseSwitchs, dic } from '@/api/fill'
 
 /*1企业名称、2时间、3企业性质、4税收、5企业人数*/
 export default {
@@ -91,7 +91,7 @@ export default {
         { label: '税收', param: 'taxRevenue' },
         { label: '企业人数', param: 'employeesNum' }
       ],
-      enterNameAry:[],
+      enterNameAry: [],
       selectedRows: []
     }
   },
@@ -105,7 +105,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const enterName = res.data.meizhiyou
-          this.enterNameAry=enterName
+          this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -116,11 +116,12 @@ export default {
       })
     },
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
+        pageNum: val,
+        pageSize: pageSize,
         enterName: this.fromSearch.enterName
       }
       coaloilEnterpriseList(params).then((res) => {
@@ -203,10 +204,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

@@ -14,7 +14,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -92,11 +92,12 @@ export default {
   },
   methods: {
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
+        pageNum: val,
+        pageSize: pageSize,
         oilWellName: this.fromSearch.oilWellName
       }
       tOilWellMonthList(params).then((res) => {

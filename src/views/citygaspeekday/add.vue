@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="form-add"><span class="first">城市燃气企业填报</span>
       <span class="first-line">></span>
-      <span class="first">按年填报</span><span class="first-line">></span>
+      <span class="first">调峰按日填报</span><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
     <div class="form-wrapper">

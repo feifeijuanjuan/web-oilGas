@@ -361,3 +361,31 @@ export const gasyearSave = params => post('/gasyear/save', params)
 export const gasyearUpdate = params => get(`/gasyear/select/${params}`)
 // 删除
 export const gasyearSwitchs = params => post(`/gasyear/switchs`, params)
+
+// 城市燃气按年填报(能源局)
+// 查询
+export const energygasyearList = params => post('/energygasyear/list', params)
+// 保存
+export const energygasyearSave = params => post('/energygasyear/save', params)
+// 更新
+export const energygasyearUpdate = params => get(`/energygasyear/select/${params}`)
+// 删除
+export const energygasyearSwitchs = params => post(`/energygasyear/switchs`, params)
+// 城市燃气按日填报(能源局)
+// 查询
+export const energygasdayList = params => post('/energygasday/list', params)
+// 保存
+export const energygasdaySave = params => post('/energygasday/save', params)
+// 更新
+export const energygasdayUpdate = params => get(`/energygasday/select/${params}`)
+// 删除
+export const energygasdaySwitchs = params => post(`/energygasday/switchs`, params)
+// 城燃按日调峰填报(能源局)
+// 查询
+export const energygaspeekdayList = params => post('/energygaspeekday/list', params)
+// 保存
+export const energygaspeekdaySave = params => post('/energygaspeekday/save', params)
+// 更新
+export const energygaspeekdayUpdate = params => get(`/energygaspeekday/select/${params}`)
+// 删除
+export const energygaspeekdaySwitchs = params => post(`/energygaspeekday/switchs`, params)

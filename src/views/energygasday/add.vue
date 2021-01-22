@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <div class="form-add"><span class="first">城市燃气按日填报</span>
+    <div class="form-add"><span class="first">能源局填报</span>
       <span class="first-line">></span>
-      <span class="first">按日填报</span
+      <span class="first">城市燃气按日填报(能源局)</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -206,7 +206,7 @@
 </template>
 
 <script>
-import { citygasdayrhsave, citygasdayUpdate, dic } from '@/api/fill'
+import { energygasdaySave, energygasdayUpdate, dic } from '@/api/fill'
 
 
 export default {
@@ -268,7 +268,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName = res.data.chengshiranqi
+          const enterName = res.data.nengyuanju
           this.leagueCityTypeAry = data
           this.enterNameAry = enterName
         } else {
@@ -282,7 +282,7 @@ export default {
     },
     // 数据回显
     update() {
-      citygasdayUpdate(this.$route.query.id).then((res) => {
+      energygasdayUpdate(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
@@ -295,20 +295,20 @@ export default {
       })
     },
     close() {
-      this.$router.push('/citygasday/list')
+      this.$router.push('/energygasday/list')
     },
     // 新增保存
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          citygasdayrhsave(this.editForm).then((res) => {
+          energygasdaySave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/citygasday/list')
+              this.$router.push('/energygasday/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -326,14 +326,14 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          citygasdayrhsave(this.editForm).then((res) => {
+          energygasdaySave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/citygasday/list')
+              this.$router.push('/energygasday/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

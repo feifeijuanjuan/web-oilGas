@@ -126,6 +126,12 @@ export default {
         return '/gasyear/list'
       } else if (path === '/governmentyearAdd') {
         return '/governmentyear/list'
+      } else if (path === '/energygasyearAdd') {
+        return '/energygasyear/list'
+      } else if (path === '/energygasdayAdd') {
+        return '/energygasday/list'
+      } else if (path === '/energygaspeekdayAdd') {
+        return '/energygaspeekday/list'
       } else {
         return path
       }

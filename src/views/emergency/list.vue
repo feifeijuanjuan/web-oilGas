@@ -50,7 +50,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -163,13 +163,12 @@ export default {
       })
     },
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        /* beginTime: this.fromSearch.time[0],
-         endTime: this.fromSearch.time[1],*/
+        pageNum: val,
+        pageSize: pageSize,
         leagueCityName: this.fromSearch.leagueCityName,
         enterName: this.fromSearch.enterName
       }

@@ -1,5 +1,5 @@
 <template>
-<!--  油井-->
+  <!--  油井-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
@@ -14,7 +14,7 @@
         </div>
         <div class="search-btn">
           <el-form-item label-width="0">
-            <el-button type="primary" icon="el-icon-search" @click="list((1,pageSize))">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="list(1,pageSize)">查询</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -78,8 +78,8 @@ export default {
       tableLabel: [
         { label: '气井名称', param: 'gasWellName' },
         // { label: '时间', param: 'recordDate' },
-        { label: '气井地图坐标信息', param: 'gasWellCoordinate'},
-        { label: '气井所属生产基地', param: 'baseName'},
+        { label: '气井地图坐标信息', param: 'gasWellCoordinate' },
+        { label: '气井所属生产基地', param: 'baseName' }
         // { label: '气井月产量(万立方米)', param: 'gasWellYield' },
         // { label: '产量属性', param: 'yieldAttribute' }
       ],
@@ -92,11 +92,12 @@ export default {
   },
   methods: {
     // 查询列表
-    list() {
+    list(val, pageSize) {
       this.loading = true
+      this.currentPage = val
       const params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
+        pageNum: val,
+        pageSize: pageSize,
         gasWellName: this.fromSearch.gasWellName
       }
       gaswellList(params).then((res) => {
@@ -180,10 +181,10 @@ export default {
           })
         }).catch(() => {
           this.$notify({
-                type: 'info',
-                message: '已取消删除',
-                offset: 100
-              })
+            type: 'info',
+            message: '已取消删除',
+            offset: 100
+          })
         })
 
       } else {

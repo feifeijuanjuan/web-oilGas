@@ -496,6 +496,42 @@ export const constantRoutes = [
         component: () => import('@/views/governmentyear/add')
       }
     ]
+  },
+  // 城市燃气按年填报(能源局)
+  {
+    path: '/energygasyearAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/energygasyearAdd',
+        component: () => import('@/views/energygasyear/add')
+      }
+    ]
+  },
+  // 城市燃气按日填报(能源局)
+  {
+    path: '/energygasdayAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/energygasdayAdd',
+        component: () => import('@/views/energygasday/add')
+      }
+    ]
+  },
+  // 城燃按日调峰填报(能源局)
+  {
+    path: '/energygaspeekdayAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/energygaspeekdayAdd',
+        component: () => import('@/views/energygaspeekday/add')
+      }
+    ]
   }
   // 管道
 

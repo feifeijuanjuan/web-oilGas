@@ -29,31 +29,22 @@ service.interceptors.request.use(
 
 // response interceptor
 // response interceptor
-/*service.interceptors.response.use(
+service.interceptors.response.use(
   response => {
     if (response.data.code === 2001) {
-      console.log(1222)
       //token过期失效，跳转登录页
-      this.$notify({
-        message: 'token失效，请重新登录',
-        type: 'error',
-        offset: 100
-      })
+      // Message.error('token失效，请重新登录')
       removeToken() // must remove  token  first
-      resetRouter()
+      // resetRouter()
       // this.$store.getters.commit('RESET_STATE')
-      location.reload()
+      // location.reload()
     }
     return response
   },
   error => {
-    this.$notify({
-      message: '网络请求失败',
-      type: 'error',
-      offset: 100
-    })
+    Message.error('网络请求失败')
   }
-);*/
+);
 
 // 封装get方法
 export function get(url, params) {

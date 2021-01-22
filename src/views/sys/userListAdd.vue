@@ -74,7 +74,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="12" v-show="this.statu=='update'">
             <el-form-item label="重置密码">
               <el-button type="primary" @click="resetPwd">重置密码</el-button>
             </el-form-item>
@@ -181,7 +181,7 @@ export default {
   methods: {
     //重置密码
     resetPwd() {
-      const userId = this.$store.getters.userId
+      const userId = this.$route.query.id
       resetPwd(userId).then((res) => {
         if (res.code === 0) {
           this.$notify({

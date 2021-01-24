@@ -1,13 +1,12 @@
 <template>
-  <!--  油井-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-form-item label="气井名称" label-width="70px">
-                <el-input v-model="fromSearch.gasWellName"></el-input>
+              <el-form-item label="基地(单位-部门)" label-width="120px">
+                <el-input v-model="fromSearch.baseName"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -58,7 +57,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { tGasWellMonthList, tGasWellMonthSwitchs } from '@/api/fill'
+import { baseList, baseSwitchs } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -71,17 +70,18 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        gasWellName: ''
+        baseName: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '气井名称', param: 'gasWellName' },
-        { label: '时间', param: 'recordDate' },
-        // { label: '气井地图坐标信息', param: 'gasWellCoordinate'},
-        { label: '气井所属生产基地', param: 'baseName'},
-        { label: '气井月产量(万立方米)', param: 'gasWellYield' },
-        { label: '产量属性', param: 'yieldAttribute' }
+        { label: '基地(单位-部门)', param: 'baseName', minWidth: 150 },
+        { label: '时间', param: 'recordDate', minWidth: 150 },
+        { label: '所属企业', param: 'groupType', minWidth: 150 },
+        { label: '企业法人', param: 'enterJuridical', minWidth: 150 },
+        { label: '基地员工数量', param: 'employeesNum', minWidth: 150 },
+        { label: '当月产量', param: 'yieldMonth', minWidth: 150 },
+        // { label: '年度累计产量', param: 'yieldYear', minWidth: 150 }
       ],
       selectedRows: []
     }
@@ -98,9 +98,9 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        gasWellName: this.fromSearch.gasWellName
+        baseName: this.fromSearch.baseName
       }
-      tGasWellMonthList(params).then((res) => {
+      baseList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -128,7 +128,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/tGasWellMonthAdd', query: params })
+      this.$router.push({ path: '/baseAdd', query: params })
 
     },
     // 编辑
@@ -139,7 +139,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/tGasWellMonthAdd', query: params })
+        this.$router.push({ path: '/baseAdd', query: params })
 
       } else {
         this.$notify({
@@ -160,7 +160,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          tGasWellMonthSwitchs(params).then((res) => {
+          baseSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',

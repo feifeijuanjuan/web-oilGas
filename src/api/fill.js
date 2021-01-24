@@ -405,3 +405,45 @@ export const energygaspeekdayUpdate = params => get(`/energygaspeekday/select/${
 // 删除
 export const energygaspeekdaySwitchs = params => post(`/energygaspeekday/switchs`, params)
 
+// 气年度产量信息填报
+// 查询
+export const gasyieldyearList = params => post('/gasyieldyear/list', params)
+// 保存
+export const gasyieldyearSave = params => post('/gasyieldyear/save', params)
+// 更新
+export const gasyieldyearUpdate = params => get(`/gasyieldyear/select/${params}`)
+// 删除
+export const gasyieldyearwitchs = params => post(`/gasyieldyear/switchs`, params)
+
+// 油田年度产量信息填报
+// 查询
+export const oilyieldyearList = params => post('/oilyieldyear/list', params)
+// 保存
+export const oilyieldyearSave = params => post('/oilyieldyear/save', params)
+// 更新
+export const oilyieldyearUpdate = params => get(`/oilyieldyear/select/${params}`)
+// 删除
+export const oilyieldyearwitchs = params => post(`/oilyieldyear/switchs`, params)
+
+// 统计局年度产量信息填报
+// 查询
+export const bureauyieldyearList = params => post('/bureauyieldyear/list', params)
+// 保存
+export const bureauyieldyearSave = params => post('/bureauyieldyear/save', params)
+// 更新
+export const bureauyieldyearUpdate = params => get(`/bureauyieldyear/select/${params}`)
+// 删除
+export const bureauyieldyearSwitchs = params => post(`/bureauyieldyear/switchs`, params)
+
+
+// 气田生产基地信息填报
+// 查询
+export const gasbaseList = params => post('/gasbase/list', params)
+// 保存
+export const gasbaseSave = params => post('/gasbase/save', params)
+// 更新
+export const gasbaseUpdate = params => get(`/gasbase/select/${params}`)
+// 删除
+export const gasbaseSwitchs = params => post(`/gasbase/switchs`, params)
+
+

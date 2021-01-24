@@ -79,7 +79,7 @@ export default {
         { label: '油井名称', param: 'oilWellName' },
         { label: '时间', param: 'recordDate' },
         // { label: '油井地图坐标信息', param: 'oilWellCoordinate' },
-        // { label: '油井所属生产基地', param: 'baseName' },
+        { label: '油井所属生产基地', param: 'baseName' },
         { label: '油井月产量(万吨)', param: 'oilWellYield' },
         { label: '产量属性', param: 'yieldAttribute' }
       ],

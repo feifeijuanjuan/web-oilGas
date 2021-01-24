@@ -136,6 +136,12 @@ export default {
         return '/citygasyear/list'
       } else if (path === '/energygasyearEdit') {
         return '/energygasyear/list'
+      } else if (path === '/gasyieldyearAdd') {
+        return '/gasyieldyear/list'
+      } else if (path === '/oilyieldyearAdd') {
+        return '/oilyieldyear/list'
+      } else if (path === '/bureauyieldyearAdd') {
+        return '/bureauyieldyear/list'
       } else {
         return path
       }

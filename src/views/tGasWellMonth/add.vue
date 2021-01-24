@@ -29,19 +29,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!--        <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="气井地图坐标信息" class="no-unit">
-                      <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="12">
-                    <el-form-item label="气井所属生产基地" class="no-unit">
-                      <el-input v-model="editForm.baseName" placeholder="请输入内容">
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>-->
+
         <el-row>
           <el-col :span="12">
             <el-form-item label="气井月产量">
@@ -64,6 +52,19 @@
                 >
                 </el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <!--           <el-col :span="12">
+                       <el-form-item label="气井地图坐标信息" class="no-unit">
+                         <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
+                       </el-form-item>
+                     </el-col>-->
+          <el-col :span="12">
+            <el-form-item label="气井所属生产基地" class="no-unit">
+              <el-input v-model="editForm.baseName" placeholder="请输入内容">
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -94,7 +95,7 @@ export default {
         gasWellName: '',
         recordDate: '',
         // gasWellCoordinate: '',
-        // baseName: '',
+        baseName: '',
         yieldAttribute: '',
         gasWellYield: ''
       },

@@ -1,13 +1,31 @@
 <template>
-  <!--  油井-->
   <div class="app-container">
     <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
-              <el-form-item label="气井名称" label-width="70px">
-                <el-input v-model="fromSearch.gasWellName"></el-input>
+            <el-col :span="9">
+              <el-form-item label="起止日期">
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.beginTime"
+                    type="year"
+                    placeholder="开始日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+                <el-col class="line" :span="2">至</el-col>
+                <el-col :span="11">
+                  <el-date-picker
+                    v-model="fromSearch.endTime"
+                    type="year"
+                    placeholder="结束日期"
+                    value-format="yyyy-MM-dd"
+                  >
+                  </el-date-picker>
+                </el-col>
+
               </el-form-item>
             </el-col>
           </el-row>
@@ -22,6 +40,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
+          按年填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -58,7 +77,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { tGasWellMonthList, tGasWellMonthSwitchs } from '@/api/fill'
+import { oilyieldyearwitchs, oilyieldyearList } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -71,17 +90,17 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        gasWellName: ''
+        // enterName: '',
+        time: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '气井名称', param: 'gasWellName' },
         { label: '时间', param: 'recordDate' },
-        // { label: '气井地图坐标信息', param: 'gasWellCoordinate'},
-        { label: '气井所属生产基地', param: 'baseName'},
-        { label: '气井月产量(万立方米)', param: 'gasWellYield' },
-        { label: '产量属性', param: 'yieldAttribute' }
+        // { label: '综合能源年产量(吨标煤)', param: 'energyConsumption' },
+        // { label: '天然气年产量(亿立方米)', param: 'yieldGasYear' },
+        { label: '原油年产量(万吨)', param: 'yieldOilYear' }
+
       ],
       selectedRows: []
     }
@@ -98,9 +117,10 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        gasWellName: this.fromSearch.gasWellName
+        beginTime: this.fromSearch.beginTime,
+        endTime: this.fromSearch.endTime
       }
-      tGasWellMonthList(params).then((res) => {
+      oilyieldyearList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -128,8 +148,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/tGasWellMonthAdd', query: params })
-
+      this.$router.push({ path: '/oilyieldyearAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -139,7 +158,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/tGasWellMonthAdd', query: params })
+        this.$router.push({ path: '/oilyieldyearAdd', query: params })
 
       } else {
         this.$notify({
@@ -149,6 +168,7 @@ export default {
         })
       }
     },
+    // 删除
     handleDel() {
       if (this.selectedRows.length > 0) {
         this.$confirm('确认删除选择数据吗?', '提示', {
@@ -160,25 +180,23 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          tGasWellMonthSwitchs(params).then((res) => {
+          oilyieldyearwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
-                message: '删除成功',
+                message: '删除成功!',
                 offset: 100
               })
-              const totalPage = Math.ceil((this.total - 1) / this.pageSize)
-              const currentPage = this.currentPage > totalPage ? totalPage : this.currentPage
-              this.currentPage = currentPage < 1 ? 1 : currentPage
               this.list(this.currentPage, this.pageSize)
             } else {
               this.$notify({
                 type: 'error',
-                message: '删除失败',
+                message: '删除失败!',
                 offset: 100
               })
             }
           })
+
         }).catch(() => {
           this.$notify({
             type: 'info',
@@ -216,5 +234,7 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+
+
 }
 </style>

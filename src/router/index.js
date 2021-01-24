@@ -554,6 +554,39 @@ export const constantRoutes = [
         component: () => import('@/views/energygasyear/edit')
       }
     ]
+  },
+  {
+    path: '/gasyieldyearAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasyieldyearAdd',
+        component: () => import('@/views/gasyieldyear/add')
+      }
+    ]
+  },
+  {
+    path: '/oilyieldyearAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/oilyieldyearAdd',
+        component: () => import('@/views/oilyieldyear/add')
+      }
+    ]
+  },
+  {
+    path: '/bureauyieldyearAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/bureauyieldyearAdd',
+        component: () => import('@/views/bureauyieldyear/add')
+      }
+    ]
   }
   // 管道
 

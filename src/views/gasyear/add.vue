@@ -12,18 +12,36 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName" placeholder="请选择">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+            <el-form-item label="企业名称" class="no-unit">
+              <!--              <el-select v-model="editForm.enterName" placeholder="请选择">
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
+              <el-input disabled v-model="editForm.enterName"></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="所属企业" class="no-unit">
+              <!--              <el-select v-model="editForm.enterName" placeholder="请选择">
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
+              <el-input disabled v-model="editForm.groupType"></el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
@@ -35,15 +53,13 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="天然气供气合同量">
               <el-input placeholder="请输入内容" v-model="editForm.yearSupplyNaGasContract"
                         type="number"
                         @input="minMax('yearSupplyNaGasContract',editForm.yearSupplyNaGasContract)"
               >
-                <template slot="append">万立方米</template>
+                <template slot="append">亿立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -63,7 +79,7 @@
 </template>
 
 <script>
-import { dic, gasyearSave, gasyearUpdate } from '@/api/fill'
+import { dic, gasyearInit, gasyearSave, gasyearUpdate } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -72,22 +88,24 @@ export default {
       editForm: {
         enterName: '',
         recordDate: '',
-        yearSupplyNaGasContract: ''
+        yearSupplyNaGasContract: '',
+        groupType: ''
       },
-      enterNameAry:[],
+      enterNameAry: [],
       rules: {
-        enterName: [
+       /* enterName: [
           { required: true, message: '请选择企业名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      },
+      }
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.gasyearInit()
   },
   mounted() {
     Promise.all([
@@ -99,6 +117,20 @@ export default {
     })
   },
   methods: {
+    gasyearInit() {
+      gasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+          this.editForm.groupType = res.data.qiyejiegou
+        } else {
+          this.$notify({
+            message: '请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -110,8 +142,8 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data
-          const enterName=data.chengpinyou
-          this.enterNameAry=enterName
+          const enterName = data.chengpinyou
+          this.enterNameAry = enterName
         }
       })
     },

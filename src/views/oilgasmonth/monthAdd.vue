@@ -39,20 +39,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业结构" class="no-unit">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
-                <el-option
-                  v-for="item in optionsGroupType"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
+            <el-form-item label="企业名称" class="no-unit">
+              <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="月产量">
+            <el-form-item label="企业结构" class="no-unit">
+              <el-input v-model="editForm.groupType" disabled></el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="实际月产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
                         type="number"
                         @input="minMax('yieldOilGas',editForm.yieldOilGas)"
@@ -61,9 +61,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="计划月产量">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield"
@@ -74,6 +71,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="区内供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas"
@@ -84,16 +83,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <!--          <el-col :span="12">
-                      <el-form-item label="月供应量">
-                        <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas">
-                          <template slot="append">{{ unit }}</template>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>-->
-        </el-row>
-
-        <el-row>
           <el-col :span="12">
             <el-form-item label="区外供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyOutOilGas"
@@ -104,13 +93,8 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <!--          <el-col :span="12">
-                      <el-form-item label="综合能源消费量">
-                        <el-input placeholder="请输入内容" v-model="editForm.energyConsumption">
-                          <template slot="append">{{ unit }}</template>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>-->
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="月产能">
               <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
@@ -122,7 +106,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
       </el-form>
 
     </div>
@@ -138,7 +121,7 @@
 </template>
 
 <script>
-import { gasmonthUpdate, oilgasmonthSave, dic } from '@/api/fill'
+import { gasmonthUpdate, oilgasmonthSave, dic, oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -180,6 +163,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.oilgasdayInit()
   },
   mounted() {
     Promise.all([
@@ -191,6 +175,21 @@ export default {
     })
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.oilGasAreaName = res.data.zuzhijigou
+          this.editForm.groupType = res.data.qiyejiegou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -203,7 +202,7 @@ export default {
         if (res.success) {
           const data = res.data
           const gasType = data.gasTypes
-          const groupTypes = data.groupType
+          // const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
           // this.gasTypesAry = gasType
           this.oilGasOptions = []
@@ -225,7 +224,7 @@ export default {
               children: childList
             })
           })
-          this.optionsGroupType = groupTypes
+          // this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
         }
       })

@@ -78,7 +78,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, gasmonthList, oilgasmonthSwitchs } from '@/api/fill'
+import { dic, gasmonthList, oilgasdayInit, oilgasmonthSwitchs } from '@/api/fill'
 
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
@@ -94,7 +94,8 @@ export default {
       pageSize: 10,
       fromSearch: {
         oilGasName: null,
-        time: ''
+        time: '',
+        oilGasAreaName: ''
       },
       loading: false,
       tableData: [],
@@ -103,9 +104,10 @@ export default {
         { label: '气田名称', param: 'oilGasName', minWidth: '150' },
         /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
          { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        { label: '企业名称', param: 'oilGasAreaName', minWidth: '150' },
         { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
-        { label: '月产量(万立方米)', param: 'yieldOilGas', minWidth: '150' },
+        { label: '实际月产量(万立方米)', param: 'yieldOilGas', minWidth: '150' },
         { label: '计划月产量(万立方米)', param: 'oilGasPlanMonthYield', minWidth: '180' },
         // { label: '月供应量', param: 'supplyOilGas', minWidth: '150' },
         // { label: '计划月供应量', param: 'oilGasPlanMonthSupply', minWidth: '150' },
@@ -121,10 +123,25 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
     this.dic()
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.oilGasAreaName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -168,7 +185,8 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        oilGasName: this.fromSearch.oilGasName
+        oilGasName: this.fromSearch.oilGasName,
+        oilGasAreaName: this.fromSearch.oilGasAreaName
       }
       gasmonthList(params).then((res) => {
         if (res.code === 0) {

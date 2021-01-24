@@ -4,47 +4,34 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
-              <el-form-item label="调峰单位" label-width="90px">
-                <el-select v-model="fromSearch.enterName" clearable>
-                  <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.dictItemId"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="盟市名称" label-width="90px">
-                <el-select v-model="fromSearch.leagueCityName" clearable>
-                  <el-option
-                    v-for="item in leagueCityTypeAry"
-                    :key="item.dictItemName"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
             <!--            <el-col :span="8">
-                          <el-form-item label="起止日期">
-                            <el-date-picker
-                              v-model="fromSearch.time"
-                              type="daterange"
-                              unlink-panels
-                              range-separator="至"
-                              start-placeholder="开始日期"
-                              end-placeholder="结束日期"
-                              value-format="yyyy-MM-dd"
-                              :clearable="false"
-                            >
-                            </el-date-picker>
+                          <el-form-item label="调峰单位" label-width="90px">
+                            <el-select v-model="fromSearch.enterName" clearable>
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.dictItemId"
+                                :label="item.dictItemName"
+                                :value="item.dictItemName"
+                              >
+                              </el-option>
+                            </el-select>
                           </el-form-item>
                         </el-col>-->
+
+            <el-col :span="8">
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  type="daterange"
+                  unlink-panels
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
           </el-row>
 
         </div>
@@ -95,7 +82,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { emergencyList, emergencSwitchs, dic } from '@/api/fill'
+import { emergencyList, emergencSwitchs, dic, oilgasdayInit } from '@/api/fill'
 
 /*league_city_name盟市名称（地区）
 		enter_name		企业（管理方）
@@ -114,7 +101,8 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        leagueCityName: '',
+        // leagueCityName: '',
+        time: '',
         enterName: ''
       },
       loading: false,
@@ -122,7 +110,7 @@ export default {
       tableLabel: [
         { label: '调峰时间', param: 'recordDate', minWidth: 160 },
         { label: '调峰单位', param: 'enterName', minWidth: 180 },
-        { label: '盟市名称', param: 'leagueCityName', minWidth: 120 },
+        // { label: '盟市名称', param: 'leagueCityName', minWidth: 120 },
         { label: '商业调峰量(万立方米)', param: 'businessPeakLoadRegulation', minWidth: 180 },
         { label: '甲醇化肥调峰量(万立方米)', param: 'methanolPeakLoadRegulation', minWidth: 200 },
         { label: '可中断工业调峰量(万立方米)', param: 'interruptiblePeakLoadRegulation', minWidth: 200 },
@@ -142,10 +130,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
     this.dic()
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -169,7 +171,8 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        leagueCityName: this.fromSearch.leagueCityName,
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
       emergencyList(params).then((res) => {

@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
@@ -16,7 +16,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="9">
               <el-form-item label="起止日期">
                 <el-col :span="11">
@@ -90,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { gasyearList, gasyearSwitchs, dic } from '@/api/fill'
+import { gasyearList, gasyearSwitchs, dic,gasyearInit} from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -112,7 +112,8 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate' },
         { label: '企业名称', param: 'enterName' },
-        { label: '天然气供气合同量(万立方米)', param: 'yearSupplyNaGasContract' }
+        { label: '所属企业', param: 'groupType' },
+        { label: '天然气供气合同量(亿立方米)', param: 'yearSupplyNaGasContract' }
       ],
       selectedRows: [],
       enterNameAry: []
@@ -120,10 +121,25 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+
     this.dic()
+    this.gasyearInit()
   },
   methods: {
+    gasyearInit(){
+      gasyearInit().then((res)=>{
+        if(res.success){
+          this.fromSearch.enterName=res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        }else{
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

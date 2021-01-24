@@ -79,7 +79,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { MessageBox, Message } from 'element-ui'
-import { list, oilgasdaySwitchs, dic } from '@/api/fill'
+import { list, oilgasdaySwitchs, dic, oilgasdayInit } from '@/api/fill'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
 12直供甲醇厂日供气量、
@@ -98,7 +98,8 @@ export default {
         oilGasName: null,
         time: '',
         name: '',
-        name1: ''
+        name1: '',
+        leagueCityName:''
       },
       loading: false,
       tableData: [],
@@ -107,10 +108,11 @@ export default {
         { label: '气田名称', param: 'oilGasName', minWidth: '150' },
         /*{ label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
         { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        { label: '企业名称', param: 'leagueCityName', minWidth: '180' },
         { label: '企业结构', param: 'groupType', minWidth: '180' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
         { label: '天然气日产量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' },
-        { label: '天然气日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
+        { label: '天然气实际日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
         { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
         // { label: '天然气日供气合同量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
         { label: '直供管道公司日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
@@ -125,11 +127,25 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
     this.dic()
   },
   methods: {
+    oilgasdayInit(){
+      oilgasdayInit().then((res)=>{
+        if(res.success){
+          this.fromSearch.leagueCityName=res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        }else{
+          this.$notify({
+            message: '请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
 
+      })
+    },
     handleChange(val) {
       if (val.length > 0) {
         this.fromSearch.oilGasName = val[val.length - 1]
@@ -173,7 +189,8 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        oilGasName: this.fromSearch.oilGasName
+        oilGasName: this.fromSearch.oilGasName,
+        leagueCityName: this.fromSearch.leagueCityName
       }
       list(params).then((res) => {
         if (res.code === 0) {

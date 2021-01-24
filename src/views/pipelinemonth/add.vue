@@ -68,9 +68,9 @@
                     </el-col>-->
           <el-col :span="12">
             <el-form-item label="管径">
-              <el-input v-model="editForm.pipelineDiamete" placeholder="请输入内容"
+              <el-input v-model="editForm.pipelineDiameter" placeholder="请输入内容"
                         type="number"
-                        @input="minMax('pipelineDiamete',editForm.pipelineDiamete)"
+                        @input="minMax('pipelineDiameter',editForm.pipelineDiameter)"
               >
                 <template slot="append">毫米</template>
               </el-input>
@@ -117,6 +117,8 @@
               <el-date-picker
                 v-model="editForm.dateIncreaseInvest"
                 placeholder="请选择日期"
+                type="year"
+                value-format="yyyy"
               />
             </el-form-item>
           </el-col>
@@ -218,7 +220,7 @@ export default {
         enterType: '',
         enterAddress: '',
         recordDate: '',
-        pipelineDiamete: '',
+        pipelineDiameter: '',
         pipelineLength: '',
         transportPower: '',
         dateIncreaseInvest: '',

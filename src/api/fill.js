@@ -10,7 +10,8 @@ export const update = params => get(`/oilgasday/select/${params}`)
 // 删除
 // export const deleteList = params => deletefn(`/oilgasday/delete/${params}`)
 export const oilgasdaySwitchs = params => post(`/oilgasday/switchs`, params)
-
+//查询所属企业名称
+export const oilgasdayInit = () => get(`/oilgasday/init`)
 // 油气田企业按月填报
 // 查询
 export const gasmonthList = params => post('/oilgasmonth/gasList', params)
@@ -366,6 +367,8 @@ export const gasyearSave = params => post('/gasyear/save', params)
 export const gasyearUpdate = params => get(`/gasyear/select/${params}`)
 // 删除
 export const gasyearSwitchs = params => post(`/gasyear/switchs`, params)
+//获取当前用户企业结构
+export const gasyearInit = params => get(`/gasyear/init`)
 
 // 城市燃气按年填报(能源局)
 // 查询

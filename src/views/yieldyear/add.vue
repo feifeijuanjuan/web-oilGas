@@ -39,7 +39,7 @@
                         type="number"
                         @input="minMax('yieldGasYear',editForm.yieldGasYear)"
               >
-                <template slot="append">吨标煤</template>
+                <template slot="append">亿立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -49,7 +49,7 @@
                         type="number"
                         @input="minMax('yieldOilYear',editForm.yieldOilYear)"
               >
-                <template slot="append">吨标煤</template>
+                <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
           </el-col>

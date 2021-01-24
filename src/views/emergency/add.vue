@@ -20,8 +20,8 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="调峰单位" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName">
+            <el-form-item label="调峰单位" class="no-unit">
+<!--              <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.dictItemId"
@@ -29,7 +29,8 @@
                   :value="item.dictItemName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
 
@@ -45,7 +46,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
               <el-select v-model="editForm.leagueCityName">
                 <el-option
@@ -57,7 +58,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="商业调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.businessPeakLoadRegulation"
@@ -67,9 +68,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="甲醇化肥调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.methanolPeakLoadRegulation"
@@ -79,6 +77,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="可中断工业调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.interruptiblePeakLoadRegulation"
@@ -88,8 +88,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="不可中断工业调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.uninterruptiblePeakLoadRegulation"
@@ -99,6 +97,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="LNG调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.lngPeakLoadRegulation"
@@ -108,8 +108,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="盟市储气日调用量">
               <el-input placeholder="请输入内容" v-model="editForm.gasInvoke"
@@ -119,6 +117,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="计划日调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.planPeakLoadRegulation"
@@ -128,8 +128,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="实际日调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.peakLoadRegulation"
@@ -139,6 +137,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="响应等级" class="no-unit">
               <el-select v-model="editForm.responseLevel">
@@ -152,6 +153,12 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="具体措施" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.specificMeasure">
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
 <!--          <el-col :span="12">
@@ -160,12 +167,7 @@
               </el-input>
             </el-form-item>
           </el-col>-->
-          <el-col :span="12">
-            <el-form-item label="具体措施" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.specificMeasure">
-              </el-input>
-            </el-form-item>
-          </el-col>
+
         </el-row>
       </el-form>
     </div>
@@ -180,7 +182,7 @@
 </template>
 
 <script>
-import { emergencyUpdate, emergencysave, dic } from '@/api/fill'
+import { emergencyUpdate, emergencysave, dic, oilgasdayInit } from '@/api/fill'
 
 
 export default {
@@ -209,9 +211,9 @@ export default {
       pageTitle: '',
       statu: '',
       rules: {
-        enterName: [
+       /* enterName: [
           { required: true, message: '请选择调峰单位', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -222,6 +224,7 @@ export default {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
     this.dic()
+    this.oilgasdayInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -229,6 +232,19 @@ export default {
     }
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -240,10 +256,10 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName=res.data.groupType
+          // const enterName=res.data.groupType
           const response = res.data.responseLevel
           this.leagueCityTypeAry = data
-          this.enterNameAry=enterName
+          // this.enterNameAry=enterName
           this.responseLevelAry = response
         } else {
           this.$notify({

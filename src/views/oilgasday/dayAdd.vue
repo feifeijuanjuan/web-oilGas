@@ -40,8 +40,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="企业名称" class="no-unit">
+              <el-input v-model="editForm.leagueCityName" disabled ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="企业结构" class="no-unit">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
+<!--              <el-select v-model="editForm.groupType" placeholder="请选择">
                 <el-option
                   v-for="item in optionsGroupType"
                   :key="item.dictItemName"
@@ -49,9 +54,13 @@
                   :value="item.dictItemName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.groupType" disabled ></el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="天然气日产量">
               <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas"
@@ -62,10 +71,8 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
-            <el-form-item label="天然气日供气量">
+            <el-form-item label="天然气实际日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGas"
                         type="number"
                         @input="minMax('daySupplyNaGas',editForm.daySupplyNaGas)"
@@ -74,16 +81,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="天然气计划日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas"
-                        type="number"
-                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)"
-              >
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
+
         </el-row>
         <el-row>
 <!--          <el-col :span="12">
@@ -97,6 +95,16 @@
             </el-form-item>
           </el-col>-->
           <el-col :span="12">
+            <el-form-item label="天然气计划日供气量">
+              <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas"
+                        type="number"
+                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="直供管道公司日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany"
                         type="number"
@@ -106,6 +114,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="直供甲醇厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh"
@@ -116,8 +127,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="直供合成氨日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3"
@@ -128,6 +137,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="直供液化工厂日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant"
@@ -152,7 +164,7 @@
 </template>
 
 <script>
-import { update, save, dic } from '@/api/fill'
+import { update, save, dic,oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -171,7 +183,8 @@ export default {
         daySupplyPipelineCompany: '',
         daySupplyCh3oh: '',
         daySupplyNh3: '',
-        daySupplyLiquPlant: ''
+        daySupplyLiquPlant: '',
+        leagueCityName:''
       },
       pageTitle: '',
       statu: '',
@@ -193,6 +206,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.oilgasdayInit()
   },
   mounted() {
     Promise.all([
@@ -204,6 +218,20 @@ export default {
     })
   },
   methods: {
+    oilgasdayInit(){
+      oilgasdayInit().then((res)=>{
+        if(res.success){
+          this.editForm.leagueCityName=res.data.zuzhijigou
+          this.editForm.groupType=res.data.qiyejiegou
+        }else{
+          this.$notify({
+            message: '请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -216,7 +244,7 @@ export default {
         if (res.success) {
           const data = res.data
           const gasType = data.gasTypes
-          const groupTypes = data.groupType
+          // const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
           // this.gasTypesAry = gasType
           this.oilGasOptions = []
@@ -238,7 +266,7 @@ export default {
               children: childList
             })
           })
-          this.optionsGroupType = groupTypes
+          // this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
         }
       })

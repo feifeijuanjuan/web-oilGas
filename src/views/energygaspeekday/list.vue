@@ -6,7 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="调峰单位" label-width="90px">
-                <el-select v-model="fromSearch.enterName" clearable>
+<!--                <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
                     v-for="item in enterNameAry"
                     :key="item.typeName"
@@ -14,7 +14,8 @@
                     :value="item.typeName"
                   >
                   </el-option>
-                </el-select>
+                </el-select>-->
+                <el-input v-model="fromSearch.enterName" placeholder="请输入调峰单位"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -131,13 +132,13 @@ export default {
   created() {
     // 初始化查询列表
     this.list(1, this.pageSize)
-    this.dic()
+    // this.dic()
   },
   methods: {
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.nengyuanju
+          const enterName = res.data.chengshiranqi
           this.enterNameAry = enterName
         } else {
           this.$notify({

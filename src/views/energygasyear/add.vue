@@ -2,13 +2,13 @@
   <div class="app-container">
     <div class="form-add"><span class="first">能源局填报</span>
       <span class="first-line">></span>
-      <span class="first">城市燃气按年填报（能源局）</span
+      <span class="first">城市燃气按年填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="160px"
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="220px"
                class="form-box clearfix"
       >
         <!--        企业名称、盟市名称、时间、状态
@@ -20,16 +20,8 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+            <el-form-item label="组织机构" class="no-unit">
+              <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -46,54 +38,6 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit">
-              <el-select v-model="editForm.leagueCityName">
-                <el-option
-                  v-for="item in leagueCityTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="城燃企业5%计划储气量">
-              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise"
-                        type="number"
-                        @input="minMax('plannedStorageEnterprise',editForm.plannedStorageEnterprise)"
-              >
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <!--          <el-col :span="12">
-                      <el-form-item label="已建储气能力">
-                        <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt">
-                          <template slot="append">万立方米</template>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>-->
-        </el-row>
-        <!--        <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="正在建设储气能力">
-                      <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction">
-                        <template slot="append">万立方米</template>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="12">
-                    <el-form-item label="待建设储气能力">
-                      <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityToBuild">
-                        <template slot="append">万立方米</template>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>-->
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="合同量">
               <el-input placeholder="请输入内容" v-model="editForm.enterpriseContract"
                         type="number"
@@ -103,7 +47,29 @@
               </el-input>
             </el-form-item>
           </el-col>
-
+          <el-col :span="12">
+            <el-form-item label="盟市城燃企业5%计划储气总量">
+              <el-input placeholder="请输入内容" v-model="editForm.leaguePlannedStorageEnterprise"
+                        type="number"
+                        @input="minMax('leaguePlannedStorageEnterprise',editForm.leaguePlannedStorageEnterprise)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12" v-for="(item,index) in qixianAry">
+            <el-form-item :label="item.typeName+'城燃企业5%计划储气量'">
+              <el-input placeholder="请输入内容"
+                        v-model="qixian[item.typeName]"
+                        type="number"
+                        @input="minMax(item.typeName,qixian[item.typeName])"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -119,7 +85,7 @@
 </template>
 
 <script>
-import { energygasyearSave, energygasyearUpdate, dic } from '@/api/fill'
+import { energygasyearSave, energygasyearUpdate, dic, energygasyearInit,insertAll } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -127,31 +93,26 @@ export default {
     return {
       editForm: {
         recordDate: '',
-        enterName: '',
         leagueCityName: '',
-        // gasStorageCapacityHaveBuilt: '',
-        // gasStorageCapacityUnderConstruction: '',
-        // gasStorageCapacityToBuild: '',
-        // actualStorageEnterprise: '',
         plannedStorageEnterprise: '',
-        enterpriseContract: ''
+        enterpriseContract: '',
+        leaguePlannedStorageEnterprise:''
       },
+      qixian: {},
       rules: {
-        enterName: [
-          { required: true, message: '请选择企业名称', trigger: 'change' }
-        ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
       },
       leagueCityTypeAry: [],
-      enterNameAry: []
+      qixianAry: []
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
     this.dic()
+    this.energygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -159,11 +120,29 @@ export default {
     }
   },
   methods: {
+    //查询用户所属盟市下的旗县
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.qixianAry = res.data.qixian
+          this.editForm.leagueCityName = res.data.zuzhijigou
+          this.qixianAry.forEach((item) => {
+            this.$set(this.qixian, item.typeName, '')
+          })
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
-        this.editForm[name] = 0
+        this.qixian[name] = 0
       } else if (value > 1000000) {
-        this.editForm[name] = 1000000
+        this.qixian[name] = 1000000
       }
     },
     dic() {
@@ -202,7 +181,19 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          energygasyearSave(this.editForm).then((res) => {
+          const params = []
+          Object.keys(this.qixian).forEach((key) => {
+            console.log(key)
+            params.push({
+              recordDate: this.editForm.recordDate,
+              leagueCityName: this.editForm.leagueCityName,
+              leaguePlannedStorageEnterprise:this.editForm.leaguePlannedStorageEnterprise,
+              plannedStorageEnterprise: this.qixian[key],
+              enterpriseContract: this.editForm.enterpriseContract,
+              enterName: key
+            })
+          })
+          insertAll(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',

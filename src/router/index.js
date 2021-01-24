@@ -532,6 +532,28 @@ export const constantRoutes = [
         component: () => import('@/views/energygaspeekday/add')
       }
     ]
+  },
+  {
+    path: '/citygasyearEdit',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/citygasyearEdit',
+        component: () => import('@/views/citygasyear/edit')
+      }
+    ]
+  },
+  {
+    path: '/energygasyearEdit',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/energygasyearEdit',
+        component: () => import('@/views/energygasyear/edit')
+      }
+    ]
   }
   // 管道
 

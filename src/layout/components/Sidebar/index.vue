@@ -132,6 +132,10 @@ export default {
         return '/energygasday/list'
       } else if (path === '/energygaspeekdayAdd') {
         return '/energygaspeekday/list'
+      } else if (path === '/citygasyearEdit') {
+        return '/citygasyear/list'
+      } else if (path === '/energygasyearEdit') {
+        return '/energygasyear/list'
       } else {
         return path
       }

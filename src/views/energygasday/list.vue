@@ -4,19 +4,19 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-select v-model="fromSearch.enterName" clearable>
-                  <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
+            <!--            <el-col :span="8">
+                          <el-form-item label="企业名称" label-width="90px">
+                            <el-select v-model="fromSearch.enterName" clearable>
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>
+                          </el-form-item>
+                        </el-col>-->
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
@@ -80,7 +80,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { energygasdayList, energygasdaySwitchs, dic } from '@/api/fill'
+import { energygasdayList, energygasdaySwitchs, dic, energygasdayInit } from '@/api/fill'
 
 /*企业名称、盟市名称、时间、状态、
 天然气消费量、天然气需求量、天然气供应合同量、天然气计划日供气量、
@@ -106,7 +106,7 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 120 },
-        { label: '企业名称', param: 'enterName', minWidth: 120 },
+        { label: '组织机构', param: 'enterName', minWidth: 120 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
         /* { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
          { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
@@ -130,15 +130,29 @@ export default {
     }
   },
   created() {
-    // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.energygasdayInit()
+
     this.dic()
   },
   methods: {
+    energygasdayInit() {
+      energygasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName=res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        }else{
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
-          const enterName = res.data.nengyuanju
+          const enterName = res.data.chengshiranqi
           this.enterNameAry = enterName
         } else {
           this.$notify({

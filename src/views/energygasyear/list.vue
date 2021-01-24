@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
@@ -16,7 +16,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="9">
               <el-form-item label="起止日期">
                 <el-col :span="11">
@@ -90,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { energygasyearList, energygasyearSwitchs, dic } from '@/api/fill'
+import { energygasyearList, energygasyearSwitchs, dic, energygasyearInit } from '@/api/fill'
 
 /*企业名称、盟市名称、时间、状态
 已建储气能力(万立方米)
@@ -110,21 +110,18 @@ export default {
       pageSize: 10,
       loading: false,
       fromSearch: {
-        enterName: '',
+        leagueCityName: '',
         beginTime: null,
         endTime: null
       },
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate' },
-        { label: '企业名称', param: 'enterName' },
-        { label: '盟市', param: 'leagueCityName' },
-        // { label: '已建储气能力', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
-        // { label: '正在建设储气能力', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
-        // { label: '待建设储气能力', param: 'gasStorageCapacityToBuild', minWidth: 150 },
-        // { label: '城燃企业5%实际储气量', param: 'actualStorageEnterprise', minWidth: 150 },
+        { label: '旗县名称', param: 'enterName' },
+        { label: '组织机构', param: 'leagueCityName' },
         { label: '城燃企业5%计划储气量(万立方米)', param: 'plannedStorageEnterprise' },
-        { label: '合同量(万立方米)', param: 'enterpriseContract' }
+        { label: '合同量(万立方米)', param: 'enterpriseContract' },
+        { label: '盟市城燃企业5%计划储气总量(万立方米)', param: 'leaguePlannedStorageEnterprise' }
       ],
       selectedRows: [],
       enterNameAry: []
@@ -132,10 +129,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.energygasyearInit()
     this.dic()
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.leagueCityName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -159,7 +170,8 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.beginTime,
         endTime: this.fromSearch.endTime,
-        enterName: this.fromSearch.enterName
+        enterName: this.fromSearch.enterName,
+        leagueCityName: this.fromSearch.leagueCityName
       }
       energygasyearList(params).then((res) => {
         if (res.code === 0) {
@@ -200,7 +212,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/energygasyearAdd', query: params })
+        this.$router.push({ path: '/energygasyearEdit', query: params })
 
       } else {
         this.$notify({

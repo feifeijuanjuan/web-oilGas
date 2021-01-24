@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <div class="form-add"><span class="first">城市燃气企业填报</span>
+    <div class="form-add"><span class="first">能源局填报</span>
       <span class="first-line">></span>
-      <span class="first">按年填报</span
+      <span class="first">城市燃气按年填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -49,7 +49,8 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="盟市城燃企业5%计划储气总量">
-              <el-input placeholder="请输入内容" v-model="editForm.leaguePlannedStorageEnterprise"
+              <el-input placeholder="请输入内容"
+                        v-model="editForm.leaguePlannedStorageEnterprise"
                         type="number"
                         @input="minMax('leaguePlannedStorageEnterprise',editForm.leaguePlannedStorageEnterprise)"
               >
@@ -59,12 +60,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" v-for="(item,index) in qixianAry">
-            <el-form-item :label="item.typeName+'城燃企业5%计划储气量'">
+          <el-col :span="12">
+            <el-form-item label="城燃企业5%计划储气量">
               <el-input placeholder="请输入内容"
-                        v-model="qixian[item.typeName]"
+                        v-model="editForm.plannedStorageEnterprise"
                         type="number"
-                        @input="minMax(item.typeName,qixian[item.typeName])"
+                        @input="minMax('plannedStorageEnterprise',editForm.plannedStorageEnterprise)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
@@ -85,7 +86,7 @@
 </template>
 
 <script>
-import { citygasyearhsave, citygasyearUpdate, dic, citygasyearInit, citygasyearInsertAll } from '@/api/fill'
+import { energygasyearSave, energygasyearUpdate, dic, energygasyearInit,insertAll } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -96,7 +97,7 @@ export default {
         leagueCityName: '',
         plannedStorageEnterprise: '',
         enterpriseContract: '',
-        leaguePlannedStorageEnterprise: ''
+        leaguePlannedStorageEnterprise:''
       },
       qixian: {},
       rules: {
@@ -112,7 +113,7 @@ export default {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
     this.dic()
-    this.citygasyearInit()
+    this.energygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -121,8 +122,8 @@ export default {
   },
   methods: {
     //查询用户所属盟市下的旗县
-    citygasyearInit() {
-      citygasyearInit().then((res) => {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
         if (res.success) {
           this.qixianAry = res.data.qixian
           this.editForm.leagueCityName = res.data.zuzhijigou
@@ -149,7 +150,7 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName = res.data.chengshiranqi
+          const enterName = res.data.nengyuanju
           this.leagueCityTypeAry = data
           this.enterNameAry = enterName
         } else {
@@ -163,7 +164,7 @@ export default {
     },
     // 数据回显
     update() {
-      citygasyearUpdate(this.$route.query.id).then((res) => {
+      energygasyearUpdate(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
@@ -176,7 +177,7 @@ export default {
       })
     },
     close() {
-      this.$router.push('/citygasyear/list')
+      this.$router.push('/energygasyear/list')
     },
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
@@ -187,20 +188,19 @@ export default {
             params.push({
               recordDate: this.editForm.recordDate,
               leagueCityName: this.editForm.leagueCityName,
-              leaguePlannedStorageEnterprise: this.editForm.leaguePlannedStorageEnterprise,
               plannedStorageEnterprise: this.qixian[key],
               enterpriseContract: this.editForm.enterpriseContract,
               enterName: key
             })
           })
-          citygasyearInsertAll(params).then((res) => {
+          insertAll(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/citygasyear/list')
+              this.$router.push('/energygasyear/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -218,14 +218,14 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          citygasyearhsave(this.editForm).then((res) => {
+          energygasyearSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/citygasyear/list')
+              this.$router.push('/energygasyear/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

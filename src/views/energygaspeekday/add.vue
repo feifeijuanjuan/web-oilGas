@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="form-add"><span class="first">能源局填报</span>
       <span class="first-line">></span>
-      <span class="first">调峰按日填报（能源局）</span><span class="first-line">></span>
+      <span class="first">调峰按日填报</span><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
     <div class="form-wrapper">
@@ -22,7 +22,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="调峰单位" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName">
+<!--              <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.typeName"
@@ -30,7 +30,8 @@
                   :value="item.typeName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.enterName" placeholder="请输入调峰单位"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -175,7 +176,7 @@
 </template>
 
 <script>
-import { energygasdaySave, energygasdayUpdate, dic } from '@/api/fill'
+import { energygaspeekdaySave, energygaspeekdayUpdate, dic } from '@/api/fill'
 
 
 export default {
@@ -203,7 +204,7 @@ export default {
       },
       rules: {
         enterName: [
-          { required: true, message: '请选择调峰单位', trigger: 'change' }
+          { required: true, message: '请输入调峰单位', trigger: 'blur' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -234,10 +235,10 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName = res.data.nengyuanju
+          // const enterName = res.data.chengshiranqi
           const response = res.data.responseLevel
           this.leagueCityTypeAry = data
-          this.enterNameAry = enterName
+          // this.enterNameAry = enterName
           this.responseLevelAry = response
         } else {
           this.$notify({
@@ -250,7 +251,7 @@ export default {
     },
     // 数据回显
     update() {
-      energygasdayUpdate(this.$route.query.id).then((res) => {
+      energygaspeekdayUpdate(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
@@ -268,7 +269,7 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          energygasdaySave(this.editForm).then((res) => {
+          energygaspeekdaySave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
@@ -293,7 +294,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          energygasdaySave(this.editForm).then((res) => {
+          energygaspeekdaySave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',

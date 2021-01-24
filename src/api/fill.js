@@ -131,6 +131,11 @@ export const citygasyearUpdate = params => get(`/citygasyear/select/${params}`)
 // 删除
 export const citygasyearSwitchs = params => post(`/citygasyear/switchs`, params)
 
+//查询当前盟市下的旗县
+export const citygasyearInit = () => get('/citygasyear/init')
+//新增页面保存
+export const citygasyearInsertAll = params => post('/citygasyear/insertAll', params)
+
 // 城市燃气企业按日填报
 // 查询
 export const citygasdaylList = params => post('/citygasday/list', params)
@@ -371,6 +376,11 @@ export const energygasyearSave = params => post('/energygasyear/save', params)
 export const energygasyearUpdate = params => get(`/energygasyear/select/${params}`)
 // 删除
 export const energygasyearSwitchs = params => post(`/energygasyear/switchs`, params)
+//查询当前盟市下的旗县
+export const energygasyearInit = () => get('/energygasyear/init')
+//新增页面保存
+export const insertAll = params => post('/energygasyear/insertAll', params)
+
 // 城市燃气按日填报(能源局)
 // 查询
 export const energygasdayList = params => post('/energygasday/list', params)
@@ -380,6 +390,8 @@ export const energygasdaySave = params => post('/energygasday/save', params)
 export const energygasdayUpdate = params => get(`/energygasday/select/${params}`)
 // 删除
 export const energygasdaySwitchs = params => post(`/energygasday/switchs`, params)
+//获取组织机构
+export const energygasdayInit = () => get('/energygasday/init')
 // 城燃按日调峰填报(能源局)
 // 查询
 export const energygaspeekdayList = params => post('/energygaspeekday/list', params)
@@ -389,3 +401,4 @@ export const energygaspeekdaySave = params => post('/energygaspeekday/save', par
 export const energygaspeekdayUpdate = params => get(`/energygaspeekday/select/${params}`)
 // 删除
 export const energygaspeekdaySwitchs = params => post(`/energygaspeekday/switchs`, params)
+

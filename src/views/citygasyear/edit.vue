@@ -59,12 +59,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" v-for="(item,index) in qixianAry">
-            <el-form-item :label="item.typeName+'城燃企业5%计划储气量'">
+          <el-col :span="12">
+            <el-form-item label="城燃企业5%计划储气量">
               <el-input placeholder="请输入内容"
-                        v-model="qixian[item.typeName]"
+                        v-model="editForm.plannedStorageEnterprise"
                         type="number"
-                        @input="minMax(item.typeName,qixian[item.typeName])"
+                        @input="minMax('plannedStorageEnterprise',editForm.plannedStorageEnterprise)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { citygasyearhsave, citygasyearUpdate, dic, citygasyearInit, citygasyearInsertAll } from '@/api/fill'
+import { citygasyearhsave, citygasyearUpdate, dic, energygasyearInit, insertAll } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -112,7 +112,7 @@ export default {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
     this.dic()
-    this.citygasyearInit()
+    this.energygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -121,8 +121,8 @@ export default {
   },
   methods: {
     //查询用户所属盟市下的旗县
-    citygasyearInit() {
-      citygasyearInit().then((res) => {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
         if (res.success) {
           this.qixianAry = res.data.qixian
           this.editForm.leagueCityName = res.data.zuzhijigou
@@ -187,13 +187,12 @@ export default {
             params.push({
               recordDate: this.editForm.recordDate,
               leagueCityName: this.editForm.leagueCityName,
-              leaguePlannedStorageEnterprise: this.editForm.leaguePlannedStorageEnterprise,
               plannedStorageEnterprise: this.qixian[key],
               enterpriseContract: this.editForm.enterpriseContract,
               enterName: key
             })
           })
-          citygasyearInsertAll(params).then((res) => {
+          insertAll(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',

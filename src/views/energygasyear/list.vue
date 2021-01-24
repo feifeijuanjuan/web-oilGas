@@ -118,10 +118,10 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate' },
         { label: '旗县名称', param: 'enterName' },
-        { label: '组织机构', param: 'leagueCityName' },
+        { label: '机构名称', param: 'leagueCityName' },
         { label: '城燃企业5%计划储气量(万立方米)', param: 'plannedStorageEnterprise' },
         { label: '合同量(万立方米)', param: 'enterpriseContract' },
-        { label: '盟市城燃企业5%计划储气总量(万立方米)', param: 'leaguePlannedStorageEnterprise' }
+        { label: '盟市年度城燃5%计划储气量(万立方米)', param: 'leaguePlannedStorageEnterprise' }
       ],
       selectedRows: [],
       enterNameAry: []

@@ -19,7 +19,7 @@
                 甲醇天然气日消费量(万立方米)、化肥天然气日消费量(万立方米)、LNG天然气日消费量(万立方米）*-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="组织机构" class="no-unit" prop="enterName">
+            <el-form-item label="机构名称" class="no-unit" prop="enterName">
 <!--              <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
@@ -46,7 +46,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-select v-model="editForm.leagueCityName">
+<!--              <el-select v-model="editForm.leagueCityName">
                 <el-option
                   v-for="item in leagueCityTypeAry"
                   :key="item.dictItemName"
@@ -54,7 +54,8 @@
                   :value="item.dictItemName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -207,7 +208,7 @@
 </template>
 
 <script>
-import { energygasdaySave, energygasdayUpdate, dic, energygasdayInit } from '@/api/fill'
+import { energygasdaySave, energygasdayUpdate, dic, energygasdayInit, energygasyearInit } from '@/api/fill'
 
 
 export default {
@@ -252,6 +253,7 @@ export default {
     this.statu = this.$route.query.statu
     this.dic()
     this.energygasdayInit()
+    this.energygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -259,6 +261,19 @@ export default {
     }
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.leagueCityName=res.data.mengshi
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     energygasdayInit() {
       energygasdayInit().then((res) => {
         if (res.success) {

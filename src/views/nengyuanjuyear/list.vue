@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="盟市名称" label-width="90px">
                 <el-select v-model="fromSearch.leagueCityName" clearable>
                   <el-option
@@ -16,7 +16,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="9">
               <el-form-item label="起止日期">
                 <el-col :span="11">
@@ -90,7 +90,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { nengyuanjuyearSwitchs, nengyuanjuyearList, dic } from '@/api/fill'
+import { nengyuanjuyearSwitchs, nengyuanjuyearList, dic, energygasyearInit } from '@/api/fill'
 
 /*盟市名称、时间
 盟市储气设施总容积
@@ -128,24 +128,38 @@ export default {
         { label: '实际储气量(万立方米)', param: 'actualStorageGovernment', minWidth: 210 },
         { label: '盟市租赁储罐数量(个)', param: 'tankRent', minWidth: 160 },
         { label: '盟市自建储罐数量(个)', param: 'tankSelf', minWidth: 160 },
-        { label: '天然气历史缺口量(万立方米)', param: 'naGasBreach', minWidth: 160 },
+        // { label: '天然气历史缺口量(万立方米)', param: 'naGasBreach', minWidth: 160 },
         // { label: '盟市储气日调用量', param: 'naGasInvoke', minWidth: 160 },
         { label: '盟市气化装置数量(万立方米)', param: 'apparatusNum', minWidth: 160 },
-        { label: '盟市气化装置日均气化量(万立方米)', param: 'apparatusGasContent', minWidth: 180 },
-        { label: '已建储气能力(万立方米)', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
-        { label: '正在建设储气能力(万立方米)', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
-        { label: '待建设储气能力(万立方米)', param: 'gasStorageCapacityToBuild', minWidth: 150 }
+        // { label: '盟市气化装置日均气化量(万立方米)', param: 'apparatusGasContent', minWidth: 180 },
+        { label: '已建储气能力(个)', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
+        { label: '正在建设储气能力(个)', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },
+        { label: '待建设储气能力(个)', param: 'gasStorageCapacityToBuild', minWidth: 150 }
       ],
       selectedRows: []
     }
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.energygasyearInit()
     //字典表
     this.dic()
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.leagueCityName = res.data.mengshi
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

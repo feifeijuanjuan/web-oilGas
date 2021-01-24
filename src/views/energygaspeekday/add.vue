@@ -22,15 +22,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="调峰单位" class="no-unit" prop="enterName">
-<!--              <el-select v-model="editForm.enterName">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>-->
+              <!--              <el-select v-model="editForm.enterName">
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
               <el-input v-model="editForm.enterName" placeholder="请输入调峰单位"></el-input>
             </el-form-item>
           </el-col>
@@ -48,22 +48,24 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-              <el-select v-model="editForm.leagueCityName">
-                <el-option
-                  v-for="item in leagueCityTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
+              <!--              <el-select v-model="editForm.leagueCityName">
+                              <el-option
+                                v-for="item in leagueCityTypeAry"
+                                :key="item.dictItemName"
+                                :label="item.dictItemName"
+                                :value="item.dictItemName"
+                              >
+                              </el-option>
+                            </el-select>-->
+              <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="商业调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.businessPeakLoadRegulation"
                         type="number"
-                        @input="minMax('businessPeakLoadRegulation',editForm.businessPeakLoadRegulation)">
+                        @input="minMax('businessPeakLoadRegulation',editForm.businessPeakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -75,7 +77,8 @@
             <el-form-item label="甲醇化肥调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.methanolPeakLoadRegulation"
                         type="number"
-                        @input="minMax('methanolPeakLoadRegulation',editForm.methanolPeakLoadRegulation)">
+                        @input="minMax('methanolPeakLoadRegulation',editForm.methanolPeakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -84,7 +87,8 @@
             <el-form-item label="可中断工业调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.interruptiblePeakLoadRegulation"
                         type="number"
-                        @input="minMax('interruptiblePeakLoadRegulation',editForm.interruptiblePeakLoadRegulation)">
+                        @input="minMax('interruptiblePeakLoadRegulation',editForm.interruptiblePeakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -95,7 +99,8 @@
             <el-form-item label="不可中断工业调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.uninterruptiblePeakLoadRegulation"
                         type="number"
-                        @input="minMax('uninterruptiblePeakLoadRegulation',editForm.uninterruptiblePeakLoadRegulation)">
+                        @input="minMax('uninterruptiblePeakLoadRegulation',editForm.uninterruptiblePeakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -104,7 +109,8 @@
             <el-form-item label="LNG调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.lngPeakLoadRegulation"
                         type="number"
-                        @input="minMax('lngPeakLoadRegulation',editForm.lngPeakLoadRegulation)">
+                        @input="minMax('lngPeakLoadRegulation',editForm.lngPeakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -115,7 +121,8 @@
             <el-form-item label="盟市储气日调用量">
               <el-input placeholder="请输入内容" v-model="editForm.gasInvoke"
                         type="number"
-                        @input="minMax('gasInvoke',editForm.gasInvoke)">
+                        @input="minMax('gasInvoke',editForm.gasInvoke)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -124,7 +131,8 @@
             <el-form-item label="计划日调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.planPeakLoadRegulation"
                         type="number"
-                        @input="minMax('planPeakLoadRegulation',editForm.planPeakLoadRegulation)">
+                        @input="minMax('planPeakLoadRegulation',editForm.planPeakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -135,7 +143,8 @@
             <el-form-item label="实际日调峰量">
               <el-input placeholder="请输入内容" v-model="editForm.peakLoadRegulation"
                         type="number"
-                        @input="minMax('peakLoadRegulation',editForm.peakLoadRegulation)">
+                        @input="minMax('peakLoadRegulation',editForm.peakLoadRegulation)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -176,8 +185,7 @@
 </template>
 
 <script>
-import { energygaspeekdaySave, energygaspeekdayUpdate, dic } from '@/api/fill'
-
+import { energygaspeekdaySave, energygaspeekdayUpdate, dic, energygasyearInit } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -217,6 +225,7 @@ export default {
     this.statu = this.$route.query.statu
     //字典表
     this.dic()
+    this.energygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -224,6 +233,19 @@ export default {
     }
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.leagueCityName = res.data.mengshi
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

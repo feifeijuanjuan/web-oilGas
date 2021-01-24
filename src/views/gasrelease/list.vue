@@ -6,7 +6,7 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="调峰单位" label-width="90px">
-                <el-select v-model="fromSearch.enterName" clearable>
+<!--                <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
                     v-for="item in enterNameAry"
                     :key="item.typeId"
@@ -14,10 +14,11 @@
                     :value="item.typeName"
                   >
                   </el-option>
-                </el-select>
+                </el-select>-->
+                <el-input v-model="fromSearch.enterName"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="盟市名称" label-width="90px">
                 <el-select v-model="fromSearch.leagueCityName" clearable>
                   <el-option
@@ -29,7 +30,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
 
             <!--            <el-col :span="8">
                           <el-form-item label="起止日期">
@@ -96,7 +97,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, gasreleaseList, gasreleaseSwitchs } from '@/api/fill'
+import { dic, energygasyearInit, gasreleaseList, gasreleaseSwitchs } from '@/api/fill'
 
 /*league_city_name盟市名称（地区）
 		enter_name		企业（管理方）
@@ -115,7 +116,6 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        leagueCityName: '',
         enterName: ''
       },
       loading: false,
@@ -124,9 +124,9 @@ export default {
         { label: '时间', param: 'recordDate', minWidth: 160 },
         { label: '调峰单位', param: 'enterName', minWidth: 180 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
-        { label: '释放气量', param: 'releaseVolumn', minWidth: 210 },
+        { label: '释放气量(万立方米)', param: 'releaseVolumn', minWidth: 210 },
         { label: '气量属性', param: 'airAttribute', minWidth: 210 },
-        { label: '剩余气量', param: 'surplusVolumn', minWidth: 160 }
+        { label: '剩余气量(万立方米)', param: 'surplusVolumn', minWidth: 160 }
       ],
       leagueCityTypeAry: [],
       enterNameAry: [],
@@ -135,10 +135,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.energygasyearInit()
     this.dic()
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.leagueCityName = res.data.mengshi
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

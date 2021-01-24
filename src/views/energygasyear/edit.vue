@@ -20,7 +20,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="组织机构" class="no-unit">
+            <el-form-item label="机构名称" class="no-unit">
               <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -48,7 +48,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="盟市城燃企业5%计划储气总量">
+            <el-form-item label="盟市年度城燃5%计划储气量">
               <el-input placeholder="请输入内容"
                         v-model="editForm.leaguePlannedStorageEnterprise"
                         type="number"

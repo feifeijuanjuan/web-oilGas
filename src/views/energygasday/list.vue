@@ -80,7 +80,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { energygasdayList, energygasdaySwitchs, dic, energygasdayInit } from '@/api/fill'
+import { energygasdayList, energygasdaySwitchs, dic, energygasdayInit, energygasyearInit } from '@/api/fill'
 
 /*企业名称、盟市名称、时间、状态、
 天然气消费量、天然气需求量、天然气供应合同量、天然气计划日供气量、
@@ -100,13 +100,14 @@ export default {
       pageSize: 10,
       fromSearch: {
         enterName: '',
-        time: ''
+        time: '',
+        leagueCityName: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: 120 },
-        { label: '组织机构', param: 'enterName', minWidth: 120 },
+        { label: '机构名称', param: 'enterName', minWidth: 120 },
         { label: '盟市', param: 'leagueCityName', minWidth: 120 },
         /* { label: '天然气消费量', param: 'naturalGasSales', minWidth: 120 },
          { label: '天然气需求量', param: 'gasDemand', minWidth: 120 },
@@ -135,12 +136,26 @@ export default {
     this.dic()
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.leagueCityName=res.data.mengshi
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     energygasdayInit() {
       energygasdayInit().then((res) => {
         if (res.success) {
-          this.fromSearch.enterName=res.data.zuzhijigou
-          this.list(1, this.pageSize)
-        }else{
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.energygasyearInit()
+        } else {
           this.$notify({
             message: '网络请求失败',
             type: 'error',
@@ -172,7 +187,8 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        enterName: this.fromSearch.enterName
+        enterName: this.fromSearch.enterName,
+        leagueCityName: this.fromSearch.leagueCityName
       }
       energygasdayList(params).then((res) => {
         if (res.code === 0) {

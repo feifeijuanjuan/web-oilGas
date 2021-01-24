@@ -6,15 +6,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="调峰单位" label-width="90px">
-<!--                <el-select v-model="fromSearch.enterName" clearable>
-                  <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>-->
+                <!--                <el-select v-model="fromSearch.enterName" clearable>
+                                  <el-option
+                                    v-for="item in enterNameAry"
+                                    :key="item.typeName"
+                                    :label="item.typeName"
+                                    :value="item.typeName"
+                                  >
+                                  </el-option>
+                                </el-select>-->
                 <el-input v-model="fromSearch.enterName" placeholder="请输入调峰单位"></el-input>
               </el-form-item>
             </el-col>
@@ -81,7 +81,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { energygaspeekdaySwitchs, energygaspeekdayList, dic } from '@/api/fill'
+import { energygaspeekdaySwitchs, energygaspeekdayList, dic, energygasyearInit } from '@/api/fill'
 
 /*企业名称、盟市名称、时间、状态
 商业调峰量
@@ -105,7 +105,8 @@ export default {
       pageSize: 10,
       fromSearch: {
         enterName: '',
-        time: ''
+        time: '',
+        leagueCityName: ''
       },
       loading: false,
       tableData: [],
@@ -131,10 +132,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.energygasyearInit()
     // this.dic()
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.leagueCityName = res.data.mengshi
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -158,7 +173,8 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        enterName: this.fromSearch.enterName
+        enterName: this.fromSearch.enterName,
+        leagueCityName: this.fromSearch.leagueCityName
       }
       energygaspeekdayList(params).then((res) => {
         if (res.code === 0) {

@@ -23,8 +23,8 @@
                 盟市气化装置日均气化量*/-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" prop="leagueCityName">
-              <el-select v-model="editForm.leagueCityName">
+            <el-form-item label="盟市名称" class="no-unit">
+<!--              <el-select v-model="editForm.leagueCityName">
                 <el-option
                   v-for="item in leagueCityTypeAry"
                   :key="item.dictItemName"
@@ -32,7 +32,8 @@
                   :value="item.dictItemName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -97,7 +98,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="天然气历史缺口量">
               <el-input placeholder="请输入内容" v-model="editForm.naGasBreach"
                         type="number"
@@ -105,25 +106,13 @@
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="盟市气化装置数量">
               <el-input placeholder="请输入内容" v-model="editForm.apparatusNum"
                         type="number"
                         @input="minMax('apparatusNum',editForm.apparatusNum)">
                 <template slot="append">个</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="盟市气化装置日均气化量">
-              <el-input placeholder="请输入内容" v-model="editForm.apparatusGasContent"
-                        type="number"
-                        @input="minMax('apparatusGasContent',editForm.apparatusGasContent)">
-                <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -135,7 +124,7 @@
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt"
                         type="number"
                         @input="minMax('gasStorageCapacityHaveBuilt',editForm.gasStorageCapacityHaveBuilt)">
-                <template slot="append">万立方米</template>
+                <template slot="append">个</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -144,7 +133,7 @@
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction"
                         type="number"
                         @input="minMax('gasStorageCapacityUnderConstruction',editForm.gasStorageCapacityUnderConstruction)">
-                <template slot="append">万立方米</template>
+                <template slot="append">个</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -155,7 +144,7 @@
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityToBuild"
                         type="number"
                         @input="minMax('gasStorageCapacityToBuild',editForm.gasStorageCapacityToBuild)">
-                <template slot="append">万立方米</template>
+                <template slot="append">个</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -174,7 +163,7 @@
 </template>
 
 <script>
-import { dic, nengyuanjuyearsave, nengyuanjuyearUpdate } from '@/api/fill'
+import { dic, energygasyearInit, nengyuanjuyearsave, nengyuanjuyearUpdate } from '@/api/fill'
 
 
 export default {
@@ -200,9 +189,9 @@ export default {
 
       },
       rules: {
-        leagueCityName: [
+       /* leagueCityName: [
           { required: true, message: '请选择盟市名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -214,6 +203,7 @@ export default {
     this.statu = this.$route.query.statu
     //字典表
     this.dic()
+    this.energygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -221,6 +211,19 @@ export default {
     }
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.leagueCityName = res.data.mengshi
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

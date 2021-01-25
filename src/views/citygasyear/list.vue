@@ -121,7 +121,7 @@ export default {
         { label: '组织机构', param: 'leagueCityName' },
         { label: '城燃企业5%计划储气量(万立方米)', param: 'plannedStorageEnterprise' },
         { label: '合同量(万立方米)', param: 'enterpriseContract' },
-        { label: '盟市城燃企业5%计划储气总量(万立方米)', param: 'leaguePlannedStorageEnterprise' }
+        { label: '城燃企业5%计划储气总量(万立方米)', param: 'leaguePlannedStorageEnterprise' }
       ],
       selectedRows: [],
       enterNameAry: []

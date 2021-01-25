@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="form-add"><span class="first">能源局填报</span>
       <span class="first-line">></span>
-      <span class="first">城市燃气按日填报</span
+      <span class="first">盟市消费及储气填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -20,15 +20,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="机构名称" class="no-unit" prop="enterName">
-<!--              <el-select v-model="editForm.enterName">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>-->
+              <!--              <el-select v-model="editForm.enterName">
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
               <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -46,15 +46,15 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="盟市名称" class="no-unit">
-<!--              <el-select v-model="editForm.leagueCityName">
-                <el-option
-                  v-for="item in leagueCityTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>-->
+              <!--              <el-select v-model="editForm.leagueCityName">
+                              <el-option
+                                v-for="item in leagueCityTypeAry"
+                                :key="item.dictItemName"
+                                :label="item.dictItemName"
+                                :value="item.dictItemName"
+                              >
+                              </el-option>
+                            </el-select>-->
               <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -75,7 +75,8 @@
             <el-form-item label="天然气计划日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.naturalGasPlanSupply"
                         type="number"
-                        @input="minMax('naturalGasPlanSupply',editForm.naturalGasPlanSupply)">
+                        @input="minMax('naturalGasPlanSupply',editForm.naturalGasPlanSupply)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -84,7 +85,8 @@
             <el-form-item label="可中断工业消费量">
               <el-input placeholder="请输入内容" v-model="editForm.interruptibleUserSales"
                         type="number"
-                        @input="minMax('interruptibleUserSales',editForm.interruptibleUserSales)">
+                        @input="minMax('interruptibleUserSales',editForm.interruptibleUserSales)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -96,7 +98,8 @@
             <el-form-item label="不可中断工业消费量">
               <el-input placeholder="请输入内容" v-model="editForm.uninterruptibleUserSales"
                         type="number"
-                        @input="minMax('uninterruptibleUserSales',editForm.uninterruptibleUserSales)">
+                        @input="minMax('uninterruptibleUserSales',editForm.uninterruptibleUserSales)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -105,7 +108,8 @@
             <el-form-item label="居民用气量天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.householdSalesDay"
                         type="number"
-                        @input="minMax('householdSalesDay',editForm.householdSalesDay)">
+                        @input="minMax('householdSalesDay',editForm.householdSalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -117,7 +121,8 @@
             <el-form-item label="民生用气量天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.livelihoodSalesDay"
                         type="number"
-                        @input="minMax('livelihoodSalesDay',editForm.livelihoodSalesDay)">
+                        @input="minMax('livelihoodSalesDay',editForm.livelihoodSalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -126,7 +131,8 @@
             <el-form-item label="社会车辆用气天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.cityTrafficSalesDay"
                         type="number"
-                        @input="minMax('cityTrafficSalesDay',editForm.cityTrafficSalesDay)">
+                        @input="minMax('cityTrafficSalesDay',editForm.cityTrafficSalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -138,7 +144,8 @@
             <el-form-item label="商业用户天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.businessSalesDay"
                         type="number"
-                        @input="minMax('businessSalesDay',editForm.businessSalesDay)">
+                        @input="minMax('businessSalesDay',editForm.businessSalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -147,7 +154,8 @@
             <el-form-item label="工业燃料天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.industrySalesDay"
                         type="number"
-                        @input="minMax('industrySalesDay',editForm.industrySalesDay)">
+                        @input="minMax('industrySalesDay',editForm.industrySalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -159,25 +167,27 @@
             <el-form-item label="甲醛化肥企业日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.methanolSalesDay"
                         type="number"
-                        @input="minMax('methanolSalesDay',editForm.methanolSalesDay)">
+                        @input="minMax('methanolSalesDay',editForm.methanolSalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
-<!--          <el-col :span="12">
-            <el-form-item label="化肥天然气日消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.fertilizerSalesDay"
-                        type="number"
-                        @input="minMax('fertilizerSalesDay',editForm.fertilizerSalesDay)">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
+          <!--          <el-col :span="12">
+                      <el-form-item label="化肥天然气日消费量">
+                        <el-input placeholder="请输入内容" v-model="editForm.fertilizerSalesDay"
+                                  type="number"
+                                  @input="minMax('fertilizerSalesDay',editForm.fertilizerSalesDay)">
+                          <template slot="append">万立方米</template>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
           <el-col :span="12">
             <el-form-item label="LNG天然气日消费量">
               <el-input placeholder="请输入内容" v-model="editForm.lngSalesDay"
                         type="number"
-                        @input="minMax('lngSalesDay',editForm.lngSalesDay)">
+                        @input="minMax('lngSalesDay',editForm.lngSalesDay)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -188,7 +198,18 @@
             <el-form-item label="城燃企业5%实际储气量">
               <el-input placeholder="请输入内容" v-model="editForm.actualStorageEnterprise"
                         type="number"
-                        @input="minMax('actualStorageEnterprise',editForm.actualStorageEnterprise)">
+                        @input="minMax('actualStorageEnterprise',editForm.actualStorageEnterprise)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="地方政府3天实际储气量">
+              <el-input placeholder="请输入内容" v-model="editForm.actualStorageGovernment"
+                        type="number"
+                        @input="minMax('actualStorageGovernment',editForm.actualStorageGovernment)"
+              >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
@@ -209,7 +230,6 @@
 
 <script>
 import { energygasdaySave, energygasdayUpdate, dic, energygasdayInit, energygasyearInit } from '@/api/fill'
-
 
 export default {
   name: 'editFormAdd',
@@ -235,13 +255,13 @@ export default {
         fertilizerSalesDay: '',
         lngSalesDay: '',
         actualStorageEnterprise: '',
-        supplyNaGasContract: ''
-
+        supplyNaGasContract: '',
+        actualStorageGovernment: ''
       },
       rules: {
-       /* enterName: [
-          { required: true, message: '请选择企业名称', trigger: 'change' }
-        ],*/
+        /* enterName: [
+           { required: true, message: '请选择企业名称', trigger: 'change' }
+         ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -264,7 +284,7 @@ export default {
     energygasyearInit() {
       energygasyearInit().then((res) => {
         if (res.success) {
-          this.editForm.leagueCityName=res.data.mengshi
+          this.editForm.leagueCityName = res.data.mengshi
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -277,8 +297,8 @@ export default {
     energygasdayInit() {
       energygasdayInit().then((res) => {
         if (res.success) {
-          this.editForm.enterName=res.data.zuzhijigou
-        }else{
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
           this.$notify({
             message: '网络请求失败',
             type: 'error',

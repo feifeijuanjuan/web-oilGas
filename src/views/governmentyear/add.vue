@@ -14,8 +14,8 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" prop="leagueCityName">
-              <el-select v-model="editForm.leagueCityName">
+            <el-form-item label="盟市名称" class="no-unit" >
+<!--              <el-select v-model="editForm.leagueCityName">
                 <el-option
                   v-for="item in leagueCityTypeAry"
                   :key="item.dictItemName"
@@ -23,7 +23,8 @@
                   :value="item.dictItemName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -31,6 +32,7 @@
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
+                type="year"
                 value-format="yyyy"
               >
               </el-date-picker>
@@ -39,8 +41,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="地方政府" class="no-unit">
-              <el-input v-model="editForm.governmentName" placeholder="请输入地方政府"></el-input>
+            <el-form-item label="机构名称" class="no-unit">
+              <el-input v-model="editForm.governmentName" disabled></el-input>
 <!--              <el-select v-model="editForm.governmentName" clearable>
                 <el-option
                   v-for="item in enterNameAry"
@@ -64,19 +66,6 @@
           </el-col>
 
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="地方政府3天实际储气量">
-              <el-input placeholder="请输入内容" v-model="editForm.actualStorageGovernment"
-                        type="number"
-                        @input="minMax('actualStorageGovernment',editForm.actualStorageGovernment)"
-              >
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
       </el-form>
     </div>
     <div class="form-footer-btn">
@@ -90,7 +79,7 @@
 </template>
 
 <script>
-import { governmentyearUpdate, governmentyearSave, dic } from '@/api/fill'
+import { governmentyearUpdate, governmentyearSave, dic, energygasyearInit, energygasdayInit } from '@/api/fill'
 
 
 export default {
@@ -109,9 +98,9 @@ export default {
       pageTitle: '',
       statu: '',
       rules: {
-        leagueCityName: [
+        /*leagueCityName: [
           { required: true, message: '请选择盟市名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -121,7 +110,8 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
-    this.dic()
+    // this.dic()
+    this.energygasdayInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -129,6 +119,33 @@ export default {
     }
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.leagueCityName = res.data.mengshi
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
+    energygasdayInit() {
+      energygasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.governmentName = res.data.zuzhijigou
+          this.energygasyearInit()
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

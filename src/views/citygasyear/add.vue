@@ -48,7 +48,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="盟市城燃企业5%计划储气总量">
+            <el-form-item label="城燃企业5%计划储气总量">
               <el-input placeholder="请输入内容" v-model="editForm.leaguePlannedStorageEnterprise"
                         type="number"
                         @input="minMax('leaguePlannedStorageEnterprise',editForm.leaguePlannedStorageEnterprise)"

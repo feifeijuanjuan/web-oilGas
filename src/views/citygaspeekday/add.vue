@@ -22,7 +22,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="调峰单位" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName">
+<!--              <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.typeName"
@@ -30,7 +30,8 @@
                   :value="item.typeName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -175,7 +176,7 @@
 </template>
 
 <script>
-import { citygaspeekdaysave, citygaspeekdayUpdate, dic } from '@/api/fill'
+import { citygaspeekdaysave, citygaspeekdayUpdate, citygasyearInit, dic } from '@/api/fill'
 
 
 export default {
@@ -202,9 +203,9 @@ export default {
         specificMeasure: ''
       },
       rules: {
-        enterName: [
+        /*enterName: [
           { required: true, message: '请选择调峰单位', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -216,6 +217,7 @@ export default {
     this.statu = this.$route.query.statu
     //字典表
     this.dic()
+    this.citygasyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -223,6 +225,19 @@ export default {
     }
   },
   methods: {
+    citygasyearInit() {
+      citygasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -234,10 +249,10 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName = res.data.chengshiranqi
+          // const enterName = res.data.chengshiranqi
           const response = res.data.responseLevel
           this.leagueCityTypeAry = data
-          this.enterNameAry = enterName
+          // this.enterNameAry = enterName
           this.responseLevelAry = response
         } else {
           this.$notify({

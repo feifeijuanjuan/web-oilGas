@@ -30,42 +30,19 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="企业名称">
-              <!--              <el-select v-model="editForm.groupType" placeholder="请选择">
-                              <el-option
-                                v-for="item in enterNameAry"
-                                :key="item.dictItemId"
-                                :label="item.dictItemName"
-                                :value="item.dictItemName"
-                              >
-                              </el-option>
-                            </el-select>-->
-              <el-input v-model="editForm.enterName" disabled></el-input>
-            </el-form-item>
-          </el-col>
+
           <el-col :span="12">
             <el-form-item label="所属企业">
-              <!--              <el-select v-model="editForm.groupType" placeholder="请选择">
-                              <el-option
-                                v-for="item in enterNameAry"
-                                :key="item.dictItemId"
-                                :label="item.dictItemName"
-                                :value="item.dictItemName"
-                              >
-                              </el-option>
-                            </el-select>-->
               <el-input v-model="editForm.groupType" disabled></el-input>
             </el-form-item>
           </el-col>
-
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="企业法人">
               <el-input v-model="editForm.enterJuridical" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="基地员工数量">
               <el-input v-model="editForm.employeesNum" placeholder="请输入内容"
@@ -75,28 +52,16 @@
               </el-input>
             </el-form-item>
           </el-col>
-
+          <el-col :span="12">
+            <el-form-item label="当月产量">
+              <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('yieldMonth',editForm.yieldMonth)"
+              >
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
-        <el-col :span="12">
-          <el-form-item label="当月产量">
-            <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
-                      type="number"
-                      @input="minMax('yieldMonth',editForm.yieldMonth)"
-            >
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <!--        <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="年度累计产量">
-                      <el-input v-model="editForm.yieldYear" placeholder="请输入内容"
-                                type="number"
-                                @input="minMax('yieldYear',editForm.yieldYear)"
-                      >
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
-                </el-row>-->
       </el-form>
     </div>
     <div class="form-footer-btn">
@@ -123,7 +88,7 @@ export default {
         baseName: '',
         recordDate: '',
         groupType: '',
-        enterName: '',
+        // enterName: '',
         enterJuridical: '',
         employeesNum: '',
         yieldMonth: '',
@@ -158,8 +123,7 @@ export default {
     gasyearInit() {
       gasyearInit().then((res) => {
         if (res.success) {
-          this.editForm.enterName = res.data.zuzhijigou
-          this.editForm.groupType = res.data.qiyejiegou
+          this.editForm.groupType = res.data.zuzhijigou
         } else {
           this.$notify({
             message: '网络请求失败',

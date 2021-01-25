@@ -71,14 +71,14 @@ export default {
       pageSize: 10,
       fromSearch: {
         baseName: '',
-        enterName:''
+        groupType:''
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '基地(单位-部门)', param: 'baseName', minWidth: 150 },
         { label: '时间', param: 'recordDate', minWidth: 150 },
-        { label: '企业名称', param: 'enterName', minWidth: 150 },
+        // { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '所属企业', param: 'groupType', minWidth: 150 },
         { label: '企业法人', param: 'enterJuridical', minWidth: 150 },
         { label: '基地员工数量', param: 'employeesNum', minWidth: 150 },
@@ -96,7 +96,7 @@ export default {
     gasyearInit() {
       gasyearInit().then((res) => {
         if (res.success) {
-          this.fromSearch.enterName = res.data.zuzhijigou
+          this.fromSearch.groupType = res.data.zuzhijigou
           this.list(1, this.pageSize)
         } else {
           this.$notify({
@@ -115,7 +115,7 @@ export default {
         pageNum: val,
         pageSize: pageSize,
         baseName: this.fromSearch.baseName,
-        enterName: this.fromSearch.enterName
+        groupType: this.fromSearch.groupType
       }
       oilbaseList(params).then((res) => {
         if (res.code === 0) {

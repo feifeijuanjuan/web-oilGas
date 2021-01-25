@@ -20,7 +20,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName">
+<!--              <el-select v-model="editForm.enterName">
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.typeName"
@@ -28,7 +28,8 @@
                   :value="item.typeName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -206,7 +207,7 @@
 </template>
 
 <script>
-import { citygasdayrhsave, citygasdayUpdate, dic } from '@/api/fill'
+import { citygasdayrhsave, citygasdayUpdate, citygasyearInit, dic } from '@/api/fill'
 
 
 export default {
@@ -237,9 +238,9 @@ export default {
 
       },
       rules: {
-        enterName: [
+        /*enterName: [
           { required: true, message: '请选择企业名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -249,6 +250,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.citygasyearInit()
     this.dic()
   },
   mounted() {
@@ -257,6 +259,19 @@ export default {
     }
   },
   methods: {
+    citygasyearInit() {
+      citygasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -268,9 +283,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.leagueCityType
-          const enterName = res.data.chengshiranqi
+          // const enterName = res.data.chengshiranqi
           this.leagueCityTypeAry = data
-          this.enterNameAry = enterName
+          // this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',

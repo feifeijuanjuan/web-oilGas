@@ -4,19 +4,19 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
-              <el-form-item label="盟市名称" label-width="90px">
-                <el-select v-model="fromSearch.leagueCityName" clearable>
-                  <el-option
-                    v-for="item in leagueCityTypeAry"
-                    :key="item.dictItemName"
-                    :label="item.dictItemName"
-                    :value="item.dictItemName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
+            <!--            <el-col :span="8">
+                          <el-form-item label="盟市名称" label-width="90px">
+                            <el-select v-model="fromSearch.leagueCityName" clearable>
+                              <el-option
+                                v-for="item in leagueCityTypeAry"
+                                :key="item.dictItemName"
+                                :label="item.dictItemName"
+                                :value="item.dictItemName"
+                              >
+                              </el-option>
+                            </el-select>
+                          </el-form-item>
+                        </el-col>-->
             <el-col :span="9">
               <el-form-item label="起止日期">
                 <el-col :span="11">
@@ -91,7 +91,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, governmentyearList, governmentyearSwitchs } from '@/api/fill'
+import { dic, energygasdayInit, energygasyearInit, governmentyearList, governmentyearSwitchs } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -104,7 +104,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        leagueCityName: '',
+        governmentName: '',
         beginTime: null,
         endTime: null
       },
@@ -112,10 +112,9 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate' },
-        { label: '地方政府', param: 'governmentName' },
+        { label: '机构名称', param: 'governmentName' },
         { label: '盟市', param: 'leagueCityName' },
-        { label: '地方政府3天计划储气量(万立方米)', param: 'plannedStorageGovernment' },
-        { label: '地方政府3天实际储气量(万立方米)', param: 'actualStorageGovernment' }
+        { label: '地方政府3天计划储气量(万立方米)', param: 'plannedStorageGovernment' }
       ],
       leagueCityTypeAry: [],
       enterNameAry: [],
@@ -124,10 +123,38 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
-    this.dic()
+    this.energygasdayInit()
+    // this.dic()
   },
   methods: {
+    energygasyearInit() {
+      energygasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.leagueCityName = res.data.mengshi
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
+    energygasdayInit() {
+      energygasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.governmentName = res.data.zuzhijigou
+          this.energygasyearInit()
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -151,7 +178,7 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        leagueCityName: this.fromSearch.leagueCityName,
+        governmentName: this.fromSearch.governmentName,
         beginTime: this.fromSearch.beginTime,
         endTime: this.fromSearch.endTime
       }

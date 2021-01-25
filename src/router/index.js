@@ -612,18 +612,6 @@ export const constantRoutes = [
   }
   // 管道
 
-  /* {
-     path: '/',
-     component: Layout,
-     redirect: 'noRedirect',
-     children: [{
-       path: 'dashboard',
-       name: 'Dashboard',
-       component: () => import('@/views/dashboard/index'),
-       meta: { title: '煤气田填报', icon: 'meiqi' }
-     }]
-   },*/
-
   /*{
     path: '/example',
     component: Layout,

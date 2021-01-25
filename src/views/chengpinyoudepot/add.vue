@@ -15,7 +15,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit" prop="enterName">
-              <el-select v-model="editForm.enterName" placeholder="请选择">
+<!--              <el-select v-model="editForm.enterName" placeholder="请选择">
                 <el-option
                   v-for="item in enterNameAry"
                   :key="item.typeName"
@@ -23,7 +23,8 @@
                   :value="item.typeName"
                 >
                 </el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -52,7 +53,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="企业结构" class="no-unit">
               <el-select v-model="editForm.groupType" placeholder="请选择">
                 <el-option
@@ -64,10 +65,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="油库汽油总库存">
               <el-input placeholder="请输入内容" v-model="editForm.gasolineInventoryOilDepot"
@@ -77,6 +75,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="油库柴油总库存">
               <el-input placeholder="请输入内容" v-model="editForm.dieselInventoryOilDepot"
@@ -86,8 +87,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="油库煤油总库存">
               <el-input placeholder="请输入内容" v-model="editForm.aviationCoalInventoryOilDepot"
@@ -97,6 +96,8 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="油库原油总库存">
               <el-input placeholder="请输入内容" v-model="editForm.crudeInventoryOilDepot"
@@ -121,7 +122,13 @@
 </template>
 
 <script>
-import { chengpinyoudepotSave, chengpinyoudepotUpdate, dic,chengpinyoudepotUpdateSave } from '@/api/fill'
+import {
+  chengpinyoudepotSave,
+  chengpinyoudepotUpdate,
+  dic,
+  chengpinyoudepotUpdateSave,
+  chengpinyousaleInit
+} from '@/api/fill'
 
 
 export default {
@@ -131,7 +138,7 @@ export default {
       editForm: {
         recordDate: '',
         enterName: '',
-        groupType:'',
+        // groupType:'',
         leagueCityName: '',
         gasolineInventoryOilDepot: '',
         dieselInventoryOilDepot: '',
@@ -142,9 +149,9 @@ export default {
       leagueCityNameAry:[],
       enterNameAry:[],
       rules: {
-        enterName: [
+       /* enterName: [
           { required: true, message: '请选择企业名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -155,6 +162,7 @@ export default {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
     this.dic()
+    this.chengpinyousaleInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -162,6 +170,19 @@ export default {
     }
   },
   methods: {
+    chengpinyousaleInit(){
+      chengpinyousaleInit().then((res)=>{
+        if(res.success){
+          this.editForm.enterName=res.data.zuzhijigou
+        }else{
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -175,10 +196,10 @@ export default {
           const data = res.data
           const groupTypes = data.groupType
           const leagueCityType = data.leagueCityType
-          const enterName=data.chengpinyou
+          // const enterName=data.chengpinyou
           this.optionsGroupType = groupTypes
           this.leagueCityNameAry = leagueCityType
-          this.enterNameAry=enterName
+          // this.enterNameAry=enterName
         }
       })
     },

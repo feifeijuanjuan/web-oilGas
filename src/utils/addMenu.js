@@ -47,6 +47,8 @@ export const handleMenu = ((menu) => {
       menuList.push({
         path: item.href,
         component: Layout,
+        name: item.name,
+        alwaysShow: true,
         meta: { title: item.name, icon: 'menu' },
         children: childList
       })

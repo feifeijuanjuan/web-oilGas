@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
@@ -15,6 +15,20 @@
                   >
                   </el-option>
                 </el-select>
+              </el-form-item>
+            </el-col>-->
+            <el-col :span="8">
+              <el-form-item label="起止日期">
+                <el-date-picker
+                  v-model="fromSearch.time"
+                  type="monthrange"
+                  unlink-panels
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="yyyy-MM-dd"
+                >
+                </el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
@@ -67,7 +81,7 @@
 <script>
 import {
   chengpinyoudepotlList,
-  chengpinyoudepotSwitchs, dic
+  chengpinyoudepotSwitchs, chengpinyousaleInit, dic
 } from '@/api/fill'
 import TableCmp from '@/components/TableCmp'
 
@@ -92,7 +106,7 @@ export default {
         { label: '时间', param: 'recordDate' },
         { label: '企业名称', param: 'enterName' },
         { label: '盟市', param: 'leagueCityName' },
-        { label: '企业结构', param: 'groupType' },
+        // { label: '企业结构', param: 'groupType' },
         { label: '油库汽油总库存(万吨)', param: 'gasolineInventoryOilDepot' },
         { label: '油库柴油总库存(万吨)', param: 'dieselInventoryOilDepot' },
         { label: '油库煤油总库存(万吨)', param: 'aviationCoalInventoryOilDepot' },
@@ -104,10 +118,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
-    this.dic()
+    this.chengpinyousaleInit()
+    // this.dic()
   },
   methods: {
+    chengpinyousaleInit(){
+      chengpinyousaleInit().then((res)=>{
+        if(res.success){
+          this.fromSearch.enterName=res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        }else{
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -129,8 +157,8 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        beginTime: this.fromSearch.beginTime,
-        endTime: this.fromSearch.endTime,
+        beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
+        endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
       chengpinyoudepotlList(params).then((res) => {

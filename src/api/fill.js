@@ -79,6 +79,8 @@ export const chengpinyousalelSave = params => post('/chengpinyousale/save', para
 export const chengpinyousaleUpdate = params => get(`/chengpinyousale/select/${params}`)
 // 删除
 export const chengpinyousaleSwitchs = params => post(`/chengpinyousale/switchs`, params)
+//获取当前所属企业
+export const chengpinyousaleInit = params => get(`/chengpinyousale/init`)
 
 // 成品油销售企业库存填报
 // 查询

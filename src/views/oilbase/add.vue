@@ -31,26 +31,23 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="所属企业">
-              <el-select v-model="editForm.groupType" placeholder="请选择">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.dictItemId"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
+            <el-form-item label="企业名称">
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="所属企业">
+              <el-input v-model="editForm.groupType" disabled></el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="企业法人">
               <el-input v-model="editForm.enterJuridical" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="基地员工数量">
               <el-input v-model="editForm.employeesNum" placeholder="请输入内容"
@@ -60,6 +57,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="当月产量">
               <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
@@ -69,17 +69,15 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="年度累计产量">
-              <el-input v-model="editForm.yieldYear" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('yieldYear',editForm.yieldYear)"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
+          <!--          <el-col :span="12">
+                      <el-form-item label="年度累计产量">
+                        <el-input v-model="editForm.yieldYear" placeholder="请输入内容"
+                                  type="number"
+                                  @input="minMax('yieldYear',editForm.yieldYear)"
+                        >
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
         </el-row>
       </el-form>
     </div>
@@ -97,7 +95,7 @@
 </template>
 
 <script>
-import { dic, baseUpdate, baseSave } from '@/api/fill'
+import { dic, oilbaseUpdate, oilbaseSave, gasyearInit } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
@@ -110,7 +108,8 @@ export default {
         enterJuridical: '',
         employeesNum: '',
         yieldMonth: '',
-        yieldYear: ''
+        yieldYear: '',
+        enterName: ''
       },
       enterNameAry: [],
       rules: {
@@ -126,6 +125,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.gasyearInit()
   },
   mounted() {
     Promise.all([
@@ -137,6 +137,20 @@ export default {
     })
   },
   methods: {
+    gasyearInit() {
+      gasyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+          this.editForm.groupType = res.data.qiyejiegou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -161,7 +175,7 @@ export default {
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {
-        baseUpdate(this.$route.query.id).then((res) => {
+        oilbaseUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
           } else {
@@ -175,20 +189,20 @@ export default {
       })
     },
     close() {
-      this.$router.push('/base/list')
+      this.$router.push('/oilbase/list')
     },
     // 新增保存
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          baseSave(this.editForm).then((res) => {
+          oilbaseSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/base/list')
+              this.$router.push('/oilbase/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -206,14 +220,14 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          baseSave(this.editForm).then((res) => {
+          oilbaseSave(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/base/list')
+              this.$router.push('/oilbase/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

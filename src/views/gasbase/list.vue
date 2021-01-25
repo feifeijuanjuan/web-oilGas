@@ -57,7 +57,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { baseList, baseSwitchs } from '@/api/fill'
+import { gasbaseList, gasbaseSwitchs, gasyearInit } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -70,17 +70,19 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        baseName: ''
+        baseName: '',
+        enterName: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '基地(单位-部门)', param: 'baseName', minWidth: 150 },
         { label: '时间', param: 'recordDate', minWidth: 150 },
+        { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '所属企业', param: 'groupType', minWidth: 150 },
         { label: '企业法人', param: 'enterJuridical', minWidth: 150 },
         { label: '基地员工数量', param: 'employeesNum', minWidth: 150 },
-        { label: '当月产量', param: 'yieldMonth', minWidth: 150 },
+        { label: '当月产量', param: 'yieldMonth', minWidth: 150 }
         // { label: '年度累计产量', param: 'yieldYear', minWidth: 150 }
       ],
       selectedRows: []
@@ -88,9 +90,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    // this.list(1, this.pageSize)
+    this.gasyearInit()
   },
   methods: {
+    gasyearInit() {
+      gasyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     // 查询列表
     list(val, pageSize) {
       this.loading = true
@@ -98,9 +115,10 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        baseName: this.fromSearch.baseName
+        baseName: this.fromSearch.baseName,
+        enterName: this.fromSearch.enterName
       }
-      baseList(params).then((res) => {
+      gasbaseList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -128,7 +146,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/baseAdd', query: params })
+      this.$router.push({ path: '/gasbaseAdd', query: params })
 
     },
     // 编辑
@@ -139,7 +157,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/baseAdd', query: params })
+        this.$router.push({ path: '/gasbaseAdd', query: params })
 
       } else {
         this.$notify({
@@ -160,7 +178,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          baseSwitchs(params).then((res) => {
+          gasbaseSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',

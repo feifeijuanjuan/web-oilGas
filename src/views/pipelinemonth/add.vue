@@ -42,15 +42,16 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="所属企业" class="no-unit">
-              <el-select v-model="editForm.enterName" placeholder="请选择">
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+              <!--              <el-select v-model="editForm.enterName" placeholder="请选择">
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
           <!--          <el-col :span="12">
@@ -207,7 +208,7 @@
 </template>
 
 <script>
-import { dic, pipelinemonthsave, pipelinemonthUpdate } from '@/api/fill'
+import { dic, pipelinemonthsave, pipelinemonthUpdate, pipelinemonthInit } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
@@ -254,6 +255,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.pipelinemonthInit()
   },
   mounted() {
     Promise.all([
@@ -265,6 +267,20 @@ export default {
     })
   },
   methods: {
+    pipelinemonthInit() {
+      pipelinemonthInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -272,7 +288,7 @@ export default {
         this.editForm[name] = 1000000
       }
     },
-    //更换单位
+    //更换单位re
     changeUnit(val) {
       if (val == '天然气管线') {
         this.unit = '亿立方米/年'
@@ -285,7 +301,7 @@ export default {
         if (res.success) {
           const pipelineTypy = res.data.pipelineType
           const enterpriseEconomyType = res.data.enterpriseEconomyType
-          const enterName = res.data.guandao
+          // const enterName = res.data.guandao
           this.pipelineTypeAry = pipelineTypy
           /*this.pipelineNameOptions = []
           pipelineTypy.forEach(item => {
@@ -307,7 +323,7 @@ export default {
             })
           })*/
           this.enterpriseEconomyTypeAry = enterpriseEconomyType
-          this.enterNameAry = enterName
+          // this.enterNameAry = enterName
         } else {
           this.$notify({
             message: '网络请求失败',

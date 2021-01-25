@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { citygasyearhsave, citygasyearUpdate, dic, energygasyearInit, insertAll } from '@/api/fill'
+import { citygasyearhsave, citygasyearUpdate, dic, energygasyearInit, insertAll,citygasyearChange } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -140,9 +140,9 @@ export default {
     },
     minMax(name, value) {
       if (value < 0) {
-        this.qixian[name] = 0
+        this.editForm[name] = 0
       } else if (value > 1000000) {
-        this.qixian[name] = 1000000
+        this.editForm[name] = 1000000
       }
     },
     dic() {
@@ -217,7 +217,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          citygasyearhsave(this.editForm).then((res) => {
+          citygasyearChange(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',

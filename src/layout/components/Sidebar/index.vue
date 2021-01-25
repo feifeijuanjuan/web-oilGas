@@ -142,6 +142,10 @@ export default {
         return '/oilyieldyear/list'
       } else if (path === '/bureauyieldyearAdd') {
         return '/bureauyieldyear/list'
+      } else if (path === '/gasbaseAdd') {
+        return '/gasbase/list'
+      } else if (path === '/oilbaseAdd') {
+        return '/oilbase/list'
       } else {
         return path
       }

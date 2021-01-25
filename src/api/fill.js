@@ -121,12 +121,16 @@ export const pipelinemonthsave = params => post('/pipelinemonth/save', params)
 export const pipelinemonthUpdate = params => get(`/pipelinemonth/select/${params}`)
 // 删除
 export const pipelinemonthSwitchs = params => post(`/pipelinemonth/switchs`, params)
+// 获取当前用户所属企业
+export const pipelinemonthInit = params => get(`/pipelinemonth/init`)
 
 // 城市燃气企业按年填报
 // 查询
 export const citygasyearlList = params => post('/citygasyear/list', params)
-// 保存
+// 新增保存
 export const citygasyearhsave = params => post('/citygasyear/save', params)
+// 编辑保存
+export const citygasyearChange = params => post('/citygasyear/update', params)
 // 更新
 export const citygasyearUpdate = params => get(`/citygasyear/select/${params}`)
 // 删除
@@ -373,8 +377,10 @@ export const gasyearInit = params => get(`/gasyear/init`)
 // 城市燃气按年填报(能源局)
 // 查询
 export const energygasyearList = params => post('/energygasyear/list', params)
-// 保存
+// 新增保存
 export const energygasyearSave = params => post('/energygasyear/save', params)
+// 编辑保存
+export const energygasyearChange = params => post('/energygasyear/update', params)
 // 更新
 export const energygasyearUpdate = params => get(`/energygasyear/select/${params}`)
 // 删除
@@ -435,7 +441,6 @@ export const bureauyieldyearUpdate = params => get(`/bureauyieldyear/select/${pa
 // 删除
 export const bureauyieldyearSwitchs = params => post(`/bureauyieldyear/switchs`, params)
 
-
 // 气田生产基地信息填报
 // 查询
 export const gasbaseList = params => post('/gasbase/list', params)
@@ -445,5 +450,15 @@ export const gasbaseSave = params => post('/gasbase/save', params)
 export const gasbaseUpdate = params => get(`/gasbase/select/${params}`)
 // 删除
 export const gasbaseSwitchs = params => post(`/gasbase/switchs`, params)
+
+// 油田生产基地信息填报
+// 查询
+export const oilbaseList = params => post('/oilbase/list', params)
+// 保存
+export const oilbaseSave = params => post('/oilbase/save', params)
+// 更新
+export const oilbaseUpdate = params => get(`/oilbase/select/${params}`)
+// 删除
+export const oilbaseSwitchs = params => post(`/oilbase/switchs`, params)
 
 

@@ -85,7 +85,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, pipelinemonthlList, pipelinemonthSwitchs } from '@/api/fill'
+import { dic, pipelinemonthInit, pipelinemonthlList, pipelinemonthSwitchs } from '@/api/fill'
 
 /*1管道名、2管道类别、3企业名称、4企业性质、5企业地址、
 6时间、7管径、8境内里程、9设计运输能力（亿立方米/年）、
@@ -104,7 +104,8 @@ export default {
       pageSize: 10,
       fromSearch: {
         pipelineName: '',
-        pipelineType: ''
+        pipelineType: '',
+        enterName:''
       },
       loading: false,
       tableData: [],
@@ -137,11 +138,26 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+   this.pipelinemonthInit()
     //
     this.dic()
   },
   methods: {
+    pipelinemonthInit() {
+      pipelinemonthInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+
+      })
+    },
     handleChange(val) {
       if (val.length > 0) {
         this.fromSearch.pipelineName = val[val.length - 1]
@@ -190,7 +206,8 @@ export default {
         pageNum: val,
         pageSize: pageSize,
         pipelineType: this.fromSearch.pipelineType,
-        pipelineName: this.fromSearch.pipelineName
+        pipelineName: this.fromSearch.pipelineName,
+        enterName: this.fromSearch.enterName
       }
       pipelinemonthlList(params).then((res) => {
         if (res.code === 0) {

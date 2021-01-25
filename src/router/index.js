@@ -587,6 +587,28 @@ export const constantRoutes = [
         component: () => import('@/views/bureauyieldyear/add')
       }
     ]
+  },
+  {
+    path: '/gasbaseAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasbaseAdd',
+        component: () => import('@/views/gasbase/add')
+      }
+    ]
+  },
+  {
+    path: '/oilbaseAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/oilbaseAdd',
+        component: () => import('@/views/oilbase/add')
+      }
+    ]
   }
   // 管道
 

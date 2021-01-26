@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+<!--    <div class="filter-container">
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
@@ -25,7 +25,7 @@
           </el-form-item>
         </div>
       </el-form>
-    </div>
+    </div>-->
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
@@ -66,7 +66,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { coaloilEnterpriseList, enterpriseSwitchs, dic } from '@/api/fill'
+import { coaloilEnterpriseList, enterpriseSwitchs, dic, enterpriseInit } from '@/api/fill'
 
 /*1企业名称、2时间、3企业性质、4税收、5企业人数*/
 export default {
@@ -96,11 +96,25 @@ export default {
     }
   },
   created() {
-    this.list(1, this.pageSize)
+    this.enterpriseInit()
     //字典表
-    this.dic()
+    // this.dic()
   },
   methods: {
+    enterpriseInit() {
+      enterpriseInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

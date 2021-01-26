@@ -202,6 +202,8 @@ export const coalgasEnterpriseList = params => post('/enterprise/coalgasList', p
 export const coaloilEnterpriseList = params => post('/enterprise/coaloilList', params)
 // 炼厂企业信息填报
 export const lianchangEnterpriseList = params => post('/enterprise/lianchangList', params)
+//获取当前用户所属企业
+export const enterpriseInit = () => get('/enterprise/init')
 
 // 管道企业按日填报
 // 原油管线查询

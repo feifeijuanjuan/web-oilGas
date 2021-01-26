@@ -17,15 +17,16 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" prop="enterName">
-              <el-select v-model="editForm.enterName" clearable>
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeName"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>
+              <!--              <el-select v-model="editForm.enterName" clearable>
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeName"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -47,7 +48,8 @@
             <el-form-item label="产能">
               <el-input placeholder="请输入内容" v-model="editForm.proCapacity"
                         type="number"
-                        @input="minMax('proCapacity',editForm.proCapacity)">
+                        @input="minMax('proCapacity',editForm.proCapacity)"
+              >
               </el-input>
             </el-form-item>
           </el-col>
@@ -55,7 +57,8 @@
             <el-form-item label="税收">
               <el-input placeholder="请输入内容" v-model="editForm.taxRevenue"
                         type="number"
-                        @input="minMax('taxRevenue',editForm.taxRevenue)">
+                        @input="minMax('taxRevenue',editForm.taxRevenue)"
+              >
               </el-input>
             </el-form-item>
           </el-col>
@@ -66,7 +69,8 @@
             <el-form-item label="企业人数">
               <el-input placeholder="请输入内容" v-model="editForm.employeesNum"
                         type="number"
-                        @input="minMax('employeesNum',editForm.employeesNum)">
+                        @input="minMax('employeesNum',editForm.employeesNum)"
+              >
               </el-input>
             </el-form-item>
           </el-col>
@@ -85,8 +89,7 @@
 </template>
 
 <script>
-import { dic, enterpriseSave, enterpriseUpdate } from '@/api/fill'
-
+import { dic, enterpriseInit, enterpriseSave, enterpriseUpdate } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -94,7 +97,7 @@ export default {
   data() {
     return {
       enterpriseEconomyTypeAry: [],
-      enterNameAry:[],
+      enterNameAry: [],
       editForm: {
         enterName: '',
         enterType: '',
@@ -103,15 +106,16 @@ export default {
         employeesNum: ''
       },
       rules: {
-        enterName: [
+        /*enterName: [
           { required: true, message: '请选择企业名称', trigger: 'change' }
-        ]
+        ]*/
       }
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.enterpriseInit()
     this.dic()
   },
   mounted() {
@@ -120,6 +124,19 @@ export default {
     }
   },
   methods: {
+    enterpriseInit() {
+      enterpriseInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0
@@ -131,9 +148,9 @@ export default {
       dic().then((res) => {
         if (res.success) {
           const data = res.data.enterpriseEconomyType
-          const enterName = res.data.meizhiyou
+          // const enterName = res.data.meizhiyou
           this.enterpriseEconomyTypeAry = data
-          this.enterNameAry=enterName
+          // this.enterNameAry=enterName
         } else {
           this.$notify({
             message: '请求失败',

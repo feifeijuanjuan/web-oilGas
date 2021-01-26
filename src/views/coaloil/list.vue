@@ -4,7 +4,7 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="企业名称" label-width="90px">
                 <el-select v-model="fromSearch.enterName" clearable>
                   <el-option
@@ -16,7 +16,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
@@ -80,7 +80,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { coaloilSwitchs, coaloilList, dic } from '@/api/fill'
+import { coaloilSwitchs, coaloilList, dic,enterpriseInit } from '@/api/fill'
 
 /*1企业名称、2时间、3状态、4计划粉煤月加工量、5粉煤月加工量、6平均负荷率、
 7计划平均负荷率、8水资源用量、9单位产品原料消耗、10单位产品综合能耗、11单位产品新鲜水耗、12石脑油产量、
@@ -164,10 +164,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
-    this.dic()
+    this.enterpriseInit()
+    // this.dic()
   },
   methods: {
+    enterpriseInit() {
+      enterpriseInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {

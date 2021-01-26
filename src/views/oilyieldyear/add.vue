@@ -10,6 +10,24 @@
                class="form-box clearfix"
       >
         <el-row>
+          <!--          <el-col :span="12">
+                      <el-form-item label="企业名称" class="no-unit">
+                        <el-input v-model="editForm.enterName" disabled></el-input>
+                      </el-form-item>
+                    </el-col>-->
+          <el-col :span="12">
+            <el-form-item label="区域名" class="no-unit" prop="oilGasAreaName">
+              <el-select v-model="editForm.oilGasAreaName">
+                <el-option
+                  v-for="item in oilGasAry"
+                  :key="item.typeId"
+                  :label="item.typeName"
+                  :value="item.typeName"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
@@ -21,16 +39,8 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-<!--          <el-col :span="12">
-            <el-form-item label="综合能源年产量">
-              <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
-                        type="number"
-                        @input="minMax('energyConsumption',editForm.energyConsumption)"
-              >
-                <template slot="append">吨标煤</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="原油年产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldOilYear"
@@ -41,19 +51,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-<!--          <el-col :span="12">
-            <el-form-item label="天然气年产量">
-              <el-input placeholder="请输入内容" v-model="editForm.yieldGasYear"
-                        type="number"
-                        @input="minMax('yieldGasYear',editForm.yieldGasYear)"
-              >
-                <template slot="append">亿立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
-
         </el-row>
       </el-form>
     </div>
@@ -69,7 +66,7 @@
 </template>
 
 <script>
-import { oilyieldyearSave, oilyieldyearUpdate } from '@/api/fill'
+import { oilyieldyearInit, oilyieldyearSave, oilyieldyearUpdate } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -79,9 +76,15 @@ export default {
         recordDate: '',
         // energyConsumption: '',
         // yieldGasYear: '',
+        enterName: '',
+        oilGasAreaName: '',
         yieldOilYear: ''
       },
+      oilGasAry: [],
       rules: {
+        oilGasAreaName: [
+          { required: true, message: '请选择区域名', trigger: 'change' }
+        ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -91,6 +94,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.oilyieldyearInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -98,6 +102,20 @@ export default {
     }
   },
   methods: {
+    oilyieldyearInit() {
+      oilyieldyearInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+          this.oilGasAry=res.data.quyu
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

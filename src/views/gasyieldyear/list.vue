@@ -77,7 +77,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { gasyieldyearwitchs, gasyieldyearList } from '@/api/fill'
+import { gasyieldyearwitchs, gasyieldyearList, gasyieldyearInit } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -98,7 +98,9 @@ export default {
       tableLabel: [
         { label: '时间', param: 'recordDate' },
         // { label: '综合能源年产量(吨标煤)', param: 'energyConsumption' },
-        { label: '天然气年产量(亿立方米)', param: 'yieldGasYear' },
+        // { label: '企业名称', param: 'enterName' },
+        { label: '区域名', param: 'oilGasAreaName' },
+        { label: '天然气年产量(亿立方米)', param: 'yieldGasYear' }
         // { label: '原油年产量(万吨)', param: 'yieldOilYear' }
 
       ],
@@ -107,9 +109,23 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.gasyieldyearInit()
   },
   methods: {
+    gasyieldyearInit() {
+      gasyieldyearInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     // 查询列表
     list(val, pageSize) {
       this.loading = true
@@ -118,7 +134,8 @@ export default {
         pageNum: val,
         pageSize: pageSize,
         beginTime: this.fromSearch.beginTime,
-        endTime: this.fromSearch.endTime
+        endTime: this.fromSearch.endTime,
+        enterName:this.fromSearch.enterName
       }
       gasyieldyearList(params).then((res) => {
         if (res.code === 0) {

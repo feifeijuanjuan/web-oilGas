@@ -15,7 +15,7 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业名称" prop="enterName">
+            <el-form-item label="企业名称" prop="enterName" class="no-unit">
 <!--              <el-select v-model="editForm.enterName" clearable>
                 <el-option
                   v-for="item in enterNameAry"
@@ -29,7 +29,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="企业性质">
+            <el-form-item label="企业性质" class="no-unit">
               <el-select v-model="editForm.enterpriseEconomyType">
                 <el-option
                   v-for="item in enterpriseEconomyTypeAry"
@@ -48,14 +48,13 @@
               <el-input placeholder="请输入内容" v-model="editForm.proCapacity"
                         type="number"
                         @input="minMax('proCapacity',editForm.proCapacity)">
+                <template slot="append">万吨/月</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="税收">
-              <el-input placeholder="请输入内容" v-model="editForm.taxRevenue"
-                        type="number"
-                        @input="minMax('taxRevenue',editForm.taxRevenue)">
+            <el-form-item label="法人" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.legalRepresentative">
               </el-input>
             </el-form-item>
           </el-col>
@@ -63,7 +62,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="企业人数">
+            <el-form-item label="企业人数" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.employeesNum"
                         type="number"
                         @input="minMax('employeesNum',editForm.employeesNum)">
@@ -100,7 +99,8 @@ export default {
         enterpriseEconomyType: '',
         proCapacity:'',
         taxRevenue: '',
-        employeesNum: ''
+        employeesNum: '',
+        legalRepresentative:''
       },
       rules: {
       /*  enterName: [

@@ -138,7 +138,7 @@
                         type="number"
                         @input="minMax('unitProductRawSales',editForm.unitProductRawSales)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -150,7 +150,7 @@
                         type="number"
                         @input="minMax('unitProductComprehensiveEnergySales',editForm.unitProductComprehensiveEnergySales)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>

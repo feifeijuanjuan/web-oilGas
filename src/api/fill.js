@@ -424,6 +424,8 @@ export const gasyieldyearSave = params => post('/gasyieldyear/save', params)
 export const gasyieldyearUpdate = params => get(`/gasyieldyear/select/${params}`)
 // 删除
 export const gasyieldyearwitchs = params => post(`/gasyieldyear/switchs`, params)
+//获取组织机构以及区域名
+export const gasyieldyearInit = params => get(`/gasyieldyear/init`)
 
 // 油田年度产量信息填报
 // 查询
@@ -434,6 +436,8 @@ export const oilyieldyearSave = params => post('/oilyieldyear/save', params)
 export const oilyieldyearUpdate = params => get(`/oilyieldyear/select/${params}`)
 // 删除
 export const oilyieldyearwitchs = params => post(`/oilyieldyear/switchs`, params)
+//获取组织机构以及区域名
+export const oilyieldyearInit = params => get(`/oilyieldyear/init`)
 
 // 统计局年度产量信息填报
 // 查询

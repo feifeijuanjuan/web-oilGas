@@ -131,7 +131,7 @@
                         type="number"
                         @input="minMax('naphthaRawCoalConsumption',editForm.naphthaRawCoalConsumption)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -144,7 +144,7 @@
                         type="number"
                         @input="minMax('dieselRawCoalConsumption',editForm.dieselRawCoalConsumption)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -154,7 +154,7 @@
                         type="number"
                         @input="minMax('lpgRawCoalConsumption',editForm.lpgRawCoalConsumption)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -167,7 +167,7 @@
                         type="number"
                         @input="minMax('naphthaUnitProductComprehensiveEnergySales',editForm.naphthaUnitProductComprehensiveEnergySales)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -177,7 +177,7 @@
                         type="number"
                         @input="minMax('dieselUnitProductComprehensiveEnergySales',editForm.dieselUnitProductComprehensiveEnergySales)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -190,7 +190,7 @@
                         type="number"
                         @input="minMax('lpgUnitProductComprehensiveEnergySales',editForm.lpgUnitProductComprehensiveEnergySales)"
               >
-                <template slot="append">吨标煤/吨</template>
+                <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
           </el-col>

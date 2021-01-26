@@ -87,8 +87,8 @@ export default {
       tableLabel: [
         { label: '企业名称', param: 'enterName' },
         { label: '企业性质', param: 'enterpriseEconomyType' },
-        { label: '产能', param: 'proCapacity' },
-        { label: '税收', param: 'taxRevenue' },
+        { label: '产能(万吨/月)', param: 'proCapacity' },
+        { label: '法人', param: 'legalRepresentative' },
         { label: '企业人数', param: 'employeesNum' }
       ],
       enterNameAry: [],

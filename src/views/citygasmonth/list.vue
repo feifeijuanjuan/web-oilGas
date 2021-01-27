@@ -43,7 +43,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按日填报
+          非供暖季按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -123,7 +123,8 @@ export default {
         { label: '甲醛化肥企业月消费量(万立方米)', param: 'methanolSalesDay', minWidth: 180 },
         // { label: '化肥天然气日消费量(万立方米)', param: 'fertilizerSalesDay', minWidth: 180 },
         { label: 'LNG天然气月消费量(万立方米)', param: 'lngSalesDay', minWidth: 180 },
-        { label: '城燃企业5%实际储气量(万立方米)', param: 'actualStorageEnterprise', minWidth: 180 }
+        { label: '城燃企业5%实际储气量(万立方米)', param: 'actualStorageEnterprise', minWidth: 180 },
+        { label: '盟市天然气月消费总量(万立方米)', param: 'naturalGasSales', minWidth: 180 }
       ],
       selectedRows: [],
       enterNameAry: []

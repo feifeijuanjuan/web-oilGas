@@ -193,6 +193,15 @@
               </el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="盟市天然气月消费总量">
+              <el-input placeholder="请输入内容" v-model="editForm.naturalGasSales"
+                        type="number"
+                        @input="minMax('naturalGasSales',editForm.naturalGasSales)">
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>

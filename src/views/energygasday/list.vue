@@ -125,7 +125,9 @@ export default {
         // { label: '化肥天然气日消费量(万立方米)', param: 'fertilizerSalesDay', minWidth: 180 },
         { label: 'LNG天然气日消费量(万立方米)', param: 'lngSalesDay', minWidth: 180 },
         { label: '城燃企业5%实际储气量(万立方米)', param: 'actualStorageEnterprise', minWidth: 180 },
-        { label: '地方政府3天实际储气量(万立方米)', param: 'actualStorageGovernment', minWidth: 180 }
+        { label: '地方政府3天实际储气量(万立方米)', param: 'actualStorageGovernment', minWidth: 180 },
+        { label: '盟市天然气日消费总量(万立方米)', param: 'naturalGasSales', minWidth: 180 }
+
       ],
       selectedRows: [],
       enterNameAry: []

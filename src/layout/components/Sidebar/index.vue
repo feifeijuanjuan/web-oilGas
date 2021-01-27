@@ -146,6 +146,10 @@ export default {
         return '/gasbase/list'
       } else if (path === '/oilbaseAdd') {
         return '/oilbase/list'
+      } else if (path === '/citygasmonthAdd') {
+        return '/citygasmonth/list'
+      } else if (path === '/energygasmonthAdd') {
+        return '/energygasmonth/list'
       } else {
         return path
       }

@@ -469,4 +469,24 @@ export const oilbaseUpdate = params => get(`/oilbase/select/${params}`)
 // 删除
 export const oilbaseSwitchs = params => post(`/oilbase/switchs`, params)
 
+// 盟市非供暖季按月填报
+// 查询
+export const citygasmonthList = params => post('/citygasmonth/list', params)
+// 保存
+export const citygasmonthSave = params => post('/citygasmonth/save', params)
+// 更新
+export const citygasmonthUpdate = params => get(`/citygasmonth/select/${params}`)
+// 删除
+export const citygasmonthSwitchs = params => post(`/citygasmonth/switchs`, params)
+// 盟市非供暖季按月填报(能源局)
+// 查询
+export const energygasmonthList = params => post('/energygasmonth/list', params)
+// 保存
+export const energygasmonthSave = params => post('/energygasmonth/save', params)
+// 更新
+export const energygasmonthUpdate = params => get(`/energygasmonth/select/${params}`)
+// 删除
+export const energygasmonthSwitchs = params => post(`/energygasmonth/switchs`, params)
+
+
 

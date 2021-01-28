@@ -8,7 +8,7 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="200px"
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="220px"
                class="form-box clearfix"
       >
         <!--        /*盟市名称、时间
@@ -50,7 +50,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="地方政府储罐容积">
+            <el-form-item label="地方政府和城燃企业储罐容积">
               <el-input placeholder="请输入内容" v-model="editForm.tankVolume"
                         type="number"
                         @input="minMax('tankVolume',editForm.tankVolume)">
@@ -59,7 +59,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="城燃企业计划储气量">
+            <el-form-item label="地方政府和城燃企业计划储气量">
               <el-input placeholder="请输入内容" v-model="editForm.plannedStorageGovernment"
                         type="number"
                         @input="minMax('plannedStorageGovernment',editForm.plannedStorageGovernment)">
@@ -70,7 +70,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="城燃企业实际储气量">
+            <el-form-item label="地方政府和城燃企业实际储气量">
               <el-input placeholder="请输入内容" v-model="editForm.actualStorageGovernment"
                         type="number"
                         @input="minMax('actualStorageGovernment',editForm.actualStorageGovernment)">

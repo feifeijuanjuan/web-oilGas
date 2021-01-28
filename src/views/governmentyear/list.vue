@@ -112,9 +112,11 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate' },
+        { label: '旗县名称', param: 'enterName' },
         { label: '机构名称', param: 'governmentName' },
+        { label: '旗县地方3天计划储气量(万立方米)', param: 'plannedStorageEnterprise' },
         { label: '盟市', param: 'leagueCityName' },
-        { label: '地方政府3天计划储气量(万立方米)', param: 'plannedStorageGovernment' }
+        { label: '地方政府年度3天计划储气总量(万立方米)', param: 'plannedStorageGovernment' }
       ],
       leagueCityTypeAry: [],
       enterNameAry: [],
@@ -221,7 +223,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/governmentyearAdd', query: params })
+        this.$router.push({ path: '/governmentyearEdit', query: params })
 
       } else {
         this.$notify({

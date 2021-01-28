@@ -150,6 +150,8 @@ export default {
         return '/citygasmonth/list'
       } else if (path === '/energygasmonthAdd') {
         return '/energygasmonth/list'
+      } else if (path === '/governmentyearEdit') {
+        return '/governmentyear/list'
       } else {
         return path
       }

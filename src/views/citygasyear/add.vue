@@ -41,7 +41,7 @@
             <el-form-item label="合同量">
               <el-input placeholder="请输入内容" v-model="editForm.enterpriseContract"
                         type="number"
-                        @input="minMax('enterpriseContract',editForm.enterpriseContract)"
+                        @input="minMaxAdd('enterpriseContract',editForm.enterpriseContract)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
@@ -51,7 +51,7 @@
             <el-form-item label="城燃企业5%计划储气总量">
               <el-input placeholder="请输入内容" v-model="editForm.leaguePlannedStorageEnterprise"
                         type="number"
-                        @input="minMax('leaguePlannedStorageEnterprise',editForm.leaguePlannedStorageEnterprise)"
+                        @input="minMaxAdd('leaguePlannedStorageEnterprise',editForm.leaguePlannedStorageEnterprise)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
@@ -137,6 +137,13 @@ export default {
           })
         }
       })
+    },
+    minMaxAdd(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
     },
     minMax(name, value) {
       if (value < 0) {

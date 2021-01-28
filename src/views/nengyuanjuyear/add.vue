@@ -50,7 +50,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="储罐容积">
+            <el-form-item label="地方政府储罐容积">
               <el-input placeholder="请输入内容" v-model="editForm.tankVolume"
                         type="number"
                         @input="minMax('tankVolume',editForm.tankVolume)">
@@ -59,7 +59,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="计划储气量">
+            <el-form-item label="城燃企业计划储气量">
               <el-input placeholder="请输入内容" v-model="editForm.plannedStorageGovernment"
                         type="number"
                         @input="minMax('plannedStorageGovernment',editForm.plannedStorageGovernment)">
@@ -70,7 +70,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="实际储气量">
+            <el-form-item label="城燃企业实际储气量">
               <el-input placeholder="请输入内容" v-model="editForm.actualStorageGovernment"
                         type="number"
                         @input="minMax('actualStorageGovernment',editForm.actualStorageGovernment)">
@@ -89,7 +89,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="盟市自建储罐数量">
               <el-input placeholder="请输入内容" v-model="editForm.tankSelf"
                         type="number"
@@ -97,7 +97,7 @@
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
 <!--          <el-col :span="12">
             <el-form-item label="天然气历史缺口量">
               <el-input placeholder="请输入内容" v-model="editForm.naGasBreach"
@@ -116,11 +116,8 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
-            <el-form-item label="已建储气能力">
+            <el-form-item label="地方政府已建储罐数量">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityHaveBuilt"
                         type="number"
                         @input="minMax('gasStorageCapacityHaveBuilt',editForm.gasStorageCapacityHaveBuilt)">
@@ -128,8 +125,12 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
+
           <el-col :span="12">
-            <el-form-item label="正在建设储气能力">
+            <el-form-item label="地方政府正在建设储罐数量">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityUnderConstruction"
                         type="number"
                         @input="minMax('gasStorageCapacityUnderConstruction',editForm.gasStorageCapacityUnderConstruction)">
@@ -137,10 +138,8 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
-            <el-form-item label="待建设储气能力">
+            <el-form-item label="地方政府待建设储罐数量">
               <el-input placeholder="请输入内容" v-model="editForm.gasStorageCapacityToBuild"
                         type="number"
                         @input="minMax('gasStorageCapacityToBuild',editForm.gasStorageCapacityToBuild)">
@@ -148,6 +147,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
         </el-row>
       </el-form>
     </div>

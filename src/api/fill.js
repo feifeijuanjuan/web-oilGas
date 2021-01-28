@@ -366,6 +366,11 @@ export const governmentyearUpdate = params => get(`/governmentyear/select/${para
 // 删除
 export const governmentyearSwitchs = params => post(`/governmentyear/switchs`, params)
 
+// 新增保存
+export const governmentyearInsertAll = params => post('/governmentyear/insertAll', params)
+// 编辑保存
+export const governmentyearChange = params => post('/governmentyear/update', params)
+
 // 地方政府储气填报
 // 查询
 export const gasyearList = params => post('/gasyear/list', params)

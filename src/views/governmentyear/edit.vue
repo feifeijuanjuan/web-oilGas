@@ -2,25 +2,28 @@
   <div class="app-container">
     <div class="form-add"><span class="first">能源局填报</span>
       <span class="first-line">></span>
-      <span class="first">城市燃气储气填报</span
+      <span class="first">地方政府储气填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" :rules="rules" ref="ruleForm" size="small" label-width="220px"
+      <el-form :model="editForm" size="small" label-width="210px" :rules="rules" ref="ruleForm"
                class="form-box clearfix"
       >
-        <!--        企业名称、盟市名称、时间、状态
-                已建储气能力(万立方米)
-                正在建设储气能力(万立方米)
-                待建设储气能力(万立方米)
-                城燃企业5%实际储气量
-                城燃企业5%计划储气量-->
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="机构名称" class="no-unit">
+            <el-form-item label="盟市名称" class="no-unit" >
+<!--              <el-select v-model="editForm.leagueCityName">
+                <el-option
+                  v-for="item in leagueCityTypeAry"
+                  :key="item.dictItemName"
+                  :label="item.dictItemName"
+                  :value="item.dictItemName"
+                >
+                </el-option>
+              </el-select>-->
               <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -28,9 +31,9 @@
             <el-form-item label="日期" class="no-unit" prop="recordDate">
               <el-date-picker
                 v-model="editForm.recordDate"
+                placeholder="请选择日期"
                 type="year"
                 value-format="yyyy"
-                placeholder="请选择日期"
               >
               </el-date-picker>
             </el-form-item>
@@ -38,32 +41,35 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="合同量">
-              <el-input placeholder="请输入内容" v-model="editForm.enterpriseContract"
-                        type="number"
-                        @input="minMax('enterpriseContract',editForm.enterpriseContract)"
-              >
-                <template slot="append">万立方米</template>
-              </el-input>
+            <el-form-item label="机构名称" class="no-unit">
+              <el-input v-model="editForm.governmentName" disabled></el-input>
+<!--              <el-select v-model="editForm.governmentName" clearable>
+                <el-option
+                  v-for="item in enterNameAry"
+                  :key="item.typeId"
+                  :label="item.typeName"
+                  :value="item.typeName"
+                >
+                </el-option>
+              </el-select>-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="盟市年度城燃5%计划储气量">
-              <el-input placeholder="请输入内容"
-                        v-model="editForm.leaguePlannedStorageEnterprise"
+            <el-form-item label="地方政府年度3天计划储气总量">
+              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageGovernment"
                         type="number"
-                        @input="minMax('leaguePlannedStorageEnterprise',editForm.leaguePlannedStorageEnterprise)"
+                        @input="minMax('plannedStorageGovernment',editForm.plannedStorageGovernment)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
+
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="城燃企业5%计划储气量">
-              <el-input placeholder="请输入内容"
-                        v-model="editForm.plannedStorageEnterprise"
+            <el-form-item label="旗县地方3天计划储气量">
+              <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise"
                         type="number"
                         @input="minMax('plannedStorageEnterprise',editForm.plannedStorageEnterprise)"
               >
@@ -76,44 +82,49 @@
     </div>
     <div class="form-footer-btn">
       <el-button class="close-btn" @click="close">取 消</el-button>
-      <el-button class="confrim-btn" type="primary"
-                 @click="statu==='create'?createData('editForm'):updateData('editForm')"
-      >确 定
+      <el-button class="confrim-btn" @click="statu==='create'?createData('editForm'):updateData('editForm')">确 定
       </el-button>
     </div>
+
   </div>
 
 </template>
 
 <script>
-import { energygasyearSave, energygasyearUpdate, dic, energygasyearInit,insertAll,energygasyearChange } from '@/api/fill'
+import { governmentyearUpdate, governmentyearChange, dic, energygasyearInit, energygasdayInit } from '@/api/fill'
+
 
 export default {
   name: 'editFormAdd',
   data() {
     return {
+      leagueCityTypeAry: [],//盟市名称
+      enterNameAry: [],
       editForm: {
         recordDate: '',
         leagueCityName: '',
-        plannedStorageEnterprise: '',
-        enterpriseContract: '',
-        leaguePlannedStorageEnterprise:''
+        governmentName: '',
+        // actualStorageGovernment: '',
+        plannedStorageGovernment: '',
+        plannedStorageEnterprise:''
       },
-      qixian: {},
+      pageTitle: '',
+      statu: '',
       rules: {
+        /*leagueCityName: [
+          { required: true, message: '请选择盟市名称', trigger: 'change' }
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      },
-      leagueCityTypeAry: [],
-      qixianAry: []
+      }
     }
   },
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
-    this.dic()
-    this.energygasyearInit()
+    // this.dic()
+    this.energygasdayInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -121,15 +132,24 @@ export default {
     }
   },
   methods: {
-    //查询用户所属盟市下的旗县
     energygasyearInit() {
       energygasyearInit().then((res) => {
         if (res.success) {
-          this.qixianAry = res.data.qixian
-          this.editForm.leagueCityName = res.data.zuzhijigou
-          this.qixianAry.forEach((item) => {
-            this.$set(this.qixian, item.typeName, '')
+          this.editForm.leagueCityName = res.data.mengshi
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
           })
+        }
+      })
+    },
+    energygasdayInit() {
+      energygasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.governmentName = res.data.zuzhijigou
+          this.energygasyearInit()
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -164,7 +184,7 @@ export default {
     },
     // 数据回显
     update() {
-      energygasyearUpdate(this.$route.query.id).then((res) => {
+      governmentyearUpdate(this.$route.query.id).then((res) => {
         if (res.code === 0) {
           this.editForm = res.body
         } else {
@@ -176,31 +196,22 @@ export default {
         }
       })
     },
+    // 取消
     close() {
-      this.$router.push('/energygasyear/list')
+      this.$router.push('/governmentyear/list')
     },
+    // 新增保存
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          const params = []
-          Object.keys(this.qixian).forEach((key) => {
-            console.log(key)
-            params.push({
-              recordDate: this.editForm.recordDate,
-              leagueCityName: this.editForm.leagueCityName,
-              plannedStorageEnterprise: this.qixian[key],
-              enterpriseContract: this.editForm.enterpriseContract,
-              enterName: key
-            })
-          })
-          insertAll(params).then((res) => {
+          governmentyearChange(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/energygasyear/list')
+              this.$router.push('/governmentyear/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -214,18 +225,18 @@ export default {
         }
       })
     },
-
+    // 编辑保存
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          energygasyearChange(this.editForm).then((res) => {
+          governmentyearChange(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/energygasyear/list')
+              this.$router.push('/governmentyear/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -244,5 +255,7 @@ export default {
 </script>
 
 <style scoped>
-
+.text-center {
+  text-align: center;
+}
 </style>

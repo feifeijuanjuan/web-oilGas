@@ -8,7 +8,7 @@
       </span></div>
     <div class="form-wrapper">
       <h3 class="form-wrapper-title">{{ pageTitle }}</h3>
-      <el-form :model="editForm" size="small" label-width="160px" :rules="rules" ref="ruleForm"
+      <el-form :model="editForm" size="small" label-width="210px" :rules="rules" ref="ruleForm"
                class="form-box clearfix"
       >
 
@@ -55,16 +55,29 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="地方政府3天计划储气量">
+            <el-form-item label="地方政府年度3天计划储气总量">
               <el-input placeholder="请输入内容" v-model="editForm.plannedStorageGovernment"
                         type="number"
-                        @input="minMax('plannedStorageGovernment',editForm.plannedStorageGovernment)"
+                        @input="minMaxAdd('plannedStorageGovernment',editForm.plannedStorageGovernment)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
 
+        </el-row>
+        <el-row>
+          <el-col :span="12" v-for="(item,index) in qixianAry">
+            <el-form-item :label="item.typeName+'地方3天计划储气量'">
+              <el-input placeholder="请输入内容"
+                        v-model="qixian[item.typeName]"
+                        type="number"
+                        @input="minMax(item.typeName,qixian[item.typeName])"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -79,7 +92,7 @@
 </template>
 
 <script>
-import { governmentyearUpdate, governmentyearSave, dic, energygasyearInit, energygasdayInit } from '@/api/fill'
+import { governmentyearUpdate, governmentyearInsertAll, dic, energygasyearInit, energygasdayInit } from '@/api/fill'
 
 
 export default {
@@ -92,8 +105,9 @@ export default {
         recordDate: '',
         leagueCityName: '',
         governmentName: '',
-        actualStorageGovernment: '',
-        plannedStorageGovernment: ''
+        // actualStorageGovernment: '',
+        plannedStorageGovernment: '',
+        plannedStorageEnterprise:''
       },
       pageTitle: '',
       statu: '',
@@ -104,7 +118,9 @@ export default {
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
-      }
+      },
+      qixian: {},
+      qixianAry: []
     }
   },
   created() {
@@ -123,6 +139,10 @@ export default {
       energygasyearInit().then((res) => {
         if (res.success) {
           this.editForm.leagueCityName = res.data.mengshi
+          this.qixianAry = res.data.qixian
+          this.qixianAry.forEach((item) => {
+            this.$set(this.qixian, item.typeName, '')
+          })
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -131,6 +151,13 @@ export default {
           })
         }
       })
+    },
+    minMaxAdd(name, value) {
+      if (value < 0) {
+        this.editForm[name] = 0
+      } else if (value > 1000000) {
+        this.editForm[name] = 1000000
+      }
     },
     energygasdayInit() {
       energygasdayInit().then((res) => {
@@ -191,7 +218,18 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          governmentyearSave(this.editForm).then((res) => {
+          const params = []
+          Object.keys(this.qixian).forEach((key) => {
+            params.push({
+              recordDate: this.editForm.recordDate,
+              leagueCityName: this.editForm.leagueCityName,
+              governmentName:this.editForm.governmentName,
+              plannedStorageEnterprise: this.qixian[key],
+              plannedStorageGovernment: this.editForm.plannedStorageGovernment,
+              enterName: key
+            })
+          })
+          governmentyearInsertAll(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
@@ -216,7 +254,7 @@ export default {
     updateData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          governmentyearSave(this.editForm).then((res) => {
+          governmentyearInsertAll(this.editForm).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',

@@ -59,6 +59,11 @@
         >
         </el-table-column>
         <el-table-column
+          prop="orgName"
+          label="组织机构"
+        >
+        </el-table-column>
+        <el-table-column
           prop="email"
           label="邮箱"
         >

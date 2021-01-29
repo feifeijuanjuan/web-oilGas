@@ -39,8 +39,27 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="油田面积">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
+                        type="number"
+                        @input="minMax('oilGasSize',editForm.oilGasSize)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="中心经纬度" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasCoordinate">
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit">
-            <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
+              <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -117,29 +136,29 @@
               </el-input>
             </el-form-item>
           </el-col>
-<!--          <el-col :span="12">
-            <el-form-item label="月产能">
-              <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
-                        type="number"
-                        @input="minMax('capacityOilGas',editForm.capacityOilGas)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
+          <!--          <el-col :span="12">
+                      <el-form-item label="月产能">
+                        <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
+                                  type="number"
+                                  @input="minMax('capacityOilGas',editForm.capacityOilGas)"
+                        >
+                          <template slot="append">{{ unit }}</template>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
         </el-row>
         <el-row>
 
-<!--          <el-col :span="12">
-            <el-form-item label="综合能源消费量">
-              <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
-                        type="number"
-                        @input="minMax('energyConsumption',editForm.energyConsumption)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>-->
+          <!--          <el-col :span="12">
+                      <el-form-item label="综合能源消费量">
+                        <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
+                                  type="number"
+                                  @input="minMax('energyConsumption',editForm.energyConsumption)"
+                        >
+                          <template slot="append">{{ unit }}</template>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
         </el-row>
       </el-form>
 
@@ -176,7 +195,9 @@ export default {
         supplyInOilGas: '',
         supplyOutOilGas: '',
         capacityOilGas: '',
-        energyConsumption: ''
+        energyConsumption: '',
+        oilGasSize: '',
+        oilGasCoordinate: ''
       },
       pageTitle: '',
       statu: '',
@@ -211,12 +232,12 @@ export default {
     })
   },
   methods: {
-    oilgasdayInit(){
-      oilgasdayInit().then((res)=>{
-        if(res.success){
-          this.editForm.oilGasAreaName=res.data.zuzhijigou
-          this.editForm.groupType=res.data.qiyejiegou
-        }else {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.oilGasAreaName = res.data.zuzhijigou
+          this.editForm.groupType = res.data.qiyejiegou
+        } else {
           this.$notify({
             message: '网络请求失败',
             type: 'error',

@@ -5,9 +5,9 @@ import store from '@/store'
 import { getToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
-
 const service = axios.create({
   baseURL: 'http://210.73.216.32:8081/oilgas-background/',
+  // baseURL: 'http://10.8.0.99:8080/oilgas-background',
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
@@ -44,7 +44,7 @@ service.interceptors.response.use(
   error => {
     // Message.error('网络请求失败')
   }
-);
+)
 
 // 封装get方法
 export function get(url, params) {

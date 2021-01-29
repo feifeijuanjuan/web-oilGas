@@ -120,7 +120,7 @@ export default {
         { label: '累计探明地质储量(万吨)', param: 'reservesCumulativeKnow', minWidth: '180' },
         { label: '剩余技术可采储量(万吨)', param: 'recoveryReservesSurplusTech', minWidth: '180' },
         { label: '剩余经济可采储量(万吨)', param: 'recoveryReservesSurplusEcon', minWidth: '180' },
-        { label: '储采比(万吨)', param: 'reserveProductionRatio', minWidth: '150' },
+        { label: '储采比(年)', param: 'reserveProductionRatio', minWidth: '150' },
         { label: '油田人数', param: 'peopleNum', minWidth: '150' },
         { label: '远景资源量(万吨)', param: 'prospectiveResources', minWidth: '150' },
         { label: '预测储量(万吨)', param: 'predictedReserves', minWidth: '150' },

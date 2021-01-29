@@ -13,12 +13,12 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="基地(单位-部门)" prop="baseName">
+            <el-form-item label="基地(单位-部门)" prop="baseName" class="no-unit">
               <el-input v-model="editForm.baseName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" prop="recordDate">
+            <el-form-item label="日期" prop="recordDate" class="no-unit">
               <el-date-picker
                 v-model="editForm.recordDate"
                 placeholder="请选择日期"
@@ -32,12 +32,12 @@
         <el-row>
 
           <el-col :span="12">
-            <el-form-item label="所属企业">
+            <el-form-item label="所属企业" class="no-unit">
               <el-input v-model="editForm.groupType" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="企业法人">
+            <el-form-item label="企业法人" class="no-unit">
               <el-input v-model="editForm.enterJuridical" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
@@ -49,6 +49,7 @@
                         type="number"
                         @input="minMax('employeesNum',editForm.employeesNum)"
               >
+                <template slot="append">人</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -58,6 +59,19 @@
                         type="number"
                         @input="minMax('yieldMonth',editForm.yieldMonth)"
               >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="管理气井数量">
+              <el-input v-model="editForm.gasWellNum" placeholder="请输入内容"
+                        type="number"
+                        @input="minMax('gasWellNum',editForm.gasWellNum)"
+              >
+                <template slot="append">个</template>
               </el-input>
             </el-form-item>
           </el-col>
@@ -92,7 +106,8 @@ export default {
         enterJuridical: '',
         employeesNum: '',
         yieldMonth: '',
-        yieldYear: ''
+        yieldYear: '',
+        gasWellNum: ''
       },
       enterNameAry: [],
       rules: {

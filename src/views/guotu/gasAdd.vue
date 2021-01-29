@@ -88,7 +88,7 @@
                         type="number"
                         @input="minMax('reserveProductionRatio',editForm.reserveProductionRatio)"
               >
-                <template slot="append">万立方米</template>
+                <template slot="append">年</template>
               </el-input>
             </el-form-item>
           </el-col>

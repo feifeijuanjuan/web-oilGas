@@ -71,18 +71,19 @@ export default {
       pageSize: 10,
       fromSearch: {
         baseName: '',
-        groupType:''
+        groupType: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '基地(单位-部门)', param: 'baseName', minWidth: 150 },
-        { label: '时间', param: 'recordDate', minWidth: 150 },
+        { label: '基地(单位-部门)', param: 'baseName' },
+        { label: '时间', param: 'recordDate' },
         // { label: '企业名称', param: 'enterName', minWidth: 150 },
-        { label: '所属企业', param: 'groupType', minWidth: 150 },
-        { label: '企业法人', param: 'enterJuridical', minWidth: 150 },
-        { label: '基地员工数量', param: 'employeesNum', minWidth: 150 },
-        { label: '当月产量', param: 'yieldMonth', minWidth: 150 },
+        { label: '所属企业', param: 'groupType' },
+        { label: '企业法人', param: 'enterJuridical' },
+        { label: '基地员工数量(人)', param: 'employeesNum' },
+        { label: '当月产量(万吨)', param: 'yieldMonth' },
+        { label: '管理油井数量(个)', param: 'oilWellNum' }
         // { label: '年度累计产量', param: 'yieldYear', minWidth: 150 }
       ],
       selectedRows: []

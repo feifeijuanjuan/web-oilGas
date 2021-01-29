@@ -104,6 +104,8 @@ export default {
         { label: '气田名称', param: 'oilGasName', minWidth: '150' },
         /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
          { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
+        { label: '气田面积(万立方米)', param: 'oilGasSize', minWidth: '150' },
+        { label: '中心经纬度', param: 'oilGasCoordinate', minWidth: '150' },
         { label: '企业名称', param: 'oilGasAreaName', minWidth: '150' },
         { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },

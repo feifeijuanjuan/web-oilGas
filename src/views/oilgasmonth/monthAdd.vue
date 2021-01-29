@@ -39,6 +39,24 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="气田面积">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
+                        type="number"
+                        @input="minMax('oilGasSize',editForm.oilGasSize)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="中心经纬度" class="no-unit">
+              <el-input placeholder="请输入内容" v-model="editForm.oilGasCoordinate">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit">
               <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
             </el-form-item>
@@ -141,7 +159,9 @@ export default {
         supplyInOilGas: '',
         supplyOutOilGas: '',
         capacityOilGas: '',
-        energyConsumption: ''
+        energyConsumption: '',
+        oilGasCoordinate: '',
+        oilGasSize: ''
       },
       pageTitle: '',
       statu: '',

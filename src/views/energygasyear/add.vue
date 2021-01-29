@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { energygasyearSave, energygasyearUpdate, dic, energygasyearInit,insertAll } from '@/api/fill'
+import { energygasyearSave, energygasyearUpdate, dic, energygasyearInit, insertAll } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -96,7 +96,7 @@ export default {
         leagueCityName: '',
         plannedStorageEnterprise: '',
         enterpriseContract: '',
-        leaguePlannedStorageEnterprise:''
+        leaguePlannedStorageEnterprise: ''
       },
       qixian: {},
       rules: {
@@ -189,17 +189,27 @@ export default {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           const params = []
-          Object.keys(this.qixian).forEach((key) => {
-            console.log(key)
+          if (Object.keys(this.qixian).length > 0) {
+            Object.keys(this.qixian).forEach((key) => {
+              params.push({
+                recordDate: this.editForm.recordDate,
+                leagueCityName: this.editForm.leagueCityName,
+                leaguePlannedStorageEnterprise: this.editForm.leaguePlannedStorageEnterprise,
+                plannedStorageEnterprise: this.qixian[key],
+                enterpriseContract: this.editForm.enterpriseContract,
+                enterName: key
+              })
+            })
+          } else {
             params.push({
               recordDate: this.editForm.recordDate,
               leagueCityName: this.editForm.leagueCityName,
-              leaguePlannedStorageEnterprise:this.editForm.leaguePlannedStorageEnterprise,
-              plannedStorageEnterprise: this.qixian[key],
+              leaguePlannedStorageEnterprise: this.editForm.leaguePlannedStorageEnterprise,
+              plannedStorageEnterprise: '',
               enterpriseContract: this.editForm.enterpriseContract,
-              enterName: key
+              enterName: ''
             })
-          })
+          }
           insertAll(params).then((res) => {
             if (res.code === 0) {
               this.$notify({

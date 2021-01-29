@@ -14,16 +14,16 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="盟市名称" class="no-unit" >
-<!--              <el-select v-model="editForm.leagueCityName">
-                <el-option
-                  v-for="item in leagueCityTypeAry"
-                  :key="item.dictItemName"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>-->
+            <el-form-item label="盟市名称" class="no-unit">
+              <!--              <el-select v-model="editForm.leagueCityName">
+                              <el-option
+                                v-for="item in leagueCityTypeAry"
+                                :key="item.dictItemName"
+                                :label="item.dictItemName"
+                                :value="item.dictItemName"
+                              >
+                              </el-option>
+                            </el-select>-->
               <el-input v-model="editForm.leagueCityName" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -43,15 +43,15 @@
           <el-col :span="12">
             <el-form-item label="机构名称" class="no-unit">
               <el-input v-model="editForm.governmentName" disabled></el-input>
-<!--              <el-select v-model="editForm.governmentName" clearable>
-                <el-option
-                  v-for="item in enterNameAry"
-                  :key="item.typeId"
-                  :label="item.typeName"
-                  :value="item.typeName"
-                >
-                </el-option>
-              </el-select>-->
+              <!--              <el-select v-model="editForm.governmentName" clearable>
+                              <el-option
+                                v-for="item in enterNameAry"
+                                :key="item.typeId"
+                                :label="item.typeName"
+                                :value="item.typeName"
+                              >
+                              </el-option>
+                            </el-select>-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -94,7 +94,6 @@
 <script>
 import { governmentyearUpdate, governmentyearInsertAll, dic, energygasyearInit, energygasdayInit } from '@/api/fill'
 
-
 export default {
   name: 'editFormAdd',
   data() {
@@ -107,7 +106,7 @@ export default {
         governmentName: '',
         // actualStorageGovernment: '',
         plannedStorageGovernment: '',
-        plannedStorageEnterprise:''
+        plannedStorageEnterprise: ''
       },
       pageTitle: '',
       statu: '',
@@ -219,16 +218,28 @@ export default {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           const params = []
-          Object.keys(this.qixian).forEach((key) => {
+          if (Object.keys(this.qixian).length > 0) {
+            Object.keys(this.qixian).forEach((key) => {
+              params.push({
+                recordDate: this.editForm.recordDate,
+                leagueCityName: this.editForm.leagueCityName,
+                governmentName: this.editForm.governmentName,
+                plannedStorageEnterprise: this.qixian[key],
+                plannedStorageGovernment: this.editForm.plannedStorageGovernment,
+                enterName: key
+              })
+            })
+          } else {
             params.push({
               recordDate: this.editForm.recordDate,
               leagueCityName: this.editForm.leagueCityName,
-              governmentName:this.editForm.governmentName,
-              plannedStorageEnterprise: this.qixian[key],
+              governmentName: this.editForm.governmentName,
+              plannedStorageEnterprise: '',
               plannedStorageGovernment: this.editForm.plannedStorageGovernment,
-              enterName: key
+              enterName: ''
             })
-          })
+          }
+
           governmentyearInsertAll(params).then((res) => {
             if (res.code === 0) {
               this.$notify({

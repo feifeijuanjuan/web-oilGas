@@ -60,7 +60,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="12" v-if="qixianAry.length>0">
             <el-form-item label="城燃企业5%计划储气量">
               <el-input placeholder="请输入内容"
                         v-model="editForm.plannedStorageEnterprise"

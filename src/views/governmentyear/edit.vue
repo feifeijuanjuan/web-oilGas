@@ -67,7 +67,7 @@
 
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="12" v-if="qixian.length>0">
             <el-form-item label="旗县地方3天计划储气量">
               <el-input placeholder="请输入内容" v-model="editForm.plannedStorageEnterprise"
                         type="number"
@@ -110,6 +110,7 @@ export default {
       },
       pageTitle: '',
       statu: '',
+      qixian:[],
       rules: {
         /*leagueCityName: [
           { required: true, message: '请选择盟市名称', trigger: 'change' }
@@ -136,6 +137,7 @@ export default {
       energygasyearInit().then((res) => {
         if (res.success) {
           this.editForm.leagueCityName = res.data.mengshi
+          this.qixian=res.data.qixian
         } else {
           this.$notify({
             message: '网络请求失败',

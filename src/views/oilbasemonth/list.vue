@@ -57,7 +57,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { oilbaseList, oilbaseSwitchs, gasyearInit } from '@/api/fill'
+import { oilbasemonthList, oilbasemonthSwitchs, gasyearInit } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -71,20 +71,14 @@ export default {
       pageSize: 10,
       fromSearch: {
         baseName: '',
-        groupType: ''
+        enterName: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '基地(单位-部门)', param: 'baseName' },
-        // { label: '时间', param: 'recordDate' },
-        // { label: '企业名称', param: 'enterName', minWidth: 150 },
-        { label: '所属企业', param: 'groupType' },
-        { label: '企业法人', param: 'enterJuridical' },
-        { label: '基地员工数量(人)', param: 'employeesNum' },
-        // { label: '当月产量(万吨)', param: 'yieldMonth' },
-        { label: '管理油井数量(个)', param: 'oilWellNum' }
-        // { label: '年度累计产量', param: 'yieldYear', minWidth: 150 }
+        { label: '时间', param: 'recordDate' },
+        { label: '当月产量(万吨)', param: 'yieldMonth' }
       ],
       selectedRows: []
     }
@@ -97,7 +91,7 @@ export default {
     gasyearInit() {
       gasyearInit().then((res) => {
         if (res.success) {
-          this.fromSearch.groupType = res.data.zuzhijigou
+          this.fromSearch.enterName = res.data.zuzhijigou
           this.list(1, this.pageSize)
         } else {
           this.$notify({
@@ -116,9 +110,9 @@ export default {
         pageNum: val,
         pageSize: pageSize,
         baseName: this.fromSearch.baseName,
-        groupType: this.fromSearch.groupType
+        enterName: this.fromSearch.enterName
       }
-      oilbaseList(params).then((res) => {
+      oilbasemonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -146,7 +140,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/oilbaseAdd', query: params })
+      this.$router.push({ path: '/oilbasemonthAdd', query: params })
 
     },
     // 编辑
@@ -157,7 +151,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/oilbaseAdd', query: params })
+        this.$router.push({ path: '/oilbasemonthAdd', query: params })
 
       } else {
         this.$notify({
@@ -178,7 +172,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilbaseSwitchs(params).then((res) => {
+          oilbasemonthSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',

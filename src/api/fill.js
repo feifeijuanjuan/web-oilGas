@@ -113,6 +113,8 @@ export const pipelinedaysave = params => post('/pipelineday/save', params)
 export const pipelinedayUpdate = params => get(`/pipelineday/select/${params}`)
 // 删除
 export const pipelinedaySwitchs = params => post(`/pipelineday/switchs`, params)
+//获取组织机构
+export const pipelinedayInit = () => get(`/pipelineday/init`)
 
 // 管道企业管道信息填报
 // 查询
@@ -492,6 +494,30 @@ export const energygasmonthSave = params => post('/energygasmonth/save', params)
 export const energygasmonthUpdate = params => get(`/energygasmonth/select/${params}`)
 // 删除
 export const energygasmonthSwitchs = params => post(`/energygasmonth/switchs`, params)
+
+// 气田生产基地月产量填报
+// 查询
+export const gasbasemonthList = params => post('/gasbasemonth/list', params)
+// 新增保存
+export const gasbasemonthSave = params => post('/gasbasemonth/save', params)
+// 编辑保存
+export const gasbasemonthChange = params => post('/gasbasemonth/update', params)
+// 更新
+export const gasbasemonthUpdate = params => get(`/gasbasemonth/select/${params}`)
+// 删除
+export const gasbasemonthSwitchs = params => post(`/gasbasemonth/switchs`, params)
+
+// 油田生产基地月产量填报
+// 查询
+export const oilbasemonthList = params => post('/oilbasemonth/list', params)
+// 新增保存
+export const oilbasemonthSave = params => post('/oilbasemonth/save', params)
+// 编辑保存
+export const oilbasemonthChange = params => post('/oilbasemonth/update', params)
+// 更新
+export const oilbasemonthUpdate = params => get(`/oilbasemonth/select/${params}`)
+// 删除
+export const oilbasemonthSwitchs = params => post(`/oilbasemonth/switchs`, params)
 
 
 

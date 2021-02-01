@@ -17,7 +17,7 @@
               <el-input v-model="editForm.baseName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="日期" prop="recordDate" class="no-unit">
               <el-date-picker
                 v-model="editForm.recordDate"
@@ -27,22 +27,20 @@
               >
               </el-date-picker>
             </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="所属企业" class="no-unit">
               <el-input v-model="editForm.groupType" disabled></el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="企业法人" class="no-unit">
               <el-input v-model="editForm.enterJuridical" placeholder="请输入内容"/>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-
           <el-col :span="12">
             <el-form-item label="基地员工数量">
               <el-input v-model="editForm.employeesNum" placeholder="请输入内容"
@@ -53,6 +51,10 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+<!--        <el-row>
+
+
           <el-col :span="12">
             <el-form-item label="当月产量">
               <el-input v-model="editForm.yieldMonth" placeholder="请输入内容"
@@ -63,7 +65,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="管理油井数量">
@@ -100,11 +102,11 @@ export default {
     return {
       editForm: {
         baseName: '',
-        recordDate: '',
+        // recordDate: '',
         groupType: '',
         enterJuridical: '',
         employeesNum: '',
-        yieldMonth: '',
+        // yieldMonth: '',
         yieldYear: '',
         oilWellNum: ''
         // enterName: ''
@@ -114,9 +116,9 @@ export default {
         baseName: [
           { required: true, message: '请输入基地(单位-部门)', trigger: 'blur' }
         ],
-        recordDate: [
+       /* recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
-        ]
+        ]*/
       }
     }
   },

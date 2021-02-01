@@ -642,6 +642,28 @@ export const constantRoutes = [
         component: () => import('@/views/governmentyear/edit')
       }
     ]
+  },
+  {
+    path: '/gasbasemonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasbasemonthAdd',
+        component: () => import('@/views/gasbasemonth/add')
+      }
+    ]
+  },
+  {
+    path: '/oilbasemonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/oilbasemonthAdd',
+        component: () => import('@/views/oilbasemonth/add')
+      }
+    ]
   }
   // 管道
 

@@ -77,12 +77,12 @@ export default {
       tableData: [],
       tableLabel: [
         { label: '基地(单位-部门)', param: 'baseName' },
-        { label: '时间', param: 'recordDate' },
+        // { label: '时间', param: 'recordDate' },
         // { label: '企业名称', param: 'enterName', minWidth: 150 },
         { label: '所属企业', param: 'groupType' },
         { label: '企业法人', param: 'enterJuridical' },
         { label: '基地员工数量(人)', param: 'employeesNum' },
-        { label: '当月产量(万立方米)', param: 'yieldMonth' },
+        // { label: '当月产量(万立方米)', param: 'yieldMonth' },
         { label: '管理气井数量(个)', param: 'gasWellNum' }
         // { label: '年度累计产量', param: 'yieldYear', minWidth: 150 }
       ],

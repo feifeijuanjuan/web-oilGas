@@ -152,6 +152,10 @@ export default {
         return '/energygasmonth/list'
       } else if (path === '/governmentyearEdit') {
         return '/governmentyear/list'
+      } else if (path === '/gasbasemonthAdd') {
+        return '/gasbasemonth/list'
+      } else if (path === '/oilbasemonthAdd') {
+        return '/oilbasemonth/list'
       } else {
         return path
       }

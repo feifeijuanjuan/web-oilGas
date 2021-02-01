@@ -125,7 +125,7 @@ export default {
         { label: '远景资源量(万立方米)', param: 'prospectiveResources', minWidth: '200' },
         { label: '预测储量(万立方米)', param: 'predictedReserves', minWidth: '200' },
         { label: '控制储量(万立方米)', param: 'controlReserve', minWidth: '200' },
-        { label: '气田面积(万立方米)', param: 'oilGasSize', minWidth: '200' },
+        { label: '气田面积(平方公里)', param: 'oilGasSize', minWidth: '200' },
         { label: '预测资源量(万立方米)', param: 'predictedResources', minWidth: '200' }
       ],
       selectedRows: [],

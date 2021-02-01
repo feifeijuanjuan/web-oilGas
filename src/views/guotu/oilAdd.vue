@@ -148,7 +148,7 @@
                         type="number"
                         @input="minMax('oilGasSize',editForm.oilGasSize)"
               >
-                <template slot="append">万立方米</template>
+                <template slot="append">平方公里</template>
               </el-input>
             </el-form-item>
           </el-col>

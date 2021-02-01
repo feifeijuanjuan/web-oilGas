@@ -79,7 +79,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { productList, pipelinedaySwitchs, dic } from '@/api/fill'
+import { productList, pipelinedaySwitchs, dic, pipelinedayInit } from '@/api/fill'
 
 /*1企业名称、2时间、3盟市名称、4状态、管线名、管线进油量、管线出油量、
 管线管存量、管线累计输油、城市燃气接收量、甲醇接收量、化肥接收量、lng接收气量、状态*/
@@ -101,7 +101,8 @@ export default {
       loading: false,
       fromSearch: {
         // enterName: '',
-        pipelineName: ''
+        pipelineName: '',
+        enterName: ''
       },
       tableData: [],
       tableLabel: [
@@ -124,11 +125,25 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.pipelinedayInit()
     //
     this.dic()
   },
   methods: {
+    pipelinedayInit() {
+      pipelinedayInit().then((res) => {
+        if(res.success){
+          this.fromSearch.enterName=res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        }else{
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     dic() {
       dic().then((res) => {
         if (res.success) {
@@ -152,7 +167,8 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        pipelineName: this.fromSearch.pipelineName
+        pipelineName: this.fromSearch.pipelineName,
+        enterName: this.fromSearch.enterName
       }
       productList(params).then((res) => {
         if (res.code === 0) {

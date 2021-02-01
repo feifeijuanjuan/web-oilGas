@@ -17,17 +17,17 @@
               <el-input v-model="editForm.gasWellName"></el-input>
             </el-form-item>
           </el-col>
-<!--          <el-col :span="12">
-            <el-form-item label="日期" class="no-unit">
-              <el-date-picker
-                v-model="editForm.recordDate"
-                placeholder="请选择日期"
-                type="month"
-                value-format="yyyy-MM"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </el-col>-->
+          <!--          <el-col :span="12">
+                      <el-form-item label="日期" class="no-unit">
+                        <el-date-picker
+                          v-model="editForm.recordDate"
+                          placeholder="请选择日期"
+                          type="month"
+                          value-format="yyyy-MM"
+                        >
+                        </el-date-picker>
+                      </el-form-item>
+                    </el-col>-->
           <el-col :span="12">
             <el-form-item label="气井地图坐标信息" class="no-unit">
               <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
@@ -43,30 +43,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-<!--        <el-row>
-          <el-col :span="12">
-            <el-form-item label="气井月产量">
-              <el-input v-model="editForm.gasWellYield" placeholder="请输入内容"
-                        type="number"
-                        @input="minMax('gasWellYield',editForm.gasWellYield)">
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="产量属性" class="no-unit">
-              <el-select v-model="editForm.yieldAttribute" placeholder="请选择产量属性" clearable>
-                <el-option
-                  v-for="item in yieldAttributeAry"
-                  :key="item.dictItemId"
-                  :label="item.dictItemName"
-                  :value="item.dictItemName"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
       </el-form>
     </div>
     <div class="form-footer-btn">
@@ -83,20 +59,20 @@
 </template>
 
 <script>
-import { dic, gaswellSave, gaswellUpdate } from '@/api/fill'
-
+import { dic, gaswellSave, gaswellUpdate, oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
   data() {
     return {
-      yieldAttributeAry:[],
+      yieldAttributeAry: [],
       editForm: {
         gasWellName: '',
         recordDate: '',
         gasWellCoordinate: '',
         baseName: '',
-        gasWellYield: ''
+        gasWellYield: '',
+        enterName: ''
       },
       rules: {
         gasWellName: [
@@ -108,6 +84,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.oilgasdayInit()
   },
   mounted() {
     Promise.all([
@@ -122,6 +99,19 @@ export default {
     }
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

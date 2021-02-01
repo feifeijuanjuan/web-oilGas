@@ -58,7 +58,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { gaswellList, gaswellSwitchs } from '@/api/fill'
+import { gaswellList, gaswellSwitchs, oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -71,7 +71,8 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        gasWellName: ''
+        gasWellName: '',
+        enterName: ''
       },
       loading: false,
       tableData: [],
@@ -88,9 +89,23 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     // 查询列表
     list(val, pageSize) {
       this.loading = true
@@ -98,7 +113,8 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        gasWellName: this.fromSearch.gasWellName
+        gasWellName: this.fromSearch.gasWellName,
+        enterName: this.fromSearch.enterName
       }
       gaswellList(params).then((res) => {
         if (res.code === 0) {

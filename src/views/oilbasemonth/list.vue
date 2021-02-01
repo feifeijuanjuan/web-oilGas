@@ -6,7 +6,14 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="基地(单位-部门)" label-width="120px">
-                <el-input v-model="fromSearch.baseName"></el-input>
+                <el-select v-model="fromSearch.baseName" clearable>
+                  <el-option
+                    v-for="item in baseNameAry"
+                    :key="item.baseName"
+                    :label="item.baseName"
+                    :value="item.baseName"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -57,7 +64,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { oilbasemonthList, oilbasemonthSwitchs, gasyearInit } from '@/api/fill'
+import { oilbasemonthList, oilbasemonthSwitchs, oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -73,6 +80,7 @@ export default {
         baseName: '',
         enterName: ''
       },
+      baseNameAry:[],
       loading: false,
       tableData: [],
       tableLabel: [
@@ -85,13 +93,14 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.gasyearInit()
+    this.oilgasdayInit()
   },
   methods: {
-    gasyearInit() {
-      gasyearInit().then((res) => {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
         if (res.success) {
           this.fromSearch.enterName = res.data.zuzhijigou
+          this.baseNameAry=res.data.oilBase
           this.list(1, this.pageSize)
         } else {
           this.$notify({

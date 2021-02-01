@@ -121,11 +121,11 @@ export default {
         { label: '剩余技术可采储量(万立方米)', param: 'recoveryReservesSurplusTech', minWidth: '200' },
         { label: '剩余经济可采储量(万立方米)', param: 'recoveryReservesSurplusEcon', minWidth: '200' },
         { label: '储采比(年)', param: 'reserveProductionRatio', minWidth: '200' },
-        { label: '气田人数', param: 'peopleNum', minWidth: '150' },
+        // { label: '气田人数', param: 'peopleNum', minWidth: '150' },
         { label: '远景资源量(万立方米)', param: 'prospectiveResources', minWidth: '200' },
         { label: '预测储量(万立方米)', param: 'predictedReserves', minWidth: '200' },
         { label: '控制储量(万立方米)', param: 'controlReserve', minWidth: '200' },
-        { label: '气田面积(平方公里)', param: 'oilGasSize', minWidth: '200' },
+        // { label: '气田面积(平方公里)', param: 'oilGasSize', minWidth: '200' },
         { label: '预测资源量(万立方米)', param: 'predictedResources', minWidth: '200' }
       ],
       selectedRows: [],

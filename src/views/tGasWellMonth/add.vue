@@ -14,7 +14,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="气井名称" prop="gasWellName" class="no-unit">
-              <el-input v-model="editForm.gasWellName"></el-input>
+              <el-select v-model="editForm.gasWellName" clearable>
+                <el-option
+                  v-for="item in gasWellNameAry"
+                  :key="item.gasWellName"
+                  :value="item.gasWellName"
+                  :label="item.gasWellName"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -61,12 +68,12 @@
                          <el-input v-model="editForm.gasWellCoordinate" placeholder="请输入内容"/>
                        </el-form-item>
                      </el-col>-->
-          <el-col :span="12">
-            <el-form-item label="气井所属生产基地" class="no-unit">
-              <el-input v-model="editForm.baseName" placeholder="请输入内容">
-              </el-input>
-            </el-form-item>
-          </el-col>
+          <!--          <el-col :span="12">
+                      <el-form-item label="气井所属生产基地" class="no-unit">
+                        <el-input v-model="editForm.baseName" placeholder="请输入内容">
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
         </el-row>
       </el-form>
     </div>
@@ -84,7 +91,7 @@
 </template>
 
 <script>
-import { dic, tGasWellMonthSave, tGasWellMonthUpdate } from '@/api/fill'
+import { dic, oilgasdayInit, tGasWellMonthSave, tGasWellMonthUpdate } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
@@ -97,11 +104,13 @@ export default {
         // gasWellCoordinate: '',
         baseName: '',
         yieldAttribute: '',
-        gasWellYield: ''
+        gasWellYield: '',
+        enterName: ''
       },
+      gasWellNameAry: [],
       rules: {
         gasWellName: [
-          { required: true, message: '请输入气井名称', trigger: 'blur' }
+          { required: true, message: '请选择气井名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -112,6 +121,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.oilgasdayInit()
   },
   mounted() {
     Promise.all([
@@ -126,6 +136,20 @@ export default {
     }
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+          this.gasWellNameAry = res.data.gasWell
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

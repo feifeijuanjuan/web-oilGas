@@ -14,7 +14,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="基地(单位-部门)" prop="baseName" class="no-unit">
-              <el-input v-model="editForm.baseName"></el-input>
+              <el-select v-model="editForm.baseName" clearable>
+                <el-option
+                  v-for="item in baseNameAry"
+                  :key="item.baseName"
+                  :label="item.baseName"
+                  :value="item.baseName"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -57,7 +64,7 @@
 </template>
 
 <script>
-import { gasbasemonthUpdate, gasbasemonthSave, gasyearInit,gasbasemonthChange } from '@/api/fill'
+import { gasbasemonthUpdate, gasbasemonthSave, oilgasdayInit,gasbasemonthChange } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
@@ -69,10 +76,11 @@ export default {
         enterName: '',
         yieldMonth: ''
       },
+      baseNameAry:[],
       enterNameAry: [],
       rules: {
         baseName: [
-          { required: true, message: '请输入基地(单位-部门)', trigger: 'blur' }
+          { required: true, message: '请选择基地(单位-部门)', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -83,7 +91,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
-    this.gasyearInit()
+    this.oilgasdayInit()
   },
   mounted() {
     if (this.statu !== 'create') {
@@ -91,10 +99,11 @@ export default {
     }
   },
   methods: {
-    gasyearInit() {
-      gasyearInit().then((res) => {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
         if (res.success) {
           this.editForm.enterName = res.data.zuzhijigou
+          this.baseNameAry=res.data.gasBase
         } else {
           this.$notify({
             message: '网络请求失败',

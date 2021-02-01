@@ -14,7 +14,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="油井名称" prop="oilWellName" class="no-unit">
-              <el-input v-model="editForm.oilWellName"></el-input>
+              <el-select v-model="editForm.oilWellName" clearable>
+                <el-option
+                  v-for="item in oilWellNameAry"
+                  :key="item.oilWellName"
+                  :value="item.oilWellName"
+                  :label="item.oilWellName"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -35,7 +42,8 @@
             <el-form-item label="油井月产量">
               <el-input v-model="editForm.oilWellYield" placeholder="请输入内容"
                         type="number"
-                        @input="minMax('oilWellYield',editForm.oilWellYield)">
+                        @input="minMax('oilWellYield',editForm.oilWellYield)"
+              >
                 <template slot="append">万吨</template>
               </el-input>
             </el-form-item>
@@ -60,12 +68,12 @@
                         <el-input v-model="editForm.oilWellCoordinate" placeholder="请输入内容"/>
                       </el-form-item>
                     </el-col>-->
-          <el-col :span="12">
-            <el-form-item label="油井所属生产基地" class="no-unit">
-              <el-input v-model="editForm.baseName" placeholder="请输入内容">
-              </el-input>
-            </el-form-item>
-          </el-col>
+          <!--          <el-col :span="12">
+                      <el-form-item label="油井所属生产基地" class="no-unit">
+                        <el-input v-model="editForm.baseName" placeholder="请输入内容">
+                        </el-input>
+                      </el-form-item>
+                    </el-col>-->
         </el-row>
       </el-form>
     </div>
@@ -83,8 +91,7 @@
 </template>
 
 <script>
-import { dic, tOilWellMonthSave, tOilWellMonthUpdate } from '@/api/fill'
-
+import { dic, oilgasdayInit, tOilWellMonthSave, tOilWellMonthUpdate } from '@/api/fill'
 
 export default {
   name: 'EditFormAdd',
@@ -95,13 +102,14 @@ export default {
         recordDate: '',
         // oilWellCoordinate: '',
         baseName: '',
+        enterName: '',
         oilWellYield: '',
         yieldAttribute: ''
       },
       yieldAttributeAry: [],
       rules: {
         oilWellName: [
-          { required: true, message: '请输入油井名称', trigger: 'blur' }
+          { required: true, message: '请选择油井名称', trigger: 'change' }
         ],
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
@@ -112,6 +120,7 @@ export default {
   created() {
     this.pageTitle = this.$route.query.title
     this.statu = this.$route.query.statu
+    this.oilgasdayInit()
   },
   mounted() {
     Promise.all([
@@ -123,6 +132,20 @@ export default {
     })
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+          this.oilWellNameAry = res.data.oilWell
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     minMax(name, value) {
       if (value < 0) {
         this.editForm[name] = 0

@@ -7,7 +7,15 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="气井名称" label-width="70px">
-                <el-input v-model="fromSearch.gasWellName"></el-input>
+<!--                <el-input v-model="fromSearch.gasWellName"></el-input>-->
+                <el-select v-model="fromSearch.gasWellName" clearable>
+                  <el-option
+                    v-for="item in gasWellNameAry"
+                    :key="item.gasWellName"
+                    :value="item.gasWellName"
+                    :label="item.gasWellName"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -58,7 +66,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { tGasWellMonthList, tGasWellMonthSwitchs } from '@/api/fill'
+import { oilgasdayInit, tGasWellMonthList, tGasWellMonthSwitchs } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -71,15 +79,17 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        gasWellName: ''
+        gasWellName: '',
+        enterName: ''
       },
+      gasWellNameAry:[],
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '气井名称', param: 'gasWellName' },
         { label: '时间', param: 'recordDate' },
         // { label: '气井地图坐标信息', param: 'gasWellCoordinate'},
-        { label: '气井所属生产基地', param: 'baseName'},
+        // { label: '气井所属生产基地', param: 'baseName'},
         { label: '气井月产量(万立方米)', param: 'gasWellYield' },
         { label: '产量属性', param: 'yieldAttribute' }
       ],
@@ -88,9 +98,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.gasWellNameAry=res.data.gasWell
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     // 查询列表
     list(val, pageSize) {
       this.loading = true
@@ -98,7 +123,8 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        gasWellName: this.fromSearch.gasWellName
+        gasWellName: this.fromSearch.gasWellName,
+        enterName: this.fromSearch.enterName
       }
       tGasWellMonthList(params).then((res) => {
         if (res.code === 0) {

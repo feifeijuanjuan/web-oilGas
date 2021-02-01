@@ -94,7 +94,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="气田人数" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.peopleNum"
                         type="number"
@@ -102,7 +102,7 @@
               >
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="远景资源量">
               <el-input placeholder="请输入内容" v-model="editForm.prospectiveResources"
@@ -113,8 +113,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="预测储量">
               <el-input placeholder="请输入内容" v-model="editForm.predictedReserves"
@@ -125,6 +123,9 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="控制储量">
               <el-input placeholder="请输入内容" v-model="editForm.controlReserve"
@@ -135,9 +136,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
+<!--          <el-col :span="12">
             <el-form-item label="气田面积">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
                         type="number"
@@ -146,7 +145,7 @@
                 <template slot="append">平方公里</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item label="预测资源量">
               <el-input placeholder="请输入内容" v-model="editForm.predictedResources"

@@ -7,7 +7,14 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="油井名称" label-width="70px">
-                <el-input v-model="fromSearch.oilWellName"></el-input>
+                <el-select v-model="fromSearch.oilWellName" clearable>
+                  <el-option
+                    v-for="item in oilWellNameAry"
+                    :key="item.oilWellName"
+                    :value="item.oilWellName"
+                    :label="item.oilWellName"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -58,7 +65,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { tOilWellMonthList, tOilWellMonthSwitchs } from '@/api/fill'
+import { oilgasdayInit, tOilWellMonthList, tOilWellMonthSwitchs } from '@/api/fill'
 
 export default {
   name: 'Dashboard',
@@ -71,15 +78,17 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        oilWellName: ''
+        oilWellName: '',
+        enterName: ''
       },
+      oilWellNameAry: [],
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '油井名称', param: 'oilWellName' },
         { label: '时间', param: 'recordDate' },
         // { label: '油井地图坐标信息', param: 'oilWellCoordinate' },
-        { label: '油井所属生产基地', param: 'baseName' },
+        // { label: '油井所属生产基地', param: 'baseName' },
         { label: '油井月产量(万吨)', param: 'oilWellYield' },
         { label: '产量属性', param: 'yieldAttribute' }
       ],
@@ -88,9 +97,24 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
   },
   methods: {
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.oilWellNameAry = res.data.oilWell
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     // 查询列表
     list(val, pageSize) {
       this.loading = true
@@ -98,7 +122,8 @@ export default {
       const params = {
         pageNum: val,
         pageSize: pageSize,
-        oilWellName: this.fromSearch.oilWellName
+        oilWellName: this.fromSearch.oilWellName,
+        enterName: this.fromSearch.enterName
       }
       tOilWellMonthList(params).then((res) => {
         if (res.code === 0) {

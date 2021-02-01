@@ -519,5 +519,26 @@ export const oilbasemonthUpdate = params => get(`/oilbasemonth/select/${params}`
 // 删除
 export const oilbasemonthSwitchs = params => post(`/oilbasemonth/switchs`, params)
 
+// 气田信息填报
+// 查询
+export const gasinfoList = params => post('/gasinfo/list', params)
+// 新增保存
+export const gasinfoSave = params => post('/gasinfo/save', params)
+// 编辑保存
+export const gasinfoChange = params => post('/gasinfo/update', params)
+// 更新
+export const gasinfoUpdate = params => get(`/gasinfo/select/${params}`)
+// 删除
+export const gasinfoSwitchs = params => post(`/gasinfo/switchs`, params)
 
-
+// 油田信息填报
+// 查询
+export const oilinfoList = params => post('/oilinfo/list', params)
+// 新增保存
+export const oilinfoSave = params => post('/oilinfo/save', params)
+// 编辑保存
+export const oilinfoChange = params => post('/oilinfo/update', params)
+// 更新
+export const oilinfoUpdate = params => get(`/oilinfo/select/${params}`)
+// 删除
+export const oilinfoSwitchs = params => post(`/oilinfo/switchs`, params)

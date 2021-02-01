@@ -156,6 +156,10 @@ export default {
         return '/gasbasemonth/list'
       } else if (path === '/oilbasemonthAdd') {
         return '/oilbasemonth/list'
+      } else if (path === '/oilinfoAdd') {
+        return '/oilinfo/list'
+      } else if (path === '/gasinfoAdd') {
+        return '/gasinfo/list'
       } else {
         return path
       }

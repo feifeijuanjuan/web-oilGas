@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="form-add"><span class="first">油气田企业填报</span>
       <span class="first-line">></span>
-      <span class="first">按月填报</span
+      <span class="first">油田基础信息填报</span
       ><span class="first-line">></span>
       <span class="second">{{ pageTitle }}
       </span></div>
@@ -26,19 +26,6 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期" class="no-unit" prop="recordDate">
-              <el-date-picker
-                v-model="editForm.recordDate"
-                type="month"
-                value-format="yyyy-MM"
-                placeholder="请选择日期"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-<!--        <el-row>
-          <el-col :span="12">
             <el-form-item label="油田面积">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
                         type="number"
@@ -48,117 +35,40 @@
               </el-input>
             </el-form-item>
           </el-col>
+<!--          <el-col :span="12">
+            <el-form-item label="日期" class="no-unit" prop="recordDate">
+              <el-date-picker
+                v-model="editForm.recordDate"
+                type="month"
+                value-format="yyyy-MM"
+                placeholder="请选择日期"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-col>-->
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="中心经纬度" class="no-unit">
               <el-input placeholder="请输入内容" v-model="editForm.oilGasCoordinate">
               </el-input>
             </el-form-item>
           </el-col>
-
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="企业名称" class="no-unit">
-              <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
+              <el-input v-model="editForm.enterName" disabled></el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
           <el-col :span="12">
             <el-form-item label="企业结构" class="no-unit">
               <el-input v-model="editForm.groupType" disabled></el-input>
             </el-form-item>
           </el-col>
 
-        </el-row>-->
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="实际月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
-                        type="number"
-                        @input="minMax('yieldOilGas',editForm.yieldOilGas)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="计划月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield"
-                        type="number"
-                        @input="minMax('oilGasPlanMonthYield',editForm.oilGasPlanMonthYield)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="实际月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas"
-                        type="number"
-                        @input="minMax('supplyOilGas',editForm.supplyOilGas)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="计划月供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthSupply"
-                        type="number"
-                        @input="minMax('oilGasPlanMonthSupply',editForm.oilGasPlanMonthSupply)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="区内供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyInOilGas"
-                        type="number"
-                        @input="minMax('supplyInOilGas',editForm.supplyInOilGas)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="区外供应量">
-              <el-input placeholder="请输入内容" v-model="editForm.supplyOutOilGas"
-                        type="number"
-                        @input="minMax('supplyOutOilGas',editForm.supplyOutOilGas)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <!--          <el-col :span="12">
-                      <el-form-item label="月产能">
-                        <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
-                                  type="number"
-                                  @input="minMax('capacityOilGas',editForm.capacityOilGas)"
-                        >
-                          <template slot="append">{{ unit }}</template>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>-->
-        </el-row>
-        <el-row>
-
-          <!--          <el-col :span="12">
-                      <el-form-item label="综合能源消费量">
-                        <el-input placeholder="请输入内容" v-model="editForm.energyConsumption"
-                                  type="number"
-                                  @input="minMax('energyConsumption',editForm.energyConsumption)"
-                        >
-                          <template slot="append">{{ unit }}</template>
-                        </el-input>
-                      </el-form-item>
-                    </el-col>-->
         </el-row>
       </el-form>
 
@@ -175,7 +85,7 @@
 </template>
 
 <script>
-import { oilmonthUpdate, oilgasmonthSave, dic, oilgasdayInit } from '@/api/fill'
+import { oilinfoUpdate, oilinfoSave, dic, oilgasdayInit,oilinfoChange } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -185,7 +95,7 @@ export default {
         oilGasName: '',
         recordDate: '',
         oilGasAreaType: '',
-        oilGasAreaName: '',
+        enterName: '',
         groupType: '',
         leagueCityName: '',
         yieldOilGas: '',
@@ -207,10 +117,10 @@ export default {
       rules: {
         oilGasName: [
           { required: true, message: '请选择油田名称', trigger: 'change' }
-        ],
+        ]/*,
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
-        ]
+        ]*/
       },
       leagueCityNameAry: [],
       oilGasOptions: []
@@ -235,7 +145,7 @@ export default {
     oilgasdayInit() {
       oilgasdayInit().then((res) => {
         if (res.success) {
-          this.editForm.oilGasAreaName = res.data.zuzhijigou
+          this.editForm.enterName = res.data.zuzhijigou
           this.editForm.groupType = res.data.qiyejiegou
         } else {
           this.$notify({
@@ -290,7 +200,7 @@ export default {
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {
-        oilmonthUpdate(this.$route.query.id).then((res) => {
+        oilinfoUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
             this.editForm.oilGasName = [res.body.typeName, res.body.oilGasName]
@@ -306,7 +216,7 @@ export default {
     },
     // 取消
     close() {
-      this.$router.push('/oilgasmonth/oilList')
+      this.$router.push('/oilinfo/list')
     },
     // 新增保存
     createData() {
@@ -315,14 +225,14 @@ export default {
           this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 1
-          oilgasmonthSave(param).then((res) => {
+          oilinfoSave(param).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/oilgasmonth/oilList')
+              this.$router.push('/oilinfo/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -343,14 +253,14 @@ export default {
           this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 1
-          oilgasmonthSave(param).then((res) => {
+          oilinfoChange(param).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/oilgasmonth/oilList')
+              this.$router.push('/oilinfo/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

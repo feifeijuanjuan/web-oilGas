@@ -25,7 +25,7 @@
                 ></el-cascader>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+<!--            <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
@@ -38,7 +38,7 @@
                 >
                 </el-date-picker>
               </el-form-item>
-            </el-col>
+            </el-col>-->
           </el-row>
         </div>
         <div class="search-btn">
@@ -87,7 +87,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, oilmonthList, oilgasmonthSwitchs, oilgasdayInit } from '@/api/fill'
+import { dic, oilinfoList, oilinfoSwitchs, oilgasdayInit } from '@/api/fill'
 
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
@@ -104,26 +104,26 @@ export default {
       fromSearch: {
         oilGasName: null,
         time: '',
-        oilGasAreaName: ''
+        enterName: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: '150' },
+        // { label: '时间', param: 'recordDate', minWidth: '150' },
         { label: '油田名称', param: 'oilGasName', minWidth: '150' },
         /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
          { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
-       /* { label: '油田面积(平方公里)', param: 'oilGasSize', minWidth: '150' },
+        { label: '油田面积(平方公里)', param: 'oilGasSize', minWidth: '150' },
         { label: '中心经纬度', param: 'oilGasCoordinate', minWidth: '150' },
-        { label: '企业名称', param: 'oilGasAreaName', minWidth: '150' },
-        { label: '企业结构', param: 'groupType', minWidth: '150' },*/
+        { label: '企业名称', param: 'enterName', minWidth: '150' },
+        { label: '企业结构', param: 'groupType', minWidth: '150' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
-        { label: '实际月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
+      /*  { label: '实际月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
         { label: '计划月产量(万吨)', param: 'oilGasPlanMonthYield', minWidth: '150' },
         { label: '实际月供应量(万吨)', param: 'supplyOilGas', minWidth: '150' },
         { label: '计划月供应量(万吨)', param: 'oilGasPlanMonthSupply', minWidth: '150' },
         { label: '区内供应量(万吨)', param: 'supplyInOilGas', minWidth: '150' },
-        { label: '区外供应量(万吨)', param: 'supplyOutOilGas', minWidth: '150' }
+        { label: '区外供应量(万吨)', param: 'supplyOutOilGas', minWidth: '150' }*/
         /*  { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
           { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }*/
       ],
@@ -141,7 +141,7 @@ export default {
     oilgasdayInit() {
       oilgasdayInit().then((res) => {
         if (res.success) {
-          this.fromSearch.oilGasAreaName = res.data.zuzhijigou
+          this.fromSearch.enterName = res.data.zuzhijigou
           this.list(1, this.pageSize)
         } else {
           this.$notify({
@@ -195,9 +195,9 @@ export default {
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         oilGasName: this.fromSearch.oilGasName,
-        oilGasAreaName: this.fromSearch.oilGasAreaName
+        enterName: this.fromSearch.enterName
       }
-      oilmonthList(params).then((res) => {
+      oilinfoList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -225,7 +225,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/oilAdd', query: params })
+      this.$router.push({ path: '/oilinfoAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -235,7 +235,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/oilAdd', query: params })
+        this.$router.push({ path: '/oilinfoAdd', query: params })
 
       } else {
         this.$notify({
@@ -257,7 +257,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilgasmonthSwitchs(params).then((res) => {
+          oilinfoSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',

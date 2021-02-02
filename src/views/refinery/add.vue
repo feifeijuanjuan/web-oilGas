@@ -111,7 +111,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="89#汽油产量">
+            <el-form-item label="98#汽油产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldGasoline89"
                         type="number"
                         @input="minMax('yieldGasoline89',editForm.yieldGasoline89)"
@@ -221,7 +221,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label=" 89#汽油供应量">
+            <el-form-item label="98#汽油供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyGasoline89"
                         type="number"
                         @input="minMax('supplyGasoline89',editForm.supplyGasoline89)"

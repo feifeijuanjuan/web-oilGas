@@ -686,6 +686,17 @@ export const constantRoutes = [
         component: () => import('@/views/gasinfo/add')
       }
     ]
+  },
+  {
+    path: '/chengpinyoupurchaseAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/chengpinyoupurchaseAdd',
+        component: () => import('@/views/chengpinyoupurchase/add')
+      }
+    ]
   }
   // 管道
 

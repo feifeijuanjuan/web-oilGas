@@ -4,19 +4,6 @@
       <el-form :model="fromSearch" size="small" label-width="80px" class="form-box clearfix">
         <div class="search-input">
           <el-row :gutter="20">
-<!--            <el-col :span="8">
-              <el-form-item label="企业名称" label-width="90px">
-                <el-select v-model="fromSearch.enterName" clearable>
-                  <el-option
-                    v-for="item in enterNameAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>-->
             <el-col :span="8">
               <el-form-item label="起止日期">
                 <el-date-picker
@@ -43,7 +30,7 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          销售按月填报
+          购进量按月填报
         </div>
         <div>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
@@ -80,14 +67,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { chengpinyousalelList, chengpinyousaleSwitchs, dic,chengpinyousaleInit  } from '@/api/fill'
+import { chengpinyoupurchaseList, chengpinyoupurchaseSwitchs, chengpinyousaleInit } from '@/api/fill'
 
-/*1企业名称、2时间、3盟市名称、
-89#汽油销售量、92#汽油销售量、95#汽油销售量、
-0#柴油销售量、负35#柴油销售量、负10#柴油销售量、负20#柴油销费量、
-煤油销费量、
-柴油消费量预测值、汽油消费量预测、
-成品油区内消费量、成品油区外消费量*/
 export default {
   name: 'Dashboard',
   components: { TableCmp },
@@ -105,52 +86,23 @@ export default {
       loading: false,
       tableData: [],
       tableLabel: [
-        { label: '时间', param: 'recordDate', minWidth: '150' },
-        { label: '企业名称', param: 'enterName', minWidth: '150' },
-        { label: '盟市', param: 'leagueCityName', minWidth: '150' },
-        { label: '98#汽油消费量(万吨)', param: 'salesGasoline89', minWidth: '180' },
-        { label: '92#汽油消费量(万吨)', param: 'salesGasoline92', minWidth: '180' },
-        { label: '95#汽油消费量(万吨)', param: 'salesGasoline95', minWidth: '180' },
-        { label: '0#柴油消费量(万吨)', param: 'salesDieselOil0', minWidth: '180' },
-        { label: '负35#柴油消费量(万吨)', param: 'salesDieselOilMinus35', minWidth: '180' },
-        { label: '负10#柴油消费量(万吨)', param: 'salesDieselOilMinus10', minWidth: '180' },
-        { label: '负20#柴油消费量(万吨)', param: 'salesDieselOilMinus20', minWidth: '180' },
-        { label: '煤油消费量(万吨)', param: 'aviationCoalSales', minWidth: '180' },/*
-        { label: '柴油消费量预测值', param: 'salesPlanDieselOil', minWidth: '180' },
-        { label: '汽油消费量预测', param: 'salesPlanGasoline', minWidth: '180' },*/
-        { label: '成品油区内消费量(万吨)', param: 'productedOilInAreaSales', minWidth: '180' },
-        { label: '成品油区外消费量(万吨)', param: 'productedOilOutAreaSales', minWidth: '180' },
-        { label: '成品油区外调入量(万吨)', param: 'productedOilTransferInVolume', minWidth: 180 }
+        { label: '时间', param: 'recordDate' },
+        { label: '企业名称', param: 'enterName' },
+        { label: '购进量(万吨)', param: 'purchaseVolume' }
       ],
       selectedRows: [],
-      enterNameAry: []
     }
   },
   created() {
     // 初始化查询列表
-   this.chengpinyousaleInit()
-    this.dic()
+    this.chengpinyousaleInit()
   },
   methods: {
-    chengpinyousaleInit(){
-      chengpinyousaleInit().then((res)=>{
-        if(res.success){
-          this.fromSearch.enterName=res.data.zuzhijigou
-          this.list(1, this.pageSize)
-        }else{
-          this.$notify({
-            message: '网络请求失败',
-            type: 'error',
-            offset: 100
-          })
-        }
-      })
-    },
-    dic() {
-      dic().then((res) => {
+    chengpinyousaleInit() {
+      chengpinyousaleInit().then((res) => {
         if (res.success) {
-          const enterName = res.data.chengpinyou
-          this.enterNameAry = enterName
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -171,7 +123,7 @@ export default {
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
-      chengpinyousalelList(params).then((res) => {
+      chengpinyoupurchaseList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -200,7 +152,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/chengpinyousaleAdd', query: params })
+      this.$router.push({ path: '/chengpinyoupurchaseAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -210,7 +162,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/chengpinyousaleAdd', query: params })
+        this.$router.push({ path: '/chengpinyoupurchaseAdd', query: params })
 
       } else {
         this.$notify({
@@ -232,7 +184,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          chengpinyousaleSwitchs(params).then((res) => {
+          chengpinyoupurchaseSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',

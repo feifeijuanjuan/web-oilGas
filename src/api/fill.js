@@ -542,3 +542,15 @@ export const oilinfoChange = params => post('/oilinfo/update', params)
 export const oilinfoUpdate = params => get(`/oilinfo/select/${params}`)
 // 删除
 export const oilinfoSwitchs = params => post(`/oilinfo/switchs`, params)
+
+// 成品油购进量填报
+// 查询
+export const chengpinyoupurchaseList = params => post('/chengpinyoupurchase/list', params)
+// 新增保存
+export const chengpinyoupurchaseSave = params => post('/chengpinyoupurchase/save', params)
+// 编辑保存
+export const chengpinyoupurchaseChange = params => post('/chengpinyoupurchase/update', params)
+// 更新
+export const chengpinyoupurchaseUpdate = params => get(`/chengpinyoupurchase/select/${params}`)
+// 删除
+export const chengpinyoupurchaseSwitchs = params => post(`/chengpinyoupurchase/switchs`, params)

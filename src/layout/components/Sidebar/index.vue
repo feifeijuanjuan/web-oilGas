@@ -160,6 +160,8 @@ export default {
         return '/oilinfo/list'
       } else if (path === '/gasinfoAdd') {
         return '/gasinfo/list'
+      } else if (path === '/chengpinyoupurchaseAdd') {
+        return '/chengpinyoupurchase/list'
       } else {
         return path
       }

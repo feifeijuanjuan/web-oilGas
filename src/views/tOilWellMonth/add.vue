@@ -106,6 +106,7 @@ export default {
         oilWellYield: '',
         yieldAttribute: ''
       },
+      oilWellNameAry: [],
       yieldAttributeAry: [],
       rules: {
         oilWellName: [

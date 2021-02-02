@@ -22,9 +22,9 @@
                 <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
                   <el-option
                     v-for="item in pipelineNameTypeAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
+                    :key="item.pipelineName"
+                    :label="item.pipelineName"
+                    :value="item.pipelineName"
                   >
                   </el-option>
                 </el-select>
@@ -127,13 +127,14 @@ export default {
     // 初始化查询列表
     this.pipelinedayInit()
     //
-    this.dic()
+    // this.dic()
   },
   methods: {
     pipelinedayInit() {
       pipelinedayInit().then((res) => {
         if(res.success){
           this.fromSearch.enterName=res.data.zuzhijigou
+          this.pipelineNameTypeAry=res.data.chengpinyou
           this.list(1, this.pageSize)
         }else{
           this.$notify({

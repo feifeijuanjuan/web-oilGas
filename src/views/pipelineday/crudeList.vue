@@ -22,9 +22,9 @@
                 <el-select v-model="fromSearch.pipelineName" placeholder="请选择管线名" clearable>
                   <el-option
                     v-for="item in pipelineNameTypeAry"
-                    :key="item.typeName"
-                    :label="item.typeName"
-                    :value="item.typeName"
+                    :key="item.pipelineName"
+                    :label="item.pipelineName"
+                    :value="item.pipelineName"
                   >
                   </el-option>
                 </el-select>
@@ -113,7 +113,7 @@ export default {
         { label: '管线管存量(万吨)', param: 'pipelineStock', minWidth: 180 },
         // { label: '管线累计输油(万吨)', param: 'pipelineCumulativeVolume', minWidth: 180 },
         // { label: '末站压力阈值(Mpa)', param: 'pressureThreshold', minWidth: 180 },
-        { label: '末站压力实际值(Mpa)', param: 'pressureActualValue', minWidth: 180 },
+        { label: '末站压力实际值(Mpa)', param: 'pressureActualValue', minWidth: 180 }
         // { label: '设计输油能力(万吨/天)', param: 'runPlanPressure', minWidth: 180 },
         // { label: '实际输油能力(万吨/天)', param: 'runPressure', minWidth: 180 }
       ],
@@ -126,15 +126,16 @@ export default {
     // 初始化查询列表
     this.pipelinedayInit()
     //
-    this.dic()
+    // this.dic()
   },
   methods: {
     pipelinedayInit() {
       pipelinedayInit().then((res) => {
-        if(res.success){
-          this.fromSearch.enterName=res.data.zuzhijigou
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.pipelineNameTypeAry = res.data.yuanyou
           this.list(1, this.pageSize)
-        }else{
+        } else {
           this.$notify({
             message: '网络请求失败',
             type: 'error',

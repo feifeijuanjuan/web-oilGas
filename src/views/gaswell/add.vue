@@ -38,8 +38,14 @@
 
           <el-col :span="12">
             <el-form-item label="气井所属生产基地" class="no-unit">
-              <el-input v-model="editForm.baseName" placeholder="请输入内容">
-              </el-input>
+              <el-select v-model="editForm.baseName" clearable>
+                <el-option
+                  v-for="item in baseNameAry"
+                  :key="item.baseName"
+                  :label="item.baseName"
+                  :value="item.baseName"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -74,6 +80,7 @@ export default {
         gasWellYield: '',
         enterName: ''
       },
+      baseNameAry:[],
       rules: {
         gasWellName: [
           { required: true, message: '请输入气井名称', trigger: 'blur' }
@@ -103,6 +110,7 @@ export default {
       oilgasdayInit().then((res) => {
         if (res.success) {
           this.editForm.enterName = res.data.zuzhijigou
+          this.baseNameAry=res.data.gasBase
         } else {
           this.$notify({
             message: '网络请求失败',

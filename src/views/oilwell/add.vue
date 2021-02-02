@@ -38,8 +38,14 @@
 
           <el-col :span="12">
             <el-form-item label="油井所属生产基地" class="no-unit">
-              <el-input v-model="editForm.baseName" placeholder="请输入内容">
-              </el-input>
+              <el-select v-model="editForm.baseName" clearable>
+                <el-option
+                  v-for="item in baseNameAry"
+                  :key="item.baseName"
+                  :label="item.baseName"
+                  :value="item.baseName"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -98,6 +104,7 @@ export default {
         yieldAttribute: '',
         enterName: ''
       },
+      baseNameAry:[],
       yieldAttributeAry: [],
       rules: {
         oilWellName: [
@@ -125,6 +132,7 @@ export default {
       oilgasdayInit().then((res) => {
         if (res.success) {
           this.editForm.enterName = res.data.zuzhijigou
+          this.baseNameAry=res.data.oilBase
         } else {
           this.$notify({
             message: '网络请求失败',

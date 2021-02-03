@@ -77,7 +77,7 @@ export function postParams(url, data) {
     service({
       method: 'post',
       url: url,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { 'Content-Type': 'multipart/form-data;boundary = ' + new Date().getTime() },
       data: data
     }).then(response => {
       resolve(response)

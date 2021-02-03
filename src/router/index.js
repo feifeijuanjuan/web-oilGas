@@ -31,10 +31,10 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-/*  {
+  {
     path: '/test',
     component: () => import('@/views/test')
-  },*/
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index'),

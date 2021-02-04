@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a href="http://localhost:9528/api/chengpinyoudepot/excel/template" target="_blank">下载模板</a>
+    <a :href="href">下载模板</a>
     <label class="file-select">
       <div class="select-button">
         <span>Select File</span>
@@ -12,7 +12,7 @@
 </template>
 <script>
 import { chengpinDownLoad, chengpinUpload } from '@/api/fill'
-
+import axios from 'axios'
 export default {
   name: 'test',
   data() {
@@ -21,15 +21,18 @@ export default {
     }
   },
   created() {
+    console.log(axios.defaults)
+    // http://localhost:9528/api/chengpinyoudepot/excel/template
+    this.href = window.location.origin + '/api' + '/chengpinyoudepot/excel/template'
     // this.chengpinDownLoad()
   },
   methods: {
     handleFileChange(e) {
-         let formData = new FormData()
-         formData.append('file', e.target.files[0].name)
-         chengpinUpload(formData).then((res)=>{
+      let formData = new FormData()
+      formData.append('file', e.target.files[0])
+      chengpinUpload(formData).then((res) => {
 
-         })
+      })
     },
     chengpinDownLoad() {
       chengpinDownLoad().then((res) => {

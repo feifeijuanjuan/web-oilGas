@@ -31,10 +31,10 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  {
+/*  {
     path: '/test',
     component: () => import('@/views/test')
-  },
+  },*/
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -695,6 +695,17 @@ export const constantRoutes = [
       {
         path: '/chengpinyoupurchaseAdd',
         component: () => import('@/views/chengpinyoupurchase/add')
+      }
+    ]
+  },
+  {
+    path: '/pipelinepeakAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/pipelinepeakAdd',
+        component: () => import('@/views/pipelinepeak/add')
       }
     ]
   }

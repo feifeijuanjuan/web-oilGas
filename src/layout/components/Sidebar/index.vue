@@ -162,6 +162,8 @@ export default {
         return '/gasinfo/list'
       } else if (path === '/chengpinyoupurchaseAdd') {
         return '/chengpinyoupurchase/list'
+      } else if (path === '/pipelinepeakAdd') {
+        return '/pipelinepeak/list'
       } else {
         return path
       }

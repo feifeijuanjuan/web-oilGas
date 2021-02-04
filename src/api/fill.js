@@ -554,3 +554,15 @@ export const chengpinyoupurchaseChange = params => post('/chengpinyoupurchase/up
 export const chengpinyoupurchaseUpdate = params => get(`/chengpinyoupurchase/select/${params}`)
 // 删除
 export const chengpinyoupurchaseSwitchs = params => post(`/chengpinyoupurchase/switchs`, params)
+
+// 管道公司按日调峰填报
+// 查询
+export const pipelinepeekdayList = params => post('/pipelinepeekday/list', params)
+// 新增保存
+export const pipelinepeekdaySave = params => post('/pipelinepeekday/save', params)
+// 编辑保存
+export const pipelinepeekdayChange = params => post('/pipelinepeekday/update', params)
+// 更新
+export const pipelinepeekdayUpdate = params => get(`/pipelinepeekday/select/${params}`)
+// 删除
+export const pipelinepeekdaySwitchs = params => post(`/pipelinepeekday/switchs`, params)

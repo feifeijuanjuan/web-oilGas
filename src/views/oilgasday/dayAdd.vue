@@ -61,21 +61,22 @@
 
         </el-row>
         <el-row>
+
           <el-col :span="12">
-            <el-form-item label="天然气日产量">
-              <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas"
+            <el-form-item label="天然气实际日供气量">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGas"
                         type="number"
-                        @input="minMax('dayYieldNaGas',editForm.dayYieldNaGas)"
+                        @input="minMax('daySupplyNaGas',editForm.daySupplyNaGas)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="天然气实际日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyNaGas"
+            <el-form-item label="天然气计划日供气量">
+              <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas"
                         type="number"
-                        @input="minMax('daySupplyNaGas',editForm.daySupplyNaGas)"
+                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
@@ -95,10 +96,10 @@
             </el-form-item>
           </el-col>-->
           <el-col :span="12">
-            <el-form-item label="天然气计划日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.dayPlanSupplyNaGas"
+            <el-form-item label="直供西部天然气日供气量">
+              <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany"
                         type="number"
-                        @input="minMax('dayPlanSupplyNaGas',editForm.dayPlanSupplyNaGas)"
+                        @input="minMax('daySupplyPipelineCompany',editForm.daySupplyPipelineCompany)"
               >
                 <template slot="append">万立方米</template>
               </el-input>
@@ -116,16 +117,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="直供西部天然气日供气量">
-              <el-input placeholder="请输入内容" v-model="editForm.daySupplyPipelineCompany"
-                        type="number"
-                        @input="minMax('daySupplyPipelineCompany',editForm.daySupplyPipelineCompany)"
-              >
-                <template slot="append">万立方米</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
+
           <el-col :span="12">
             <el-form-item label="其他直供企业城市用气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyCh3oh"
@@ -136,8 +128,6 @@
               </el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="其他直供企业工业用气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyNh3"
@@ -148,11 +138,23 @@
               </el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="直供液化工厂LNG日供气量">
               <el-input placeholder="请输入内容" v-model="editForm.daySupplyLiquPlant"
                         type="number"
                         @input="minMax('daySupplyLiquPlant',editForm.daySupplyLiquPlant)"
+              >
+                <template slot="append">万立方米</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="直供甲醇化肥厂">
+              <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas"
+                        type="number"
+                        @input="minMax('dayYieldNaGas',editForm.dayYieldNaGas)"
               >
                 <template slot="append">万立方米</template>
               </el-input>

@@ -111,14 +111,14 @@ export default {
         { label: '企业名称', param: 'leagueCityName', minWidth: '180' },
         { label: '企业结构', param: 'groupType', minWidth: '180' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
-        { label: '天然气日产量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' },
         { label: '天然气实际日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
         { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
-        { label: '直供新圣天然气日供气量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
         { label: '直供西部天然气日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
+        { label: '直供新圣天然气日供气量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
         { label: '其他直供企业城市用气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
         { label: '其他直供企业工业用气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
-        { label: '直供液化工厂LNG日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' }
+        { label: '直供液化工厂LNG日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
+        { label: '直供甲醇化肥厂(万立方米)', param: 'dayYieldNaGas', minWidth: '180' }
       ],
       selectedRows: [],
       gasTypesAry: [],

@@ -151,7 +151,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="直供甲醇化肥厂">
+            <el-form-item label="直供甲醇化肥厂供气量">
               <el-input placeholder="请输入内容" v-model="editForm.dayYieldNaGas"
                         type="number"
                         @input="minMax('dayYieldNaGas',editForm.dayYieldNaGas)"

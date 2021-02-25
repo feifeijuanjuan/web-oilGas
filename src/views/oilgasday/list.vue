@@ -118,7 +118,7 @@ export default {
         { label: '其他直供企业城市用气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
         { label: '其他直供企业工业用气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
         { label: '直供液化工厂LNG日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
-        { label: '直供甲醇化肥厂(万立方米)', param: 'dayYieldNaGas', minWidth: '180' }
+        { label: '直供甲醇化肥厂供气量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' }
       ],
       selectedRows: [],
       gasTypesAry: [],

@@ -13,6 +13,8 @@
 <script>
 import { chengpinDownLoad, chengpinUpload } from '@/api/fill'
 import axios from 'axios'
+import { downLoad } from '@/utils/upload'
+
 export default {
   name: 'test',
   data() {
@@ -21,14 +23,21 @@ export default {
     }
   },
   created() {
-    console.log(axios.defaults)
-    // http://localhost:9528/api/chengpinyoudepot/excel/template
-    this.href = window.location.origin + '/api' + '/chengpinyoudepot/excel/template'
+    /* console.log(process.env.NODE_ENV)
+     console.log(axios.defaults)
+     // http://localhost:9528/api/chengpinyoudepot/excel/template
+     if (process.env.NODE_ENV === 'development') {
+       this.href = window.location.origin + '/api' + '/chengpinyoudepot/excel/template'
+     } else {
+       this.href = window.location.origin + '/chengpinyoudepot/excel/template'
+     }*/
+
+    this.href = downLoad('/chengpinyoudepot/excel/template')
     // this.chengpinDownLoad()
   },
   methods: {
     handleFileChange(e) {
-      let formData = new FormData()
+      const formData = new FormData()
       formData.append('file', e.target.files[0])
       chengpinUpload(formData).then((res) => {
 

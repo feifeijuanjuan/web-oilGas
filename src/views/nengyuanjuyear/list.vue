@@ -130,7 +130,7 @@ export default {
         // { label: '盟市自建储罐数量(个)', param: 'tankSelf', minWidth: 160 },
         // { label: '天然气历史缺口量(万立方米)', param: 'naGasBreach', minWidth: 160 },
         // { label: '盟市储气日调用量', param: 'naGasInvoke', minWidth: 160 },
-        { label: '盟市气化装置数量(万立方米)', param: 'apparatusNum', minWidth: 160 },
+        { label: '盟市气化装置数量(个)', param: 'apparatusNum', minWidth: 160 },
         // { label: '盟市气化装置日均气化量(万立方米)', param: 'apparatusGasContent', minWidth: 180 },
         { label: '地方政府已建储罐数量(个)', param: 'gasStorageCapacityHaveBuilt', minWidth: 120 },
         { label: '地方政府正在建设储罐数量(个)', param: 'gasStorageCapacityUnderConstruction', minWidth: 150 },

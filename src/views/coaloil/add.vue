@@ -126,7 +126,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="石脑油单位产品原料煤耗">
+            <el-form-item label="煤制油单位产品原料煤耗">
               <el-input placeholder="请输入内容" v-model="editForm.naphthaRawCoalConsumption"
                         type="number"
                         @input="minMax('naphthaRawCoalConsumption',editForm.naphthaRawCoalConsumption)"
@@ -137,7 +137,7 @@
           </el-col>
 
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="柴油单位产品原料煤耗">
               <el-input placeholder="请输入内容" v-model="editForm.dieselRawCoalConsumption"
@@ -159,10 +159,10 @@
             </el-form-item>
           </el-col>
 
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="石脑油单位产品综合能耗">
+            <el-form-item label="煤制油单位产品综合能耗">
               <el-input placeholder="请输入内容" v-model="editForm.naphthaUnitProductComprehensiveEnergySales"
                         type="number"
                         @input="minMax('naphthaUnitProductComprehensiveEnergySales',editForm.naphthaUnitProductComprehensiveEnergySales)"
@@ -172,6 +172,16 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="煤制油单位产品新鲜水耗">
+              <el-input placeholder="请输入内容" v-model="editForm.naphthaUnitProductFreshWaterConsumption"
+                        type="number"
+                        @input="minMax('naphthaUnitProductFreshWaterConsumption',editForm.naphthaUnitProductFreshWaterConsumption)"
+              >
+                <template slot="append">吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <!-- <el-col :span="12">
             <el-form-item label="柴油单位产品综合能耗">
               <el-input placeholder="请输入内容" v-model="editForm.dieselUnitProductComprehensiveEnergySales"
                         type="number"
@@ -180,10 +190,10 @@
                 <template slot="append">吨标准煤</template>
               </el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
 
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="液化气单位产品综合能耗">
               <el-input placeholder="请输入内容" v-model="editForm.lpgUnitProductComprehensiveEnergySales"
@@ -205,8 +215,8 @@
             </el-form-item>
           </el-col>
 
-        </el-row>
-        <el-row>
+        </el-row> -->
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="柴油单位产品新鲜水耗">
               <el-input placeholder="请输入内容" v-model="editForm.dieselUnitProductFreshWaterConsumption"
@@ -228,7 +238,7 @@
             </el-form-item>
           </el-col>
 
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="12">
             <el-form-item label="石脑油产量">
@@ -245,6 +255,29 @@
               <el-input placeholder="请输入内容" v-model="editForm.yieldDieselOil"
                         type="number"
                         @input="minMax('yieldDieselOil',editForm.yieldDieselOil)"
+              >
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="石脑油计划产量">
+              <el-input placeholder="请输入内容" v-model="editForm.planYieldNaphtha"
+                        type="number"
+                        @input="minMax('planYieldNaphtha',editForm.planYieldNaphtha)"
+              >
+                <template slot="append">万吨</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="柴油计划产量">
+              <el-input placeholder="请输入内容" v-model="editForm.planYieldNaphtha"
+                        type="number"
+                        @input="minMax('planYieldDieselOil',editForm.planYieldNaphtha)"
               >
                 <template slot="append">万吨</template>
               </el-input>
@@ -687,7 +720,9 @@ export default {
         lpgUnitProductComprehensiveEnergySales: '',
         naphthaUnitProductFreshWaterConsumption: '',
         dieselUnitProductFreshWaterConsumption: '',
-        lpgUnitProductFreshWwaterConsumption: ''
+        lpgUnitProductFreshWwaterConsumption: '',
+        planYieldNaphtha: '',
+        planYieldDieselOil: ''
       },
       rules: {
         /*enterName: [

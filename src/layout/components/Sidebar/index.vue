@@ -164,6 +164,12 @@ export default {
         return '/chengpinyoupurchase/list'
       } else if (path === '/pipelinepeakAdd') {
         return '/pipelinepeak/list'
+      } else if (path === '/gassupplymonthAdd') {
+        return '/gassupplymonth/list'
+      } else if (path === '/gasmonthAdd') {
+        return '/gassupplymonth/list'
+      } else if (path === '/oilsupplymonthAdd') {
+        return '/oilsupplymonth/list'
       } else {
         return path
       }

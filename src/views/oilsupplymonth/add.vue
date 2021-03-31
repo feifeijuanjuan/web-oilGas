@@ -17,12 +17,13 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油田名称" class="no-unit" prop="oilGasName">
-              <el-cascader
+            <el-form-item label="油田区域名称" class="no-unit" prop="oilGasName">
+<!--              <el-cascader
                 v-model="editForm.oilGasName"
                 placeholder="请选择油田名称"
                 :options="oilGasOptions"
-              ></el-cascader>
+              ></el-cascader>-->
+              <el-input v-model="editForm.oilGasName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -69,7 +70,7 @@
           </el-col>
 
         </el-row>-->
-        <el-row>
+<!--        <el-row>
           <el-col :span="12">
             <el-form-item label="实际月产量">
               <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
@@ -91,8 +92,8 @@
             </el-form-item>
           </el-col>
 
-        </el-row>
-<!--        <el-row>
+        </el-row>-->
+        <el-row>
           <el-col :span="12">
             <el-form-item label="实际月供应量">
               <el-input placeholder="请输入内容" v-model="editForm.supplyOilGas"
@@ -136,7 +137,7 @@
               </el-input>
             </el-form-item>
           </el-col>
-          &lt;!&ndash;          <el-col :span="12">
+          <!--          <el-col :span="12">
                       <el-form-item label="月产能">
                         <el-input placeholder="请输入内容" v-model="editForm.capacityOilGas"
                                   type="number"
@@ -145,8 +146,8 @@
                           <template slot="append">{{ unit }}</template>
                         </el-input>
                       </el-form-item>
-                    </el-col>&ndash;&gt;
-        </el-row>-->
+                    </el-col>-->
+        </el-row>
         <el-row>
 
           <!--          <el-col :span="12">
@@ -205,9 +206,9 @@ export default {
       optionsGroupType: [],
       unit: '万吨',
       rules: {
-        oilGasName: [
+      /*  oilGasName: [
           { required: true, message: '请选择油田名称', trigger: 'change' }
-        ],
+        ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -237,6 +238,7 @@ export default {
         if (res.success) {
           this.editForm.oilGasAreaName = res.data.zuzhijigou
           this.editForm.groupType = res.data.qiyejiegou
+          this.editForm.oilGasName=res.data.quyu
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -306,7 +308,7 @@ export default {
     },
     // 取消
     close() {
-      this.$router.push('/oilgasmonth/oilList')
+      this.$router.push('/oilsupplymonth/list')
     },
     // 新增保存
     createData() {
@@ -322,7 +324,7 @@ export default {
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/oilgasmonth/oilList')
+              this.$router.push('/oilsupplymonth/list')
             } else {
               this.$notify({
                 message: '保存失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),
@@ -350,7 +352,7 @@ export default {
                 type: 'success',
                 offset: 100
               })
-              this.$router.push('/oilgasmonth/oilList')
+              this.$router.push('/oilsupplymonth/list')
             } else {
               this.$notify({
                 message: '修改失败' + (res.body == '已存在该记录！' ? ',' + res.body : ''),

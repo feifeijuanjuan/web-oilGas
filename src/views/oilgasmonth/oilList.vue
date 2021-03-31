@@ -120,10 +120,10 @@ export default {
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
         { label: '实际月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
         { label: '计划月产量(万吨)', param: 'oilGasPlanMonthYield', minWidth: '150' },
-        { label: '实际月供应量(万吨)', param: 'supplyOilGas', minWidth: '150' },
+      /*  { label: '实际月供应量(万吨)', param: 'supplyOilGas', minWidth: '150' },
         { label: '计划月供应量(万吨)', param: 'oilGasPlanMonthSupply', minWidth: '150' },
         { label: '区内供应量(万吨)', param: 'supplyInOilGas', minWidth: '150' },
-        { label: '区外供应量(万吨)', param: 'supplyOutOilGas', minWidth: '150' }
+        { label: '区外供应量(万吨)', param: 'supplyOutOilGas', minWidth: '150' }*/
         /*  { label: '月产能', param: 'capacityOilGas', minWidth: '150' },
           { label: '综合能源消费量', param: 'energyConsumption', minWidth: '180' }*/
       ],

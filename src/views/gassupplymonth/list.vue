@@ -20,11 +20,11 @@
               <el-form-item label="起止日期">
                 <el-date-picker
                   v-model="fromSearch.time"
-                  type="daterange"
+                  type="monthrange"
                   unlink-panels
                   range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  start-placeholder="开始月份"
+                  end-placeholder="结束月份"
                   value-format="yyyy-MM-dd"
                 >
                 </el-date-picker>
@@ -42,18 +42,9 @@
     <div class="table-wrapper">
       <div class="handel-btn">
         <div class="submenu-title">
-          按日填报
+          按月填报
         </div>
         <div>
-          <a :href="href">
-            <input type=button class="temclass" value="下载模板">
-          </a>
-          <label class="file-select">
-            <div class="select-button">
-              <span>批量导入</span>
-            </div>
-            <input type="file" @change="handleFileChange" ref="inputs"/>
-          </label>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
@@ -88,8 +79,7 @@
 <script>
 import TableCmp from '@/components/TableCmp'
 import { MessageBox, Message } from 'element-ui'
-import { list, oilgasdaySwitchs, dic, oilgasdayInit, oilgasdayUpload } from '@/api/fill'
-import { downLoad } from '@/utils/upload'
+import { gasfieldlist, gasfieldSwitchs, dic, oilgasdayInit } from '@/api/fill'
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7天然气日产量、8天然气日供气量、9天然气计划日供气量、10天然气日供气合同量、11直供管道公司日供气量、
 12直供甲醇厂日供气量、
@@ -121,26 +111,24 @@ export default {
         { label: '企业名称', param: 'leagueCityName', minWidth: '180' },
         { label: '企业结构', param: 'groupType', minWidth: '180' },
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '180' },
-        { label: '天然气实际日供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
-        { label: '天然气计划日供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
-        { label: '直供西部天然气日供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
-        { label: '直供新圣天然气日供气量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
+        { label: '天然气实际月供气量(万立方米)', param: 'daySupplyNaGas', minWidth: '240' },
+        { label: '天然气计划月供气量(万立方米)', param: 'dayPlanSupplyNaGas', minWidth: '240' },
+        { label: '直供西部天然气月供气量(万立方米)', param: 'daySupplyPipelineCompany', minWidth: '240' },
+        { label: '直供新圣天然气月供气量(万立方米)', param: 'daySupplyNaGasContract', minWidth: '240' },
         { label: '其他直供企业城市用气量(万立方米)', param: 'daySupplyCh3oh', minWidth: '240' },
         { label: '其他直供企业工业用气量(万立方米)', param: 'daySupplyNh3', minWidth: '240' },
-        { label: '直供液化工厂LNG日供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
+        { label: '直供液化工厂LNG月供气量(万立方米)', param: 'daySupplyLiquPlant', minWidth: '240' },
         { label: '直供甲醇化肥厂供气量(万立方米)', param: 'dayYieldNaGas', minWidth: '180' }
       ],
       selectedRows: [],
       gasTypesAry: [],
-      oilGasOptions: [],
-      href: '',
+      oilGasOptions: []
     }
   },
   created() {
     // 初始化查询列表
     this.oilgasdayInit()
     this.dic()
-    this.href = downLoad('/oilgasday/excel/template')
   },
   methods: {
     oilgasdayInit(){
@@ -204,7 +192,7 @@ export default {
         oilGasName: this.fromSearch.oilGasName,
         leagueCityName: this.fromSearch.leagueCityName
       }
-      list(params).then((res) => {
+      gasfieldlist(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -233,7 +221,7 @@ export default {
         title: '新增',
         statu: 'create'
       }
-      this.$router.push({ path: '/dayAdd', query: params })
+      this.$router.push({ path: '/gasmonthAdd', query: params })
     },
     // 编辑
     handleEdit() {
@@ -243,7 +231,7 @@ export default {
           id: this.selectedRows[0],
           statu: 'update'
         }
-        this.$router.push({ path: '/dayAdd', query: params })
+        this.$router.push({ path: '/gasmonthAdd', query: params })
       } else {
         this.$notify({
           message: '请选择一条数据进行编辑',
@@ -263,7 +251,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilgasdaySwitchs(params).then((res) => {
+          gasfieldSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',
@@ -304,19 +292,8 @@ export default {
       })
       this.selectedRows = arr
     },
-    handleFileChange(e) {
-      const formData = new FormData()
-      formData.append('file', e.target.files[0])
-      oilgasdayUpload(formData).then((res) => {
-         if (res.data.code === 0) {
-              this.$notify({
-                message: '批量导入成功!',
-                type: 'success',
-                offset: 100
-              })
-            }
-          console.log(res)
-      })
+    handleNodeClick() {
+
     }
   }
 }
@@ -332,32 +309,5 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
-}
-.temclass {
-  border:1px solid rgb(105, 247, 70);
-  margin-right: 8px;
-  background-color:#fff;
-  border-radius: 3px;
-  padding: 6px;
-  font-size: 14px;
-  text-align: center;
-}
-.file-select > .select-button {
-  padding: 6px;
-display:inline;
-  color: black;
-  /*background-color: #2EA169;*/
-  background-color:#fff;
-  border-radius: 3px;
-  border:1px solid rgb(245, 242, 104);
-  margin-right: 8px;
-  text-align: center;
-  font-size: 14px;
-  // font-weight: bold;
-}
-
-/* Don't forget to hide the original file input! */
-.file-select > input[type="file"] {
-  display: none;
 }
 </style>

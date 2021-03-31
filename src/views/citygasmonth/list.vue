@@ -46,6 +46,15 @@
           非供暖季按月填报
         </div>
         <div>
+          <a :href="href">
+            <input type="button" class="temclass" value="下载模板" />
+          </a>
+          <label class="file-select">
+            <div class="select-button">
+              <span>批量导入</span>
+            </div>
+            <input type="file" @change="handleFileChange" ref="inputs" />
+          </label>
           <el-button size="small" class="btn-add" style="margin-bottom: 10px;" @click="handleAdd"><i
             class="icon iconfont i-add"
           >&#xe880;</i>新增
@@ -80,8 +89,8 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { citygasmonthList, citygasmonthSwitchs, citygasyearInit, dic } from '@/api/fill'
-
+import { citygasmonthList, citygasmonthSwitchs, citygasyearInit, dic, citygasmonthsaleUpload, citygasmonthsaleDownLoad } from '@/api/fill'
+import { downLoad } from "@/utils/upload";
 /*企业名称、盟市名称、时间、状态、
 天然气消费量、天然气需求量、天然气供应合同量、天然气计划日供气量、
 工业用户天然气消费量、商业用户天然气消费量、建筑业天然气消费量、生活销售天然气销售量、供暖天然气销售量、
@@ -127,13 +136,15 @@ export default {
         { label: '盟市天然气月消费总量(万立方米)', param: 'naturalGasSales', minWidth: 180 }
       ],
       selectedRows: [],
-      enterNameAry: []
+      enterNameAry: [],
+      href: ""
     }
   },
   created() {
     // 初始化查询列表
     this.citygasyearInit()
     // this.dic()
+    this.href = downLoad("/citygasmonth/excel/template");
   },
   methods: {
     citygasyearInit() {
@@ -275,7 +286,29 @@ export default {
         arr.push(item.id)
       })
       this.selectedRows = arr
-    }
+    },
+    handleFileChange(e) {
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      console.log(formData)
+      citygasmonthsaleUpload(formData).then((res) => {
+        console.log(res)
+        if (res.data.code === 0) {
+          this.$notify({
+            message: "批量导入成功!",
+            type: "success",
+            offset: 100,
+          });
+        }
+        console.log(res);
+      });
+    },
+    chengpinDownLoad() {
+      chengpinyousaleDownLoad().then((res) => {
+        this.href = res;
+        console.log(this.href);
+      });
+    },
   }
 }
 </script>
@@ -290,7 +323,31 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
-
-
+}
+.temclass {
+  border: 1px solid rgb(105, 247, 70);
+  margin-right: 8px;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+.file-select > .select-button {
+  padding: 6px;
+  display: inline;
+  color: black;
+  /*background-color: #2EA169;*/
+  background-color: #fff;
+  border-radius: 3px;
+  border: 1px solid rgb(245, 242, 104);
+  margin-right: 8px;
+  text-align: center;
+  font-size: 14px;
+  // font-weight: bold;
+}
+/* Don't forget to hide the original file input! */
+.file-select > input[type="file"] {
+  display: none;
 }
 </style>

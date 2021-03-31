@@ -5,9 +5,9 @@
 export function downLoad(url) {
   let point = ''
   if (process.env.NODE_ENV === 'development') {
-    point = window.location.origin + '/api' + url
+    point = "http://58.18.173.195:8082/oilgas-background/" + url     // window.location.origin + '/api'
   } else {
-    point = window.location.origin + url
+    point = "http://58.18.173.195:8082/oilgas-background/" + url  //window.location.origin + http://192.168.31.91:8080
   }
   return point
 }

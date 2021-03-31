@@ -112,19 +112,21 @@ export default {
         { label: '平均负荷率(%)', param: 'avgLoadRate', minWidth: 150 },
         { label: '计划平均负荷率(%)', param: 'planAvgLoadRate', minWidth: 150 },
         { label: '水资源用量(万吨)', param: 'waterUse', minWidth: 150 },
-        { label: '石脑油单位产品原料煤耗(吨标准煤)', param: 'naphthaRawCoalConsumption', minWidth: 150 },
-        { label: '柴油单位产品原料煤耗(吨标准煤)', param: 'dieselRawCoalConsumption', minWidth: 150 },
-        { label: '液化气单位产品原料煤耗(吨标准煤)', param: 'lpgRawCoalConsumption', minWidth: 150 },
-        { label: '石脑油单位产品综合能耗(吨标准煤)', param: 'naphthaUnitProductComprehensiveEnergySales', minWidth: 150 },
-        { label: '柴油单位产品综合能耗(吨标准煤)', param: 'dieselUnitProductComprehensiveEnergySales', minWidth: 150 },
-        { label: '液化气单位产品综合能耗(吨标准煤)', param: 'lpgUnitProductComprehensiveEnergySales', minWidth: 150 },
-        { label: '石脑油单位产品新鲜水耗(吨)', param: 'naphthaUnitProductFreshWaterConsumption', minWidth: 150 },
-        { label: '柴油单位产品新鲜水耗(吨)', param: 'dieselUnitProductFreshWaterConsumption', minWidth: 150 },
-        { label: '液化气单位产品新鲜水耗(吨)', param: 'lpgUnitProductFreshWwaterConsumption', minWidth: 150 },
+        { label: '煤制油单位产品原料煤耗(吨标准煤)', param: 'naphthaRawCoalConsumption', minWidth: 150 },
+        // { label: '柴油单位产品原料煤耗(吨标准煤)', param: 'dieselRawCoalConsumption', minWidth: 150 },
+        // { label: '液化气单位产品原料煤耗(吨标准煤)', param: 'lpgRawCoalConsumption', minWidth: 150 },
+        { label: '煤制油单位产品综合能耗(吨标准煤)', param: 'naphthaUnitProductComprehensiveEnergySales', minWidth: 150 },
+        // { label: '柴油单位产品综合能耗(吨标准煤)', param: 'dieselUnitProductComprehensiveEnergySales', minWidth: 150 },
+        // { label: '液化气单位产品综合能耗(吨标准煤)', param: 'lpgUnitProductComprehensiveEnergySales', minWidth: 150 },
+        { label: '煤制油单位产品新鲜水耗(吨)', param: 'naphthaUnitProductFreshWaterConsumption', minWidth: 150 },
+        // { label: '柴油单位产品新鲜水耗(吨)', param: 'dieselUnitProductFreshWaterConsumption', minWidth: 150 },
+        // { label: '液化气单位产品新鲜水耗(吨)', param: 'lpgUnitProductFreshWwaterConsumption', minWidth: 150 },
         /*{ label: '单位产品综合能耗(吨标准煤)', param: 'unitProductComprehensiveEnergySales', minWidth: 150 },
         { label: '单位产品新鲜水耗(吨)', param: 'unitProductFreshWaterConsumption', minWidth: 150 },*/
         { label: '石脑油产量(万吨)', param: 'yieldNaphtha', minWidth: 150 },
+        { label: '石脑油计划产量(万吨)', param: 'planYieldNaphtha', minWidth: 150 },
         { label: '柴油产量(万吨)', param: 'yieldDieselOil', minWidth: 150 },
+        { label: '柴油计划产量(万吨)', param: 'planYieldDieselOil', minWidth: 150 },
         { label: '液化气产量(万吨)', param: 'yieldLpg', minWidth: 150 },
         { label: '干气产量(万吨)', param: 'yieldDryGas', minWidth: 150 },
         { label: '石脑油供应量(万吨)', param: 'monthSupplyNaphtha', minWidth: 150 },
@@ -170,6 +172,7 @@ export default {
   methods: {
     enterpriseInit() {
       enterpriseInit().then((res) => {
+        console.log(res)
         if (res.success) {
           this.fromSearch.enterName = res.data.zuzhijigou
           this.list(1, this.pageSize)
@@ -200,14 +203,16 @@ export default {
     list(val, pageSize) {
       this.loading = true
       this.currentPage = val
-      const params = {
+      let params = {
         pageNum: val,
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
         enterName: this.fromSearch.enterName
       }
+      console.log(params)
       coaloilList(params).then((res) => {
+        console.log(res)
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total

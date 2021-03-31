@@ -1,5 +1,15 @@
 import { get, post, postParams } from '@/utils/request'
 
+//气田供应按月填报
+// 查询
+export const gasfieldlist = params => post(`/gassupplymonth/list`, params)
+// 删除
+export const gasfieldSwitchs = params => post(`/gassupplymonth/switchs`, params)
+// 保存
+export const gasfieldsave = params => post(`/gassupplymonth/save`, params)
+// 更新
+export const gasfieldupdate = params => get(`/gassupplymonth/select/${params}`)
+
 // 油气田企业按日填报
 // 查询
 export const list = params => post(`/oilgasday/list`, params)
@@ -10,6 +20,9 @@ export const update = params => get(`/oilgasday/select/${params}`)
 // 删除
 // export const deleteList = params => deletefn(`/oilgasday/delete/${params}`)
 export const oilgasdaySwitchs = params => post(`/oilgasday/switchs`, params)
+
+export const oilgasdayUpload = (params) => postParams('/oilgasday/test', params)
+
 //查询所属企业名称
 export const oilgasdayInit = () => get(`/oilgasday/init`)
 // 油气田企业按月填报
@@ -82,6 +95,9 @@ export const chengpinyousaleSwitchs = params => post(`/chengpinyousale/switchs`,
 //获取当前所属企业
 export const chengpinyousaleInit = params => get(`/chengpinyousale/init`)
 
+export const chengpinyousaleDownLoad = () => get('/chengpinyousale/excel/template')
+export const chengpinyousaleUpload = (params) => postParams('/chengpinyousale/test', params)
+
 // 成品油销售企业库存填报
 // 查询
 export const chengpinyoudepotlList = params => post('/chengpinyoudepot/list', params)
@@ -115,6 +131,18 @@ export const pipelinedayUpdate = params => get(`/pipelineday/select/${params}`)
 export const pipelinedaySwitchs = params => post(`/pipelineday/switchs`, params)
 //获取组织机构
 export const pipelinedayInit = () => get(`/pipelineday/init`)
+
+// 管道企业按yue填报   非供暖季天然气管道按月填报
+// 查询
+export const pipmonthlList = params => post('/pipmonth/list', params)
+// 保存
+export const pipmonthsave = params => post('/pipmonth/save', params)
+// 更新
+export const pipmonthUpdate = params => get(`/pipmonth/select/${params}`)
+// 删除
+export const pipmonthSwitchs = params => post(`/pipmonth/switchs`, params)
+//获取组织机构
+export const pipmonthInit = () => get(`/pipmonth/init`)
 
 // 管道企业管道信息填报
 // 查询
@@ -209,11 +237,13 @@ export const enterpriseInit = () => get('/enterprise/init')
 
 // 管道企业按日填报
 // 原油管线查询
-export const crudeList = params => post('/pipelineday/crudeList', params)
+export const crudeList = params => post('/pipmonth/crudeList', params)
 // 天然气管线查询
 export const gasList = params => post('/pipelineday/gasList', params)
+// 天然气yue管线查询
+export const gasmonList = params => post('/pipmonth/gasList', params)
 // 成品油管线查询
-export const productList = params => post('/pipelineday/productList', params)
+export const productList = params => post('/pipmonth/productList', params)
 // 气井
 // 查询
 export const gaswellList = params => post('/gaswell/list', params)
@@ -485,6 +515,10 @@ export const citygasmonthSave = params => post('/citygasmonth/save', params)
 export const citygasmonthUpdate = params => get(`/citygasmonth/select/${params}`)
 // 删除
 export const citygasmonthSwitchs = params => post(`/citygasmonth/switchs`, params)
+
+export const citygasmonthsaleDownLoad = () => get('/citygasmonth/excel/template')
+export const citygasmonthsaleUpload = (params) => postParams('/citygasmonth/test', params)
+
 // 盟市非供暖季按月填报(能源局)
 // 查询
 export const energygasmonthList = params => post('/energygasmonth/list', params)

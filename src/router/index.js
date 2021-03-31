@@ -31,6 +31,7 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  { path: '/', redirect: '/login' },
   {
     path: '/test',
     component: () => import('@/views/test')
@@ -208,7 +209,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/crudeAdd',
-        component: () => import('@/views/pipelineday/crudeAdd')
+        component: () => import('@/views/pipelinemonth/crudeAdd')
       }
     ]
   },
@@ -224,13 +225,24 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/gasmonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasmonthAdd',
+        component: () => import('@/views/pipelinemonth/gasAdd')
+      }
+    ]
+  },
+  {
     path: '/productAdd',
     component: Layout,
     hidden: true,
     children: [
       {
         path: '/productAdd',
-        component: () => import('@/views/pipelineday/productAdd')
+        component: () => import('@/views/pipelinemonth/productAdd')
       }
     ]
   },
@@ -706,6 +718,40 @@ export const constantRoutes = [
       {
         path: '/pipelinepeakAdd',
         component: () => import('@/views/pipelinepeak/add')
+      }
+    ]
+  },
+  {
+    path: '/gassupplymonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gassupplymonthAdd',
+        component: () => import('@/views/gassupplymonth/dayAdd')
+      }
+    ]
+  },
+  //油气田按日填报新增
+  {
+    path: '/gasmonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/gasmonthAdd',
+        component: () => import('@/views/gassupplymonth/dayAdd')
+      }
+    ]
+  },
+  {
+    path: '/oilsupplymonthAdd',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/oilsupplymonthAdd',
+        component: () => import('@/views/oilsupplymonth/add')
       }
     ]
   }

@@ -211,7 +211,7 @@ export default {
             if (res.code === 0) {
               this.$notify({
                 message: "保存成功",
-                type: "error",
+                type: "success",
                 offset: 100,
               });
               this.$router.push("/sys/orgList");

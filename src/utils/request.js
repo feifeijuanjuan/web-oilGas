@@ -7,8 +7,8 @@ import { resetRouter } from '@/router'
 
 const service = axios.create({
   // baseURL: 'http://210.73.216.32:8081/oilgas-background/', //外网
-  baseURL: 'http://58.18.173.195:8082/oilgas-background/',//内网
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: 'http://58.18.173.195:8082/oilgas-background/',//内网
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
   crossDomain: true

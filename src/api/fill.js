@@ -40,6 +40,16 @@ export const gasmonthUpdate = params => get(`/oilgasmonth/select1/${params}`)
 // 删除
 export const oilgasmonthSwitchs = params => post(`/oilgasmonth/switchs`, params)
 
+// 油田区域供应按月查询填报
+// 查询
+export const oilsupplymonthList = params => post('/oilsupplymonth/list', params)
+// 保存
+export const oilsupplymonthSave = params => post('/oilsupplymonth/save', params)
+// 更新(油田按月)
+export const oilsupplymonthUpdate = params => get(`/oilsupplymonth/select/${params}`)
+// 删除
+export const oilsupplymonthSwitchs = params => post(`/oilsupplymonth/switchs`, params)
+
 // 国土资源厅按年填报
 // 查询
 export const guotuGasList = params => post('/guotu/gasList', params)

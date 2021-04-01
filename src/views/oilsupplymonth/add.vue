@@ -17,13 +17,13 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="油田区域名称" class="no-unit" prop="oilGasName">
-<!--              <el-cascader
-                v-model="editForm.oilGasName"
-                placeholder="请选择油田名称"
-                :options="oilGasOptions"
-              ></el-cascader>-->
-              <el-input v-model="editForm.oilGasName" disabled></el-input>
+            <el-form-item label="油田区域名称" class="no-unit">
+              <!--              <el-cascader
+                              v-model="editForm.oilGasName"
+                              placeholder="请选择油田名称"
+                              :options="oilGasOptions"
+                            ></el-cascader>-->
+              <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -38,61 +38,61 @@
             </el-form-item>
           </el-col>
         </el-row>
-<!--        <el-row>
-          <el-col :span="12">
-            <el-form-item label="油田面积">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
-                        type="number"
-                        @input="minMax('oilGasSize',editForm.oilGasSize)"
-              >
-                <template slot="append">平方公里</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="中心经纬度" class="no-unit">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasCoordinate">
-              </el-input>
-            </el-form-item>
-          </el-col>
+        <!--        <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="油田面积">
+                      <el-input placeholder="请输入内容" v-model="editForm.oilGasSize"
+                                type="number"
+                                @input="minMax('oilGasSize',editForm.oilGasSize)"
+                      >
+                        <template slot="append">平方公里</template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="中心经纬度" class="no-unit">
+                      <el-input placeholder="请输入内容" v-model="editForm.oilGasCoordinate">
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
 
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="企业名称" class="no-unit">
-              <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="企业结构" class="no-unit">
-              <el-input v-model="editForm.groupType" disabled></el-input>
-            </el-form-item>
-          </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="企业名称" class="no-unit">
+                      <el-input v-model="editForm.oilGasAreaName" disabled></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="企业结构" class="no-unit">
+                      <el-input v-model="editForm.groupType" disabled></el-input>
+                    </el-form-item>
+                  </el-col>
 
-        </el-row>-->
-<!--        <el-row>
-          <el-col :span="12">
-            <el-form-item label="实际月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
-                        type="number"
-                        @input="minMax('yieldOilGas',editForm.yieldOilGas)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="计划月产量">
-              <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield"
-                        type="number"
-                        @input="minMax('oilGasPlanMonthYield',editForm.oilGasPlanMonthYield)"
-              >
-                <template slot="append">{{ unit }}</template>
-              </el-input>
-            </el-form-item>
-          </el-col>
+                </el-row>-->
+        <!--        <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="实际月产量">
+                      <el-input placeholder="请输入内容" v-model="editForm.yieldOilGas"
+                                type="number"
+                                @input="minMax('yieldOilGas',editForm.yieldOilGas)"
+                      >
+                        <template slot="append">{{ unit }}</template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label="计划月产量">
+                      <el-input placeholder="请输入内容" v-model="editForm.oilGasPlanMonthYield"
+                                type="number"
+                                @input="minMax('oilGasPlanMonthYield',editForm.oilGasPlanMonthYield)"
+                      >
+                        <template slot="append">{{ unit }}</template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
 
-        </el-row>-->
+                </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="实际月供应量">
@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import { oilmonthUpdate, oilgasmonthSave, dic, oilgasdayInit } from '@/api/fill'
+import { oilsupplymonthUpdate, oilsupplymonthSave, dic, oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -198,7 +198,8 @@ export default {
         capacityOilGas: '',
         energyConsumption: '',
         oilGasSize: '',
-        oilGasCoordinate: ''
+        oilGasCoordinate: '',
+        enterName: ''
       },
       pageTitle: '',
       statu: '',
@@ -206,9 +207,9 @@ export default {
       optionsGroupType: [],
       unit: '万吨',
       rules: {
-      /*  oilGasName: [
-          { required: true, message: '请选择油田名称', trigger: 'change' }
-        ],*/
+        /*  oilGasName: [
+            { required: true, message: '请选择油田名称', trigger: 'change' }
+          ],*/
         recordDate: [
           { required: true, message: '请选择日期', trigger: 'change' }
         ]
@@ -236,9 +237,9 @@ export default {
     oilgasdayInit() {
       oilgasdayInit().then((res) => {
         if (res.success) {
-          this.editForm.oilGasAreaName = res.data.zuzhijigou
+          this.editForm.enterName = res.data.zuzhijigou
           this.editForm.groupType = res.data.qiyejiegou
-          this.editForm.oilGasName=res.data.quyu
+          this.editForm.oilGasAreaName = res.data.quyu
         } else {
           this.$notify({
             message: '网络请求失败',
@@ -292,7 +293,7 @@ export default {
     // 数据回显
     update() {
       return new Promise((resolve, reject) => {
-        oilmonthUpdate(this.$route.query.id).then((res) => {
+        oilsupplymonthUpdate(this.$route.query.id).then((res) => {
           if (res.code === 0) {
             this.editForm = res.body
             this.editForm.oilGasName = [res.body.typeName, res.body.oilGasName]
@@ -317,7 +318,7 @@ export default {
           this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 1
-          oilgasmonthSave(param).then((res) => {
+          oilsupplymonthSave(param).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '保存成功',
@@ -345,7 +346,7 @@ export default {
           this.editForm.oilGasName = Array.isArray(this.editForm.oilGasName) ? this.editForm.oilGasName[this.editForm.oilGasName.length - 1] : this.editForm.oilGasName
           const param = this.editForm
           param['oilGasAreaType'] = 1
-          oilgasmonthSave(param).then((res) => {
+          oilsupplymonthSave(param).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 message: '修改成功',

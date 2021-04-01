@@ -7,22 +7,22 @@
           <el-row :gutter="20">
             <el-col :span="8">
               <el-form-item label="油田区域名称" label-width="110px">
-                                <el-select v-model="fromSearch.oilGasName" placeholder="请选择油田区域名称" clearable>
-                                  <el-option
-                                    v-for="item in oilGasOptions"
-                                    :key="item.label"
-                                    :label="item.label"
-                                    :value="item.label"
-                                  >
-                                  </el-option>
-                                </el-select>
-<!--                <el-cascader
-                  v-model="fromSearch.oilGasName"
-                  placeholder="请选择油田名称"
-                  :options="oilGasOptions"
-                  clearable
-                  @change="handleChange"
-                ></el-cascader>-->
+                <el-select v-model="fromSearch.oilGasAreaName" placeholder="请选择油田区域名称" clearable>
+                  <el-option
+                    v-for="item in oilGasOptions"
+                    :key="item.label"
+                    :label="item.label"
+                    :value="item.label"
+                  >
+                  </el-option>
+                </el-select>
+                <!--                <el-cascader
+                                  v-model="fromSearch.oilGasName"
+                                  placeholder="请选择油田名称"
+                                  :options="oilGasOptions"
+                                  clearable
+                                  @change="handleChange"
+                                ></el-cascader>-->
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -87,7 +87,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { dic, oilmonthList, oilgasmonthSwitchs, oilgasdayInit } from '@/api/fill'
+import { dic, oilsupplymonthList, oilsupplymonthSwitchs, oilgasdayInit } from '@/api/fill'
 
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7月产量、8计划月产量、9月供应量、10计划月供应量、11区内供应量、12区外供应量、
@@ -102,24 +102,24 @@ export default {
       currentPage: 1,
       pageSize: 10,
       fromSearch: {
-        oilGasName: null,
         time: '',
-        oilGasAreaName: ''
+        oilGasAreaName: '',
+        enterName: ''
       },
       loading: false,
       tableData: [],
       tableLabel: [
         { label: '时间', param: 'recordDate', minWidth: '150' },
-        { label: '油田区域名称', param: 'oilGasName', minWidth: '150' },
+        { label: '油田区域名称', param: 'oilGasAreaName', minWidth: '150' },
         /* { label: '油气田区域类型', param: 'oilGasAreaType', minWidth: '180' },
          { label: '油气田区域名称', param: 'oilGasAreaName', minWidth: '180' },*/
-       /* { label: '油田面积(平方公里)', param: 'oilGasSize', minWidth: '150' },
-        { label: '中心经纬度', param: 'oilGasCoordinate', minWidth: '150' },
-        { label: '企业名称', param: 'oilGasAreaName', minWidth: '150' },
-        { label: '企业结构', param: 'groupType', minWidth: '150' },*/
+        /* { label: '油田面积(平方公里)', param: 'oilGasSize', minWidth: '150' },
+         { label: '中心经纬度', param: 'oilGasCoordinate', minWidth: '150' },
+         { label: '企业名称', param: 'oilGasAreaName', minWidth: '150' },
+         { label: '企业结构', param: 'groupType', minWidth: '150' },*/
         // { label: '盟市名称', param: 'leagueCityName', minWidth: '150' },
-      /*  { label: '实际月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
-        { label: '计划月产量(万吨)', param: 'oilGasPlanMonthYield', minWidth: '150' },*/
+        /*  { label: '实际月产量(万吨)', param: 'yieldOilGas', minWidth: '150' },
+          { label: '计划月产量(万吨)', param: 'oilGasPlanMonthYield', minWidth: '150' },*/
         { label: '实际月供应量(万吨)', param: 'supplyOilGas', minWidth: '150' },
         { label: '计划月供应量(万吨)', param: 'oilGasPlanMonthSupply', minWidth: '150' },
         { label: '区内供应量(万吨)', param: 'supplyInOilGas', minWidth: '150' },
@@ -141,7 +141,7 @@ export default {
     oilgasdayInit() {
       oilgasdayInit().then((res) => {
         if (res.success) {
-          this.fromSearch.oilGasAreaName = res.data.zuzhijigou
+          this.fromSearch.enterName = res.data.zuzhijigou
           this.list(1, this.pageSize)
         } else {
           this.$notify({
@@ -165,17 +165,17 @@ export default {
           const data = res.data.oilTypes
           this.oilGasOptions = []
           data.forEach(item => {
-          /*  const childList = []
-            if (item.childrenProjectType) {
-              item.childrenProjectType.forEach((i, idx) => {
-                childList.push(
-                  {
-                    value: i.typeName,
-                    label: i.typeName
-                  }
-                )
-              })
-            }*/
+            /*  const childList = []
+              if (item.childrenProjectType) {
+                item.childrenProjectType.forEach((i, idx) => {
+                  childList.push(
+                    {
+                      value: i.typeName,
+                      label: i.typeName
+                    }
+                  )
+                })
+              }*/
             console.log(item.typeName)
             this.oilGasOptions.push({
               value: item.typeName,
@@ -195,10 +195,10 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.time ? this.fromSearch.time[0] : null,
         endTime: this.fromSearch.time ? this.fromSearch.time[1] : null,
-        oilGasName: this.fromSearch.oilGasName,
+        enterName: this.fromSearch.enterName,
         oilGasAreaName: this.fromSearch.oilGasAreaName
       }
-      oilmonthList(params).then((res) => {
+      oilsupplymonthList(params).then((res) => {
         if (res.code === 0) {
           this.tableData = res.body.data
           this.total = res.body.total
@@ -258,7 +258,7 @@ export default {
             ids: this.selectedRows,
             lx: 3
           }
-          oilgasmonthSwitchs(params).then((res) => {
+          oilsupplymonthSwitchs(params).then((res) => {
             if (res.code === 0) {
               this.$notify({
                 type: 'success',

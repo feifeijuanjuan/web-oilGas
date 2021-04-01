@@ -88,7 +88,7 @@
 
 <script>
 import TableCmp from '@/components/TableCmp'
-import { guotuGasList, guotuSwitchs, dic } from '@/api/fill'
+import { guotuGasList, guotuSwitchs, dic, oilgasdayInit } from '@/api/fill'
 
 /*1油气田名称、2时间、3油气田区域类型、4油气田区域名称、5集团标识、6盟市名称、
 7累计探明地质储量、8剩余技术可采储量、9剩余经济可采储量、10储采比、11油气田人数、12远景资源量、
@@ -106,7 +106,8 @@ export default {
       fromSearch: {
         oilGasName: '',
         beginTime: null,
-        endTime: null
+        endTime: null,
+        enterName:''
       },
       loading: false,
       tableData: [],
@@ -135,7 +136,7 @@ export default {
   },
   created() {
     // 初始化查询列表
-    this.list(1, this.pageSize)
+    this.oilgasdayInit()
     this.dic()
   },
   methods: {
@@ -173,6 +174,20 @@ export default {
         }
       })
     },
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.fromSearch.enterName = res.data.zuzhijigou
+          this.list(1, this.pageSize)
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
+    },
     // 查询列表
     list(val, pageSize) {
       this.loading = true
@@ -182,7 +197,8 @@ export default {
         pageSize: pageSize,
         beginTime: this.fromSearch.beginTime,
         endTime: this.fromSearch.endTime,
-        oilGasName: this.fromSearch.oilGasName
+        oilGasName: this.fromSearch.oilGasName,
+        enterName:this.fromSearch.enterName
       }
       guotuGasList(params).then((res) => {
         if (res.code === 0) {

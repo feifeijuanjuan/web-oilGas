@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import { dic, guotuSave, guotuOilUpdate } from '@/api/fill'
+import { dic, guotuSave, guotuOilUpdate, oilgasdayInit } from '@/api/fill'
 
 export default {
   name: 'editFormAdd',
@@ -210,6 +210,7 @@ export default {
     // this.dic()
   },
   mounted() {
+    this.oilgasdayInit()
     Promise.all([
       this.dic()
     ]).then(res => {
@@ -225,6 +226,19 @@ export default {
       } else if (value > 1000000) {
         this.editForm[name] = 1000000
       }
+    },
+    oilgasdayInit() {
+      oilgasdayInit().then((res) => {
+        if (res.success) {
+          this.editForm.enterName = res.data.zuzhijigou
+        } else {
+          this.$notify({
+            message: '网络请求失败',
+            type: 'error',
+            offset: 100
+          })
+        }
+      })
     },
     dic() {
       dic().then((res) => {
